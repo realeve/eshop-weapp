@@ -65,3 +65,8 @@ git fetch --all
 git reset --hard origin/dev
 
 ```
+
+# doc
+
+1. taro ui [https://taro-ui.jd.com/#/](https://taro-ui.jd.com/#/)
+2. taro [https://taro.aotu.io](https://taro.aotu.io)

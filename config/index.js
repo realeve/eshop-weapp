@@ -5,7 +5,10 @@ const config = {
   date: "2019-10-17",
   alias: {
     "@/components": path.resolve(__dirname, "..", "src/components"),
-    "@/utils": path.resolve(__dirname, "..", "src/utils")
+    "@/utils": path.resolve(__dirname, "..", "src/utils"),
+    "@/models": path.resolve(__dirname, "..", "src/models"),
+    "@/services": path.resolve(__dirname, "..", "src/services"),
+    "@/pages": path.resolve(__dirname, "..", "src/pages")
   },
   designWidth: 750,
   deviceRatio: {
@@ -70,6 +73,7 @@ const config = {
   h5: {
     publicPath: "/",
     staticDirectory: "static",
+    esnextModules: ["taro-ui"],
     devServer: {
       host: "localhost", // 如需局域网（如手机）访问，请更换为0.0.0.0
       // host: '0.0.0.0', // 如需局域网（如手机）访问，请更换为0.0.0.0

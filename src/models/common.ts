@@ -1,25 +1,64 @@
 import Taro from "@tarojs/taro";
 import { setStore } from "@/utils/lib";
-export default {
-  namespace: "common",
-  state: {
-    access_token: Taro.getStorageSync("access_token"),
-    mobile: Taro.getStorageSync("user_info")
-      ? Taro.getStorageSync("user_info").mobile
-      : "",
-    nickname: Taro.getStorageSync("user_info")
-      ? Taro.getStorageSync("user_info").nickname
-      : "",
-    new_user: Taro.getStorageSync("user_info")
-      ? Taro.getStorageSync("user_info").new_user
-      : "",
-    is_has_buy_card: Taro.getStorageSync("user_info")
-      ? Taro.getStorageSync("user_info").is_has_buy_card
-      : "",
-    erroMessage: Taro.getStorageSync("user_info")
-      ? Taro.getStorageSync("user_info").erroMessage
-      : ""
-  },
+import * as db from "../services/common";
+import { Dispatch } from "redux";
 
-  reducers: { setStore }
+export { Dispatch };
+export interface RouteData {
+  pathname: string;
+  query?: any;
+  search?: string;
+  state?: any;
+}
+
+export interface IGlobalModel {
+  user: any;
+  special: {
+    batchId: string;
+    imageUrl: string;
+    type: string;
+  };
+}
+
+const state = {
+  user: Taro.getStorageSync("user_info") || {},
+  special: {
+    batchId: "0",
+    imageUrl: "",
+    type: ""
+  }
+};
+
+const namespace = "common";
+export default {
+  namespace,
+  state,
+  reducers: { setStore },
+  subscriptions: {
+    async setup({ dispatch }: { dispatch: Dispatch; history: RouteData }) {
+      db.loadHome().then(res => {
+        let {
+          componentA: special,
+          componentB,
+          componentC,
+          componentD,
+          componentE
+        } = res;
+        dispatch({
+          type: namespace + "/setStore",
+          payload: {
+            special
+          }
+        });
+
+        console.log(componentB, componentC, componentD, componentE);
+      });
+
+      // 载入用户登录信息
+      // await loadUserInfo(dispatch);
+      // return history.listen(({ pathname, search }) => {
+
+      // });
+    }
+  }
 };

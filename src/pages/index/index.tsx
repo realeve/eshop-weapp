@@ -1,35 +1,35 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.less'
+import Taro from "@tarojs/taro";
+import { View, Text, Image } from "@tarojs/components";
+import "./index.less";
 
-export default class Index extends Component {
+import { connect } from "@tarojs/redux";
+import { IGlobalModel } from "@/models/common";
 
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
-  config: Config = {
-    navigationBarTitleText: '首页'
-  }
+import Search from "./components/search/";
 
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='index'>
-        <Text>Hello world!</Text>
-      </View>
-    )
-  }
+export interface IProps extends IGlobalModel {
+  [key: string]: any;
 }
+const Index = ({ special }: IProps) => {
+  return (
+    <View className="index-page">
+      <View className="banner">
+        <Search className="searchWrap" />
+        <View>
+          {special.batchId > 0 && (
+            <Image src={special.imageUrl} className="img" />
+          )}
+        </View>
+      </View>
+      <Text>首页</Text>
+    </View>
+  );
+};
+
+Index.config = {
+  navigationBarTitleText: "首页"
+};
+
+export default connect(({ common }: { common: IGlobalModel }) => ({
+  special: common.special
+}))(Index as any);
