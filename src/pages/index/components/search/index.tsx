@@ -1,21 +1,29 @@
 import Taro, { useState } from "@tarojs/taro";
-import { View } from "@tarojs/components";
-
 import { AtSearchBar } from "taro-ui";
+import { View, Text, Image } from "@tarojs/components";
 import "./index.less";
 import "taro-ui/dist/style/components/search-bar.scss";
 import "taro-ui/dist/style/components/button.scss";
 import "taro-ui/dist/style/components/icon.scss";
 
-const Search = () => {
+import classname from "classname";
+
+export interface ISearchProps {
+  pos: number;
+  [key: string]: any;
+}
+const Search = ({ pos }: ISearchProps) => {
   let [keyword, setKeyword] = useState("");
+
   return (
-    <AtSearchBar
-      value={keyword}
-      onChange={(e: string) => {
-        console.log(e);
-      }}
-    />
+    <View className={classname("searchWrap", `searchWrap${pos}`)}>
+      <AtSearchBar
+        value={keyword}
+        onChange={(e: string) => {
+          console.log(e);
+        }}
+      />
+    </View>
   );
 };
 
