@@ -2,6 +2,8 @@ import Taro from "@tarojs/taro";
 import { setStore } from "@/utils/lib";
 import * as db from "../services/common";
 import { Dispatch } from "redux";
+import { ICateItem } from "@/pages/index/components/cateList";
+import { ICollection } from "@/pages/index/components/collectionList";
 
 export { Dispatch };
 export interface RouteData {
@@ -18,6 +20,8 @@ export interface IGlobalModel {
     imageUrl: string;
     type: string;
   };
+  cateList: ICateItem[];
+  collectionList: ICollection;
 }
 
 const state = {
@@ -26,6 +30,12 @@ const state = {
     batchId: "0",
     imageUrl: "",
     type: ""
+  },
+  cateList: [],
+  collectionList: {
+    data: [],
+    titleCh: "",
+    titleEn: ""
   }
 };
 
@@ -44,14 +54,26 @@ export default {
           componentD,
           componentE
         } = res;
+        let payload = {};
+
+        if (special) {
+          payload = { ...payload, special };
+        }
+
+        if (componentB) {
+          payload = { ...payload, cateList: componentB.data };
+        }
+
+        if (componentC) {
+          payload = { ...payload, collectionList: componentC };
+        }
+
         dispatch({
           type: namespace + "/setStore",
-          payload: {
-            special
-          }
+          payload
         });
 
-        console.log(componentB, componentC, componentD, componentE);
+        console.log(componentC, componentD, componentE);
       });
 
       // 载入用户登录信息

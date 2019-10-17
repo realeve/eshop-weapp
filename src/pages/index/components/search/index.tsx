@@ -1,6 +1,6 @@
 import Taro, { useState } from "@tarojs/taro";
 import { AtSearchBar } from "taro-ui";
-import { View, Text, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import "./index.less";
 import "taro-ui/dist/style/components/search-bar.scss";
 import "taro-ui/dist/style/components/button.scss";
