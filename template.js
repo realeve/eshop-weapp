@@ -18,7 +18,7 @@ import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { I${titleCase(dirName)}Model } from "./model";
 import { Dispatch } from "redux";
-import "./index.less";
+import "./index.scss";
  
 interface IProps extends I${titleCase(dirName)}Model {
   dispatch: Dispatch;
@@ -51,8 +51,8 @@ export default connect(({${dirName}}) => ({
 }))(${titleCase(dirName)} as any);
 `;
 
-// less文件模版
-const lessTep = `@import "../../styles/theme.less";
+// scss 文件模板
+const scssTep = `@import "../../styles/theme.scss";
 
 .${dirName}-page {
   width: 100%;
@@ -111,7 +111,7 @@ fs.mkdirSync(`./src/pages/${dirName}`); // mkdir $1
 process.chdir(`./src/pages/${dirName}`); // cd $1
 
 fs.writeFileSync("index.tsx", indexTep);
-fs.writeFileSync("index.less", lessTep);
+fs.writeFileSync("index.scss", scssTep);
 fs.writeFileSync("model.ts", modelTep);
 fs.writeFileSync("service.ts", serviceTep);
 

@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { Image } from "@tarojs/components";
-import "./index.less";
+import "./index.scss";
 
 export interface IProps {
   special: {

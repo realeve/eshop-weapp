@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICateModel } from "./model";
 import { Dispatch } from "redux";
-import "./index.less";
+import "./index.scss";
 
 interface IProps extends ICateModel {
   dispatch: Dispatch;

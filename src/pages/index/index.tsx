@@ -7,7 +7,7 @@ import BannerImg from "./components/bannerImg";
 import CateList from "./components/cateList";
 import CollectionList from "./components/CollectionList";
 
-import "./index.less";
+import "./index.scss";
 
 const handlePos = (res: Taro.PageScrollObject) =>
   Math.min(Math.ceil(res.scrollTop / 50), 10);

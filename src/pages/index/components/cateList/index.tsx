@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
-import "./index.less";
+import { View } from "@tarojs/components";
+import "./index.scss";
 import * as R from "ramda";
 export interface ICateItem {
   commonId: number;

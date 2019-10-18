@@ -1,10 +1,7 @@
 import Taro, { useState } from "@tarojs/taro";
 import { AtSearchBar } from "taro-ui";
 import { View } from "@tarojs/components";
-import "./index.less";
-import "taro-ui/dist/style/components/search-bar.scss";
-import "taro-ui/dist/style/components/button.scss";
-import "taro-ui/dist/style/components/icon.scss";
+import "./index.scss";
 
 import classname from "classname";
 

@@ -69,7 +69,7 @@ export default {
         }
 
         dispatch({
-          type: namespace + "/setStore",
+          type: "setStore",
           payload
         });
 

@@ -4,7 +4,7 @@ import Index from "./pages/index";
 import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
-import "./app.less";
+import "./app.scss";
 
 const dvaApp = dva.createApp({
   initialState: {},

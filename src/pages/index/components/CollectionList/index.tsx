@@ -1,10 +1,8 @@
 import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
-import "./index.less";
+import "./index.scss";
 import * as R from "ramda";
 import { AtButton } from "taro-ui";
-import "taro-ui/dist/style/components/button.scss";
-import "taro-ui/dist/style/components/loading.scss";
 
 export interface ICollectionItem {
   commonId: number;
