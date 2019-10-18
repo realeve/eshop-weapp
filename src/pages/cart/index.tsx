@@ -4,6 +4,7 @@ import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
 import { Dispatch } from "redux";
 import "./index.scss";
+import EmptyCart from "./components/empty";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -22,13 +23,13 @@ const Cart = ({ dispatch, ...props }: IProps) => {
 
   return (
     <View className="cart-page">
-      <Text>cart</Text>
+      <EmptyCart />
     </View>
   );
 };
 
 Cart.config = {
-  navigationBarTitleText: "这是页面标题信息"
+  navigationBarTitleText: "购物车"
 };
 
 export default connect(({ cart }) => ({

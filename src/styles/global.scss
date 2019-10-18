@@ -11,10 +11,13 @@
   }
 }
 
-.center {
+.hcenter {
   display: flex;
-  align-items: center;
   justify-content: center;
+}
+.center {
+  @extend .hcenter;
+  align-items: center;
 }
 
 .vcenter {

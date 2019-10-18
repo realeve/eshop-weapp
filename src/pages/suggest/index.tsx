@@ -11,8 +11,6 @@ export interface IProps {
   [key: string]: any;
 }
 const Suggest = ({ data }: IProps) => {
-  console.log(data);
-
   return (
     <View className="suggest-page">
       <View className="grid">
