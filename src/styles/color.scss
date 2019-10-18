@@ -27,7 +27,6 @@ $extrmeLightYellow: #e4bd8b;
 $midYellow: #d2ba7e;
 $darkYellow: #cdba8b;
 
-
 //蓝
 $blue: #69c;
 $lightBlue: fade($blue, 85%);
@@ -66,9 +65,8 @@ $borderColorWhite: $midWhite;
 
 $boxShadow: 3px 2px 17px 0px rgba(0, 0, 0, 0.05);
 
-
 // 渐变
-$yellowGardiant: linear-gradient(90deg, $yellow, $extrmeLightYellow);
+$yellowGardiant: linear-gradient(-90deg, $yellow, $midYellow);
 $lightYellowGardiant: linear-gradient(90deg, $lightYellow, $extrmeLightYellow);
 $blackGreyGardiant: linear-gradient(140deg, $mainTitle 20%, #575b66 80%);
 
