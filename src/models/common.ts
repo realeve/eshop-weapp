@@ -22,6 +22,7 @@ export interface IGlobalModel {
   };
   cateList: ICateItem[];
   collectionList: ICollection;
+  newProduct: ICollection;
 }
 
 const state = {
@@ -33,6 +34,11 @@ const state = {
   },
   cateList: [],
   collectionList: {
+    data: [],
+    titleCh: "",
+    titleEn: ""
+  },
+  newProduct: {
     data: [],
     titleCh: "",
     titleEn: ""
@@ -68,12 +74,16 @@ export default {
           payload = { ...payload, collectionList: componentC };
         }
 
+        if (componentD) {
+          payload = { ...payload, newProduct: componentD };
+        }
+
         dispatch({
           type: "setStore",
           payload
         });
 
-        console.log(componentC, componentD, componentE);
+        console.log(componentE);
       });
 
       // 载入用户登录信息

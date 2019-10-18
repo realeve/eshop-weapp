@@ -6,6 +6,7 @@ import Search from "./components/search/";
 import BannerImg from "./components/bannerImg";
 import CateList from "./components/cateList";
 import CollectionList from "./components/CollectionList";
+import NewProduct from "./components/newProduct";
 
 import "./index.scss";
 
@@ -14,7 +15,7 @@ const handlePos = (res: Taro.PageScrollObject) =>
 export interface IProps extends IGlobalModel {
   [key: string]: any;
 }
-const Index = ({ special, cateList, collectionList }: IProps) => {
+const Index = ({ special, cateList, collectionList, newProduct }: IProps) => {
   let [pos, setPos] = useState(0);
   usePageScroll(res => {
     setPos(handlePos(res));
@@ -26,6 +27,7 @@ const Index = ({ special, cateList, collectionList }: IProps) => {
       <BannerImg special={special} />
       <CateList data={cateList} />
       <CollectionList data={collectionList} />
+      <NewProduct data={newProduct} />
     </View>
   );
 };

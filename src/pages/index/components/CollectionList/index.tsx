@@ -18,8 +18,7 @@ export interface ITitle {
   titleEn: string;
 }
 export interface ICollection extends ITitle {
-  summary: string;
-
+  summary?: string;
   data: ICollectionItem[];
 }
 export interface IProps {
@@ -28,7 +27,7 @@ export interface IProps {
 }
 
 export const TitleItem = ({ data }: { data: ITitle }) => (
-  <View className="title">
+  <View className="title-homePage">
     <Text className="main">{data.titleCh}</Text>
     <Text className="sub">{data.titleEn}</Text>
   </View>

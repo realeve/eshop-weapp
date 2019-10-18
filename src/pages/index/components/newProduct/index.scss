@@ -1,0 +1,30 @@
+@import "../../../../styles/theme.scss";
+
+.newProduct {
+  margin-top: $componentSpan;
+  padding-bottom: 56px;
+  background-color: $white;
+  .grid {
+    @extend .alignColumn;
+    .row {
+      display: flex;
+      .item {
+        flex: 1;
+      }
+      .taro-img {
+        width: unset;
+        height: unset;
+      }
+      .detail {
+        .title {
+          font-size: $fontSizeSmall;
+          text-align: center;
+          padding: 0;
+        }
+        .price {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
