@@ -5,6 +5,7 @@ import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
 import "./app.scss";
+import "./styles/custom-theme.scss";
 
 const dvaApp = dva.createApp({
   initialState: {},
