@@ -6,3 +6,8 @@ export const loadHome = () =>
     method: "post",
     url: API.INDEX_COMPONENT as string
   });
+
+export const loadMenuList = () =>
+  axios({
+    url: API.CATEGORY as string
+  }).then(({ menuList }) => menuList);

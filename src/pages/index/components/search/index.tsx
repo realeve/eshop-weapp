@@ -7,13 +7,14 @@ import classname from "classname";
 
 export interface ISearchProps {
   pos: number;
+  className?: string;
   [key: string]: any;
 }
-const Search = ({ pos }: ISearchProps) => {
+const Search = ({ pos, className }: ISearchProps) => {
   let [keyword, setKeyword] = useState("");
 
   return (
-    <View className={classname("searchWrap", `searchWrap${pos}`)}>
+    <View className={classname("searchWrap", `searchWrap${pos}`, className)}>
       <AtSearchBar
         value={keyword}
         onChange={(e: string) => {

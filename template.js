@@ -52,7 +52,7 @@ export default connect(({${dirName}}) => ({
 `;
 
 // scss 文件模板
-const scssTep = `@import "../../styles/theme.scss";
+const scssTep = `@import "@/styles/theme.scss";
 
 .${dirName}-page {
   width: 100%;

@@ -13,6 +13,39 @@ export interface RouteData {
   state?: any;
 }
 
+interface IMenuItem {
+  menuAd: never[];
+  menuId: number;
+  menuItemList: {
+    itemData: {
+      data: string;
+      image: string;
+      imageUrl: string;
+      name: string;
+      type: string;
+    };
+    itemId: number;
+    itemMore: {
+      data: string;
+      image: string;
+      imageUrl: string;
+      name: string;
+      type: string;
+    };
+    itemName: string;
+    itemType: number;
+    menuId: number;
+    subitemData: {
+      data: string;
+      image: string;
+      imageUrl: string;
+      name: string;
+      type: string;
+    }[];
+  }[];
+  menuName: string;
+}
+
 export interface IGlobalModel {
   user: any;
   special: {
@@ -23,6 +56,7 @@ export interface IGlobalModel {
   cateList: ICateItem[];
   collectionList: ICollection;
   newProduct: ICollection;
+  menuList: IMenuItem[];
 }
 
 const state = {
@@ -42,7 +76,8 @@ const state = {
     data: [],
     titleCh: "",
     titleEn: ""
-  }
+  },
+  menuList: []
 };
 
 const namespace = "common";
@@ -57,8 +92,8 @@ export default {
           componentA: special,
           componentB,
           componentC,
-          componentD,
-          componentE
+          componentD
+          // componentE
         } = res;
         let payload = {};
 
@@ -83,7 +118,28 @@ export default {
           payload
         });
 
-        console.log(componentE);
+        // 热卖产品，后端暂无返回
+        // console.log(componentE);
+      });
+
+      db.loadMenuList().then(menuList => {
+        let menus = menuList.map(item => ({
+          name: item.menuName,
+          id: item.menuId,
+          cates: item.menuItemList.map(menu => ({
+            id: menu.itemId,
+            name: menu.itemName,
+            categoryList: menu.subitemData.map(sub => ({
+              id: sub.data,
+              name: sub.name,
+              url: sub.imageUrl
+            }))
+          }))
+        }));
+        dispatch({
+          type: "setStore",
+          payload: { menuList: menus }
+        });
       });
 
       // 载入用户登录信息

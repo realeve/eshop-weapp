@@ -1,6 +1,6 @@
 import "@tarojs/async-await";
 import Taro, { Component, Config } from "@tarojs/taro";
-import Index from "./pages/index";
+import Index from "./pages";
 import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
@@ -29,11 +29,12 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      "pages/index/index",
-      "pages/cate/index",
-      "pages/cart/index",
-      "pages/user/index",
-      "pages/find/index"
+      "pages/index",
+      "pages/cate",
+      "pages/cart",
+      "pages/user",
+      "pages/find",
+      "pages/suggest"
     ],
     window: {
       backgroundTextStyle: "light",
@@ -45,39 +46,40 @@ class App extends Component {
     tabBar: {
       list: [
         {
-          pagePath: "pages/index/index",
+          pagePath: "pages/index",
           text: "首页",
           iconPath: "./images/tab/home.png",
           selectedIconPath: "./images/tab/home-active.png"
         },
         {
-          pagePath: "pages/cate/index",
+          pagePath: "pages/cate",
           text: "分类",
           iconPath: "./images/tab/cate.png",
           selectedIconPath: "./images/tab/cate-active.png"
         },
         {
-          pagePath: "pages/find/index",
+          pagePath: "pages/find",
           text: "",
           iconPath: "./images/tab/logo.png",
           selectedIconPath: "./images/tab/logo-active.png"
         },
         {
-          pagePath: "pages/cart/index",
+          pagePath: "pages/cart",
           text: "购物车",
           iconPath: "./images/tab/cart.png",
           selectedIconPath: "./images/tab/cart-active.png"
         },
         {
-          pagePath: "pages/user/index",
+          pagePath: "pages/user",
           text: "我的",
           iconPath: "./images/tab/user.png",
           selectedIconPath: "./images/tab/user-active.png"
         }
       ],
       color: "#333",
-      selectedColor: "#333",
+      selectedColor: "#b98a4e",
       backgroundColor: "#fff",
+      // backgroundColor: "#f8f9fb",
       borderStyle: "white"
     }
   };

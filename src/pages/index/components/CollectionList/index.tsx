@@ -54,7 +54,15 @@ const CollectionList = ({ data }: IProps) => {
 
       <View className="footer">
         <View className="summary">{data.summary}</View>
-        <AtButton type="secondary" size="small">
+        <AtButton
+          type="secondary"
+          size="small"
+          onClick={() => {
+            Taro.navigateTo({
+              url: "/pages/suggest"
+            });
+          }}
+        >
           点击查看
         </AtButton>
       </View>

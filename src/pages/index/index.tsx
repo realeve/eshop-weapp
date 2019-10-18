@@ -1,5 +1,5 @@
-import Taro, { usePageScroll, useState } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import Taro, { useState } from "@tarojs/taro"; //  usePageScroll,
+import { View, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
 import Search from "./components/search/";
@@ -7,6 +7,7 @@ import BannerImg from "./components/bannerImg";
 import CateList from "./components/cateList";
 import CollectionList from "./components/CollectionList";
 import NewProduct from "./components/newProduct";
+import { getWindowHeight } from "@/utils/style";
 
 import "./index.scss";
 
@@ -17,23 +18,35 @@ export interface IProps extends IGlobalModel {
 }
 const Index = ({ special, cateList, collectionList, newProduct }: IProps) => {
   let [pos, setPos] = useState(0);
-  usePageScroll(res => {
-    setPos(handlePos(res));
-  });
+  // usePageScroll(res => {
+  //   setPos(handlePos(res));
+  // });
+
+  const onScroll = event => {
+    setPos(handlePos(event.detail));
+  };
 
   return (
     <View className="index-page">
       <Search pos={pos} />
-      <BannerImg special={special} />
-      <CateList data={cateList} />
-      <CollectionList data={collectionList} />
-      <NewProduct data={newProduct} />
+      <ScrollView
+        scrollY
+        onScrollToLower={this.loadRecommend}
+        style={{ height: getWindowHeight() }}
+        onScroll={onScroll}
+      >
+        <BannerImg special={special} />
+        <CateList data={cateList} />
+        <CollectionList data={collectionList} />
+        <NewProduct data={newProduct} />
+      </ScrollView>
     </View>
   );
 };
 
 Index.config = {
   navigationBarTitleText: "首页"
+  // backgroundColor: "#f8f9fb"
 };
 
 export default connect(({ common }: { common: IGlobalModel }) => common)(
