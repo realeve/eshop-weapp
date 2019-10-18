@@ -52,7 +52,7 @@ export default connect(({${dirName}}) => ({
 `;
 
 // less文件模版
-const lessTep = `@import "../../styles/index.less";
+const lessTep = `@import "../../styles/theme.less";
 
 .${dirName}-page {
   width: 100%;

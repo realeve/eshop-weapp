@@ -8,7 +8,8 @@ const config = {
     "@/utils": path.resolve(__dirname, "..", "src/utils"),
     "@/models": path.resolve(__dirname, "..", "src/models"),
     "@/services": path.resolve(__dirname, "..", "src/services"),
-    "@/pages": path.resolve(__dirname, "..", "src/pages")
+    "@/pages": path.resolve(__dirname, "..", "src/pages"),
+    "@/styles": path.resolve(__dirname, "..", "src/styles")
   },
   designWidth: 750,
   deviceRatio: {

@@ -1,0 +1,63 @@
+// animation
+.fadeIn {
+  animation: fadeIn 0.5s;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vcenter {
+  display: flex;
+  align-items: center;
+}
+
+.alignRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.alignColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+// 黄色渐变线
+.yellowGardiantLine {
+  width: 100%;
+  padding-bottom: 15px;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(
+      to right,
+      rgba(227, 189, 139, 0.1) 0%,
+      #b98a4e 50%,
+      rgba(227, 189, 139, 0.1) 100%
+    )
+    1;
+}
+
+// 黄色渐变线
+.whitewGardiantLine {
+  width: 100%;
+  border-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1) 0%,
+      #fff 50%,
+      rgba(255, 255, 255, 0.1) 100%
+    )
+    1;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
