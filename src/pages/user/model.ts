@@ -1,9 +1,10 @@
 import * as db from "./service";
 import { setStore } from "@/utils/lib";
+import { RouteData, Dispatch } from "@/models/common";
 
 export interface IUserModel {
   stateName: string;
-  [key:string]: any;
+  [key: string]: any;
 }
 
 const state: IUserModel = {
@@ -16,17 +17,11 @@ export default {
   reducers: {
     setStore
   },
-  effects: {
-    *effectsDemo(_, { call, put }) {
-      const { status, data } = yield call(db.demo, {});
-      if (status === "ok") {
-        yield put({
-          type: "setStore",
-          payload: {
-            topData: data
-          }
-        });
-      }
+
+  subscriptions: {
+    async setup({ dispatch }: { dispatch: Dispatch; history: RouteData }) {
+      // 载入个人信息
+      console.log(history);
     }
   }
-}; 
+};

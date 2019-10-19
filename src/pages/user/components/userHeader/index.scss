@@ -1,0 +1,34 @@
+@import "@/styles/theme.scss";
+.userCenter-header {
+  widows: 100%;
+  height: 310px;
+  @extend .alignRow;
+  justify-content: space-between;
+  @extend .vcenter;
+  background-color: $yellow;
+  padding: 0 20px;
+  .avatar {
+    @extend .alignRow;
+    .avatarImg {
+      margin-right: 20px;
+    }
+    .detail {
+      color: $white;
+      .userName {
+        @extend .alignRow;
+        .name {
+          font-size: $heading-3-size;
+        }
+        .status {
+          font-size: $heading-4-size;
+          margin-left: 10px;
+        }
+      }
+      .welcome {
+        font-size: $heading-5-size;
+      }
+    }
+  }
+  .setting {
+  }
+}

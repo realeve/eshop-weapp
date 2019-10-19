@@ -2,33 +2,24 @@ import Taro, { useEffect } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { IUserModel } from "./model";
-import { Dispatch } from "redux";
 import "./index.scss";
 
+import UserHeader from "./components/userHeader";
+
 interface IProps extends IUserModel {
-  dispatch: Dispatch;
   [key: string]: any;
 }
-const User = ({ dispatch, ...props }: IProps) => {
-  useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
-    dispatch({
-      type: "user/setStore",
-      payload: {
-        stateName: "变更数据"
-      }
-    });
-  }, [props.stateName]);
-
+const User = ({ ...props }: IProps) => {
   return (
     <View className="user-page">
+      <UserHeader />
       <Text>user</Text>
     </View>
   );
 };
 
 User.config = {
-  navigationBarTitleText: "这是页面标题信息"
+  navigationBarTitleText: "个人中心"
 };
 
 export default connect(({ user }) => ({
