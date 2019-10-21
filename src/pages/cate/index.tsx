@@ -1,8 +1,9 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
+import Taro, { useEffect } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICateModel } from "./model";
 import { getWindowHeight } from "@/utils/style";
+import { useSetState } from "@/components";
 
 import Search from "@/pages/index/components/search/";
 
@@ -33,29 +34,27 @@ interface IProps extends ICateModel {
 
 const Index = ({ menuList }: IProps) => {
   const height = getWindowHeight();
-  const [state, setState] = useState({
+  const [state, setState] = useSetState({
     current: 0,
     list: (menuList[0] && menuList[0].cates) || []
   });
 
   const handleMenu = (current: number) => {
     let list = menuList.find(item => item.id == current) || { cates: [] };
-    setState(prevState => ({
-      ...prevState,
+    setState({
       current,
       list: list.cates
-    }));
+    });
   };
 
   useEffect(() => {
     if (menuList.length === 0) {
       return;
     }
-    setState(prevState => ({
-      ...prevState,
+    setState({
       current: menuList[0].id,
       list: menuList[0].cates
-    }));
+    });
   }, [menuList]);
 
   return (

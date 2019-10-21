@@ -293,3 +293,13 @@ export const setSNSendStatus = (status: boolean | string) => {
 
 export const loadSNSendStatus: () => null | string = () =>
   Taro.getStorageSync(LocalStorageKeys.SNS);
+
+export const setPhone = (data: string) => {
+  Taro.setStorage({
+    key: LocalStorageKeys.phone,
+    data
+  });
+};
+
+export const loadPhone: () => string = () =>
+  Taro.getStorageSync(LocalStorageKeys.phone) || "";

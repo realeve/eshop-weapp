@@ -2,43 +2,4 @@
 
 .login-phone {
   padding-top: 78px;
-  .at-form {
-    &:after {
-      border-top: none;
-    }
-    .at-input__title {
-      width: unset;
-    }
-  }
-  .icon {
-    width: 35px;
-    height: 35px;
-  }
-  .at-icon {
-    color: $yellow;
-  }
-  .at-input__icon-alert {
-    color: #ff4949;
-  }
-  .sendSn {
-    color: $blue;
-    font-size: $heading-5-size;
-  }
-  .disabled {
-    color: $grey;
-  }
-
-  // .captchaWrap {
-  //   position: absolute;
-  //   top: -60px;
-  //   left: 0;
-  // }
-  .at-modal {
-    &__overlay {
-      background: none;
-    }
-    &__container {
-      width: 100%;
-    }
-  }
 }
