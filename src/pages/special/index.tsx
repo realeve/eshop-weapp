@@ -1,17 +1,20 @@
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { Dispatch } from "redux";
+
 import "./index.scss";
 
 interface IProps {
-  dispatch: Dispatch;
   [key: string]: any;
 }
 const Special = (props: IProps) => {
+  const {
+    params: { id: specialId }
+  } = useRouter();
+
   return (
     <View className="special-page">
-      <Text>special</Text>
+      <Text>特品ID-{specialId}</Text>
     </View>
   );
 };
