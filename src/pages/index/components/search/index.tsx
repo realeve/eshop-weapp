@@ -20,6 +20,7 @@ const Search = ({ pos, className }: ISearchProps) => {
         onChange={(e: string) => {
           console.log(e);
         }}
+        placeholder="请输入搜索关键词"
       />
     </View>
   );

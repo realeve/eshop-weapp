@@ -3,6 +3,8 @@ import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
+import { set as setGlobalData } from "@/utils/global_data";
+
 /**
  * @exports
  * @enum CLIENT_TYPE 客户端类型
@@ -158,7 +160,7 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
     data
   }).then(res => {
     if (res.token) {
-      window.g_axios.token = res.token;
+      setGlobalData("token", res.token);
     }
     return res;
   });

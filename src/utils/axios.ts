@@ -4,6 +4,10 @@ import { host } from "./setting";
 import * as R from "ramda";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
+import {
+  set as setGlobalData,
+  get as getGlobalData
+} from "@/utils/global_data";
 
 export interface GlobalAxios {
   host: string;
@@ -99,7 +103,8 @@ export const loadUserInfo = (user: null | string) => {
     token: string;
     [key: string]: any;
   } = JSON.parse(user);
-  window.g_axios.token = setting.token;
+  setGlobalData("token", setting.token);
+  // window.g_axios.token = setting.token;
   return { token: setting.token };
 };
 
@@ -224,12 +229,15 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     };
   }
   if (headers.Authorization) {
-    window.g_axios.token = headers.Authorization;
+    // window.g_axios.token = headers.Authorization;
+    setGlobalData("token", headers.Authorization);
     saveToken(headers.Authorization);
   }
   // 刷新token
   if (typeof datas.token !== "undefined") {
-    window.g_axios.token = datas.token;
+    // window.g_axios.token = datas.token;
+    setGlobalData("token", datas.token);
+
     saveToken(datas.token);
     // 移除token
     Reflect.deleteProperty(datas, "token");
@@ -239,7 +247,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
 
 export const handleUrl = (option: AxiosRequestConfig) => {
   if (option.url && option.url[0] === ".") {
-    option.url = window.location.origin + option.url.slice(1);
+    option.url = host + "/" + option.url.slice(1);
   }
   return option;
 };
@@ -254,18 +262,22 @@ export let axios: <T extends {}>(
 ) => Promise<
   T | { token?: string | undefined; error?: {} | undefined }
 > = _option => {
-  let fp = (window.g_axios && window.g_axios.fp) || "";
+  let g_fp = getGlobalData("fp");
+  let g_axios = getGlobalData("g_axios");
+  let token = getGlobalData("token");
+
+  let fp = g_fp || "";
   if (fp.length === 0) {
     fp = getFp();
   }
-  window.g_axios = window.g_axios || {
+  g_axios = g_axios || {
     host,
     token: Taro.getStorageSync(LocalStorageKeys.token),
     fp
   };
 
   // token为空时自动获取
-  if (window.g_axios.token === "") {
+  if (token === "") {
     let user: null | string = Taro.getStorageSync(LocalStorageKeys.user);
     loadUserInfo(user);
   }
@@ -276,8 +288,8 @@ export let axios: <T extends {}>(
 
   option = Object.assign(option, {
     headers: {
-      Authorization: window.g_axios.token,
-      fp: window.g_axios.fp,
+      Authorization: token,
+      fp: g_fp,
       ...option.headers
     },
     method: option.method || "get"

@@ -36,7 +36,8 @@ class App extends Component {
       "pages/cart", // 购物车
       "pages/user", // 个人中心
       "pages/find", // 发现
-      "pages/login" // 登录
+      "pages/login", // 登录
+      "pages/special" // 特品
     ],
     window: {
       backgroundTextStyle: "light",

@@ -119,7 +119,14 @@ export default {
   state,
   reducers: { setStore, setUserStore },
   subscriptions: {
-    async setup({ dispatch }: { dispatch: Dispatch; history: RouteData }) {
+    async setup({
+      dispatch,
+      ...props
+    }: {
+      dispatch: Dispatch;
+      history: RouteData;
+    }) {
+      console.log(props);
       db.loadHome().then(res => {
         let {
           componentA: special,
@@ -179,7 +186,7 @@ export default {
       await loadUserInfo(dispatch);
 
       // return history.listen(({ pathname, search }) => {
-
+      //   console.log(pathname, search);
       // });
     }
   }

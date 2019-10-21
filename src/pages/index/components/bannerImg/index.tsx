@@ -11,7 +11,16 @@ export interface IProps {
 
 const BannerImg = ({ special }: IProps) => {
   return special.batchId > 0 ? (
-    <Image src={special.imageUrl} className="bannerImg" mode="scaleToFill" />
+    <Image
+      src={special.imageUrl}
+      className="bannerImg"
+      mode="scaleToFill"
+      onClick={() => {
+        Taro.navigateTo({
+          url: "/pages/special?id=" + special.batchId
+        });
+      }}
+    />
   ) : null;
 };
 
