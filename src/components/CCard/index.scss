@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
 .CCard {
-  padding: 10px;
+  padding: 0.512rem;
   background-color: $white;
   .head {
     @extend .alignRow;
@@ -15,7 +15,7 @@
     }
     .extra {
       color: $subTitle;
-      font-size: 26px;
+      font-size: $fontSizeNormal;
     }
     padding-bottom: 5px;
     border-bottom: 1px solid $borderColorGrey;

@@ -59,7 +59,7 @@ const CollectionList = ({ data }: IProps) => {
           size="small"
           onClick={() => {
             Taro.navigateTo({
-              url: "/pages/suggest"
+              url: "/pages/index/suggest"
             });
           }}
         >

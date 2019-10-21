@@ -5,14 +5,23 @@ import { AtAvatar } from "taro-ui";
 
 import DefaultAvatar from "./headerLogo.png";
 
-interface IUserInfo {
+export interface IUserInfo {
+  uid: number;
   username: string;
   avatar: string;
   valid: boolean;
+  [key: string]: any;
 }
 
 const NotLogin = () => (
-  <View className="avatar">
+  <View
+    className="avatar"
+    onClick={() => {
+      Taro.navigateTo({
+        url: "/pages/login"
+      });
+    }}
+  >
     <View className="avatarImg">
       <AtAvatar circle size="large" image={DefaultAvatar} />
     </View>
@@ -45,18 +54,21 @@ const IsLogin = ({ data: { avatar, username, valid } }: ILoginProp) => (
   </View>
 );
 
-const userInfo: IUserInfo = {
-  username: "张三",
-  avatar:
-    "https://static.ccgold.cn/image/9f/12/9f12f7c6a5c005cef4488c753a33e554.gif",
-  valid: true
+const EmptyCart = () => {
+  const userInfo: IUserInfo = {
+    uid: 0,
+    username: "张三",
+    avatar:
+      "https://static.ccgold.cn/image/9f/12/9f12f7c6a5c005cef4488c753a33e554.gif",
+    valid: true
+  };
+
+  return (
+    <View className="userCenter-header">
+      {userInfo.uid == 0 ? <NotLogin /> : <IsLogin data={userInfo} />}
+      <View className="at-icon at-icon-settings setting" />
+    </View>
+  );
 };
-const EmptyCart = () => (
-  <View className="userCenter-header">
-    {/* <NotLogin /> */}
-    <IsLogin data={userInfo} />
-    <View className="at-icon at-icon-settings setting" />
-  </View>
-);
 
 export default EmptyCart;

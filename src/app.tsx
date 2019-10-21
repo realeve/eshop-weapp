@@ -29,12 +29,14 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      "pages/index",
-      "pages/cate",
-      "pages/cart",
-      "pages/user",
-      "pages/find",
-      "pages/suggest"
+      "pages/index", // 首页
+      "pages/index/suggest", // 精彩推荐
+
+      "pages/cate", // 分类
+      "pages/cart", // 购物车
+      "pages/user", // 个人中心
+      "pages/find", // 发现
+      "pages/login" // 登录
     ],
     window: {
       backgroundTextStyle: "light",
