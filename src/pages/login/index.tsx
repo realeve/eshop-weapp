@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import "./index.scss";
 import DefaultAvatar from "@/pages/user/components/userHeader/headerLogo.png";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import { CButton } from "@/components";
+import LoginPhone from "./components/LoginPhone";
 
 // interface IProps {
 //   [key: string]: any;
@@ -18,11 +18,14 @@ const Login = () => {
       <View className="logo">
         <Image src={DefaultAvatar} className="img" />
       </View>
-      <AtTabs current={current} tabList={tabList} onClick={setCurrent}>
+      <AtTabs
+        current={current}
+        swipeable={false}
+        tabList={tabList}
+        onClick={setCurrent}
+      >
         <AtTabsPane current={current} index={0}>
-          <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;">
-            手机号登录
-          </View>
+          <LoginPhone />
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
           <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;">
@@ -30,9 +33,7 @@ const Login = () => {
           </View>
         </AtTabsPane>
       </AtTabs>
-      <View className="action">
-        <CButton theme="gardient">登录</CButton>
-      </View>
+
       <View className="register">没有账号？现在注册</View>
     </View>
   );
