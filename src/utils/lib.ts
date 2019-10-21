@@ -159,6 +159,7 @@ export const setUserStore = (state: any, store: Store) => {
         key: LocalStorageKeys.phone,
         data: store.phone
       });
+
       Taro.setStorage({
         key: LocalStorageKeys.user,
         data: JSON.stringify(store)

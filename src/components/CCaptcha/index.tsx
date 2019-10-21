@@ -76,13 +76,13 @@ const Captcha: (props: ICaptchaProps) => React.ReactElement = props => {
     setLoading(false);
   };
 
-  if (loading) {
-    Taro.showToast({
-      title: "正在加载",
-      icon: "loading"
-    });
-    return null;
-  }
+  useEffect(() => {
+    if (loading) {
+      Taro.showLoading();
+    } else {
+      Taro.hideLoading();
+    }
+  }, [loading]);
 
   return (
     <View className={classnames("captcha", props.className)}>

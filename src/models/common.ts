@@ -1,9 +1,10 @@
 import Taro from "@tarojs/taro";
-import { setStore } from "@/utils/lib";
+import { setStore, setUserStore } from "@/utils/lib";
 import * as db from "../services/common";
 import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
 import { ICollection } from "@/pages/index/components/collectionList";
+import { LocalStorageKeys } from "@/utils/setting";
 
 export { Dispatch };
 export interface RouteData {
@@ -46,21 +47,37 @@ interface IMenuItem {
   menuName: string;
 }
 
+export interface IGlobalUser {
+  uid: string;
+  avatar: string;
+  username: string;
+  fullname: string;
+  user_type: number;
+  addressArea: string;
+  weixinUser: string;
+  qqUser: string;
+  authState: number;
+  authMessage: string;
+  [key: string]: any;
+}
+
 export interface IGlobalModel {
-  user: any;
+  user: IGlobalUser; // 用户全局状态
+  isLogin: boolean; // 是否登录
   special: {
     batchId: string;
     imageUrl: string;
     type: string;
-  };
-  cateList: ICateItem[];
+  }; // 特品信息
+  cateList: ICateItem[]; // 主页菜单列表
   collectionList: ICollection;
-  newProduct: ICollection;
-  menuList: IMenuItem[];
+  newProduct: ICollection; // 新品
+  menuList: IMenuItem[]; // 分类
 }
 
 const state = {
-  user: Taro.getStorageSync("user_info") || {},
+  user: Taro.getStorageSync(LocalStorageKeys.user) || {},
+  isLogin: false,
   special: {
     batchId: "0",
     imageUrl: "",
@@ -80,11 +97,26 @@ const state = {
   menuList: []
 };
 
+// 载入登录信息
+export const loadUserInfo = (dispatch: Dispatch) => {
+  let user = Taro.getStorageSync(LocalStorageKeys.user) || { username: "" };
+
+  Reflect.deleteProperty(user, "token");
+
+  dispatch({
+    type: "setStore",
+    payload: {
+      user,
+      isLogin: user && user.uid > 0
+    }
+  });
+};
+
 const namespace = "common";
 export default {
   namespace,
   state,
-  reducers: { setStore },
+  reducers: { setStore, setUserStore },
   subscriptions: {
     async setup({ dispatch }: { dispatch: Dispatch; history: RouteData }) {
       db.loadHome().then(res => {
@@ -143,7 +175,8 @@ export default {
       });
 
       // 载入用户登录信息
-      // await loadUserInfo(dispatch);
+      await loadUserInfo(dispatch);
+
       // return history.listen(({ pathname, search }) => {
 
       // });

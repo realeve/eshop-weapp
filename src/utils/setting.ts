@@ -82,6 +82,7 @@ export { API } from "./api";
  *
  */
 export const LocalStorageKeys = {
+  token: "token",
   shoppingCart: "booking", //购物车
   user: "user", // 用户身份
   FingerPrint: "fp", // 指纹

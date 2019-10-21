@@ -104,12 +104,7 @@ export const loadUserInfo = (user: null | string) => {
 };
 
 const saveToken = (token: string) => {
-  Taro.setStorageSync(
-    LocalStorageKeys.user,
-    JSON.stringify({
-      token: token
-    })
-  );
+  Taro.setStorage({ key: LocalStorageKeys.token, data: token });
 };
 
 export interface AxiosError {
@@ -249,8 +244,9 @@ export const handleUrl = (option: AxiosRequestConfig) => {
   return option;
 };
 
-const getFp = (): string =>
-  Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
+// const getFp = (): string =>
+//   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
+const getFp = (): string => "weapp";
 
 // 自动处理token更新，data 序列化等
 export let axios: <T extends {}>(
@@ -264,15 +260,13 @@ export let axios: <T extends {}>(
   }
   window.g_axios = window.g_axios || {
     host,
-    token: "",
+    token: Taro.getStorageSync(LocalStorageKeys.token),
     fp
   };
 
   // token为空时自动获取
   if (window.g_axios.token === "") {
-    let user: null | string = window.sessionStorage.getItem(
-      LocalStorageKeys.user
-    );
+    let user: null | string = Taro.getStorageSync(LocalStorageKeys.user);
     loadUserInfo(user);
   }
 
