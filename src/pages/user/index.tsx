@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import { IUserModel } from "./model";
 import "./index.scss";
 
-import UserHeader from "./components/userHeader";
+import { UserHeader, MyOrder, MyService } from "./components";
 
 interface IProps extends IUserModel {
   [key: string]: any;
@@ -13,7 +13,8 @@ const User = ({ ...props }: IProps) => {
   return (
     <View className="user-page">
       <UserHeader />
-      <Text>user</Text>
+      <MyOrder />
+      <MyService />
     </View>
   );
 };

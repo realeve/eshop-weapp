@@ -1,11 +1,14 @@
 @import "@/styles/theme.scss";
 .userCenter-header {
-  widows: 100%;
+  //   widows: 100%;
   height: 310px;
   @extend .alignRow;
   justify-content: space-between;
   @extend .vcenter;
-  background-color: $yellow;
+
+  background: url("./banner.svg") no-repeat;
+  background-size: cover;
+
   padding: 0 20px;
   .avatar {
     @extend .alignRow;
@@ -14,14 +17,31 @@
     }
     .detail {
       color: $white;
+      @extend .alignColumn;
+      @extend .hcenter;
       .userName {
         @extend .alignRow;
+        @extend .vcenter;
+
+        font-size: $heading-3-size;
+
         .name {
-          font-size: $heading-3-size;
+          font: {
+            size: $heading-3-size;
+            weight: bold;
+          }
         }
-        .status {
-          font-size: $heading-4-size;
+        .valid {
           margin-left: 10px;
+          font-size: $font-size-xs;
+          background: linear-gradient(90deg, #444 0%, $subTitle 50%, #444 100%);
+          border-radius: 18px;
+          height: 36px;
+          padding: 0 10px;
+        }
+        .invalid {
+          @extend .valid;
+          background: linear-gradient(90deg, $red 0%, #ff5b1e 50%, $red 100%);
         }
       }
       .welcome {
@@ -30,5 +50,6 @@
     }
   }
   .setting {
+    color: $white;
   }
 }

@@ -2,11 +2,13 @@ import Taro, { useState } from "@tarojs/taro"; //  usePageScroll,
 import { View, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
-import Search from "./components/search/";
-import BannerImg from "./components/bannerImg";
-import CateList from "./components/cateList";
-import CollectionList from "./components/CollectionList";
-import NewProduct from "./components/newProduct";
+import {
+  Search,
+  BannerImg,
+  CateList,
+  CollectionList,
+  NewProduct
+} from "./components/";
 import { getWindowHeight } from "@/utils/style";
 
 import "./index.scss";

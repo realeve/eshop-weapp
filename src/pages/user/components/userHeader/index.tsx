@@ -1,20 +1,61 @@
 import Taro from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import "./index.scss";
+import { AtAvatar } from "taro-ui";
 
+import DefaultAvatar from "./headerLogo.png";
+
+interface IUserInfo {
+  username: string;
+  avatar: string;
+  valid: boolean;
+}
+
+const NotLogin = () => (
+  <View className="avatar">
+    <View className="avatarImg">
+      <AtAvatar circle size="large" image={DefaultAvatar} />
+    </View>
+    <View className="detail">
+      <View className="userName">您好，请您登录</View>
+      <View className="welcome">欢迎畅享中钞电商购物体验</View>
+    </View>
+  </View>
+);
+
+interface ILoginProp {
+  data: IUserInfo;
+}
+const IsLogin = ({ data: { avatar, username, valid } }: ILoginProp) => (
+  <View className="avatar">
+    <View className="avatarImg">
+      <AtAvatar circle size="large" image={avatar} />
+    </View>
+    <View className="detail">
+      <View className="userName">
+        <View className="name">{username}</View>
+        {valid ? (
+          <View className="valid">已实名认证</View>
+        ) : (
+          <View className="invalid">未实名认证</View>
+        )}
+      </View>
+      <View className="welcome">欢迎畅享中钞电商购物体验</View>
+    </View>
+  </View>
+);
+
+const userInfo: IUserInfo = {
+  username: "张三",
+  avatar:
+    "https://static.ccgold.cn/image/9f/12/9f12f7c6a5c005cef4488c753a33e554.gif",
+  valid: true
+};
 const EmptyCart = () => (
   <View className="userCenter-header">
-    <View className="avatar">
-      <View className="avatarImg">头像</View>
-      <View className="detail">
-        <View className="userName">
-          <View className="name">张三</View>
-          <View className="status">已认证状态</View>
-        </View>
-        <View className="welcome">欢迎畅享中钞电商购物体验</View>
-      </View>
-    </View>
-    <View className="setting">设置按钮</View>
+    {/* <NotLogin /> */}
+    <IsLogin data={userInfo} />
+    <View className="at-icon at-icon-settings setting" />
   </View>
 );
 
