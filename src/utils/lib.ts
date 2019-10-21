@@ -5,6 +5,7 @@ import { getType, axios } from "./axios";
 
 import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
+import Taro from "@tarojs/taro";
 
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
@@ -149,13 +150,19 @@ export const setUserStore = (state: any, store: Store) => {
   }
 
   if (payload && payload.isLogin && payload.user) {
-    let localStore = window.localStorage.getItem(LocalStorageKeys.user);
+    let localStore = Taro.getStorageSync(LocalStorageKeys.user);
     if (localStore) {
       let store = { ...JSON.parse(localStore), ...payload.user };
 
       // 存储手机号
-      window.localStorage.setItem(LocalStorageKeys.phone, store.phone);
-      window.localStorage.setItem(LocalStorageKeys.user, JSON.stringify(store));
+      Taro.setStorage({
+        key: LocalStorageKeys.phone,
+        data: store.phone
+      });
+      Taro.setStorage({
+        key: LocalStorageKeys.user,
+        data: JSON.stringify(store)
+      });
     }
   }
   return setStore(state, store);
@@ -270,7 +277,19 @@ export const canSelloutNow: (param?: {
 
 // 判断是否登录，用于购物车条件请求
 export const isLogin: () => boolean = () =>
-  window.localStorage.getItem(LocalStorageKeys.user) !== null;
+  Taro.getStorageSync(LocalStorageKeys.user) !== null;
 
 export const hidePhone = (phone: string) =>
   phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
+
+// 记录验证码发送状态
+export const setSNSendStatus = (status: boolean | string) => {
+  if (status) {
+    Taro.setStorage({ key: LocalStorageKeys.SNS, data: status });
+    return;
+  }
+  Taro.removeStorage({ key: LocalStorageKeys.SNS });
+};
+
+export const loadSNSendStatus: () => null | string = () =>
+  Taro.getStorageSync(LocalStorageKeys.SNS);

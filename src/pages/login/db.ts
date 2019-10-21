@@ -2,6 +2,31 @@ import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 
 /**
+ * @exports
+ * @enum SMS_TYPE 短信类型
+ * @alias REGISTER = 注册
+ * @alias LOGIN = 登录
+ * @alias FIND_PASSWORD = 找回密码
+ * @alias MOBILE_BIND = 绑定手机
+ * @alias MOBILE_AUTH = 手机认证
+ * @alias ADMIN_ADD_MEMBER = 后台管理员新增会员
+ * @alias ADMIN_EDIT_MEMBER = 后台管理员编辑会员手机
+ * @alias CHAIN_ADD_MEMBER = 门店新增会员
+ * @alias CHAIN_VALET_ORDERS = 门店代客下单
+ */
+export enum SMS_TYPE {
+  REGISTER = 1, // 注册
+  LOGIN = 2, // 登录
+  FIND_PASSWORD = 3, // 找回密码
+  MOBILE_BIND = 4, // 绑定手机
+  MOBILE_AUTH = 5, // 手机认证
+  ADMIN_ADD_MEMBER = 6, // 后台管理员新增会员
+  ADMIN_EDIT_MEMBER = 7, // 后台管理员编辑会员手机
+  CHAIN_ADD_MEMBER = 8, // 门店新增会员
+  CHAIN_VALET_ORDERS = 9 // 门店代客下单
+}
+
+/**
  * 请求短信验证码参数
  *
  * @export

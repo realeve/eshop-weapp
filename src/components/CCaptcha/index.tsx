@@ -3,8 +3,6 @@ import { ICaptchaKV, getCaptchaKey } from "@/pages/login/db";
 import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 
-import { AtToast } from "taro-ui";
-
 import * as R from "ramda";
 import classnames from "classnames";
 
@@ -61,7 +59,10 @@ const Captcha: (props: ICaptchaProps) => React.ReactElement = props => {
     setLoading(true);
     resetBoxes();
     let cp: ICaptchaKV | boolean = await getCaptchaKey().catch(e => {
-      // Toast.fail("获取注册码失败");
+      Taro.showToast({
+        title: "获取注册码失败",
+        icon: "none"
+      });
       return false;
     });
 
@@ -76,12 +77,15 @@ const Captcha: (props: ICaptchaProps) => React.ReactElement = props => {
   };
 
   if (loading) {
-    return <AtToast isOpened={isErr} status="error" text="获取注册码失败" />;
+    Taro.showToast({
+      title: "正在加载",
+      icon: "loading"
+    });
+    return null;
   }
 
   return (
     <View className={classnames("captcha", props.className)}>
-      <AtToast isOpened={isErr} status="loading" text="正在加载" />
       <View className="tips">
         <Text>
           请依次点击下图中的：{" "}

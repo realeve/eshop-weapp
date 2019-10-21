@@ -24,9 +24,21 @@
     color: $blue;
     font-size: $heading-5-size;
   }
-  .captchaWrap {
-    position: absolute;
-    top: -60px;
-    left: 0;
+  .disabled {
+    color: $grey;
+  }
+
+  // .captchaWrap {
+  //   position: absolute;
+  //   top: -60px;
+  //   left: 0;
+  // }
+  .at-modal {
+    &__overlay {
+      background: none;
+    }
+    &__container {
+      width: 100%;
+    }
   }
 }

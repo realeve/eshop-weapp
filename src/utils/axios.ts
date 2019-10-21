@@ -3,6 +3,7 @@ import qs from "qs";
 import { host } from "./setting";
 import * as R from "ramda";
 import { LocalStorageKeys } from "@/utils/setting";
+import Taro from "@tarojs/taro";
 
 export interface GlobalAxios {
   host: string;
@@ -103,7 +104,7 @@ export const loadUserInfo = (user: null | string) => {
 };
 
 const saveToken = (token: string) => {
-  window.sessionStorage.setItem(
+  Taro.setStorageSync(
     LocalStorageKeys.user,
     JSON.stringify({
       token: token
@@ -249,7 +250,7 @@ export const handleUrl = (option: AxiosRequestConfig) => {
 };
 
 const getFp = (): string =>
-  window.localStorage.getItem(LocalStorageKeys.FingerPrint) || "";
+  Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
 
 // 自动处理token更新，data 序列化等
 export let axios: <T extends {}>(
