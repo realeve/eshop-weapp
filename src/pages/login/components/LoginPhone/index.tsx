@@ -12,7 +12,7 @@ import {
   CLIENT_TYPE,
   loadMember
 } from "../../db";
-// import { loadPhone } from "@/utils/lib";
+
 import { IGlobalModel } from "@/models/common";
 
 const LoginPhone = ({ callback, dispatch }) => {

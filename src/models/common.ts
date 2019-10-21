@@ -48,15 +48,16 @@ interface IMenuItem {
 }
 
 export interface IGlobalUser {
-  uid: string;
   avatar: string;
-  username: string;
-  fullname: string;
-  user_type: number;
-  addressArea: string;
-  weixinUser: string;
-  qqUser: string;
+  uid: number;
+  account: string;
+  memberName: string;
+  trueName: string;
+  phone: string;
+  sex: string;
+  birthday: null;
   authState: number;
+  isRealNamePassed: boolean;
   authMessage: string;
   [key: string]: any;
 }
