@@ -1,0 +1,50 @@
+@import "@/styles/theme.scss";
+
+.response {
+  &Notice {
+    color: $subTitle;
+    .title {
+      text-align: center;
+      color: $mainTitle;
+      margin-top: 48px;
+      font-weight: bold;
+    }
+    .actions {
+      @extend .alignRow;
+      justify-content: space-around;
+      margin: 20px 0;
+      .btn {
+        width: 240px;
+        height: 72px;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+
+  $iconSize: 30px;
+  &__title {
+    .at-checkbox {
+      &:before,
+      &:after {
+        content: unset;
+      }
+      &__option {
+        padding-left: 10px;
+        &-wrap {
+          padding-right: 5px;
+        }
+      }
+      &__icon-cnt {
+        margin-right: 0;
+        width: $iconSize;
+        height: $iconSize;
+        min-width: $iconSize;
+      }
+      &__title {
+        font-size: $font-size-sm;
+        color: $yellow;
+        border-bottom: 1px solid $yellow;
+      }
+    }
+  }
+}

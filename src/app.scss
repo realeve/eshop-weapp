@@ -1,9 +1,6 @@
 .taro-tabbar__tabbar {
   box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
   margin-top: 25px;
-  &-hide {
-    display: block;
-  }
   .weui-tabbar__item {
     &:nth-child(3) {
       img {

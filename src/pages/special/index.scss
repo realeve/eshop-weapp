@@ -1,6 +1,17 @@
 @import "@/styles/theme.scss";
 
+$actionHeight: 100px;
 .special-page {
-  width: 100%;
+  @extend .alignColumn;
   height: 100%;
-}  
+  .main {
+    flex: 1;
+    .img {
+      width: 80%;
+      height: unset;
+    }
+    .swiper-slide {
+      @extend .center;
+    }
+  }
+}

@@ -119,14 +119,7 @@ export default {
   state,
   reducers: { setStore, setUserStore },
   subscriptions: {
-    async setup({
-      dispatch,
-      ...props
-    }: {
-      dispatch: Dispatch;
-      history: RouteData;
-    }) {
-      console.log(props);
+    async setup({ dispatch }: { dispatch: Dispatch }) {
       db.loadHome().then(res => {
         let {
           componentA: special,
@@ -184,10 +177,6 @@ export default {
 
       // 载入用户登录信息
       await loadUserInfo(dispatch);
-
-      // return history.listen(({ pathname, search }) => {
-      //   console.log(pathname, search);
-      // });
     }
   }
 };

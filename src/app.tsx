@@ -80,6 +80,7 @@ class App extends Component {
         }
       ],
       color: "#333",
+      custom: false,
       selectedColor: "#b98a4e",
       backgroundColor: "#fff",
       // backgroundColor: "#f8f9fb",
