@@ -37,7 +37,8 @@ class App extends Component {
       "pages/user", // 个人中心
       "pages/find", // 发现
       "pages/login", // 登录
-      "pages/special" // 特品
+      "pages/special", // 特品
+      "pages/special/detail" // 特品
     ],
     window: {
       backgroundTextStyle: "light",
