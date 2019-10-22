@@ -27,10 +27,10 @@ const Special = (props: IProps) => {
       <Swiper
         className="main"
         indicatorColor="#999"
-        indicatorActiveColor="#333"
         circular
-        indicatorDots
         autoplay
+        indicatorDots
+        indicatorActiveColor="rgb(178, 42, 49)"
       >
         {subscribe &&
           subscribe.thumbList.map(item => (
@@ -45,7 +45,7 @@ const Special = (props: IProps) => {
 };
 
 Special.config = {
-  navigationBarTitleText: "预约购"
+  navigationBarTitleText: "最新预约"
 };
 
 export default connect(({ common }) => common)(Special as any);
