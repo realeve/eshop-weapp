@@ -2,11 +2,13 @@ import Taro, { useState } from "@tarojs/taro";
 import { CButton, CPrice, ResponseNotice } from "@/components/";
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
+import { ISubscribe } from "../db";
 
 interface IProps {
+  data: ISubscribe;
   [key: string]: any;
 }
-const SpecialAction = (props: IProps) => {
+const SpecialAction = ({ data }: IProps) => {
   const [agree, setAgree] = useState(false);
   return (
     <View className="special__action">
@@ -18,7 +20,7 @@ const SpecialAction = (props: IProps) => {
         <View className="text">
           <View className="price">
             <Text style={{ marginRight: 5 }}>预约价</Text>
-            <CPrice retail={2000} />
+            <CPrice retail={data.goodsPrice || 0} />
           </View>
           <View className="tips">10天15小时20分后关闭预约</View>
         </View>

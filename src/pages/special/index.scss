@@ -7,13 +7,19 @@ $actionHeight: 100px;
   .swiperCard {
     overflow: inherit !important;
     flex: 1;
+    width: 100%;
     .img {
-      width: 600px;
+      width: 80%;
       height: unset;
       overflow: hidden;
     }
     .swiper-slide {
       @extend .center;
+      transition: 300ms transform;
+      &-next,
+      &-prev {
+        transform: scale(0.9);
+      }
     }
   }
 }

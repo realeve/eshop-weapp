@@ -3,7 +3,7 @@ import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
 import { useFetch } from "@/components/";
-import { handleSubscribe } from "./db";
+import { handleSubscribe, ISubscribe } from "./db";
 import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import "./index.scss";
 import SpecialAction from "./components/Actions";
@@ -17,7 +17,7 @@ const Special = ({ dispatch }: IProps) => {
   const {
     params: { id: specialId }
   } = useRouter();
-  const { data: subscribe, loading } = useFetch({
+  const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${specialId}` },
     callback: e => {
       let res = handleSubscribe(e);
@@ -64,7 +64,7 @@ const Special = ({ dispatch }: IProps) => {
           ))}
       </Swiper>
       <Skeleton loading={loading} row={2} avatar>
-        <SpecialAction />
+        <SpecialAction data={subscribe} />
       </Skeleton>
     </View>
   );

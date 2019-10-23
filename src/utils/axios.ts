@@ -92,11 +92,6 @@ export const getType: (data: any) => VariableType = data =>
 export const loadUserInfo = (user: null | string) => {
   if (user == null) {
     return {};
-    // window.g_axios.token = refreshNoncer;
-    // saveToken();
-    // return {
-    //   token: refreshNoncer,
-    // };
   }
 
   let setting: {
@@ -104,7 +99,6 @@ export const loadUserInfo = (user: null | string) => {
     [key: string]: any;
   } = JSON.parse(user);
   setGlobalData("token", setting.token);
-  // window.g_axios.token = setting.token;
   return { token: setting.token };
 };
 
@@ -262,25 +256,30 @@ export let axios: <T extends {}>(
 ) => Promise<
   T | { token?: string | undefined; error?: {} | undefined }
 > = _option => {
-  let g_fp = getGlobalData("fp");
   let g_axios = getGlobalData("g_axios");
-  let token = getGlobalData("token");
 
-  let fp = g_fp || "";
-  if (fp.length === 0) {
-    fp = getFp();
+  if (!g_axios) {
+    let g_fp = getGlobalData("fp");
+    let fp = g_fp || "";
+    if (fp.length === 0) {
+      fp = getFp();
+    }
+    let token = getGlobalData("token");
+
+    if (!token) {
+      token = Taro.getStorageSync(LocalStorageKeys.token);
+      setGlobalData("token", token);
+    }
+
+    g_axios = {
+      host,
+      token,
+      fp
+    };
+    setGlobalData("g_axios", g_axios);
   }
-  g_axios = g_axios || {
-    host,
-    token: Taro.getStorageSync(LocalStorageKeys.token),
-    fp
-  };
 
   // token为空时自动获取
-  if (token === "") {
-    let user: null | string = Taro.getStorageSync(LocalStorageKeys.user);
-    loadUserInfo(user);
-  }
 
   let option = R.clone(_option);
 
@@ -288,8 +287,8 @@ export let axios: <T extends {}>(
 
   option = Object.assign(option, {
     headers: {
-      Authorization: token,
-      fp: g_fp,
+      Authorization: g_axios.token,
+      fp: g_axios.fp,
       ...option.headers
     },
     method: option.method || "get"
