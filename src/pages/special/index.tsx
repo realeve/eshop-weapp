@@ -45,7 +45,8 @@ const Special = ({ dispatch }: IProps) => {
                   jump({
                     url: "/pages/special/detail",
                     payload: {
-                      id
+                      id,
+                      specialId
                     }
                   });
                 }}

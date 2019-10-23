@@ -17,11 +17,11 @@ interface IProps {
 }
 const SpecialDetail = ({ dispatch, special }: IProps) => {
   const {
-    params: { id }
+    params: { id, specialId }
   } = useRouter();
 
   const { data: subscribe, loading } = useFetch<ISubscribe>({
-    param: { url: `${API.SP_SUBSCRIBER_INFO}/${id}` },
+    param: { url: `${API.SP_SUBSCRIBER_INFO}/${specialId}` },
     callback: e => handleSubscribe(e, dispatch),
     valid: () => id > "0" && !special
   });
@@ -64,7 +64,9 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
       </AtTabs>
 
       <Skeleton loading={loading} row={2} avatar>
-        <SpecialAction className="action" data={special || subscribe} />
+        <View className="action">
+          <SpecialAction data={special || subscribe} />
+        </View>
       </Skeleton>
     </View>
   );
