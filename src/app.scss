@@ -1,16 +1,21 @@
-.taro-tabbar__tabbar {
-  box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-top: 25px;
-  .weui-tabbar__item {
-    &:nth-child(3) {
-      img {
-        border-radius: 50% 50% 0 0;
-        background: #fff;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        transform: scale(2);
-        margin-top: -25px;
+.taro-tabbar {
+  &__tabbar {
+    box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 25px;
+    .weui-tabbar__item {
+      &:nth-child(3) {
+        img {
+          border-radius: 50% 50% 0 0;
+          background: #fff;
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          transform: scale(2);
+          margin-top: -25px;
+        }
       }
     }
+  }
+  &__panel {
+    overflow-x: hidden;
   }
 }
 

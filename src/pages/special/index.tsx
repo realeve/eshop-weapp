@@ -4,11 +4,12 @@ import { connect } from "@tarojs/redux";
 import { API } from "@/utils/setting";
 import { useFetch } from "@/components/";
 import { handleSubscribe, ISubscribe } from "./db";
-import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
+import { SwiperItem, View, Image } from "@tarojs/components"; // Swiper,
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
+import { Swiper } from "@/components/swiper/";
 
 interface IProps {
   [key: string]: any;
@@ -32,21 +33,19 @@ const Special = ({ dispatch }: IProps) => {
     valid: () => specialId > "0"
   });
 
-  // const [current, setCurrent] = useState(1);
-
   return (
     <View className="special-page">
-      <Swiper
-        className="swiperCard"
-        circular
-        autoplay
-        indicatorDots
-        indicatorActiveColor="#b98a4e"
-        // current={current}
-        // onChange={e => setCurrent(e.detail.current)}
-      >
-        {subscribe &&
-          subscribe.thumbList.map((item, id) => (
+      {subscribe && (
+        <Swiper
+          className="swiperCard"
+          circular
+          autoplay
+          interval={1000}
+          indicatorDots
+          indicatorActiveColor="#b98a4e"
+          displayMultipleItems={1.6}
+        >
+          {subscribe.thumbList.map((item, id) => (
             <SwiperItem key={item}>
               <Image
                 className="img"
@@ -62,7 +61,8 @@ const Special = ({ dispatch }: IProps) => {
               />
             </SwiperItem>
           ))}
-      </Swiper>
+        </Swiper>
+      )}
       <Skeleton loading={loading} row={2} avatar>
         <SpecialAction data={subscribe} />
       </Skeleton>

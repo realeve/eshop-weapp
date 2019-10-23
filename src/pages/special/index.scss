@@ -5,20 +5,19 @@ $actionHeight: 100px;
   @extend .alignColumn;
   height: 100%;
   .swiperCard {
-    overflow: inherit !important;
     flex: 1;
     width: 100%;
     .img {
-      width: 80%;
+      width: 90%;
       height: unset;
-      overflow: hidden;
     }
     .swiper-slide {
       @extend .center;
       transition: 300ms transform;
+      transform: scale(1.2);
       &-next,
       &-prev {
-        transform: scale(0.9);
+        transform: scale(0.95);
       }
     }
   }
