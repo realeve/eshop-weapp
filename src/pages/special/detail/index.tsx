@@ -71,7 +71,7 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
 };
 
 SpecialDetail.config = {
-  navigationBarTitleText: "最新预约-详情"
+  navigationBarTitleText: "预约详情"
 };
 
 export default connect(({ special }) => special)(SpecialDetail as any);

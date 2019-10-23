@@ -21,7 +21,10 @@ const NewProduct = ({ data }: IProps) => {
                 />
                 <View className="detail">
                   <View className="title">{item.goodsTitle}</View>
-                  <CPrice className="price" retail={item.goodsPrice} />
+                  <CPrice
+                    className="price"
+                    retail={(item && item.goodsPrice) || 0}
+                  />
                 </View>
               </View>
             ))}
