@@ -1,5 +1,5 @@
-import { axios } from "@/utils/axios";
-import { API } from "@/utils/setting";
+import * as R from "ramda";
+import { Dispatch } from "redux";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -135,9 +135,12 @@ export interface ISubscribe {
  * @param {data}
  * @returns {ISubscribe}
  */
-export const handleSubscribe: (data: {
-  specialtyProductSubscriberVO: ISubscribe;
-}) => ISubscribe = ({ specialtyProductSubscriberVO: sp }) => {
+export const handleSubscribe: (
+  data: {
+    specialtyProductSubscriberVO: ISubscribe;
+  },
+  dispatch: Dispatch
+) => ISubscribe = ({ specialtyProductSubscriberVO: sp }, dispatch) => {
   if (!sp) {
     return sp;
   }
@@ -163,6 +166,33 @@ export const handleSubscribe: (data: {
     }
   ];
   let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3];
+  let special = R.pick(
+    [
+      "activityId",
+      "beginTime",
+      "denyCode",
+      "denyDesc",
+      "goodsPrice",
+      "imgList",
+      "thumbList",
+      "isExpired",
+      "isPay",
+      "isWin",
+      "payExpireTime",
+      "payId",
+      "state",
+      "subscribeState",
+      "subscribeStateStr",
+      "subscribeTime"
+    ],
+    sp
+  );
+  dispatch({
+    type: "special/setStore",
+    payload: {
+      special
+    }
+  });
 
-  return { ...sp, imgList, thumbList };
+  return { ...special, imgList, thumbList };
 };

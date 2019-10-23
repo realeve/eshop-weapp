@@ -1,4 +1,26 @@
 @import "@/styles/theme.scss";
 
 .special-page__detail {
+  .at-tabs__item-underline {
+    left: 15%;
+    width: 70%;
+    height: 4px;
+  }
+  //   .imgWrapper {
+  //     width: 100%;
+  //   }
+  .img {
+    width: 100%;
+    display: block;
+  }
+  .detail {
+    margin-bottom: 100px;
+    padding-bottom: 20px;
+  }
+  .action {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
 }

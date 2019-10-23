@@ -33,7 +33,6 @@ const Index = ({ special, cateList, collectionList, newProduct }: IProps) => {
       <Search pos={pos} />
       <ScrollView
         scrollY
-        onScrollToLower={this.loadRecommend}
         style={{ height: getWindowHeight() }}
         onScroll={onScroll}
       >

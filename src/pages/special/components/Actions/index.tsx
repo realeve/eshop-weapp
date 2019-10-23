@@ -3,15 +3,16 @@ import { CButton, CPrice, ResponseNotice } from "@/components/";
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { ISubscribe } from "../db";
+import classnames from "classnames";
 
 interface IProps {
   data: ISubscribe;
   [key: string]: any;
 }
-const SpecialAction = ({ data }: IProps) => {
+const SpecialAction = ({ data, className }: IProps) => {
   const [agree, setAgree] = useState(false);
   return (
-    <View className="special__action">
+    <View className={classnames("special__action", className)}>
       <View className="readme">
         <ResponseNotice needAgree onChange={setAgree} />
       </View>

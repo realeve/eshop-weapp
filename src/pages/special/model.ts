@@ -1,15 +1,12 @@
 import { setStore } from "@/utils/lib";
 
 export interface ICartModel {
-  imgList: {
-    title: string;
-    detail: string[];
-  }[];
+  special: any;
   [key: string]: any;
 }
 
 const state: ICartModel = {
-  imgList: []
+  special: null
 };
 
 export default {

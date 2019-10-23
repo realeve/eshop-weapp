@@ -1,15 +1,15 @@
-import Taro, { useRouter, useState } from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
 import { useFetch } from "@/components/";
 import { handleSubscribe, ISubscribe } from "./db";
-import { SwiperItem, View, Image } from "@tarojs/components"; // Swiper,
+import { View, Image } from "@tarojs/components"; // Swiper,
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
-import { Swiper } from "@/components/swiper/";
+import { SwiperItem, Swiper } from "@/components/swiper/";
 
 interface IProps {
   [key: string]: any;
@@ -20,16 +20,7 @@ const Special = ({ dispatch }: IProps) => {
   } = useRouter();
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${specialId}` },
-    callback: e => {
-      let res = handleSubscribe(e);
-      dispatch({
-        type: "special/setStore",
-        payload: {
-          imgList: res.imgList
-        }
-      });
-      return res;
-    },
+    callback: e => handleSubscribe(e, dispatch),
     valid: () => specialId > "0"
   });
 
