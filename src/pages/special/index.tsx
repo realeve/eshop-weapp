@@ -1,4 +1,4 @@
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro, { useRouter, useState } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
@@ -8,6 +8,7 @@ import { Swiper, SwiperItem, View, Image } from "@tarojs/components";
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
+import Skeleton from "taro-skeleton";
 
 interface IProps {
   [key: string]: any;
@@ -31,22 +32,18 @@ const Special = ({ dispatch }: IProps) => {
     valid: () => specialId > "0"
   });
 
-  // 加载中
-  if (loading) {
-    Taro.showLoading();
-  } else {
-    Taro.hideLoading();
-  }
+  // const [current, setCurrent] = useState(1);
 
   return (
     <View className="special-page">
       <Swiper
-        className="main"
-        indicatorColor="#999"
+        className="swiperCard"
         circular
         autoplay
         indicatorDots
-        indicatorActiveColor="rgb(178, 42, 49)"
+        indicatorActiveColor="#b98a4e"
+        // current={current}
+        // onChange={e => setCurrent(e.detail.current)}
       >
         {subscribe &&
           subscribe.thumbList.map((item, id) => (
@@ -66,7 +63,9 @@ const Special = ({ dispatch }: IProps) => {
             </SwiperItem>
           ))}
       </Swiper>
-      <SpecialAction />
+      <Skeleton loading={loading} row={2} avatar>
+        <SpecialAction />
+      </Skeleton>
     </View>
   );
 };

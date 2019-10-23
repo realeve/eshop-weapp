@@ -5,6 +5,7 @@ import { AtAvatar } from "taro-ui";
 import { connect } from "@tarojs/redux";
 import DefaultAvatar from "./headerLogo.png";
 import { IGlobalModel, IGlobalUser } from "@/models/common";
+import Skeleton from "taro-skeleton";
 
 const NotLogin = () => (
   <View
@@ -49,16 +50,21 @@ const IsLogin = ({
   </View>
 );
 
-const UserHeader = ({ user }) => {
+const UserHeader = ({ user, loading }) => {
   return (
-    <View className="userCenter-header">
-      {!user.uid ? <NotLogin /> : <IsLogin data={user} />}
-      <View className="at-icon at-icon-settings setting" />
-    </View>
+    <Skeleton avatar loading={loading.global} row={2}>
+      <View className="userCenter-header">
+        {!user.uid ? <NotLogin /> : <IsLogin data={user} />}
+        <View className="at-icon at-icon-settings setting" />
+      </View>
+    </Skeleton>
   );
 };
 
-export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
-  user,
-  isLogin
-}))(UserHeader as any);
+export default connect(
+  ({ common: { user, isLogin }, loading }: IGlobalModel) => ({
+    user,
+    isLogin,
+    loading
+  })
+)(UserHeader as any);

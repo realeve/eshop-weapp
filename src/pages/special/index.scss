@@ -4,11 +4,13 @@ $actionHeight: 100px;
 .special-page {
   @extend .alignColumn;
   height: 100%;
-  .main {
+  .swiperCard {
+    overflow: inherit !important;
     flex: 1;
     .img {
-      width: 80%;
+      width: 600px;
       height: unset;
+      overflow: hidden;
     }
     .swiper-slide {
       @extend .center;
