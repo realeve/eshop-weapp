@@ -1,0 +1,10 @@
+@import "@/styles/theme.scss";
+/* prettier-ignore */
+.cDot {
+  background-color: $white;  
+  width: 4PX;
+  height: 4PX; 
+  border-radius: 50%;
+  border: 3PX solid $yellow;
+  display: inline-block;
+}

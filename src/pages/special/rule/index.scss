@@ -1,0 +1,24 @@
+@import "@/styles/theme.scss";
+
+.special_rule_page {
+  background: linear-gradient(180deg, $lightYellow, $extrmeLightYellow);
+  padding: 20px;
+  min-height: 100%;
+  .rule_card {
+    padding: 40px 48px;
+    background: $white;
+    border-radius: 4px;
+    font-size: $fontSizeBase;
+
+    color: $subTitle;
+    .title {
+      // text-align: center;
+      color: $mainTitle;
+      margin: 48px 0 15px 0;
+      font-weight: bold;
+    }
+    .strong {
+      color: $red;
+    }
+  }
+}

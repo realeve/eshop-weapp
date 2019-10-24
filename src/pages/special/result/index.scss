@@ -11,21 +11,6 @@
       margin: 0 40px 20px 40px;
     }
     &__content {
-      .list-item {
-        position: relative;
-        &:before {
-          content: "";
-          background-color: $subTitle;
-          /* prettier-ignore */
-          width: 6PX;
-          /* prettier-ignore */
-          height: 6PX;
-          border-radius: 50%;
-          position: absolute;
-          left: -15px;
-          top: 15px;
-        }
-      }
       padding-bottom: 30px;
       /* prettier-ignore */
       border-bottom : 1PX dashed $borderColorGrey;

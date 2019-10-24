@@ -10,3 +10,5 @@ export { default as useSetState } from "./hooks/useSetState";
 export { default as useFetch } from "./hooks/useFetch";
 export { Swiper, SwiperItem } from "./swiper";
 export { default as CStep } from "./step";
+
+export { default as CDot } from "./CDot";
