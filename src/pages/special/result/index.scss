@@ -2,8 +2,9 @@
 
 .special-page__result {
   background: $bg;
-  /* prettier-ignore */
-  padding-bottom: 48px;
+  min-height: 100%;
+
+  padding-bottom: 25px;
 
   .result {
     &_container {

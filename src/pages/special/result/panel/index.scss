@@ -33,7 +33,6 @@
           @extend .alignColumn;
           justify-content: space-between;
           width: 80px;
-          height: 10px;
           margin: 0 14px;
           .top {
             /* prettier-ignore */
@@ -42,13 +41,17 @@
           }
           .btm {
             @extend .top;
+            margin-top: 10px;
             width: 50px;
           }
         }
         .left {
           @extend .right;
           flex-direction: column-reverse;
-          transform: rotateZ(180deg);
+          transform: scale(-1);
+          .btm {
+            margin: 0 0 10px 0;
+          }
         }
       }
 
