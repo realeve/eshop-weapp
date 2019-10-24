@@ -31,7 +31,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
 
   return (
     <View className="special-page__result">
-      <SpecialPanel data={{ status, loading }} />
+      <SpecialPanel data={{ status, loading: special ? false : loading }} />
       <SpecialStep current={1} />
       <SpecialCard title="中签公告" className="result_container">
         <View className="result__content">

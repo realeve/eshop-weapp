@@ -4,6 +4,7 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { ISubscribe } from "../db";
 import classnames from "classnames";
+import { jump } from "@/utils/lib";
 
 interface IProps {
   data: ISubscribe;
@@ -35,6 +36,18 @@ const SpecialAction = ({ data, className }: IProps) => {
               return;
             }
             console.log("立即预约");
+            Taro.showLoading({ title: "预约中,处理完毕后跳转结果页" });
+            setTimeout(() => {
+              Taro.hideLoading();
+
+              // 跳转至结果页
+              jump({
+                url: "/pages/special/result",
+                payload: {
+                  id: data.activityId
+                }
+              });
+            }, 1000);
           }}
           theme="gardient"
           className="btn"
