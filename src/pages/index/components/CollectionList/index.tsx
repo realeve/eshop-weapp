@@ -46,6 +46,11 @@ const CollectionList = ({ data }: IProps) => {
                 className="item"
                 key={item.titleCh}
                 src={item.imageUrl}
+                onClick={() => {
+                  Taro.navigateTo({
+                    url: "/pages/detail?id=" + item.commonId
+                  });
+                }}
               />
             ))}
           </View>

@@ -40,7 +40,8 @@ class App extends Component {
       "pages/special", // 特品
       "pages/special/detail", // 特品详情
       "pages/special/result", // 特品结果
-      "pages/special/rule" // 特品规则
+      "pages/special/rule", // 特品规则
+      "pages/detail"
     ],
     window: {
       backgroundTextStyle: "light",
