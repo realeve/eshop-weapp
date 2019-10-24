@@ -9,6 +9,7 @@ import { useFetch } from "@/components/";
 import { handleSubscribe, ISubscribe } from "../db";
 
 import SpecialPanel from "./panel";
+import SpecialStep from "./step";
 
 interface IProps {
   [key: string]: any;
@@ -29,6 +30,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
   return (
     <View className="special-page__result">
       <SpecialPanel data={{ status, loading }} />
+      <SpecialStep current={1} />
     </View>
   );
 };

@@ -21,7 +21,7 @@ const SpecialPanel = ({ data }) => {
     <View className="special-page__panel">
       <Skeleton loading={data.loading} row={6} rowHeight={30}>
         <View className="head">
-          <Image src={bg} mode="widthFix" className="img" />
+          {/* <Image src={bg} mode="widthFix" className="img" /> */}
           <View
             className={classnames("content", {
               unlucky: data.status === "unlucky"

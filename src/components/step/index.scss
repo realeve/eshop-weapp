@@ -1,0 +1,64 @@
+@import "@/styles/theme.scss";
+.cStep {
+  .at-steps {
+    // &__num {
+    //   display: none;
+    // }
+    &__right-line {
+      width: 100%;
+      left: 50%;
+      // z-index: -2;
+      background-color: $subTitle;
+    }
+    &__left-line {
+      background-color: $subTitle;
+    }
+
+    $circular: 20px;
+    $circularBorder: 8px;
+
+    &__item--inactive,
+    &__item--active {
+      .at-steps__circular {
+        width: $circular + 2 * $circularBorder;
+        height: $circular + 2 * $circularBorder;
+        z-index: 1;
+        background-color: $subTitle;
+        position: relative;
+        .border {
+          content: "";
+          width: $circular;
+          height: $circular;
+          border: 4px solid $white;
+          background: $subTitle;
+          border-radius: 50%;
+          position: absolute;
+          left: $circularBorder/2;
+          top: $circularBorder/2;
+        }
+      }
+    }
+
+    &__item--active {
+      .at-steps {
+        &__circular {
+          background-color: $yellow;
+          .border {
+            background: $yellow;
+          }
+        }
+        &__right-line,
+        &__left-line {
+          background-color: $yellow;
+        }
+      }
+      .grey__line {
+        background-color: $subTitle;
+      }
+    }
+
+    &__title {
+      font-size: $fontSizeSmall;
+    }
+  }
+}

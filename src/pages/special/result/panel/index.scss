@@ -3,6 +3,10 @@
 .special-page__panel {
   .head {
     position: relative;
+    background-image: url("./main_bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 684px;
     .img {
       width: 100%;
       height: unset;

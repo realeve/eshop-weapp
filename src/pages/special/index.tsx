@@ -2,14 +2,13 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
-import { useFetch } from "@/components/";
 import { handleSubscribe, ISubscribe } from "./db";
 import { View, Image } from "@tarojs/components"; // Swiper,
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
-import { SwiperItem, Swiper } from "@/components/swiper/";
+import { useFetch, SwiperItem, Swiper } from "@/components/";
 
 interface IProps {
   [key: string]: any;
