@@ -166,6 +166,7 @@ export const handleSubscribe: (
     }
   ];
   let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3];
+  sp = { ...sp, imgList, thumbList };
   let special = R.pick(
     [
       "activityId",
