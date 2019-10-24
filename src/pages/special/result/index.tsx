@@ -76,7 +76,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
 };
 
 SpecialResult.config = {
-  navigationBarTitleText: "预约结果"
+  navigationBarTitleText: "预约抽签规则"
 };
 
 export default connect(({ special }) => special)(SpecialResult as any);
