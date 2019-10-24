@@ -8,17 +8,19 @@
     height: 360px;
     background-repeat: no-repeat;
     background-size: cover;
-    border: 2px solid $yellow;
+    /* prettier-ignore */
+    border: 2PX solid $yellow;
     margin: 0 auto;
 
     .item {
       width: -2+180px;
       height: -2+180px;
-      border: 1px dashed #c0c0c0;
+      /* prettier-ignore */
+      border: 1PX dashed #c0c0c0;
       border-left: none;
       border-bottom: none;
       display: -webkit-flex;
-      float: left;
+      // float: left;
       cursor: pointer;
       &:nth-child(1),
       &:nth-child(2),

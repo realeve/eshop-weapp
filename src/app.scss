@@ -7,7 +7,8 @@
         img {
           border-radius: 50% 50% 0 0;
           background: #fff;
-          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          /* prettier-ignore */
+          border-top: 1PX solid rgba(0, 0, 0, 0.1);
           transform: scale(2);
           margin-top: -25px;
         }

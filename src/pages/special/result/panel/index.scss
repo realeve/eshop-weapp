@@ -36,7 +36,8 @@
           height: 10px;
           margin: 0 14px;
           .top {
-            border-top: 2px solid;
+            /* prettier-ignore */
+            border-top: 2PX solid;
             border-image: linear-gradient(90deg, #dca45c 0%, #ebe7c5 100%) 1;
           }
           .btm {
@@ -59,7 +60,8 @@
         height: 250px;
         width: 80%;
         margin: 0 auto;
-        border-bottom: 3px solid;
+        /* prettier-ignore */
+        border-bottom: 3PX solid;
         border-image: linear-gradient(90deg, #fff, #e7cfa6, #fff) 1;
         font-size: $fontSizeBase;
         .grass {

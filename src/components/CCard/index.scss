@@ -18,7 +18,8 @@
       font-size: $fontSizeNormal;
     }
     padding-bottom: 5px;
-    border-bottom: 1px solid $borderColorGrey;
+    /* prettier-ignore */
+    border-bottom: 1PX solid $borderColorGrey;
   }
   .content {
     padding: 50px 0 30px 0;

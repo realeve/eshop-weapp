@@ -1,9 +1,6 @@
 @import "@/styles/theme.scss";
 .cStep {
   .at-steps {
-    // &__num {
-    //   display: none;
-    // }
     &__right-line {
       width: 100%;
       left: 50%;
@@ -14,27 +11,21 @@
       background-color: $subTitle;
     }
 
-    $circular: 20px;
-    $circularBorder: 8px;
-
+    /* prettier-ignore */
     &__item--inactive,
     &__item--active {
       .at-steps__circular {
-        width: $circular + 2 * $circularBorder;
-        height: $circular + 2 * $circularBorder;
+        width: 16PX;
+        height: 16PX;
+        border: 2PX solid $subTitle;
         z-index: 1;
-        background-color: $subTitle;
-        position: relative;
+        @extend .center;
         .border {
-          content: "";
-          width: $circular;
-          height: $circular;
-          border: 4px solid $white;
+          width: 12PX;
+          height: 12PX;
+          border: 2PX solid $white;
           background: $subTitle;
           border-radius: 50%;
-          position: absolute;
-          left: $circularBorder/2;
-          top: $circularBorder/2;
         }
       }
     }
@@ -43,6 +34,8 @@
       .at-steps {
         &__circular {
           background-color: $yellow;
+          /* prettier-ignore */
+          border: 2PX solid $yellow;
           .border {
             background: $yellow;
           }

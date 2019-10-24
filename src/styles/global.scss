@@ -39,7 +39,8 @@
 .yellowGardiantLine {
   width: 100%;
   padding-bottom: 15px;
-  border-bottom: 1px solid;
+  /* prettier-ignore */
+  border-bottom: 1PX solid;
   border-image: linear-gradient(
       to right,
       rgba(227, 189, 139, 0.1) 0%,

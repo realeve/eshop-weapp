@@ -2,5 +2,42 @@
 
 .special-page__result {
   background: $bg;
+  /* prettier-ignore */
   padding-bottom: 48px;
+
+  .result {
+    &_container {
+      margin: 0 40px 20px 40px;
+    }
+    &__content {
+      .list-item {
+        position: relative;
+        &:before {
+          content: "";
+          background-color: $subTitle;
+          /* prettier-ignore */
+          width: 6PX;
+          /* prettier-ignore */
+          height: 6PX;
+          border-radius: 50%;
+          position: absolute;
+          left: -15px;
+          top: 15px;
+        }
+      }
+      padding-bottom: 30px;
+      /* prettier-ignore */
+      border-bottom : 1PX dashed $borderColorGrey;
+    }
+    &__footer {
+      margin-top: 30px;
+      @extend .alignRow;
+      justify-content: space-between;
+      align-items: center;
+      font-size: $fontSizeBase;
+    }
+  }
+  .special__result__action {
+    margin: 30px 40px 0 40px;
+  }
 }
