@@ -1,0 +1,22 @@
+import Taro from "@tarojs/taro";
+import { View } from "@tarojs/components";
+import "./index.scss";
+import classnames from "classnames";
+import { TReactNode } from "@/components";
+const DetailCard = ({
+  className,
+  style,
+  children
+}: {
+  className?: string;
+  style?: any;
+  children?: TReactNode;
+}) => {
+  return (
+    <View className={classnames("detail-card", className)} style={style}>
+      {children}
+    </View>
+  );
+};
+
+export default DetailCard;

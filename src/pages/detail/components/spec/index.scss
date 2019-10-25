@@ -1,0 +1,12 @@
+@import "@/styles/theme.scss";
+
+.detail_page_spec {
+  .item {
+    font-size: $font-size-lg;
+    @extend .alignRow;
+    justify-content: space-between;
+    .title {
+      margin-right: 30px;
+    }
+  }
+}

@@ -2,11 +2,11 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.scss";
 import classnames from "classnames";
-
+import { TReactNode } from "@/components";
 export interface ICardProp {
-  title: string | JSX.Element;
-  extra?: string | JSX.Element;
-  children?: JSX.Element;
+  title: TReactNode;
+  extra?: TReactNode;
+  children?: TReactNode;
   className?: string;
   [key: string]: any;
 }

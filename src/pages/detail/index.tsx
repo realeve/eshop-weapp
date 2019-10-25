@@ -2,10 +2,14 @@ import Taro, { useRouter } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
-import { useFetch } from "@/components";
+import { useFetch, CMaginify } from "@/components";
 
 import { API } from "@/utils/setting";
-import { handleGoodsData, initData } from "./lib";
+import { handleGoodsData } from "./lib";
+import Skeleton from "taro-skeleton";
+
+import DTitle from "./components/title";
+import DSpec from "./components/spec";
 
 const Detail = () => {
   const {
@@ -20,16 +24,27 @@ const Detail = () => {
     callback: handleGoodsData,
     valid: () => id > "0"
   });
+  console.log(data);
 
   return (
     <View className="detail-page">
-      <Text>detail</Text>
+      <Skeleton loading={loading} animate rowHeight={375} row={1}>
+        <CMaginify data={data && data.imgs && data.imgs[0]} />
+      </Skeleton>
+
+      <Skeleton loading={loading} animate row={3}>
+        <DTitle data={data || {}} />
+      </Skeleton>
+
+      <Skeleton loading={loading} animate row={2}>
+        <DSpec data={data || {}} />
+      </Skeleton>
     </View>
   );
 };
 
 Detail.config = {
-  navigationBarTitleText: "这是页面标题信息"
+  navigationBarTitleText: "商品详情"
 };
 
 export default connect(({ detail }) => detail)(Detail as any);

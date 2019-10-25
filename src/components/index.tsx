@@ -12,3 +12,7 @@ export { Swiper, SwiperItem } from "./swiper";
 export { default as CStep } from "./step";
 
 export { default as CDot } from "./CDot";
+
+export { default as CMaginify } from "./CMaginify";
+
+export type TReactNode = JSX.Element | JSX.Element[] | string | null | never[];

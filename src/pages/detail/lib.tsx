@@ -22,7 +22,8 @@ export const handleStoreData = ({
       { name: "商品评价", score: storeInfo.storeDesccredit },
       { name: "物流履约", score: storeInfo.storeDeliverycredit },
       { name: "售后服务", score: storeInfo.storeServicecredit }
-    ]
+    ],
+    address: storeInfo.storeAddress
   };
 };
 
@@ -59,15 +60,18 @@ export const handleWorkingTime = (str: string | undefined) =>
     .replace("PM", "下午")
     .replace("-", "至");
 
+export interface ITypeImageItem {
+  colorId: string;
+  id: number;
+  img80: string;
+  img500: string;
+  [key: string]: any;
+}
+
 const handleImageList: (
   list: { imageId: number; colorId: string; imageSrc: string }[]
 ) => {
-  [key: number]: {
-    colorId: string;
-    id: number;
-    img80: string;
-    img500: string;
-  }[];
+  [key: number]: ITypeImageItem[];
 }[] = list => {
   if (!list || list.length === 0) {
     return [];
@@ -105,17 +109,17 @@ export const handleGoodsData = data => {
   };
 
   console.log({
+    storeData,
     goodsCount,
     canBuy,
-    storeData,
     evaData,
     hotData,
     storeService
   });
 
   let res = initData(data.goodsDetail, storeData, goodsCount);
-  console.log(res);
-  return data;
+
+  return { ...res, canBuy, evaData, hotData, storeService };
 };
 
 export interface IAddressItem {
@@ -226,9 +230,9 @@ export const initData: (
     price: org.webPrice0,
     // counter: '',
     unitName: org.unitName,
-    shopId: store.storeId,
-    shopName: store.storeName,
-    shopAddress: store.storeAddress,
+    shopId: store.id,
+    shopName: store.name,
+    shopAddress: store.address,
     defaultAddress: [
       { name: "四川省", value: 23 },
       { name: "成都市", value: 385 },
