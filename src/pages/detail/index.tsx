@@ -1,35 +1,72 @@
-import Taro, { useRouter } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import Taro, { useRouter, useState } from "@tarojs/taro";
+import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
 import { useFetch, CMaginify } from "@/components";
 
 import { API } from "@/utils/setting";
-import { handleGoodsData } from "./lib";
+import { handleGoodsData, ISpecValueItem } from "./lib";
 import Skeleton from "taro-skeleton";
 
 import DTitle from "./components/title";
-import DSpec from "./components/spec";
+import DSpec, { getGoodsInfoBySpec } from "./components/spec";
+
+import { ITypeImageItem } from "@/pages/detail/lib";
+import * as R from "ramda";
 
 const Detail = () => {
   const {
     params: { id }
   } = useRouter();
 
-  let { data, loading, error, reFetch } = useFetch({
+  const [imgs, setImgs] = useState<ITypeImageItem[]>([]);
+
+  let { data, loading, setData, error, reFetch } = useFetch({
     param: {
       ...(API.GOODS as {}),
       data: { commonId: id }
     },
-    callback: handleGoodsData,
+    callback: res => {
+      let dist = handleGoodsData(res);
+      let imgList = R.head(Object.values(dist.imgs));
+      setImgs(imgList);
+      return dist;
+    },
     valid: () => id > "0"
   });
   console.log(data);
+  console.log(imgs);
 
+  const [spec, setSpec] = useState<ISpecValueItem[] | null>(null);
+
+  // 规格变更时商品信息需同步更新
+  const onSpecChange = res => {
+    setSpec(res);
+    let dist: ITypeImageItem[] = [];
+    res.forEach((item: ISpecValueItem) => {
+      dist = [...dist, ...(data.imgs[item.specValueId] || [])];
+    });
+    if (dist.length > 0) {
+      setImgs(dist);
+    }
+
+    // 规格变更时，获取对应项的goodsId
+    let specGoodsInfo = getGoodsInfoBySpec(res, data);
+    let {
+      appPrice0: price,
+      goodsId,
+      goodsFullSpecs,
+      goodsStorage: number,
+      imageSrc: img
+    } = specGoodsInfo;
+
+    // 更新当前数据信息
+    setData({ ...data, goodsId, price, goodsFullSpecs, number, img });
+  };
   return (
     <View className="detail-page">
       <Skeleton loading={loading} animate rowHeight={375} row={1}>
-        <CMaginify data={data && data.imgs && data.imgs[0]} />
+        <CMaginify data={imgs} circular={data && data.specs.length < 2} />
       </Skeleton>
 
       <Skeleton loading={loading} animate row={3}>
@@ -37,7 +74,7 @@ const Detail = () => {
       </Skeleton>
 
       <Skeleton loading={loading} animate row={2}>
-        <DSpec data={data || {}} />
+        <DSpec data={data || {}} onChange={onSpecChange} />
       </Skeleton>
     </View>
   );

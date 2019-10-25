@@ -18,26 +18,26 @@ export let DEV: boolean =
  * 测评环境
  * {"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiZWZiMjI5ZjI1MzE0MDY4YjhhMjI5N2QyOWJhOGE3MiIsInN1YiI6IndhcCIsImlhdCI6MTU3MDI0NTIwOCwiZXhwIjoxNTcwODUwMDA4LCJwYXJhbXMiOnsidWlkIjoxNiwidW5hbWUiOiJ1XzAwMTUxNTY4OTQyNyIsImZwIjoiNjkzNTUyMGFmNDJmNjU4NjIzYjQyYTc4NmRjMTJiOWMiLCJycCI6MX19.EO74AForPC8nazdLVDzq4PFCnbo8D9GF2BVKxpGjEdQ","avatar":"https://statictest.ccgold.cn/image/18/ad/18ad32b1ddaa26601ba789f28b1317cd.jpg","uid":16,"account":"微信","memberName":"u_001515689427","trueName":"*宾","phone":"18628123455","sex":"保密","birthday":null,"authState":30,"isRealNamePassed":true,"authMessage":"已通过"}
  */
-// const SETTING: { [key: string]: string } = {
-//   host: "//apitest.ccgold.cn/api",
-//   oss: "//statictest.ccgold.cn",
-//   base: "/",
-//   publicPath: "/",
-//   IM: "//imtest.ccgold.cn/member",
-//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
-// };
+const SETTING: { [key: string]: string } = {
+  host: "//apitest.ccgold.cn/api",
+  oss: "//statictest.ccgold.cn",
+  base: "/",
+  publicPath: "/",
+  IM: "//imtest.ccgold.cn/member",
+  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
+};
 
 /**
  * 生产环境
  */
-const SETTING: { [key: string]: string } = {
-  host: "//api.ccgold.cn/api",
-  oss: "//static.ccgold.cn",
-  base: "/",
-  publicPath: "/",
-  IM: "//im.ccgold.cn/member",
-  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
-};
+// const SETTING: { [key: string]: string } = {
+//   host: "//api.ccgold.cn/api",
+//   oss: "//static.ccgold.cn",
+//   base: "/",
+//   publicPath: "/",
+//   IM: "//im.ccgold.cn/member",
+//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
+// };
 
 // https://www.ccgold.cn/index.html
 // https://w3.ccgold.cn/index.html

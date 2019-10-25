@@ -5,9 +5,10 @@ import DCard from "../card";
 import { CPrice } from "@/components";
 
 const DetailCard = ({ data }) => {
-  let address = data.shopAddress.includes("市")
-    ? data.shopAddress.split("市")[0] + "市"
-    : data.shopAddress;
+  let address =
+    data.shopAddress && data.shopAddress.includes("市")
+      ? data.shopAddress.split("市")[0] + "市"
+      : data.shopAddress;
   return (
     <DCard className="detail_page_title">
       <CPrice retail={data.price} retailStyle="font-size:20px;" />
@@ -15,7 +16,7 @@ const DetailCard = ({ data }) => {
       <View className="detail">
         <View>运费:{data.expressPrice || "包邮"}</View>
         <View>已售:{data.goodsSaleNum}件</View>
-        <View>发货地:{address}</View>
+        {address && <View>发货地:{address}</View>}
       </View>
     </DCard>
   );

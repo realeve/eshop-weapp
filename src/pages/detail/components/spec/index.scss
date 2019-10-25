@@ -59,6 +59,41 @@
           color: $disabledTitle;
           font-size: $fontSizeSmall;
         }
+        .goodsname {
+          font-size: $fontSizeBase;
+        }
+      }
+    }
+
+    // 规格列表
+    .specs {
+      &__title {
+        font-weight: bold;
+        margin: 40px 0 16px 0;
+        color: $mainTitle;
+        font-size: $fontSize30;
+      }
+      .list {
+        @extend .alignRow;
+        flex-wrap: wrap;
+
+        .item {
+          @extend .center;
+          margin-right: 20px;
+          max-width: 240px;
+          width: auto;
+          height: 56px;
+          color: $subTitle;
+          /* prettier-ignore */
+          border: 1PX solid $borderColorGrey;
+          border-radius: $border-radius;
+          padding: 0 34px;
+          font-size: $font-size-sm;
+          &Active {
+            color: $yellow;
+            border-color: $yellow;
+          }
+        }
       }
     }
   }

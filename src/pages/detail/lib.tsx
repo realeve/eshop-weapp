@@ -119,7 +119,13 @@ export const handleGoodsData = data => {
 
   let res = initData(data.goodsDetail, storeData, goodsCount);
 
-  return { ...res, canBuy, evaData, hotData, storeService };
+  return {
+    ...res,
+    canBuy,
+    evaData,
+    hotData,
+    storeService
+  };
 };
 
 export interface IAddressItem {
@@ -146,17 +152,20 @@ export interface ILotteryBuy {
   [key: string]: any;
 }
 
+export interface ISpecValueItem {
+  imageSrc: string;
+  specValueId: number;
+  specValueName: string;
+  title: string;
+  [key: string]: any;
+}
 export interface ISpecItem {
   specId: number;
   specName: string;
-  specValueList: {
-    imageSrc: string;
-    specValueId: number;
-    specValueName: string;
-  }[];
+  specValueList: ISpecValueItem[];
 }
 
-type TGoodsTime = { range: string; week: number; text: string } | boolean;
+type TGoodsTime = { range: string; week: number; text: string } | null;
 export interface IProductInfo {
   id: string;
   shopName: string;
@@ -208,6 +217,9 @@ export interface IProductInfo {
   }[];
   tips?: string;
   goodsId?: number;
+  imgs: {
+    [key: number]: ITypeImageItem[];
+  }[];
   [key: string]: any;
 }
 
@@ -249,7 +261,7 @@ export const initData: (
     return {};
   }
 
-  let goodsSaleTime: TGoodsTime = false;
+  let goodsSaleTime: TGoodsTime = null;
 
   if (org.goodsSaleTime) {
     let saleTime = {
@@ -271,6 +283,10 @@ export const initData: (
       org.promotionType * org.promotionState > 0 ? org.promotionTypeText : "",
     img: org.goodsImageList[0].imageSrc,
     price: org.webPrice0,
+
+    goodsImageList: org.goodsImageList,
+    goodsList: org.goodsList,
+
     // counter: '',
     unitName: org.unitName,
     shopId: store.id,

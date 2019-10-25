@@ -4,11 +4,13 @@ import "./index.scss";
 import { ITypeImageItem } from "@/pages/detail/lib";
 
 export default function Gallery({
-  data = []
+  data = [],
+  circular = true
 }: // stared = false
 {
   data: ITypeImageItem[];
   stared: boolean;
+  circular: boolean;
   [key: string]: any;
 }) {
   const [current, setCurrent] = useState(0);
@@ -28,7 +30,7 @@ export default function Gallery({
         indicatorActiveColor="#b98a4e"
         indicatorDots
         autoplay
-        circular
+        circular={circular}
       >
         {data.map(item => (
           <SwiperItem key={item.id} className="item-gallery__swiper-item">
