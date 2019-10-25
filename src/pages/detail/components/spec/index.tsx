@@ -2,7 +2,8 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
-import { AtFloatLayout } from "taro-ui";
+import { AtFloatLayout, AtInputNumber } from "taro-ui";
+
 import { CPrice } from "@/components";
 import { IProductInfo, ISpecValueItem } from "../../lib";
 import * as R from "ramda";
@@ -16,10 +17,14 @@ export const getGoodsInfoBySpec = (res, data) => {
 
 const DetailCard = ({
   data,
-  onChange
+  onSpecChange,
+  goodsnum,
+  onGoodsnumChange
 }: {
+  goodsnum: number;
   data: IProductInfo;
-  onChange: (e: ISpecValueItem[]) => void;
+  onSpecChange: (e: ISpecValueItem[]) => void;
+  onGoodsnumChange: (e: number) => void;
 }) => {
   const [showPanel, setShowPanel] = useState<boolean>(false);
   const [spec, setSpec] = useState([]);
@@ -99,7 +104,7 @@ const DetailCard = ({
 
                       // 获取goodsId
                       if (prev.length === data.specs.length) {
-                        onChange(prev);
+                        onSpecChange(prev);
                         console.log(prev);
                       }
                     }}
@@ -114,6 +119,16 @@ const DetailCard = ({
           {/* 数量选择 */}
           <View className="specs">
             <View className="specs__title">数量</View>
+            <View>
+              <AtInputNumber
+                type="number"
+                value={goodsnum}
+                onChange={onGoodsnumChange}
+                min={1}
+                max={data.number}
+                step={1}
+              />
+            </View>
           </View>
         </View>
       </AtFloatLayout>

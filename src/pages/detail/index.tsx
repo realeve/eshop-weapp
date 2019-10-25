@@ -52,6 +52,10 @@ const Detail = () => {
 
     // 规格变更时，获取对应项的goodsId
     let specGoodsInfo = getGoodsInfoBySpec(res, data);
+    if (!specGoodsInfo) {
+      return;
+    }
+
     let {
       appPrice0: price,
       goodsId,
@@ -63,6 +67,10 @@ const Detail = () => {
     // 更新当前数据信息
     setData({ ...data, goodsId, price, goodsFullSpecs, number, img });
   };
+
+  // 购买数量
+  const [goodsnum, setGoodsnum] = useState(1);
+
   return (
     <View className="detail-page">
       <Skeleton loading={loading} animate rowHeight={375} row={1}>
@@ -74,7 +82,12 @@ const Detail = () => {
       </Skeleton>
 
       <Skeleton loading={loading} animate row={2}>
-        <DSpec data={data || {}} onChange={onSpecChange} />
+        <DSpec
+          goodsnum={goodsnum}
+          data={data || {}}
+          onSpecChange={onSpecChange}
+          onGoodsnumChange={setGoodsnum}
+        />
       </Skeleton>
     </View>
   );
