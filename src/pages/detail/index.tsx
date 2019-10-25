@@ -14,6 +14,8 @@ import DSpec, { getGoodsInfoBySpec } from "./components/spec";
 import { ITypeImageItem } from "@/pages/detail/lib";
 import * as R from "ramda";
 
+import DComment from "./components/comment";
+
 const Detail = () => {
   const {
     params: { id }
@@ -88,6 +90,7 @@ const Detail = () => {
           onGoodsnumChange={setGoodsnum}
         />
       </Skeleton>
+      <DComment id={id} />
     </View>
   );
 };

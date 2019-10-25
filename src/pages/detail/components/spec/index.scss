@@ -1,6 +1,12 @@
 @import "@/styles/theme.scss";
 
 .detail_page_spec {
+  .selltime {
+    margin-top: 30px;
+    font-size: $fontSizeSmall;
+    color: $disabledTitle;
+  }
+
   .item {
     font-size: $fontSize30;
     @extend .alignRow;
@@ -21,11 +27,6 @@
       }
     }
 
-    .selltime {
-      margin-top: 30px;
-      font-size: $fontSizeSmall;
-      color: $disabledTitle;
-    }
     .serviceList {
       @extend .alignRow;
       flex: 1;
