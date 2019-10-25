@@ -31,6 +31,7 @@ const DetailCard = ({
 
   return (
     <DCard className="detail_page_spec">
+      {/* 选择规格 */}
       <View className="item">
         <Text className="title">选择</Text>
         <View className="detail">
@@ -48,14 +49,32 @@ const DetailCard = ({
             </View>
             <View className="at-icon at-icon-chevron-right" />
           </View>
-          {data.goodsSaleTime && (
-            <View className="selltime">
-              <View className="at-icon at-icon-clock"></View>
-              该商品售卖时间为{data.goodsSaleTime.text}
-            </View>
-          )}
         </View>
       </View>
+
+      {/* 服务列表 */}
+      <View className="item" style="margin-top:20px;">
+        <Text className="title">服务</Text>
+        <View className="serviceList">
+          <View className="services">
+            {data.services &&
+              data.services.map(service => (
+                <View key={service.title} className="servicesItem">
+                  {" "}
+                  • {service.title}{" "}
+                </View>
+              ))}
+          </View>
+          <View className="at-icon at-icon-chevron-right" />
+        </View>
+      </View>
+
+      {data.goodsSaleTime && (
+        <View className="selltime">
+          <View className="at-icon at-icon-clock"></View>
+          该商品售卖时间为{data.goodsSaleTime.text}
+        </View>
+      )}
 
       {/* 规格选择面板 */}
       <AtFloatLayout

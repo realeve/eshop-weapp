@@ -19,10 +19,25 @@
         align-items: center;
         color: $mainTitle;
       }
-      .selltime {
-        margin-top: 30px;
-        font-size: $fontSizeSmall;
-        color: $disabledTitle;
+    }
+
+    .selltime {
+      margin-top: 30px;
+      font-size: $fontSizeSmall;
+      color: $disabledTitle;
+    }
+    .serviceList {
+      @extend .alignRow;
+      flex: 1;
+      align-items: center;
+      justify-content: space-between;
+      .services {
+        @extend .alignRow;
+        flex: 1;
+        // justify-content: space-between;
+        &Item {
+          margin-right: 40px;
+        }
       }
     }
   }

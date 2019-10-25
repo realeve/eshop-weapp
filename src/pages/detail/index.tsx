@@ -35,7 +35,6 @@ const Detail = () => {
     valid: () => id > "0"
   });
   console.log(data);
-  console.log(imgs);
 
   const [spec, setSpec] = useState<ISpecValueItem[] | null>(null);
 
