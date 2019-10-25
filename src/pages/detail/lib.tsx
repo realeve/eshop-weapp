@@ -156,6 +156,7 @@ export interface ISpecItem {
   }[];
 }
 
+type TGoodsTime = { range: string; week: number; text: string } | boolean;
 export interface IProductInfo {
   id: string;
   shopName: string;
@@ -182,7 +183,7 @@ export interface IProductInfo {
   number: number;
   goodsSaleNum: number;
   goodsRate: number;
-  goodsSaleTime?: { range: string; week: number } | boolean;
+  goodsSaleTime?: TGoodsTime;
   discount?: {
     title: string;
     text: string;
@@ -210,6 +211,35 @@ export interface IProductInfo {
   [key: string]: any;
 }
 
+const WEEKDAYS = ["周日", "周六", "周五", "周四", "周三", "周二", "周一"];
+export const getSaleTimeWeek: (param: { week: number }) => string = ({
+  week
+}) => {
+  if (week === 31) {
+    return "工作日 (周一至周五)";
+  }
+  let str: string[] = [];
+  week
+    .toString(2)
+    .padStart(7, "0")
+    .split("")
+    .forEach((d, idx) => (d === "1" ? str.push(WEEKDAYS[idx]) : false));
+  return str.reverse().join("，");
+};
+
+export const getSaleTimeRange: (param: { range: string }) => string = ({
+  range
+}) =>
+  range
+    .split(",")
+    .map(item =>
+      item
+        .split("-")
+        .map(t => t.substr(0, 2) + ":" + t.substr(2))
+        .join("-")
+    )
+    .join(" , ");
+
 export const initData: (
   org: any,
   store: any,
@@ -217,6 +247,19 @@ export const initData: (
 ) => IProductInfo | {} = (org, store, goodsCommonCount) => {
   if (!org) {
     return {};
+  }
+
+  let goodsSaleTime: TGoodsTime = false;
+
+  if (org.goodsSaleTime) {
+    let saleTime = {
+      range: org.goodsSaleTime.dayTimeRange,
+      week: org.goodsSaleTime.week
+    };
+    goodsSaleTime = {
+      ...saleTime,
+      text: getSaleTimeWeek(saleTime) + " " + getSaleTimeRange(saleTime)
+    };
   }
 
   let prod: IProductInfo = {
@@ -244,9 +287,7 @@ export const initData: (
     number: goodsCommonCount,
     goodsSaleNum: org.goodsSaleNum,
     goodsRate: org.goodsRate,
-    goodsSaleTime: org.goodsSaleTime
-      ? { range: org.goodsSaleTime.dayTimeRange, week: org.goodsSaleTime.week }
-      : false,
+    goodsSaleTime,
     discount: [
       { title: "优惠券", text: "新人立减20元", date: "2019.03.15-2019.09.14" }
     ],

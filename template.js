@@ -46,9 +46,9 @@ ${titleCase(dirName)}.config = {
   navigationBarTitleText: "这是页面标题信息"
 };
 
-export default connect(({${dirName}}) => ({
-  ...${dirName},
-}))(${titleCase(dirName)} as any);
+export default connect(({${dirName}}) => ${dirName})(${titleCase(
+  dirName
+)} as any);
 `;
 
 // scss 文件模板

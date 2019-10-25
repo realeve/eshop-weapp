@@ -107,6 +107,7 @@ export const API: {
 const orderList: {
   [key: string]: string;
 } = {
+  orderStatusNumber: "/member/index", // 订单不同状态下数量显示
   list: "/member/orders/list",
   buyAgain: "/member/orders/buy/again",
   cancel: "/member/orders/cancel",

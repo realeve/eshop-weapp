@@ -2,11 +2,64 @@
 
 .detail_page_spec {
   .item {
-    font-size: $font-size-lg;
+    font-size: $fontSize30;
     @extend .alignRow;
-    justify-content: space-between;
     .title {
       margin-right: 30px;
+      color: $subTitle;
+    }
+    .at-icon {
+      color: $subTitle;
+    }
+    .detail {
+      flex: 1;
+      .spec {
+        @extend .alignRow;
+        justify-content: space-between;
+        align-items: center;
+        color: $mainTitle;
+      }
+      .selltime {
+        margin-top: 30px;
+        font-size: $fontSizeSmall;
+        color: $disabledTitle;
+      }
+    }
+  }
+
+  // 规格选择
+  .layout-body {
+    padding: 0;
+  }
+
+  .specPanel {
+    $imgSize: 180px;
+    padding: 32px;
+    position: relative;
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 50px;
+      color: $subTitle;
+    }
+    .title {
+      @extend .alignRow;
+      height: $imgSize;
+      .img {
+        width: $imgSize;
+        height: 100%;
+        background: $white;
+        margin-right: 36px;
+      }
+      .detail {
+        @extend .alignColumn;
+        justify-content: space-between;
+        .storage {
+          color: $disabledTitle;
+          font-size: $fontSizeSmall;
+        }
+      }
     }
   }
 }

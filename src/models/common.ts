@@ -62,6 +62,15 @@ export interface IGlobalUser {
   [key: string]: any;
 }
 
+export interface IOrderNum {
+  needPay: number;
+  needSend: number;
+  needReceive: number;
+  needConfirm: number;
+  refund: number;
+  [key: string]: any;
+}
+
 export interface IGlobalModel {
   user: IGlobalUser; // 用户全局状态
   isLogin: boolean; // 是否登录
@@ -74,6 +83,7 @@ export interface IGlobalModel {
   collectionList: ICollection;
   newProduct: ICollection; // 新品
   menuList: IMenuItem[]; // 分类
+  orderNum: IOrderNum;
 }
 
 const state = {
@@ -95,7 +105,8 @@ const state = {
     titleCh: "",
     titleEn: ""
   },
-  menuList: []
+  menuList: [],
+  orderNum: {}
 };
 
 // 载入登录信息
@@ -103,7 +114,6 @@ export const loadUserInfo = (dispatch: Dispatch) => {
   let user = Taro.getStorageSync(LocalStorageKeys.user) || { username: "" };
 
   Reflect.deleteProperty(user, "token");
-
   dispatch({
     type: "setStore",
     payload: {
@@ -114,6 +124,7 @@ export const loadUserInfo = (dispatch: Dispatch) => {
 };
 
 const namespace = "common";
+export const updateStore = namespace + "/setStore";
 export default {
   namespace,
   state,
