@@ -15,6 +15,8 @@ import { ITypeImageItem } from "@/pages/detail/lib";
 import * as R from "ramda";
 
 import DComment from "./components/comment";
+import DShop from "./components/shop";
+import DContent from "./components/detail";
 
 const Detail = () => {
   const {
@@ -23,7 +25,7 @@ const Detail = () => {
 
   const [imgs, setImgs] = useState<ITypeImageItem[]>([]);
 
-  let { data, loading, setData, error, reFetch } = useFetch({
+  let { data, loading, setData } = useFetch({
     param: {
       ...(API.GOODS as {}),
       data: { commonId: id }
@@ -36,7 +38,6 @@ const Detail = () => {
     },
     valid: () => id > "0"
   });
-  console.log(data);
 
   const [spec, setSpec] = useState<ISpecValueItem[] | null>(null);
 
@@ -69,6 +70,8 @@ const Detail = () => {
     setData({ ...data, goodsId, price, goodsFullSpecs, number, img });
   };
 
+  console.log(data);
+
   // 购买数量
   const [goodsnum, setGoodsnum] = useState(1);
 
@@ -90,7 +93,17 @@ const Detail = () => {
           onGoodsnumChange={setGoodsnum}
         />
       </Skeleton>
+
+      {/* 评论卡片，下间隔存在异常 */}
       <DComment id={id} />
+
+      <Skeleton loading={loading} avatar animate row={2}>
+        <DShop data={(data && data.storeData) || {}} />
+      </Skeleton>
+
+      <Skeleton loading={loading} animate row={4} rowHeight={400}>
+        <DContent data={data || {}} />
+      </Skeleton>
     </View>
   );
 };

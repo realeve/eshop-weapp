@@ -2,6 +2,7 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Swiper, SwiperItem, Image } from "@tarojs/components";
 import "./index.scss";
 import { ITypeImageItem } from "@/pages/detail/lib";
+import { jump } from "@/utils/lib";
 
 export default function Gallery({
   data = [],
@@ -56,11 +57,16 @@ export default function Gallery({
         >
           <View className={`at-icon at-icon-star${stared ? "-2" : ""}`}></View>
         </View>
-        {/* <View className="item-gallery__action__item">
-          <View className="at-icon" style="margin-top:-10px;">
-            ...
-          </View>
-        </View> */}
+        <View
+          className="item-gallery__action__item"
+          onClick={() => {
+            jump({
+              url: "/pages/index"
+            });
+          }}
+        >
+          <View className="at-icon at-icon-home" />
+        </View>
       </View>
     </View>
   );

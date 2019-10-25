@@ -6,33 +6,31 @@
     @extend .alignRow;
     justify-content: space-between;
   }
-  .commentItem {
+  .item {
     padding: 24px;
     margin-top: 24px;
     /* prettier-ignore */
-    border: 1PX solid $borderColorGrey;
+    border: 1PX solid $splitLine;
     border-radius: $border-radius;
-    font-size: $fontSizeNormal;
     @extend .alignRow;
-    .avatar {
-      //   width: 50px;
-      //   height: 50px;
-      margin-right: 10px;
-    }
-
-    .detail {
-      flex: 1;
-      .username {
-        color: $mainTitle;
-        @extend .alignRow;
-        justify-content: space-between;
-        .time {
-          color: $subTitle;
-        }
-      }
-      .content {
+  }
+  .avatar {
+    margin-right: 10px;
+  }
+  .detail {
+    flex: 1;
+    .username {
+      font-size: $fontSizeNormal;
+      color: $mainTitle;
+      @extend .alignRow;
+      justify-content: space-between;
+      .time {
         color: $subTitle;
       }
+    }
+    .content {
+      font-size: $fontSizeNormal;
+      color: $subTitle;
     }
   }
 }

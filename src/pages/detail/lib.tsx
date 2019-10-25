@@ -121,6 +121,7 @@ export const handleGoodsData = data => {
 
   return {
     ...res,
+    storeData,
     canBuy,
     evaData,
     hotData,
