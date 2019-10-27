@@ -6,7 +6,7 @@ import * as R from "ramda";
 import DCard from "../card";
 
 export default ({ data, title }) => (
-  <DCard className="pin__wrap">
+  <DCard className="home-pin__wrap">
     {title && <View className="home-pin__title">{title}</View>}
     <Swiper
       className="home-pin__swiper"

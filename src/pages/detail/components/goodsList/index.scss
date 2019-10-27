@@ -9,12 +9,6 @@ $swiperSize: 380px;
 .home-pin {
   padding: 0 30px;
   background: $white;
-  &__wrap {
-    height: $swiperSize;
-    overflow: hidden;
-    @include eject(margin, 0);
-    @include eject(height, $swiperSize);
-  }
   &__title {
     color: $mainTitle;
     font-size: $fontSizeBase;
@@ -28,7 +22,6 @@ $swiperSize: 380px;
     }
   }
   &__item {
-    // position: relative;
     @extend .alignColumn;
     align-items: center;
     padding: 10px;

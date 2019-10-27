@@ -17,7 +17,7 @@ import * as R from "ramda";
 import DComment from "./components/comment";
 import DShop from "./components/shop";
 import DContent from "./components/detail";
-import DGoodsList from "./components/home-title";
+import DGoodsList from "./components/goodsList";
 
 const Detail = () => {
   const {
