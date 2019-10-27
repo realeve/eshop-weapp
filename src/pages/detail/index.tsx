@@ -17,6 +17,7 @@ import * as R from "ramda";
 import DComment from "./components/comment";
 import DShop from "./components/shop";
 import DContent from "./components/detail";
+import DGoodsList from "./components/home-title";
 
 const Detail = () => {
   const {
@@ -94,12 +95,17 @@ const Detail = () => {
         />
       </Skeleton>
 
+      <Skeleton loading={loading} animate row={3}>
+        <DGoodsList data={(data && data.hotData) || []} title="店铺热销" />
+      </Skeleton>
+
       {/* 评论卡片，下间隔存在异常 */}
       <DComment id={id} />
 
       <Skeleton loading={loading} avatar animate row={2}>
         <DShop data={(data && data.storeData) || {}} />
       </Skeleton>
+
       <DContent id={id} />
     </View>
   );
