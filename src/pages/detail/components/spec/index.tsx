@@ -8,6 +8,15 @@ import { CPrice, CModal } from "@/components";
 import { IProductInfo, ISpecValueItem } from "../../lib";
 import * as R from "ramda";
 import classnames from "classnames";
+import iconYou from "./you.png";
+import iconBao from "./bao.png";
+import iconZheng from "./zheng.png";
+
+const iconList = {
+  you: iconYou,
+  bao: iconBao,
+  zheng: iconZheng
+};
 
 // 根据规格获取商品信息
 export const getGoodsInfoBySpec = (res, data) => {
@@ -28,6 +37,8 @@ const DetailCard = ({
 }) => {
   const [showPanel, setShowPanel] = useState<boolean>(false);
   const [spec, setSpec] = useState([]);
+
+  const [showService, setShowService] = useState<boolean>(false);
 
   return (
     <DCard className="detail_page_spec">
@@ -55,7 +66,7 @@ const DetailCard = ({
       {/* 服务列表 */}
       <View className="item" style="margin-top:20px;">
         <Text className="title">服务</Text>
-        <View className="serviceList">
+        <View className="serviceList" onClick={() => setShowService(true)}>
           <View className="services">
             {data.services &&
               data.services.map(service => (
@@ -74,6 +85,26 @@ const DetailCard = ({
           该商品售卖时间为{data.goodsSaleTime.text}
         </View>
       )}
+
+      {/* 服务列表面板 */}
+
+      <CModal
+        show={showService}
+        className="specServices"
+        onClose={() => setShowService(false)}
+      >
+        <View className="title">服务说明</View>
+        {data.services &&
+          data.services.map(service => (
+            <View key={service.title} className="item">
+              <Image className="icon" src={iconList[service.icon]} />
+              <View className="service">
+                <View className="serviceTitle">{service.title}</View>
+                <View className="serviceSubtitle">{service.subTitle}</View>
+              </View>
+            </View>
+          ))}
+      </CModal>
 
       {/* 规格选择面板 */}
       <CModal

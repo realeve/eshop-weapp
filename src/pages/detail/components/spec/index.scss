@@ -100,3 +100,35 @@
     }
   }
 }
+
+.specServices {
+  .title {
+    text-align: center;
+    padding-bottom: 24px;
+    font-size: $fontSizeBase;
+    /* prettier-ignore */
+    border-bottom: 1PX solid $borderColorGrey;
+  }
+  .item {
+    margin-top: 45px;
+    @extend .alignRow;
+    .icon {
+      margin-right: 13px;
+      width: 56px;
+      height: 56px;
+    }
+    .service {
+      flex: 1;
+      &Title {
+        font-size: $fontSize30;
+        color: $mainTitle;
+        margin-bottom: 12px;
+        font-weight: bold;
+      }
+      &Subtitle {
+        font-size: $fontSizeSmall;
+        color: $subTitle;
+      }
+    }
+  }
+}

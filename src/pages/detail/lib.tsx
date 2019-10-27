@@ -215,6 +215,8 @@ export interface IProductInfo {
   services?: {
     key: string;
     title: string;
+    icon: string;
+    subTitle: string;
   }[];
   tips?: string;
   goodsId?: number;
@@ -322,15 +324,22 @@ export const initData: (
       // },
       {
         key: "正",
-        title: "正品保障"
+        title: "正品保障",
+        icon: "zheng",
+        subTitle: "中国印钞造币旗下品牌，央企出品，保证正品"
       },
       {
         key: "邮",
-        title: "顺丰包邮"
+        title: "顺丰包邮",
+        icon: "you",
+        subTitle: "该商品通过顺丰速运为您提供快捷的配送服务"
       },
       {
-        key: "险",
-        title: "丢件保险"
+        key: "保",
+        title: "全额保价",
+        icon: "bao",
+        subTitle:
+          "在配送时，我们会对商品进行全额保价，让您远在千里之外，享受无忧服务"
       }
     ],
     tips: "本商品无质量问题不支持退换货",

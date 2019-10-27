@@ -1,7 +1,7 @@
 @import "@/styles/theme.scss";
 
 // 规格选择
-.layout-body {
+.at-float-layout .layout-body {
   padding: 0;
 }
 
@@ -10,8 +10,8 @@
   position: relative;
   .close {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 0;
+    top: 0;
     font-size: 50px;
     color: $subTitle;
   }
