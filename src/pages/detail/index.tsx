@@ -100,10 +100,7 @@ const Detail = () => {
       <Skeleton loading={loading} avatar animate row={2}>
         <DShop data={(data && data.storeData) || {}} />
       </Skeleton>
-
-      <Skeleton loading={loading} animate row={4} rowHeight={400}>
-        <DContent data={data || {}} />
-      </Skeleton>
+      <DContent id={id} />
     </View>
   );
 };
