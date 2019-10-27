@@ -42,73 +42,59 @@
       }
     }
   }
+}
 
-  // 规格选择
-  .layout-body {
-    padding: 0;
+.specPanel {
+  $imgSize: 180px;
+  .title {
+    @extend .alignRow;
+    height: $imgSize;
+    .img {
+      width: $imgSize;
+      height: 100%;
+      background: $white;
+      margin-right: 36px;
+    }
+    .detail {
+      @extend .alignColumn;
+      justify-content: space-between;
+      .storage {
+        color: $disabledTitle;
+        font-size: $fontSizeSmall;
+      }
+      .goodsname {
+        font-size: $fontSizeBase;
+      }
+    }
   }
 
-  .specPanel {
-    $imgSize: 180px;
-    padding: 32px;
-    position: relative;
-    .close {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      font-size: 50px;
-      color: $subTitle;
+  // 规格列表
+  .specs {
+    &__title {
+      font-weight: bold;
+      margin: 40px 0 16px 0;
+      color: $mainTitle;
+      font-size: $fontSize30;
     }
-    .title {
+    .list {
       @extend .alignRow;
-      height: $imgSize;
-      .img {
-        width: $imgSize;
-        height: 100%;
-        background: $white;
-        margin-right: 36px;
-      }
-      .detail {
-        @extend .alignColumn;
-        justify-content: space-between;
-        .storage {
-          color: $disabledTitle;
-          font-size: $fontSizeSmall;
-        }
-        .goodsname {
-          font-size: $fontSizeBase;
-        }
-      }
-    }
+      flex-wrap: wrap;
 
-    // 规格列表
-    .specs {
-      &__title {
-        font-weight: bold;
-        margin: 40px 0 16px 0;
-        color: $mainTitle;
-        font-size: $fontSize30;
-      }
-      .list {
-        @extend .alignRow;
-        flex-wrap: wrap;
-
-        .item {
-          @extend .center;
-          margin-right: 20px;
-          max-width: 240px;
-          width: auto;
-          height: 56px;
-          color: $subTitle;
-          /* prettier-ignore */
-          border: 1PX solid $borderColorGrey;
-          border-radius: $border-radius;
-          padding: 0 34px;
-          font-size: $font-size-sm;
-          &Active {
-            color: $yellow;
-            border-color: $yellow;
-          }
+      .item {
+        @extend .center;
+        margin-right: 20px;
+        max-width: 240px;
+        width: auto;
+        height: 56px;
+        color: $subTitle;
+        /* prettier-ignore */
+        border: 1PX solid $borderColorGrey;
+        border-radius: $border-radius;
+        padding: 0 34px;
+        font-size: $font-size-sm;
+        &Active {
+          color: $yellow;
+          border-color: $yellow;
         }
       }
     }

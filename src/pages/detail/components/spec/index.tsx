@@ -2,9 +2,9 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
-import { AtFloatLayout, AtInputNumber } from "taro-ui";
+import { AtInputNumber } from "taro-ui";
 
-import { CPrice } from "@/components";
+import { CPrice, CModal } from "@/components";
 import { IProductInfo, ISpecValueItem } from "../../lib";
 import * as R from "ramda";
 import classnames from "classnames";
@@ -76,80 +76,71 @@ const DetailCard = ({
       )}
 
       {/* 规格选择面板 */}
-      <AtFloatLayout
-        isOpened={showPanel}
+      <CModal
+        show={showPanel}
+        className="specPanel"
         onClose={() => setShowPanel(false)}
-        scrollY
       >
-        <View className="specPanel">
-          {/* 商品基本信息 */}
-          <View className="title">
-            <Image className="img" src={data.img} />
-            <View className="detail">
-              <CPrice retail={data.price} retailStyle="font-size:20px;" />
-              <Text className="storage">库存 {data.number}件</Text>
-              <Text className="goodsname">{data.title}</Text>
-            </View>
-          </View>
-
-          {/* 关闭按钮 */}
-          <View className="close" onClick={() => setShowPanel(false)}>
-            <View className="at-icon at-icon-close-circle"></View>
-          </View>
-
-          {/* 规格列表 */}
-          {(data.specs || []).map((item, idx) => (
-            <View className="specs" key={item.specId}>
-              <View className="specs__title">{item.specName}</View>
-              <View className="list">
-                {item.specValueList.map(specItem => (
-                  <Text
-                    className={classnames("item", {
-                      itemActive:
-                        spec[idx] &&
-                        spec[idx].specValueId &&
-                        spec[idx].specValueId === specItem.specValueId
-                    })}
-                    key={spec.specValueId}
-                    onClick={() => {
-                      // 选中对应规格
-                      let prev = R.clone(spec);
-                      prev[idx] = {
-                        ...specItem,
-                        title: `${item.specName}:${specItem.specValueName}`
-                      };
-                      setSpec(prev);
-
-                      // 获取goodsId
-                      if (prev.length === data.specs.length) {
-                        onSpecChange(prev);
-                        console.log(prev);
-                      }
-                    }}
-                  >
-                    {specItem.specValueName}
-                  </Text>
-                ))}
-              </View>
-            </View>
-          ))}
-
-          {/* 数量选择 */}
-          <View className="specs">
-            <View className="specs__title">数量</View>
-            <View>
-              <AtInputNumber
-                type="number"
-                value={goodsnum}
-                onChange={onGoodsnumChange}
-                min={1}
-                max={data.number}
-                step={1}
-              />
-            </View>
+        {/* 商品基本信息 */}
+        <View className="title">
+          <Image className="img" src={data.img} />
+          <View className="detail">
+            <CPrice retail={data.price} retailStyle="font-size:20px;" />
+            <Text className="storage">库存 {data.number}件</Text>
+            <Text className="goodsname">{data.title}</Text>
           </View>
         </View>
-      </AtFloatLayout>
+        {/* 规格列表 */}
+        {(data.specs || []).map((item, idx) => (
+          <View className="specs" key={item.specId}>
+            <View className="specs__title">{item.specName}</View>
+            <View className="list">
+              {item.specValueList.map(specItem => (
+                <Text
+                  className={classnames("item", {
+                    itemActive:
+                      spec[idx] &&
+                      spec[idx].specValueId &&
+                      spec[idx].specValueId === specItem.specValueId
+                  })}
+                  key={spec.specValueId}
+                  onClick={() => {
+                    // 选中对应规格
+                    let prev = R.clone(spec);
+                    prev[idx] = {
+                      ...specItem,
+                      title: `${item.specName}:${specItem.specValueName}`
+                    };
+                    setSpec(prev);
+
+                    // 获取goodsId
+                    if (prev.length === data.specs.length) {
+                      onSpecChange(prev);
+                      console.log(prev);
+                    }
+                  }}
+                >
+                  {specItem.specValueName}
+                </Text>
+              ))}
+            </View>
+          </View>
+        ))}
+        {/* 数量选择 */}
+        <View className="specs">
+          <View className="specs__title">数量</View>
+          <View>
+            <AtInputNumber
+              type="number"
+              value={goodsnum}
+              onChange={onGoodsnumChange}
+              min={1}
+              max={data.number}
+              step={1}
+            />
+          </View>
+        </View>
+      </CModal>
     </DCard>
   );
 };

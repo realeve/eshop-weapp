@@ -1,0 +1,18 @@
+@import "@/styles/theme.scss";
+
+// 规格选择
+.layout-body {
+  padding: 0;
+}
+
+.CModal {
+  padding: 32px;
+  position: relative;
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 50px;
+    color: $subTitle;
+  }
+}

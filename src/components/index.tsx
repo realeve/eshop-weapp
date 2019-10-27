@@ -16,3 +16,5 @@ export { default as CDot } from "./CDot";
 export { default as CMaginify } from "./CMaginify";
 
 export type TReactNode = JSX.Element | JSX.Element[] | string | null | never[];
+
+export { default as CModal } from "./CModal";
