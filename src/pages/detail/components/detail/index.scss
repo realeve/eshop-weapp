@@ -16,14 +16,15 @@
     &-pane {
       padding: 34px 0;
       height: auto;
-      p {
-        margin-block-start: 0;
-        margin-block-end: 0;
-        display: flex;
-        img {
+
+      .goodsDetail {
+        @extend .alignColumn;
+        .img {
           width: 100%;
+          height: auto;
         }
       }
+
       .container {
         .title,
         .bold {
