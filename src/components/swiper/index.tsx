@@ -151,14 +151,8 @@ class CSwiper extends Taro.Component {
   }
 
   render() {
-    const {
-      className,
-      style,
-      indicatorColor,
-      indicatorActiveColor
-    } = this.props;
-    let defaultIndicatorColor = indicatorColor || "rgba(0, 0, 0, .3)";
-    let defaultIndicatorActiveColor = indicatorActiveColor || "#000";
+    const { className, style } = this.props;
+
     const cls = classNames(
       `taro-swiper-${this._id}`,
       "swiper-container",
