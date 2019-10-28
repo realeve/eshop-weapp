@@ -13,6 +13,8 @@ import { IGlobalModel } from "@/models/common";
 import { IProductInfo, ISpecItem } from "../../lib";
 import * as R from "ramda";
 
+import { AtBadge } from "taro-ui";
+
 // 通过商品详情数据提取存储至购物车所需信息
 export const getLocalStorageConfigByData: (
   data: IProductInfo,
@@ -78,7 +80,7 @@ const checkTime = data => {
   return true;
 };
 
-const DetailAction = ({ data, goodsnum, dispatch, isLogin }) => {
+const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
   console.log(data);
   let cartItem = {
     buyNum: goodsnum,
@@ -126,7 +128,17 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin }) => {
     <View className="detail-action">
       <View className="icons">
         <Image src={serviceIcon} className="icon" />
-        <View className="at-icon at-icon-shopping-cart icon"></View>
+        <AtBadge value={shoppingCart.total.num} maxValue={99} className="icon">
+          <View
+            className="at-icon at-icon-shopping-cart"
+            style="font-size:24px;"
+            onClick={() => {
+              Taro.navigateTo({
+                url: "/pages/cart"
+              });
+            }}
+          ></View>
+        </AtBadge>
       </View>
       <View className="action">
         <CButton
@@ -154,6 +166,9 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin }) => {
   );
 };
 
-export default connect(({ common: { isLogin } }: IGlobalModel) => ({
-  isLogin
-}))(DetailAction as any);
+export default connect(
+  ({ common: { isLogin, shoppingCart } }: IGlobalModel) => ({
+    isLogin,
+    shoppingCart
+  })
+)(DetailAction as any);
