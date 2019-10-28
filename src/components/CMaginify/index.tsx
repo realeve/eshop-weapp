@@ -61,7 +61,7 @@ export default function Gallery({
           className="item-gallery__action__item"
           onClick={() => {
             jump({
-              url: "/pages/index"
+              url: "/pages/index/index"
             });
           }}
         >

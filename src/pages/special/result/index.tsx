@@ -65,7 +65,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
         className="special__result__action"
         onClick={() => {
           jump({
-            url: "/pages/index"
+            url: "/pages/index/index"
           });
         }}
       >

@@ -72,3 +72,7 @@ git reset --hard origin/dev
 2. taro [https://taro.aotu.io](https://taro.aotu.io)
 
 3. scss[https://www.sass.hk/docs/](https://www.sass.hk/docs/)
+
+## 编译到微信小程序报错
+
+> no such file or directory, open '项目目录 \node_modules\taro-ui\dist\weapp\style\themes\purple.scss'

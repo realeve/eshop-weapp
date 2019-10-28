@@ -29,7 +29,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      "pages/index", // 首页
+      "pages/index/index", // 首页
       "pages/index/suggest", // 精彩推荐
       "pages/cate", // 分类
       "pages/cart", // 购物车
@@ -53,7 +53,7 @@ class App extends Component {
     tabBar: {
       list: [
         {
-          pagePath: "pages/index",
+          pagePath: "pages/index/index",
           text: "首页",
           iconPath: "./images/tab/home.png",
           selectedIconPath: "./images/tab/home-active.png"

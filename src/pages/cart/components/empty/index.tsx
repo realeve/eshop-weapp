@@ -13,7 +13,7 @@ const EmptyCart = () => (
     <CButton
       onClick={() => {
         Taro.switchTab({
-          url: "/pages/index"
+          url: "/pages/index/index"
         });
       }}
       theme="gardient"
