@@ -117,7 +117,7 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
     // 立即购买
     if (directBuy) {
       cartDb.addConfirmCart(dispatch, [cartConfirm]);
-      Taro.navigateTo({ url: "/pages/order/confirm" });
+      Taro.navigateTo({ url: "/pages/order/confirm/index" });
       return;
     }
 

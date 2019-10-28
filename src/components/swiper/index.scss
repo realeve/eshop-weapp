@@ -27,8 +27,8 @@
       height: 8px;
       display: inline-block;
     }
-    &-bullet.active {
-      background: #000000;
+    &-active {
+      background: #b98a4e;
     }
   }
 }
@@ -47,5 +47,16 @@
   .swiper__pagination-bullet {
     margin: 4px 0;
     display: block;
+  }
+}
+
+.taro-swiper-1,
+.taro-swiper-2,
+.taro-swiper-3 {
+  .swiper-pagination-bullet {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .swiper-pagination-bullet-active {
+    background: #b98a4e;
   }
 }

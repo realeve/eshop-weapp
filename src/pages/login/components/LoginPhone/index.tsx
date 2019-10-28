@@ -57,7 +57,7 @@ const LoginPhone = ({ callback, dispatch }) => {
     callback && callback();
 
     // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-    useTimeoutFn(() => {
+    setTimeout(() => {
       loadMember(dispatch);
     }, 500);
 

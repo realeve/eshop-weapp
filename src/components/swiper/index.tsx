@@ -2,9 +2,8 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import classNames from "classnames";
 import Swipers from "./swiper";
-// , RichText
 
-// import "swiper/dist/css/swiper.min.css";
+import "swiper/dist/css/swiper.min.css";
 import "./index.scss";
 
 let INSTANCE_ID = 0;
@@ -170,7 +169,7 @@ class CSwiper extends Taro.Component {
       "swiper-pagination-bullets": this.props.indicatorDots
     });
     return (
-      <View
+      <div
         className={cls}
         style={style}
         ref={el => {
@@ -185,7 +184,7 @@ class CSwiper extends Taro.Component {
         /> */}
         <View className="swiper-wrapper">{this.props.children}</View>
         <View className={paginationCls} />
-      </View>
+      </div>
     );
   }
 }
