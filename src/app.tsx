@@ -31,9 +31,9 @@ class App extends Component {
     pages: [
       "pages/index", // 首页
       "pages/index/suggest", // 精彩推荐
-
       "pages/cate", // 分类
       "pages/cart", // 购物车
+      "pages/order/confirm", // 立即购买
       "pages/user", // 个人中心
       "pages/find", // 发现
       "pages/login", // 登录

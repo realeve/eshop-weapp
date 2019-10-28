@@ -20,3 +20,4 @@ export { default as CMaginify } from "./CMaginify";
 export type TReactNode = JSX.Element | JSX.Element[] | string | null | never[];
 
 export { default as CModal } from "./CModal";
+export { default as CCardLite } from "./CCardLite";

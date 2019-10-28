@@ -23,7 +23,9 @@ export const handleStoreData = ({
       { name: "物流履约", score: storeInfo.storeDeliverycredit },
       { name: "售后服务", score: storeInfo.storeServicecredit }
     ],
-    address: storeInfo.storeAddress
+    address: storeInfo.storeAddress,
+    storePresales: storeInfo.storePresales,
+    storeAftersales: storeInfo.storeAftersales
   };
 };
 
@@ -315,7 +317,7 @@ export const initData: (
     ],
     specs: org.specJson,
     specValue: org.goodsSpecValueJson,
-    saleService: store.storePresales ? JSON.parse(store.storePresales)[0] : [],
+    saleService: JSON.parse(store.storePresales || "[]"),
     services: [
       // {
       //   key: '退',

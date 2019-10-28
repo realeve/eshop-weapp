@@ -238,11 +238,19 @@ export interface ICartDetail {
   spec: string;
   price: number;
   num: number;
-  valid: boolean;
+  valid?: boolean;
   storage: number;
   img: string;
-  totalPrice: number;
+  totalPrice?: number;
   unitName: string;
+}
+
+export interface IConfirmCart extends ICartDetail {
+  shop: {
+    id: number;
+    name: string;
+    saleService?: { num: number; name: string }[];
+  };
 }
 
 export interface IShoppingCartItem {

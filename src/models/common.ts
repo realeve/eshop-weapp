@@ -5,7 +5,11 @@ import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
 import { ICollection } from "@/pages/index/components/collectionList";
 import { LocalStorageKeys } from "@/utils/setting";
-import { IShoppingCartCount, loadShoppingCart } from "@/utils/cartDB";
+import {
+  IShoppingCartCount,
+  loadShoppingCart,
+  IConfirmCart
+} from "@/utils/cartDB";
 import { loadMember } from "@/pages/login/db";
 
 export { Dispatch };
@@ -87,6 +91,7 @@ export interface IGlobalModel {
   menuList: IMenuItem[]; // 分类
   orderNum: IOrderNum;
   shoppingCart: IShoppingCartCount; // 购物车
+  confirmCart: IConfirmCart[]; // 立即购买商品确认
 }
 
 const state = {
@@ -103,6 +108,7 @@ const state = {
     data: [],
     type: "offline"
   },
+  confirmCart: [],
   cateList: [],
   collectionList: {
     data: [],

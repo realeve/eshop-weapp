@@ -19,6 +19,7 @@ import {
 import * as R from "ramda";
 import * as lib from "@/utils/lib";
 import { Dispatch } from "redux";
+import Taro from "@tarojs/taro";
 
 /**
  *
@@ -341,4 +342,24 @@ export const loadShoppingCart = async (dispatch: Dispatch) => {
       }
     }
   });
+};
+
+// 生成订单号之后清空确认数据
+export const clearConfirmCart = (dispatch: Dispatch) => {
+  dispatch({
+    type: "common/setStore",
+    payload: {
+      confirmCart: []
+    }
+  });
+};
+
+export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
+  dispatch({
+    type: "common/setStore",
+    payload: {
+      confirmCart
+    }
+  });
+  Taro.setStorageSync(LocalStorageKeys.confirm, confirmCart);
 };
