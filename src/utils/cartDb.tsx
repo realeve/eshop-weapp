@@ -317,3 +317,28 @@ export const setShoppingCart = async (
   // // 更新store
   refreshShoppingCart(state, dispatch);
 };
+
+export const loadShoppingCart = async (dispatch: Dispatch) => {
+  // 载入中
+  dispatch({
+    type: "setStore",
+    payload: {
+      shoppingCart: {
+        loading: true,
+        data: []
+      }
+    }
+  });
+
+  // 载入完毕
+  let data = await readShoppingCart();
+  dispatch({
+    type: "setStore",
+    payload: {
+      shoppingCart: {
+        loading: false,
+        ...data
+      }
+    }
+  });
+};

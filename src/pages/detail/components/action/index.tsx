@@ -6,7 +6,7 @@ import serviceIcon from "./service.svg";
 
 import * as cartDb from "@/utils/cartDB";
 import * as lib from "@/utils/lib";
-import { ShoppingCartItem, ICartItem } from "@/utils/order";
+import { ShoppingCartItem, ICartItem } from "@/utils/cart";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
 

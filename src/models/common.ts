@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
 import { ICollection } from "@/pages/index/components/collectionList";
 import { LocalStorageKeys } from "@/utils/setting";
-import { IShoppingCartCount } from "@/utils/order/cartDB";
+import { IShoppingCartCount, loadShoppingCart } from "@/utils/cartDB";
 import { loadMember } from "@/pages/login/db";
 
 export { Dispatch };
@@ -201,6 +201,9 @@ export default {
 
       // 载入用户登录信息
       await loadUserInfo(dispatch);
+
+      // 载入购物车信息
+      loadShoppingCart(dispatch);
     }
   }
 };
