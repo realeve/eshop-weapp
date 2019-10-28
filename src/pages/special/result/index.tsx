@@ -47,7 +47,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
             className="result__footer__rules"
             onClick={() => {
               jump({
-                url: "/pages/special/rule"
+                url: "/pages/special/rule/index"
               });
             }}
           >
@@ -65,7 +65,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
         className="special__result__action"
         onClick={() => {
           jump({
-            url: "/pages/index/index"
+            url: "/pages/index/index/index"
           });
         }}
       >

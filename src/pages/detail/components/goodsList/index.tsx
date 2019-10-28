@@ -5,7 +5,7 @@ import { CPrice } from "@/components";
 import * as R from "ramda";
 import DCard from "../card";
 
-export default ({ data, title }) => (
+export default ({ data = [], title }) => (
   <DCard className="home-pin__wrap">
     {title && <View className="home-pin__title">{title}</View>}
     <Swiper

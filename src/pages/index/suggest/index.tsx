@@ -10,7 +10,7 @@ export interface IProps {
   data: ICollection;
   [key: string]: any;
 }
-const Suggest = ({ data }: IProps) => {
+const Suggest = ({ data = { data: [] } }: IProps) => {
   return (
     <View className="suggest-page">
       <View className="grid">

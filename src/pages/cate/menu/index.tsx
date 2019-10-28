@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
 
-const Menu = ({ current, list, onClick }) => (
+const Menu = ({ current, list = [], onClick }) => (
   <View className="cate-menu">
     {list.map(item => {
       const active = item.id === current;

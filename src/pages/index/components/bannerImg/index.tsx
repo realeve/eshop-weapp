@@ -17,7 +17,7 @@ const BannerImg = ({ special }: IProps) => {
       mode="scaleToFill"
       onClick={() => {
         Taro.navigateTo({
-          url: "/pages/special?id=" + special.batchId
+          url: "/pages/special/index?id=" + special.batchId
         });
       }}
     />

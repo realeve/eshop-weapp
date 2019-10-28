@@ -20,7 +20,7 @@ export interface IPropPrice {
  * @param counterStyle 折扣前价格的文本样式，控制颜色，大小
  * @param direction 实际价格与折扣前价格的方向  row(默认) | column
  */
-const CPrice: (props: IPropPrice) => React.ReactElement = props => {
+const CPrice = (props: IPropPrice) => {
   const {
     counter = 0,
     retail = 0,
@@ -28,8 +28,8 @@ const CPrice: (props: IPropPrice) => React.ReactElement = props => {
     retailStyle,
     className,
     priceClassName,
-    direction = "row",
-    ...rest
+    direction = "row"
+    // ...rest
   } = props;
 
   return (
@@ -39,7 +39,7 @@ const CPrice: (props: IPropPrice) => React.ReactElement = props => {
         { ["direction"]: direction === "column" },
         className
       )}
-      {...rest}
+      // {...rest}
     >
       {retail > 0 && (
         <View

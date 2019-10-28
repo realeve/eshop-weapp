@@ -17,7 +17,7 @@ export interface IProps {
   [key: string]: any;
 }
 
-const CateList = ({ data }: IProps) => {
+const CateList = ({ data = [] }: IProps) => {
   return (
     <View className="cateList">
       {R.splitEvery(3, data).map((row, rowId) => (

@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import classNames from "classnames";
 import "./index.scss";
-const List = ({ list }) => {
+const List = ({ list = [] }) => {
   const handleClick = item => {
     Taro.navigateTo({
       url: `/pages/cate-sub/cate-sub?categoryId=${item.id}`

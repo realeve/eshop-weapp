@@ -66,7 +66,7 @@ const LoginPhone = ({ callback, dispatch }) => {
 
     Taro.hideLoading();
 
-    Taro.switchTab({ url: "/pages/user" });
+    Taro.switchTab({ url: "/pages/user/index" });
   };
 
   return (

@@ -12,7 +12,7 @@ const NotLogin = () => (
     className="avatar"
     onClick={() => {
       Taro.navigateTo({
-        url: "/pages/login"
+        url: "/pages/login/index"
       });
     }}
   >

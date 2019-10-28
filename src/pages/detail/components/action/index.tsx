@@ -93,7 +93,7 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
     // 暂时只调试在线购物车，离线购物车暂不对接
     if (!isLogin) {
       Taro.navigateTo({
-        url: "/pages/login"
+        url: "/pages/login/index"
       });
       fail("请先登录后添加购物车");
       return;
@@ -143,7 +143,7 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
             style="font-size:24px;"
             onClick={() => {
               Taro.switchTab({
-                url: "/pages/cart"
+                url: "/pages/cart/cart"
               });
             }}
           ></View>

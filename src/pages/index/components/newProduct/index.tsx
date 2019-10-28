@@ -5,7 +5,7 @@ import * as R from "ramda";
 import { TitleItem, IProps } from "../CollectionList";
 import { CPrice } from "@/components/";
 
-const NewProduct = ({ data }: IProps) => {
+const NewProduct = ({ data = { data: [] } }: IProps) => {
   return (
     <View className="newProduct">
       <TitleItem data={data} />

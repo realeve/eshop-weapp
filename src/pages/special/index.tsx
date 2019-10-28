@@ -42,7 +42,7 @@ const Special = ({ dispatch }: IProps) => {
                 src={item}
                 onClick={() => {
                   jump({
-                    url: "/pages/special/detail",
+                    url: "/pages/special/detail/index",
                     payload: {
                       id,
                       specialId

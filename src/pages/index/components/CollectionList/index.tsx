@@ -33,7 +33,7 @@ export const TitleItem = ({ data }: { data: ITitle }) => (
   </View>
 );
 
-const CollectionList = ({ data }: IProps) => {
+const CollectionList = ({ data = { data: [] } }: IProps) => {
   return (
     <View className="collectionList">
       <TitleItem data={data} />
@@ -48,7 +48,7 @@ const CollectionList = ({ data }: IProps) => {
                 src={item.imageUrl}
                 onClick={() => {
                   Taro.navigateTo({
-                    url: "/pages/detail?id=" + item.commonId
+                    url: "/pages/detail/index?id=" + item.commonId
                   });
                 }}
               />
@@ -64,7 +64,7 @@ const CollectionList = ({ data }: IProps) => {
           size="small"
           onClick={() => {
             Taro.navigateTo({
-              url: "/pages/index/suggest"
+              url: "/pages/index/suggest/index"
             });
           }}
         >

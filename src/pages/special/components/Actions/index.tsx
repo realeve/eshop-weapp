@@ -42,7 +42,7 @@ const SpecialAction = ({ data, className }: IProps) => {
 
               // 跳转至结果页
               jump({
-                url: "/pages/special/result",
+                url: "/pages/special/result/index",
                 payload: {
                   id: data.activityId
                 }

@@ -1,20 +1,25 @@
-import "weui";
-import Nerv from "nervjs";
+import Taro from "@tarojs/taro";
+import { View } from "@tarojs/components";
 import classNames from "classnames";
 import Swipers from "./swiper";
+// , RichText
 
-import "swiper/dist/css/swiper.min.css";
-import "./style/index.scss";
+// import "swiper/dist/css/swiper.min.css";
+import "./index.scss";
 
 let INSTANCE_ID = 0;
 
-class SwiperItem extends Nerv.Component {
+class CSwiperItem extends Taro.Component {
   render() {
     const cls = classNames("swiper-slide", this.props.className);
     return (
-      <div className={cls} style={this.props.style} item-id={this.props.itemId}>
+      <View
+        className={cls}
+        style={this.props.style}
+        item-id={this.props.itemId}
+      >
         {this.props.children}
-      </div>
+      </View>
     );
   }
 }
@@ -30,7 +35,7 @@ const createEvent = type => {
   return e;
 };
 
-class Swiper extends Nerv.Component {
+class CSwiper extends Taro.Component {
   constructor() {
     super(...arguments);
     this.$el = null;
@@ -165,26 +170,24 @@ class Swiper extends Nerv.Component {
       "swiper-pagination-bullets": this.props.indicatorDots
     });
     return (
-      <div
+      <View
         className={cls}
         style={style}
         ref={el => {
           this.$el = el;
         }}
       >
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<style type='text/css'>
-            .taro-swiper-${this._id} .swiper-pagination-bullet { background: ${defaultIndicatorColor} }
-            .taro-swiper-${this._id} .swiper-pagination-bullet-active { background: ${defaultIndicatorActiveColor} }
-            </style>`
-          }}
-        />
-        <div className="swiper-wrapper">{this.props.children}</div>
-        <div className={paginationCls} />
-      </div>
+        {/* <RichText
+          nodes={`<style type='text/css'>
+        .taro-swiper-${this._id} .swiper-pagination-bullet { background: ${defaultIndicatorColor} }
+        .taro-swiper-${this._id} .swiper-pagination-bullet-active { background: ${defaultIndicatorActiveColor} }
+        </style>`}
+        /> */}
+        <View className="swiper-wrapper">{this.props.children}</View>
+        <View className={paginationCls} />
+      </View>
     );
   }
 }
 
-export { Swiper, SwiperItem };
+export { CSwiper, CSwiperItem };
