@@ -78,7 +78,7 @@ const checkTime = data => {
   return true;
 };
 
-const DetailAction = ({ data, goodsnum, dispatch }) => {
+const DetailAction = ({ data, goodsnum, dispatch, isLogin }) => {
   console.log(data);
   let cartItem = {
     buyNum: goodsnum,
@@ -86,6 +86,15 @@ const DetailAction = ({ data, goodsnum, dispatch }) => {
   };
 
   const addToCart = (addToCart: boolean = false) => {
+    // 暂时只调试在线购物车，离线购物车暂不对接
+    if (!isLogin) {
+      Taro.navigateTo({
+        url: "/pages/login"
+      });
+      fail("请先登录后添加购物车");
+      return;
+    }
+
     let status = checkTime(data);
     if (!status) {
       return;
@@ -145,7 +154,6 @@ const DetailAction = ({ data, goodsnum, dispatch }) => {
   );
 };
 
-export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
-  user,
+export default connect(({ common: { isLogin } }: IGlobalModel) => ({
   isLogin
 }))(DetailAction as any);
