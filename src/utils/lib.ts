@@ -150,21 +150,18 @@ export const setUserStore = (state: any, store: Store) => {
   }
 
   if (payload && payload.isLogin && payload.user) {
-    let localStore = Taro.getStorageSync(LocalStorageKeys.user);
-    if (localStore) {
-      let store = { ...JSON.parse(localStore), ...payload.user };
+    let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
+    let store = { ...JSON.parse(localStore), ...payload.user };
+    // 存储手机号
+    Taro.setStorage({
+      key: LocalStorageKeys.phone,
+      data: store.phone
+    });
 
-      // 存储手机号
-      Taro.setStorage({
-        key: LocalStorageKeys.phone,
-        data: store.phone
-      });
-
-      Taro.setStorage({
-        key: LocalStorageKeys.user,
-        data: JSON.stringify(store)
-      });
-    }
+    Taro.setStorage({
+      key: LocalStorageKeys.user,
+      data: JSON.stringify(store)
+    });
   }
   return setStore(state, store);
 };

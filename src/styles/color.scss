@@ -70,7 +70,7 @@ $yellowGardiant: linear-gradient(-90deg, $yellow, $midYellow);
 $lightYellowGardiant: linear-gradient(90deg, $lightYellow, $extrmeLightYellow);
 $blackGreyGardiant: linear-gradient(140deg, $mainTitle 20%, #575b66 80%);
 
-$blackGardiant: linear-gradient(180deg, $mainTitle 0%, #575b66 100%);
+$blackGardiant: linear-gradient(-90deg, $mainTitle 0%, #575b66 100%);
 $greyGardiant: linear-gradient(
   180deg,
   rgba(44, 46, 54, 0.8) 0%,

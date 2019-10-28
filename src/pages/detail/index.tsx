@@ -18,7 +18,7 @@ import DComment from "./components/comment";
 import DShop from "./components/shop";
 import DContent from "./components/detail";
 import DGoodsList from "./components/goodsList";
-
+import DAction from "./components/action";
 const Detail = () => {
   const {
     params: { id }
@@ -71,10 +71,10 @@ const Detail = () => {
     setData({ ...data, goodsId, price, goodsFullSpecs, number, img });
   };
 
-  console.log(data);
-
   // 购买数量
   const [goodsnum, setGoodsnum] = useState(1);
+
+  console.log(spec);
 
   return (
     <View className="detail-page">
@@ -107,6 +107,10 @@ const Detail = () => {
       </Skeleton>
 
       <DContent id={id} />
+
+      <Skeleton loading={loading} action animate row={1}>
+        <DAction data={data || {}} goodsnum={goodsnum} />
+      </Skeleton>
     </View>
   );
 };

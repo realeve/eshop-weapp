@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
 
-import { CButton, useSetState } from "@/components";
+import { CButton, useSetState, useTimeoutFn } from "@/components";
 import MobileWithCode from "../MobileWithCode";
 import {
   SMS_TYPE,
@@ -55,7 +55,11 @@ const LoginPhone = ({ callback, dispatch }) => {
     }
 
     callback && callback();
-    loadMember(dispatch);
+
+    // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
+    useTimeoutFn(() => {
+      loadMember(dispatch);
+    }, 500);
 
     // 载入购物车
     // loadShoppingCart(dispatch);

@@ -87,13 +87,6 @@ const handleImageList: (
 };
 
 export const handleGoodsData = data => {
-  let canBuy = false;
-  if (data) {
-    canBuy =
-      data.goodsDetail.goodsStatus &&
-      lib.canSelloutNow(data.goodsDetail.goodsSaleTime as {});
-  }
-
   let goodsCount = R.reduce(
     (sum, item: { goodsStorage: number }) => sum + item.goodsStorage,
     0
@@ -108,6 +101,14 @@ export const handleGoodsData = data => {
     afterSales: JSON.parse(data.storeInfo.storeAftersales || "[]")
   };
 
+  let res = initData(data.goodsDetail, storeData, goodsCount);
+  let canBuy = false;
+  if (data) {
+    canBuy =
+      data.goodsDetail.goodsStatus &&
+      lib.canSelloutNow(data.goodsDetail.goodsSaleTime as {}) &&
+      res.number > 0;
+  }
   console.log({
     storeData,
     goodsCount,
@@ -116,8 +117,6 @@ export const handleGoodsData = data => {
     hotData,
     storeService
   });
-
-  let res = initData(data.goodsDetail, storeData, goodsCount);
 
   return {
     ...res,

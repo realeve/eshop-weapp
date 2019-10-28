@@ -5,6 +5,8 @@ import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
 import { ICollection } from "@/pages/index/components/collectionList";
 import { LocalStorageKeys } from "@/utils/setting";
+import { IShoppingCartCount } from "@/utils/order/cartDB";
+import { loadMember } from "@/pages/login/db";
 
 export { Dispatch };
 export interface RouteData {
@@ -84,6 +86,7 @@ export interface IGlobalModel {
   newProduct: ICollection; // 新品
   menuList: IMenuItem[]; // 分类
   orderNum: IOrderNum;
+  shoppingCart: IShoppingCartCount; // 购物车
 }
 
 const state = {
@@ -93,6 +96,12 @@ const state = {
     batchId: "0",
     imageUrl: "",
     type: ""
+  },
+  shoppingCart: {
+    loading: true,
+    total: { num: 0, price: 0 },
+    data: [],
+    type: "offline"
   },
   cateList: [],
   collectionList: {
@@ -114,6 +123,10 @@ export const loadUserInfo = (dispatch: Dispatch) => {
   let user = Taro.getStorageSync(LocalStorageKeys.user) || { username: "" };
 
   Reflect.deleteProperty(user, "token");
+  if (user.username.length === 0) {
+    loadMember(dispatch);
+  }
+
   dispatch({
     type: "setStore",
     payload: {

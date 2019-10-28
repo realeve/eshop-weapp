@@ -12,6 +12,9 @@
     border: 2PX solid $yellow;
     margin: 0 auto;
 
+    @extend .alignRow;
+    flex-wrap: wrap;
+
     .item {
       width: -2+180px;
       height: -2+180px;

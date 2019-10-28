@@ -96,8 +96,8 @@ const MyOrder = ({ isLogin, dispatch }) => {
         }
       });
       return Object.values(orderNum);
-    },
-    valid: () => isLogin
+    }
+    // valid: () => isLogin
   });
 
   return (
@@ -125,6 +125,6 @@ const MyOrder = ({ isLogin, dispatch }) => {
   );
 };
 
-export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
+export default connect(({ common: { isLogin } }: IGlobalModel) => ({
   isLogin
 }))(MyOrder as any);

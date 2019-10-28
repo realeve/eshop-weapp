@@ -265,7 +265,7 @@ export const storeMember = (
 
   callback &&
     callback({
-      type: "global/setUserStore",
+      type: "common/setUserStore",
       payload: {
         user,
         isLogin: true
