@@ -256,3 +256,16 @@ export interface IShoppingCartItem {
   };
   detail: ICartDetail[];
 }
+
+export interface IShopInfo {
+  tags?: string[];
+  name: string;
+  id: number;
+  logo: string;
+  [keys: string]: any;
+}
+export interface ILocalStorageCartDetail extends ICartDetail {
+  shop: IShopInfo;
+  type: TCartType; // 离线或在线模式
+  [key: string]: any;
+}

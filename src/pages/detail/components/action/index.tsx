@@ -4,14 +4,67 @@ import "./index.scss";
 import { CButton } from "@/components";
 import serviceIcon from "./service.svg";
 
-import * as cartDb from "@/utils/order/cartDB";
+import * as cartDb from "@/utils/cartDB";
 import * as lib from "@/utils/lib";
+import { ShoppingCartItem, ICartItem } from "@/utils/order";
+import { connect } from "@tarojs/redux";
+import { IGlobalModel } from "@/models/common";
+
+import { IProductInfo, ISpecItem } from "../../lib";
+import * as R from "ramda";
+
+// 通过商品详情数据提取存储至购物车所需信息
+export const getLocalStorageConfigByData: (
+  data: IProductInfo,
+  cartItem: ICartItem
+) => cartDb.ILocalStorageCartDetail = (data, cartItem) => {
+  let specValue = R.find(R.propEq("goodsId", Number(cartItem.goodsId)))(
+    data.specValue || []
+  );
+
+  let specInfo: string[] = [];
+
+  let img = "";
+  if (specValue && data.specs) {
+    specValue.specValueIds.forEach((spec: number) => {
+      (data.specs || []).forEach((item: ISpecItem) => {
+        let name = item.specName;
+        let detail = R.find(R.propEq("specValueId", spec))(item.specValueList);
+        if (detail) {
+          specInfo.push(`${name}:${detail.specValueName}`);
+          img = detail.imageSrc || img;
+        }
+      });
+    });
+  }
+
+  return {
+    shop: {
+      id: data.shopId,
+      name: data.shopName
+    },
+    type: lib.isLogin() ? "online" : "offline",
+    spuid: Number(data.id),
+    id: Number(cartItem.goodsId),
+    name: data.title,
+    spec: specInfo.join(","),
+    price: Number(data.price),
+    num: Number(cartItem.buyNum),
+    valid: true,
+    storage: data.number,
+    img: img || data.img,
+    totalPrice: 0,
+    unitName: data.unitName
+  };
+};
 
 const fail = title =>
   Taro.showToast({
     title,
     icon: "none"
   });
+
+const success = title => Taro.showToast({ title });
 
 const checkTime = data => {
   if (!data.goodsSaleTime) {
@@ -25,16 +78,14 @@ const checkTime = data => {
   return true;
 };
 
-const DetailAction = ({ data, goodsnum }) => {
+const DetailAction = ({ data, goodsnum, dispatch }) => {
   console.log(data);
-  let buyData = [
-    {
-      buyNum: goodsnum,
-      goodsId: data.goodsId || data.id
-    }
-  ];
+  let cartItem = {
+    buyNum: goodsnum,
+    goodsId: data.goodsId || data.id
+  };
 
-  const addToCart = () => {
+  const addToCart = (addToCart: boolean = false) => {
     let status = checkTime(data);
     if (!status) {
       return;
@@ -44,12 +95,24 @@ const DetailAction = ({ data, goodsnum }) => {
       return;
     }
 
-    Taro.showToast({
-      title: "加入购物车对接"
-    });
+    // 添加购物车
+    let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
+
+    // 加购物车
+    cartDb
+      .cartAdd(params)
+      .then(() => {
+        success("添加购物车成功");
+        cartDb.setShoppingCart(
+          getLocalStorageConfigByData(data, cartItem),
+          dispatch
+        );
+      })
+      .catch(err => {
+        fail(`出错啦：${err.message}！`);
+      });
   };
 
-  console.log(buyData);
   return (
     <View className="detail-action">
       <View className="icons">
@@ -82,4 +145,7 @@ const DetailAction = ({ data, goodsnum }) => {
   );
 };
 
-export default DetailAction;
+export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
+  user,
+  isLogin
+}))(DetailAction as any);

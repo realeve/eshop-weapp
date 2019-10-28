@@ -6,6 +6,7 @@ import { getType, axios } from "./axios";
 import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
+export { getType, axios } from "./axios";
 
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
