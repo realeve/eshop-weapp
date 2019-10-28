@@ -1,9 +1,8 @@
 import Taro, { useState } from "@tarojs/taro";
 
 import { View, Text, RichText } from "@tarojs/components";
-import { AtCheckbox } from "taro-ui";
+import { AtCheckbox, AtFloatLayout } from "taro-ui";
 import { commonResponseHtml } from "@/utils/cbpm_doc";
-import { AtFloatLayout } from "taro-ui";
 import "./index.scss";
 import { CButton } from "@/components/";
 

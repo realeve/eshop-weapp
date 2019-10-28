@@ -4,8 +4,8 @@ import "./index.scss";
 import { AtFloatLayout } from "taro-ui";
 import classnames from "classnames";
 
-export default ({ show, onClose, className, ...props }) => {
-  let { children, ...extra } = props;
+export default props => {
+  let { show, onClose, className, children, ...extra } = props;
   return (
     <AtFloatLayout isOpened={show} onClose={onClose} scrollY {...extra}>
       <View className={classnames("CModal", className)}>

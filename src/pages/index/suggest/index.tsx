@@ -15,7 +15,7 @@ const Suggest = ({ data }: IProps) => {
     <View className="suggest-page">
       <View className="grid">
         {R.splitEvery(2, data.data).map((row, rowId) => (
-          <View className="row" key={rowId}>
+          <View className="row" key={rowId + ""}>
             {row.map(item => (
               <View className="item" key={item.titleCh}>
                 <Image mode="aspectFit" src={item.imageUrl} />

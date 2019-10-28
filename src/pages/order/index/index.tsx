@@ -9,16 +9,16 @@ interface IProps extends IOrderModel {
   dispatch: Dispatch;
   [key: string]: any;
 }
-const Order = ({ dispatch, ...props }: IProps) => {
+const Order = ({ dispatch, stateName }: IProps) => {
   useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
+    console.log("这里对数据的引用", stateName);
     dispatch({
       type: "order/setStore",
       payload: {
         stateName: "变更数据"
       }
     });
-  }, [props.stateName]);
+  }, [stateName]);
 
   return (
     <View className="order-page">

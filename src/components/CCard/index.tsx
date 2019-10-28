@@ -10,14 +10,8 @@ export interface ICardProp {
   className?: string;
   [key: string]: any;
 }
-const CCard = ({
-  title,
-  extra,
-  children,
-  style,
-  className,
-  ...extend
-}: ICardProp) => {
+const CCard = (props: ICardProp) => {
+  let { title, extra, children, style, className, ...extend } = props;
   return (
     <View className={classnames("CCard", className)} style={style}>
       <View className="head">

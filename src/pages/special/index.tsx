@@ -8,7 +8,7 @@ import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
-import { useFetch, SwiperItem, Swiper } from "@/components/";
+import { useFetch, CSwiperItem, CSwiper } from "@/components/";
 
 interface IProps {
   [key: string]: any;
@@ -26,7 +26,7 @@ const Special = ({ dispatch }: IProps) => {
   return (
     <View className="special-page">
       {subscribe && (
-        <Swiper
+        <CSwiper
           className="swiperCard"
           circular
           autoplay
@@ -36,7 +36,7 @@ const Special = ({ dispatch }: IProps) => {
           displayMultipleItems={1.6}
         >
           {subscribe.thumbList.map((item, id) => (
-            <SwiperItem key={item}>
+            <CSwiperItem key={item}>
               <Image
                 className="img"
                 src={item}
@@ -50,9 +50,9 @@ const Special = ({ dispatch }: IProps) => {
                   });
                 }}
               />
-            </SwiperItem>
+            </CSwiperItem>
           ))}
-        </Swiper>
+        </CSwiper>
       )}
       <Skeleton loading={loading} row={2} avatar>
         <SpecialAction data={subscribe} />

@@ -21,7 +21,7 @@ const CateList = ({ data }: IProps) => {
   return (
     <View className="cateList">
       {R.splitEvery(3, data).map((row, rowId) => (
-        <View className="row" key={rowId}>
+        <View className="row" key={rowId + ""}>
           {row.map(item => (
             <View className="item" key={item.titleCh}>
               {item.titleCh}

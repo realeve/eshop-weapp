@@ -24,16 +24,16 @@ interface IProps extends I${titleCase(dirName)}Model {
   dispatch: Dispatch;
   [key: string]: any;
 }
-const ${titleCase(dirName)} = ({ dispatch, ...props }: IProps) => {
+const ${titleCase(dirName)} = ({ dispatch, stateName }: IProps) => {
   useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
+    console.log("这里对数据的引用", stateName);
     dispatch({
       type: "${dirName}/setStore",
       payload: {
         stateName: "变更数据"
       }
     });
-  }, [props.stateName]);
+  }, [stateName]);
 
   return (
     <View className="${dirName}-page">

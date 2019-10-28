@@ -20,41 +20,45 @@ export interface IPropPrice {
  * @param counterStyle 折扣前价格的文本样式，控制颜色，大小
  * @param direction 实际价格与折扣前价格的方向  row(默认) | column
  */
-const CPrice: (props: IPropPrice) => React.ReactElement = ({
-  counter = 0,
-  retail = 0,
-  counterStyle,
-  retailStyle,
-  className,
-  priceClassName,
-  direction = "row",
-  ...rest
-}) => (
-  <View
-    className={classNames(
-      "cPrice",
-      { ["direction"]: direction === "column" },
-      className
-    )}
-    {...rest}
-  >
-    {retail > 0 && (
-      <View
-        className={classNames("retail", priceClassName)}
-        style={retailStyle}
-      >
-        ¥ {(+retail).toFixed(2)}
-      </View>
-    )}
-    {counter > 0 && counter != retail && (
-      <View
-        className={classNames("counter", priceClassName)}
-        style={counterStyle}
-      >
-        ¥{(+counter).toFixed(2)}
-      </View>
-    )}
-  </View>
-);
+const CPrice: (props: IPropPrice) => React.ReactElement = props => {
+  const {
+    counter = 0,
+    retail = 0,
+    counterStyle,
+    retailStyle,
+    className,
+    priceClassName,
+    direction = "row",
+    ...rest
+  } = props;
+
+  return (
+    <View
+      className={classNames(
+        "cPrice",
+        { ["direction"]: direction === "column" },
+        className
+      )}
+      {...rest}
+    >
+      {retail > 0 && (
+        <View
+          className={classNames("retail", priceClassName)}
+          style={retailStyle}
+        >
+          ¥ {(+retail).toFixed(2)}
+        </View>
+      )}
+      {counter > 0 && counter != retail && (
+        <View
+          className={classNames("counter", priceClassName)}
+          style={counterStyle}
+        >
+          ¥{(+counter).toFixed(2)}
+        </View>
+      )}
+    </View>
+  );
+};
 
 export default CPrice;

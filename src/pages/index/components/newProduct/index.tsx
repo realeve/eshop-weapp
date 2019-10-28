@@ -11,7 +11,7 @@ const NewProduct = ({ data }: IProps) => {
       <TitleItem data={data} />
       <View className="grid">
         {R.splitEvery(3, data.data).map((row, rowId) => (
-          <View className="row" key={rowId}>
+          <View className="row" key={rowId + ""}>
             {row.map(item => (
               <View className="item">
                 <Image

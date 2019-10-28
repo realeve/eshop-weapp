@@ -15,7 +15,7 @@ export default ({ data, title }) => (
       indicatorActiveColor="#b98a4e"
     >
       {R.splitEvery(3, data).map((group, index) => (
-        <SwiperItem key={index} className="home-pin__swiper-item">
+        <SwiperItem key={index + ""} className="home-pin__swiper-item">
           {group.map(item => (
             <View key={item.commonId} className="home-pin__item">
               <Image
