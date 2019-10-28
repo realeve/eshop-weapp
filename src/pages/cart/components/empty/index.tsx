@@ -12,7 +12,7 @@ const EmptyCart = () => (
     <View className="title">您当前购物车空空如也~</View>
     <CButton
       onClick={() => {
-        Taro.navigateTo({
+        Taro.switchTab({
           url: "/pages/index"
         });
       }}

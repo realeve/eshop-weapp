@@ -14,6 +14,7 @@ import { IProductInfo, ISpecItem } from "../../lib";
 import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
+import { useTimeoutFn } from "@/components";
 
 // 通过商品详情数据提取存储至购物车所需信息
 export const getLocalStorageConfigByData: (
@@ -133,7 +134,7 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
             className="at-icon at-icon-shopping-cart"
             style="font-size:24px;"
             onClick={() => {
-              Taro.navigateTo({
+              Taro.switchTab({
                 url: "/pages/cart"
               });
             }}
