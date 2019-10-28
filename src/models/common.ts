@@ -120,10 +120,10 @@ const state = {
 
 // 载入登录信息
 export const loadUserInfo = (dispatch: Dispatch) => {
-  let user = Taro.getStorageSync(LocalStorageKeys.user) || { username: "" };
+  let user = Taro.getStorageSync(LocalStorageKeys.user) || { memberName: "" };
 
   Reflect.deleteProperty(user, "token");
-  if (user.username.length === 0) {
+  if (user.memberName.length === 0) {
     loadMember(dispatch);
   }
 
