@@ -1,10 +1,11 @@
-import Taro, { useEffect, useState } from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
 import DefaultAvatar from "@/pages/user/components/userHeader/headerLogo.png";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import LoginPhone from "./components/LoginPhone";
+import LoginPassword from "./components/LoginPassword";
 
 // interface IProps {
 //   [key: string]: any;
@@ -28,9 +29,9 @@ const Login = () => {
           <LoginPhone />
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
-          <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;">
-            标签页二的内容
-          </View>
+          {/* <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;"> */}
+          <LoginPassword />
+          {/* </View> */}
         </AtTabsPane>
       </AtTabs>
 

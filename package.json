@@ -49,6 +49,7 @@
     "dayjs": "^1.8.16",
     "dva-core": "^2.0.0",
     "dva-loading": "^3.0.14",
+    "moment": "^2.24.0",
     "nerv-devtools": "^1.5.1",
     "nervjs": "^1.5.1",
     "ramda": "^0.26.1",
