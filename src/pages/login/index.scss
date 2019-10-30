@@ -13,6 +13,9 @@
   }
   .at-tabs {
     height: unset;
+    .at-modal{
+      position: absolute;
+    }
   }
   .action {
     margin: 56px auto 40px auto;
