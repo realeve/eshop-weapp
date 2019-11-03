@@ -6,10 +6,16 @@
   justify-content: space-between;
   @extend .vcenter;
 
-  background: url("./banner.svg") no-repeat;
+  background: url("https://www.cbpc.ltd/ccgold/static/banner.svg") no-repeat;
   background-size: cover;
 
   padding: 0 20px;
+  .setting {
+    color: $white;
+  }
+}
+.notLogin,
+.isLogin {
   .avatar {
     @extend .alignRow;
     .avatarImg {
@@ -48,8 +54,5 @@
         font-size: $heading-5-size;
       }
     }
-  }
-  .setting {
-    color: $white;
   }
 }
