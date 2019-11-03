@@ -1,6 +1,6 @@
 import { useState, useEffect } from "@tarojs/taro";
 import { mock, axios, AxiosError } from "@/utils/axios";
-import http, { AxiosRequestConfig } from "axios";
+import { axios as http, AxiosRequestConfig } from "taro-axios";
 import * as R from "ramda";
 
 /**

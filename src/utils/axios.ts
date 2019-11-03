@@ -1,4 +1,4 @@
-import http, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { axios as http, AxiosRequestConfig, AxiosResponse } from "taro-axios";
 import qs from "qs";
 import { host } from "./setting";
 import * as R from "ramda";

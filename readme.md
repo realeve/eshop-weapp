@@ -76,3 +76,17 @@ git reset --hard origin/dev
 ## 编译到微信小程序报错
 
 > no such file or directory, open '项目目录 \node_modules\taro-ui\dist\weapp\style\themes\purple.scss'
+
+把整个 style 目录拷到对应目录
+
+## 🐛🐛🐛🐛🐛🐛🐛🐛🐛🐛🐛 修复小程序 axios 引用报错
+
+[https://github.com/fjc0k/taro-axios](https://github.com/fjc0k/taro-axios)
+
+```
+> 因为 Taro 不支持解析 package.json 里的 browser 属性，导致所有使用了该特性的包都可能无法在 Taro 里正常运行。不幸的是，axios 就是其中之一。
+
+> 于是，taro-axios 预先解析了 axios 包中的 browser 属性并提供了 Taro 版的请求适配器后，将之打包出了一个 Taro 可用的版本。
+
+> 也就是说，taro-axios 只是 axios 的 Taro 重制版，并非是为 Taro 仿写了一个 axios。axios 提供什么，taro-axios 也就提供什么特性
+```
