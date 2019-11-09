@@ -20,9 +20,6 @@ export interface IProps extends IGlobalModel {
 }
 const Index = ({ special, cateList, collectionList, newProduct }: IProps) => {
   let [pos, setPos] = useState(0);
-  // usePageScroll(res => {
-  //   setPos(handlePos(res));
-  // });
 
   const onScroll = event => {
     setPos(handlePos(event.detail));

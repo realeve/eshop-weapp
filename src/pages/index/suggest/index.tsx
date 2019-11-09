@@ -18,7 +18,7 @@ const Suggest = ({ data = { data: [] } }: IProps) => {
           <View className="row" key={rowId + ""}>
             {row.map(item => (
               <View className="item" key={item.titleCh}>
-                <Image mode="aspectFit" src={item.imageUrl} />
+                <Image mode="aspectFit" src={item.imageUrl} className="img" />
                 <View className="detail">
                   <View className="title">{item.goodsTitle}</View>
                   <View className="subTitle">

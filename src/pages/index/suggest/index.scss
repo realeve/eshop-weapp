@@ -9,6 +9,9 @@
     .row {
       display: flex;
       margin-bottom: $componentSpan;
+      &:last-child {
+        margin-bottom: 0;
+      }
       .item {
         flex: 1;
         background-color: $white;
@@ -30,9 +33,9 @@
           }
         }
       }
-      .taro-img {
-        width: unset;
-        height: unset;
+      .img {
+        width: 49vw;
+        height: 51vw;
       }
     }
   }
