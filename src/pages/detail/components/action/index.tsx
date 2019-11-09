@@ -4,7 +4,7 @@ import "./index.scss";
 import { CButton } from "@/components";
 import serviceIcon from "./service.svg";
 
-import * as cartDb from "@/utils/cartDB";
+import * as cartDb from "@/utils/cartDb";
 import * as lib from "@/utils/lib";
 import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { connect } from "@tarojs/redux";

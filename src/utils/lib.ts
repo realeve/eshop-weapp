@@ -227,7 +227,7 @@ export const getSaleTimeRange: (param: { range: string }) => string = ({
 
 export const checkSaleTimeToday: (week: number) => boolean = week => {
   if (week > 127 || week < 0) {
-    throw "销售周期设置错误";
+    return Promise.reject("销售周期设置错误");
   }
   // 此处待调试
   let today = moment().day(0);

@@ -1,19 +1,22 @@
 import Taro from "@tarojs/taro";
-import { CCard } from "@/components";
-import { View, Image } from "@tarojs/components";
-import "./index.scss";
-
+import { View, Text } from "@tarojs/components";
 import needPay from "./needPay.png";
 import needConfirm from "./needConfirm.png";
 import needSend from "./needSend.png";
 import refund from "./refund.png";
 import needReceive from "./sending.png";
+
 import { connect } from "@tarojs/redux";
 import { IGlobalModel, updateStore } from "@/models/common";
-import { useFetch } from "@/components/";
+import useFetch from "@/components/hooks/useFetch";
 import Skeleton from "taro-skeleton";
-import { AtBadge } from "taro-ui";
 import { ORDER } from "@/utils/api";
+
+import OrderItem from "./OrderItem";
+import "@/components/CCard/index.scss";
+import "./index.scss";
+
+import "taro-ui/dist/weapp/style/components/icon.scss";
 
 // ordersStatePayCount 待发货数量
 // ordersStateEvaluationCount 待评价数量
@@ -56,35 +59,7 @@ const linkList = [
   }
 ];
 
-const OrderItem = ({
-  data,
-  value
-}: {
-  value: number;
-  data: {
-    text: string;
-    img: any;
-    link: string;
-  };
-}) => {
-  let Detail = () => (
-    <View className="linkItem">
-      <View>
-        <Image src={data.img} className="icon" />
-      </View>
-      <View>{data.text}</View>
-    </View>
-  );
-
-  return value > 0 ? (
-    <AtBadge value={value}>
-      <Detail />
-    </AtBadge>
-  ) : (
-    <Detail />
-  );
-};
-const MyOrder = ({ isLogin, dispatch }) => {
+const MyOrder = ({ dispatch, isLogin }) => {
   const { data: orderNumber, loading } = useFetch({
     param: ORDER.orderStatusNumber,
     callback: e => {
@@ -96,32 +71,35 @@ const MyOrder = ({ isLogin, dispatch }) => {
         }
       });
       return Object.values(orderNum);
-    }
-    // valid: () => isLogin
+    },
+    valid: () => isLogin
   });
 
   return (
-    <CCard
-      title="我的订单"
-      extra={
-        <View>
-          全部订单 <View className="at-icon at-icon-chevron-right" />
+    <View className="CCard" style="margin-top:10px;">
+      <View className="head">
+        <View className="title">我的订单</View>
+        <View className="extra">
+          <Text>
+            全部订单
+            <View className="at-icon at-icon-chevron-right" />
+          </Text>
         </View>
-      }
-      style={{ marginTop: 10 }}
-    >
-      <Skeleton animate loading={loading} row={2}>
-        <View className="usercenterOrderLinkList">
-          {linkList.map((item, idx) => (
-            <OrderItem
-              key={item.text}
-              data={item}
-              value={(orderNumber || [])[idx]}
-            />
-          ))}
+      </View>
+      <Skeleton animate loading={loading && isLogin} row={2}>
+        <View className="content">
+          <View className="usercenterOrderLinkList">
+            {linkList.map((item, idx) => (
+              <OrderItem
+                key={item.text}
+                data={item}
+                value={(orderNumber || [])[idx]}
+              />
+            ))}
+          </View>
         </View>
       </Skeleton>
-    </CCard>
+    </View>
   );
 };
 

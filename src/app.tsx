@@ -29,19 +29,19 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      "pages/index/index", // 首页
+      // "pages/index/index", // 首页
       "pages/cart/cart", // 购物车
-      "pages/index/suggest/index", // 精彩推荐
+      // "pages/index/suggest/index", // 精彩推荐
       "pages/cate/cate", // 分类
-      "pages/order/confirm/index", // 立即购买
+      // "pages/order/confirm/index", // 立即购买
       "pages/user/index", // 个人中心
-      "pages/find/index", // 发现
-      "pages/login/index", // 登录
-      "pages/special/index", // 特品
-      "pages/special/detail/index", // 特品详情
-      "pages/special/result/index", // 特品结果
-      "pages/special/rule/index", // 特品规则
-      "pages/detail/index"
+      "pages/find/index" // 发现
+      // "pages/login/index", // 登录
+      // "pages/special/index", // 特品
+      // "pages/special/detail/index", // 特品详情
+      // "pages/special/result/index", // 特品结果
+      // "pages/special/rule/index", // 特品规则
+      // "pages/detail/index"
     ],
     window: {
       backgroundTextStyle: "light",
@@ -52,12 +52,12 @@ class App extends Component {
 
     tabBar: {
       list: [
-        {
-          pagePath: "pages/index/index",
-          text: "首页",
-          iconPath: "./images/tab/home.png",
-          selectedIconPath: "./images/tab/home-active.png"
-        },
+        // {
+        //   pagePath: "pages/index/index",
+        //   text: "首页",
+        //   iconPath: "./images/tab/home.png",
+        //   selectedIconPath: "./images/tab/home-active.png"
+        // },
         {
           pagePath: "pages/cate/cate",
           text: "分类",

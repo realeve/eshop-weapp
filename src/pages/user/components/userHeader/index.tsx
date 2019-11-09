@@ -7,10 +7,16 @@ import NotLogin from "./NotLogin";
 import IsLogin from "./IsLogin";
 import Skeleton from "taro-skeleton";
 
+// const TestComponent = () => (
+//   <View>
+//     <Text>dafasdf</Text>
+//   </View>
+// );
 const UserHeader = ({ user, loading }) => {
   return (
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
+        {/* <TestComponent /> */}
         {!user.uid ? <NotLogin /> : <IsLogin data={user} />}
         <View className="at-icon at-icon-settings setting" />
       </View>

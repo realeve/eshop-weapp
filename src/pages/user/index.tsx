@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.scss";
 
-import { UserHeader, MyOrder, MyService } from "./components";
+import { UserHeader, MyOrder, MyService } from "./components/index";
 
 const User = () => {
   return (

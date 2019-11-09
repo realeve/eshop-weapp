@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import "./index.scss";
 import { AtList, AtListItem } from "taro-ui";
 import address from "./address.png";

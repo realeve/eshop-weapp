@@ -10,17 +10,7 @@ interface IProps extends ICartModel {
   dispatch: Dispatch;
   [key: string]: any;
 }
-const Cart = ({ dispatch, stateName }: IProps) => {
-  useEffect(() => {
-    console.log("这里对数据的引用", stateName);
-    dispatch({
-      type: "cart/setStore",
-      payload: {
-        stateName: "变更数据"
-      }
-    });
-  }, [stateName]);
-
+const Cart = (props: IProps) => {
   return (
     <View className="cart-page">
       <EmptyCart />
@@ -32,6 +22,8 @@ Cart.config = {
   navigationBarTitleText: "购物车"
 };
 
-export default connect(({ cart }) => ({
+export default Cart;
+
+connect(({ cart }) => ({
   ...cart
 }))(Cart as any);

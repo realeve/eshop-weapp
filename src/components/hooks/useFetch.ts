@@ -113,7 +113,7 @@ const useFetch = <T extends {} | void>({
       .catch((e: any) => {
         setError(e);
         setLoading(false);
-        throw e;
+        return Promise.reject(e);
       });
 
     // 路由变更时，取消axios

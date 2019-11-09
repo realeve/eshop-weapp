@@ -1,25 +1,27 @@
 @import "@/styles/theme.scss";
 .usercenterOrderLinkList {
   @extend .alignRow;
-  .linkItem {
-    color: $yellow;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font: {
-      size: $fontSizeNormal;
-      weight: normal;
-    }
-
-    .icon {
-      width: 50px;
-      height: 50px;
-    }
-  }
+  justify-content: space-between;
   .at-badge__num {
     /* prettier-ignore */
     top: -10PX;
     right: 0px;
+  }
+}
+
+.linkItem {
+  color: $yellow;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font: {
+    size: $fontSizeNormal;
+    weight: normal;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
   }
 }

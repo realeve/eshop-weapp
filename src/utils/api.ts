@@ -1,4 +1,4 @@
-import { Method } from "taro-axios";
+import { Method } from "axios";
 
 export const API: {
   [key: string]: string | { method?: Method; url: string };

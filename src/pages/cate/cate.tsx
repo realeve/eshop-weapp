@@ -1,9 +1,10 @@
 import Taro, { useEffect } from "@tarojs/taro";
-import { View, ScrollView } from "@tarojs/components";
+import { View, ScrollView, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { ICateModel } from "./model";
+import { IMenuItem as ICateModel } from "../../models/common";
+
 import { getWindowHeight } from "@/utils/style";
-import { useSetState } from "@/components";
+import useSetState from "@/components/hooks/useSetState";
 
 import Search from "@/pages/index/components/search/";
 
@@ -27,18 +28,18 @@ interface IMenuList extends IMenuItem {
   [key: string]: any;
 }
 
-interface IProps extends ICateModel {
+interface IProps {
   menuList: IMenuList;
   [key: string]: any;
 }
 
 const Index = ({ menuList }: IProps) => {
   const height = getWindowHeight();
+
   const [state, setState] = useSetState({
     current: 0,
     list: (menuList[0] && menuList[0].cates) || []
   });
-
   const handleMenu = (current: number) => {
     let list = menuList.find(item => item.id == current) || { cates: [] };
     setState({

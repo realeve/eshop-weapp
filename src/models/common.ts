@@ -12,6 +12,8 @@ import {
 } from "@/utils/cartDB";
 import { loadMember } from "@/pages/login/db";
 
+import { get as getGlobalData } from "@/utils/global_data";
+
 export { Dispatch };
 export interface RouteData {
   pathname: string;
@@ -20,7 +22,7 @@ export interface RouteData {
   state?: any;
 }
 
-interface IMenuItem {
+export interface IMenuItem {
   menuAd: never[];
   menuId: number;
   menuItemList: {
@@ -125,12 +127,12 @@ const state = {
 };
 
 // 载入登录信息
-export const loadUserInfo = (dispatch: Dispatch) => {
+export const loadUserInfo = async (dispatch: Dispatch) => {
   let user = Taro.getStorageSync(LocalStorageKeys.user) || { memberName: "" };
 
   Reflect.deleteProperty(user, "token");
   if (user.memberName.length === 0) {
-    loadMember(dispatch);
+    user = await loadMember(dispatch).catch(() => ({}));
   }
 
   dispatch({
@@ -140,6 +142,7 @@ export const loadUserInfo = (dispatch: Dispatch) => {
       isLogin: user && user.uid > 0
     }
   });
+  return user;
 };
 
 const namespace = "common";
@@ -159,32 +162,25 @@ export default {
           // componentE
         } = res;
         let payload = {};
-
         if (special) {
           payload = { ...payload, special };
         }
-
         if (componentB) {
           payload = { ...payload, cateList: componentB.data };
         }
-
         if (componentC) {
           payload = { ...payload, collectionList: componentC };
         }
-
         if (componentD) {
           payload = { ...payload, newProduct: componentD };
         }
-
         dispatch({
           type: "setStore",
           payload
         });
-
         // 热卖产品，后端暂无返回
         // console.log(componentE);
       });
-
       db.loadMenuList().then(menuList => {
         let menus = menuList.map(item => ({
           name: item.menuName,
@@ -205,11 +201,14 @@ export default {
         });
       });
 
-      // 载入用户登录信息
-      await loadUserInfo(dispatch);
-
-      // 载入购物车信息
-      loadShoppingCart(dispatch);
+      let token = getGlobalData("token");
+      if (token.length > 0) {
+        // 载入用户登录信息
+        await loadUserInfo(dispatch).then(() => {
+          // 载入购物车信息
+          loadShoppingCart(dispatch);
+        });
+      }
     }
   }
 };

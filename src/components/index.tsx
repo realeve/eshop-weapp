@@ -17,7 +17,7 @@ export { default as CDot } from "./CDot";
 
 export { default as CMaginify } from "./CMaginify";
 
-export type TReactNode = JSX.Element | JSX.Element[] | string | null | never[];
+export type TReactNode = string | null | never[]; // JSX.Element | JSX.Element[] |
 
 export { default as CModal } from "./CModal";
 export { default as CCardLite } from "./CCardLite";
