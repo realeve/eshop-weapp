@@ -1,4 +1,6 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/weapp/style/components/icon.scss";
+
 .usercenterOrderLinkList {
   @extend .alignRow;
   justify-content: space-between;

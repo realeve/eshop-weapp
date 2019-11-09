@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
 .CCard {
-  padding: 0.512rem;
+  padding: 24px;
   background-color: $white;
   .head {
     @extend .alignRow;
@@ -8,7 +8,7 @@
     align-items: flex-end;
     .title {
       font: {
-        weight: bold;
+        // weight: bold;
         size: $fontSizeBase;
       }
       color: $mainTitle;
@@ -17,7 +17,7 @@
       color: $subTitle;
       font-size: $fontSizeNormal;
     }
-    padding-bottom: 5px;
+    padding-bottom: 24px;
     /* prettier-ignore */
     border-bottom: 1PX solid $borderColorGrey;
   }

@@ -16,8 +16,6 @@ import OrderItem from "./OrderItem";
 import "@/components/CCard/index.scss";
 import "./index.scss";
 
-import "taro-ui/dist/weapp/style/components/icon.scss";
-
 // ordersStatePayCount 待发货数量
 // ordersStateEvaluationCount 待评价数量
 // refundAndReturnCount 退款退货数
@@ -80,10 +78,8 @@ const MyOrder = ({ dispatch, isLogin }) => {
       <View className="head">
         <View className="title">我的订单</View>
         <View className="extra">
-          <Text>
-            全部订单
-            <View className="at-icon at-icon-chevron-right" />
-          </Text>
+          <Text>全部订单</Text>
+          <View className="at-icon at-icon-chevron-right" />
         </View>
       </View>
       <Skeleton animate loading={loading && isLogin} row={2}>
