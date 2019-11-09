@@ -56,9 +56,9 @@ const Special = ({ dispatch }: IProps) => {
           ))}
         </CSwiper>
       )} */}
-      {/* <Skeleton loading={loading} row={2} avatar>
-        <SpecialAction data={subscribe} />
-      </Skeleton> */}
+      <Skeleton loading={loading} row={2} avatar>
+        <SpecialAction data={subscribe || {}} />
+      </Skeleton>
       <Text>adfasdf{specialId}</Text>
     </View>
   );

@@ -1,8 +1,8 @@
 import Taro from "@tarojs/taro";
 import { View, RichText } from "@tarojs/components";
 import { AtFloatLayout } from "taro-ui";
-import "./index.scss";
 import { CButton } from "@/components/";
+import "./index.scss";
 
 //  process.env.TARO_ENV === 'weapp'
 const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;
@@ -31,20 +31,25 @@ const ResPage = ({
     {isWEB ? (
       <View dangerouslySetInnerHTML={{ __html: html }} />
     ) : (
-      <RichText nodes={html || ""} />
+      <RichText nodes={html || ""} style="line-height:2em;" />
     )}
-    <View className="actions">
+    <View className="response__actions">
       <CButton
         theme="gardient"
-        className="btn"
+        size="small"
         onClick={() => {
           setShowPanel(needAgree);
         }}
+        style="width:100px;"
       >
         {needAgree ? "同意" : "关闭"}
       </CButton>
       {needAgree && (
-        <CButton className="btn" onClick={() => onCancel(false)}>
+        <CButton
+          style="width:100px;"
+          size="small"
+          onClick={() => onCancel(false)}
+        >
           不同意
         </CButton>
       )}

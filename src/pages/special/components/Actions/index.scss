@@ -17,17 +17,17 @@
     align-items: center;
     .text {
       font-size: $font-size-xs;
+      margin-right: 10px;
+      .price {
+        @extend .alignRow;
+        align-items: center;
+        justify-content: flex-end;
+      }
     }
-    .price {
-      @extend .alignRow;
-      align-items: center;
-      justify-content: flex-end;
-    }
-    .btn {
-      width: 240px;
-      height: 72px;
-      font-size: $font-size-sm;
-      margin-left: 10px;
-    }
+    // .btn {
+    //   width: 240px;
+    //   height: 72px;
+    //   font-size: $font-size-sm;
+    // }
   }
 }

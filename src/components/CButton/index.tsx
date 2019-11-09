@@ -1,18 +1,26 @@
 import Taro, { Component } from "@tarojs/taro";
 import "./index.scss";
 import classnames from "classnames";
-import { AtButton } from "taro-ui";
+import { Button } from "@tarojs/components";
 
 export default class CButton extends Component {
   render() {
-    const { children, theme = "", className, onClick } = this.props;
+    const {
+      children,
+      theme = "",
+      className,
+      onClick,
+      size,
+      style
+    } = this.props;
     return (
-      <AtButton
-        className={classnames(className, "cButton" + theme)}
+      <Button
+        className={classnames(className, "cButton" + theme, "cButton" + size)}
         onClick={onClick}
+        style={style}
       >
         {children}
-      </AtButton>
+      </Button>
     );
   }
 }

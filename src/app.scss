@@ -1,3 +1,5 @@
+@import "@/styles/theme.scss";
+
 .taro-tabbar {
   &__tabbar {
     box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
@@ -23,4 +25,14 @@
 @font-face {
   font-family: "priceFont";
   src: url("./components/CPrice/price.ttf");
+}
+
+.at-checkbox {
+  &__title {
+    font-size: $font-size-sm !important;
+  }
+  &:before,
+  &:after {
+    border: none !important;
+  }
 }

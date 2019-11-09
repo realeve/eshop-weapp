@@ -11,6 +11,12 @@
     border: none;
     background: $blackGardiant;
   }
+  &small {
+    min-width: 180px;
+    height: 72px;
+    line-height: 72px;
+    font-size: $font-size-base;
+  }
 }
 
 .at-button__text {

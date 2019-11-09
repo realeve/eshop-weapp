@@ -1,29 +1,28 @@
 import Taro, { useState } from "@tarojs/taro";
-import { CPrice, CButton } from "@/components"; // ResponseNotice
+import { CPrice, CButton, ResponseNotice } from "@/components";
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { ISubscribe } from "../db";
 import classnames from "classnames";
 import { jump } from "@/utils/lib";
-import "@/components/CButton/index.scss";
 
 interface IProps {
   data: ISubscribe;
   [key: string]: any;
 }
-const SpecialAction = ({ data, className }: IProps) => {
+const SpecialAction = ({ data = {}, className }: IProps) => {
   const [agree, setAgree] = useState(false);
   return (
     <View className={classnames("special__action", className)}>
       <View className="readme">
-        {/* <ResponseNotice needAgree onChange={setAgree} /> */}
+        <ResponseNotice needAgree onChange={setAgree} />
       </View>
 
       <View className="buy">
         <View className="text">
           <View className="price">
             <Text style={{ marginRight: 5 }}>预约价</Text>
-            <CPrice retail={data.goodsPrice || 0} />
+            <CPrice retail={data.goodsPrice} />
           </View>
           <View className="tips">10天15小时20分后关闭预约</View>
         </View>
@@ -51,6 +50,7 @@ const SpecialAction = ({ data, className }: IProps) => {
             }, 1000);
           }}
           theme="gardient"
+          size="small"
         >
           立即预约
         </CButton>
