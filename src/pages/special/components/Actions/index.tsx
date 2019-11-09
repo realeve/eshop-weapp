@@ -1,10 +1,11 @@
 import Taro, { useState } from "@tarojs/taro";
-import { CButton, CPrice, ResponseNotice } from "@/components/";
+import { CPrice, CButton } from "@/components"; // ResponseNotice
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { ISubscribe } from "../db";
 import classnames from "classnames";
 import { jump } from "@/utils/lib";
+import "@/components/CButton/index.scss";
 
 interface IProps {
   data: ISubscribe;
@@ -15,7 +16,7 @@ const SpecialAction = ({ data, className }: IProps) => {
   return (
     <View className={classnames("special__action", className)}>
       <View className="readme">
-        <ResponseNotice needAgree onChange={setAgree} />
+        {/* <ResponseNotice needAgree onChange={setAgree} /> */}
       </View>
 
       <View className="buy">
@@ -50,7 +51,6 @@ const SpecialAction = ({ data, className }: IProps) => {
             }, 1000);
           }}
           theme="gardient"
-          className="btn"
         >
           立即预约
         </CButton>

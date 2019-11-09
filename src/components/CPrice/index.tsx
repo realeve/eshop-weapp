@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import "./index.scss";
 import classNames from "classnames";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 export interface IPropPrice {
   counter?: string | number;
@@ -28,8 +28,8 @@ const CPrice = (props: IPropPrice) => {
     retailStyle,
     className,
     priceClassName,
-    direction = "row"
-    // ...rest
+    direction = "row",
+    ...rest
   } = props;
 
   return (
@@ -39,23 +39,23 @@ const CPrice = (props: IPropPrice) => {
         { ["direction"]: direction === "column" },
         className
       )}
-      // {...rest}
+      {...rest}
     >
       {retail > 0 && (
-        <View
+        <Text
           className={classNames("retail", priceClassName)}
           style={retailStyle}
         >
           ¥ {(+retail).toFixed(2)}
-        </View>
+        </Text>
       )}
       {counter > 0 && counter != retail && (
-        <View
+        <Text
           className={classNames("counter", priceClassName)}
           style={counterStyle}
         >
           ¥{(+counter).toFixed(2)}
-        </View>
+        </Text>
       )}
     </View>
   );

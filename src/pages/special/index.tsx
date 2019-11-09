@@ -3,12 +3,13 @@ import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
 import { handleSubscribe, ISubscribe } from "./db";
-import { View, Image } from "@tarojs/components"; // Swiper,
+import { View, Text, Image, Swiper } from "@tarojs/components";
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
-import { useFetch, CSwiperItem, CSwiper } from "@/components/";
+import useFetch from "@/components/hooks/useFetch";
+// , CSwiperItem, CSwiper
 
 interface IProps {
   [key: string]: any;
@@ -22,10 +23,11 @@ const Special = ({ dispatch }: IProps) => {
     callback: e => handleSubscribe(e, dispatch),
     valid: () => specialId > "0"
   });
+  console.log(loading, subscribe);
 
   return (
     <View className="special-page">
-      {subscribe && (
+      {/* {subscribe && (
         <CSwiper
           className="swiperCard"
           circular
@@ -53,10 +55,11 @@ const Special = ({ dispatch }: IProps) => {
             </CSwiperItem>
           ))}
         </CSwiper>
-      )}
-      <Skeleton loading={loading} row={2} avatar>
+      )} */}
+      {/* <Skeleton loading={loading} row={2} avatar>
         <SpecialAction data={subscribe} />
-      </Skeleton>
+      </Skeleton> */}
+      <Text>adfasdf{specialId}</Text>
     </View>
   );
 };
@@ -64,6 +67,8 @@ const Special = ({ dispatch }: IProps) => {
 Special.config = {
   navigationBarTitleText: "最新预约"
 };
+
+// export default Special;
 
 export default connect(({ common }) => ({
   user: common.user
