@@ -10,6 +10,7 @@ export interface IProps {
 }
 
 const BannerImg = ({ special }: IProps) => {
+  console.log(special);
   return special.batchId > 0 ? (
     <Image
       src={special.imageUrl}
