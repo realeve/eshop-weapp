@@ -1,10 +1,10 @@
 import Taro from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./index.scss";
-import { CButton } from "@/components";
+import CButton from "@/components/CButton";
 import serviceIcon from "./service.svg";
 
-import * as cartDb from "@/utils/cartDb";
+// import * as cartDb from "@/utils/cartDb";
 import * as lib from "@/utils/lib";
 import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { connect } from "@tarojs/redux";
@@ -14,6 +14,8 @@ import { IProductInfo, ISpecItem } from "../../lib";
 import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
+import fail from "./fail";
+// import success from "./success";
 
 // 通过商品详情数据提取存储至购物车所需信息
 export const getLocalStorageConfigByData: (
@@ -62,14 +64,6 @@ export const getLocalStorageConfigByData: (
   };
 };
 
-const fail = title =>
-  Taro.showToast({
-    title,
-    icon: "none"
-  });
-
-const success = title => Taro.showToast({ title });
-
 const checkTime = data => {
   if (!data.goodsSaleTime) {
     return true;
@@ -82,12 +76,17 @@ const checkTime = data => {
   return true;
 };
 
-const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
-  console.log(data);
-  let cartItem = {
-    buyNum: goodsnum,
-    goodsId: data.goodsId || data.id
-  };
+const DetailAction = ({
+  data: state,
+  goodsnum,
+  dispatch,
+  isLogin,
+  shoppingCart
+}) => {
+  // 小程序中处理不了data||{}
+  // 在组件还未载入时，小程序会在运行时加载组件，同时传入的所有数据：data/goodsnum均为undefined
+
+  let data = state || {};
 
   const addToCart = (directBuy: boolean = false) => {
     // 暂时只调试在线购物车，离线购物车暂不对接
@@ -108,29 +107,34 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
       return;
     }
 
-    // 添加购物车
-    let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
+    // let cartItem = {
+    //   buyNum: goodsnum,
+    //   goodsId: data.goodsId || data.id
+    // };
 
-    // 需要立即购买的商品信息；
-    const cartConfirm = getLocalStorageConfigByData(data, cartItem);
+    // // 添加购物车
+    // let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
 
-    // 立即购买
-    if (directBuy) {
-      cartDb.addConfirmCart(dispatch, [cartConfirm]);
-      Taro.navigateTo({ url: "/pages/order/confirm/index" });
-      return;
-    }
+    // // 需要立即购买的商品信息；
+    // const cartConfirm = getLocalStorageConfigByData(data, cartItem);
 
-    // 加购物车
-    cartDb
-      .cartAdd(params)
-      .then(() => {
-        success("添加购物车成功");
-        cartDb.setShoppingCart(cartConfirm, dispatch);
-      })
-      .catch(err => {
-        fail(`出错啦：${err.message}！`);
-      });
+    // // 立即购买
+    // if (directBuy) {
+    //   cartDb.addConfirmCart(dispatch, [cartConfirm]);
+    //   Taro.navigateTo({ url: "/pages/order/confirm/index" });
+    //   return;
+    // }
+
+    // // 加购物车
+    // cartDb
+    //   .cartAdd(params)
+    //   .then(() => {
+    //     success("添加购物车成功");
+    //     cartDb.setShoppingCart(cartConfirm, dispatch);
+    //   })
+    //   .catch(err => {
+    //     fail(`出错啦：${err.message}！`);
+    //   });
   };
 
   return (
@@ -146,7 +150,7 @@ const DetailAction = ({ data, goodsnum, dispatch, isLogin, shoppingCart }) => {
                 url: "/pages/cart/cart"
               });
             }}
-          ></View>
+          />
         </AtBadge>
       </View>
       <View className="action">

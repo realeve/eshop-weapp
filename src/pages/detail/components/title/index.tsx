@@ -1,22 +1,22 @@
 import Taro from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
 import { CPrice } from "@/components";
 
-const DetailCard = ({ data }) => {
+const DetailCard = ({ data = {} }) => {
   let address =
     data.shopAddress && data.shopAddress.includes("市")
       ? data.shopAddress.split("市")[0] + "市"
       : data.shopAddress;
   return (
-    <DCard className="detail_page_title">
+    <DCard>
       <CPrice retail={data.price} retailStyle="font-size:20px;" />
-      <View className="title">{data.title}</View>
-      <View className="detail">
-        <View>运费:{data.expressPrice || "包邮"}</View>
-        <View>已售:{data.goodsSaleNum}件</View>
-        {address && <View>发货地:{address}</View>}
+      <Text className="detail_page_title">{data.title}</Text>
+      <View className="detail_page_detail">
+        <Text>运费:{data.expressPrice || "包邮"}</Text>
+        <Text>已售:{data.goodsSaleNum}件</Text>
+        {address && <Text>发货地:{address}</Text>}
       </View>
     </DCard>
   );

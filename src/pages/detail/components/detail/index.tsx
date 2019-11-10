@@ -3,8 +3,7 @@ import { View, Image, RichText } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
 import { API } from "@/utils/setting";
-import { useFetch } from "@/components";
-
+import useFetch from "@/components/hooks/useFetch";
 import { AtTabs, AtTabsPane } from "taro-ui";
 
 import Skeleton from "taro-skeleton";
@@ -19,7 +18,8 @@ const DetailContent = ({ id }: { id: string | number }) => {
     callback: e =>
       ((e.goodsBody || "").match(/(http\S+\")/g) || []).map(item =>
         item.replace('"', "")
-      )
+      ),
+    valid: () => id
   });
 
   return (
@@ -33,7 +33,7 @@ const DetailContent = ({ id }: { id: string | number }) => {
           <AtTabsPane current={this.state.current} index={0}>
             <View className="goodsDetail">
               {(imgs || []).map(src => (
-                <Image src={src} className="img" />
+                <Image src={src} className="img" key={src} />
               ))}
             </View>
           </AtTabsPane>

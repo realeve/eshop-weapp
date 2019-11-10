@@ -12,6 +12,7 @@ import useFetch from "@/components/hooks/useFetch";
 import { handleSubscribe, ISubscribe } from "../db";
 import Skeleton from "taro-skeleton";
 
+// import * as R from "ramda";
 interface IProps {
   [key: string]: any;
 }
@@ -65,7 +66,12 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
 
       <Skeleton loading={loading} row={2} avatar>
         <View className="action">
-          <SpecialAction data={special || subscribe} />
+          <SpecialAction
+            data={
+              // !R.isNil(special) ? special : !R.isNil(subscribe) ? subscribe : {}
+              special || subscribe || {}
+            }
+          />
         </View>
       </Skeleton>
     </View>

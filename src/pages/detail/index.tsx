@@ -2,8 +2,8 @@ import Taro, { useRouter, useState } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
-import { useFetch, CMaginify } from "@/components";
-
+import { CMaginify } from "@/components";
+import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 import { handleGoodsData, ISpecValueItem } from "./lib";
 import Skeleton from "taro-skeleton";

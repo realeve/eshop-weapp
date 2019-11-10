@@ -39,9 +39,9 @@ class App extends Component {
       // "pages/login/index", // 登录
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
-      "pages/special/result/index" // 特品结果
+      "pages/special/result/index", // 特品结果
       //, "pages/special/rule/index" // 特品规则
-      //, "pages/detail/index"
+      "pages/detail/index"
     ],
     window: {
       backgroundTextStyle: "light",

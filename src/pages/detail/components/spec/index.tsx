@@ -25,7 +25,7 @@ export const getGoodsInfoBySpec = (res, data) => {
 };
 
 const DetailCard = ({
-  data,
+  data = {},
   onSpecChange,
   goodsnum,
   onGoodsnumChange

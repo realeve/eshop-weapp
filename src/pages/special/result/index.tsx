@@ -61,17 +61,18 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
           <View className="at-icon at-icon-chevron-right" />
         </View>
       </SpecialCard>
-      <CButton
-        theme="gardient"
-        className="special__result__action"
-        onClick={() => {
-          jump({
-            url: "/pages/index/index"
-          });
-        }}
-      >
-        回到首页
-      </CButton>
+      <View className="special__result__action">
+        <CButton
+          theme="gardient"
+          onClick={() => {
+            jump({
+              url: "/pages/index/index"
+            });
+          }}
+        >
+          回到首页
+        </CButton>
+      </View>
     </View>
   );
 };

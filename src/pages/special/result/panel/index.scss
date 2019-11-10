@@ -71,7 +71,6 @@
           &Left,
           &Right {
             width: 70px;
-            height: unset;
           }
           &Left {
             transform: scaleX(-1);
@@ -79,6 +78,7 @@
         }
         .result {
           margin: 0 50px;
+          @extend .alignColumn;
           .title {
             font: {
               size: 24px * $hd;

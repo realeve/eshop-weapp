@@ -39,12 +39,12 @@ const SpecialPanel = ({ data }: IProps) => {
               </View>
             </View>
             <View className="detail">
-              <Image src={Grass} className="grassLeft" />
+              <Image src={Grass} className="grassLeft" mode="aspectFit" />
               <View className="result">
                 <Text className="title">很遗憾</Text>
                 <Text className="desc">您未中签</Text>
               </View>
-              <Image src={Grass} className="grassRight" />
+              <Image src={Grass} className="grassRight" mode="aspectFit" />
             </View>
 
             <View className="tips">

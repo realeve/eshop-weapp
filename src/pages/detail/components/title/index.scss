@@ -1,11 +1,11 @@
 @import "@/styles/theme.scss";
 
-.detail_page_title {
-  .title {
+.detail_page {
+  &_title {
     font-size: $font-size-lg;
     color: $mainTitle;
   }
-  .detail {
+  &_detail {
     color: $subTitle;
     font-size: $fontSizeSmall;
     @extend .alignRow;

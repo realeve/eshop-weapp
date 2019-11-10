@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import Skeleton from "taro-skeleton";
 import DCard from "../card";
-import { useFetch } from "@/components";
+import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 import { AtAvatar } from "taro-ui";
 import { ymdFormat } from "@/utils/lib";
@@ -17,7 +17,8 @@ const DetailComment = ({ id: commonId }: { id: string }) => {
         commonId
       }
     },
-    callback: e => e.evaluateGoodsVoList[0] || null
+    callback: e => e.evaluateGoodsVoList[0] || null,
+    valid: () => commonId
   });
 
   return (
@@ -37,7 +38,7 @@ const DetailComment = ({ id: commonId }: { id: string }) => {
                 <Text>{data.memberNameHidden}</Text>
                 <Text className="time">{ymdFormat(data.evaluateTime)}</Text>
               </View>
-              <View className="content">{data.content}</View>
+              <Text className="content">{data.content}</Text>
             </View>
           </View>
         )}

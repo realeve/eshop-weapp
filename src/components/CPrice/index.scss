@@ -3,9 +3,9 @@
 $fontSize: $heading-3-size;
 
 .cPrice {
-  color: $yellow;
-  font-family: priceFont;
-  .retail {
+  &_retail {
+    color: $yellow;
+    font-family: priceFont;
     // position: relative;
     // top: 1px;
     // padding: 0;
@@ -14,7 +14,9 @@ $fontSize: $heading-3-size;
     // text-align: center;
   }
 
-  .counter {
+  &_counter {
+    // color: $yellow;
+    font-family: priceFont;
     font-size: -1 + $fontSize;
     color: $midGrey;
     top: 2px;

@@ -43,7 +43,7 @@ const CPrice = (props: IPropPrice) => {
     >
       {retail > 0 && (
         <Text
-          className={classNames("retail", priceClassName)}
+          className={classNames("cPrice_retail", priceClassName)}
           style={retailStyle}
         >
           ¥ {(+retail).toFixed(2)}
@@ -51,7 +51,7 @@ const CPrice = (props: IPropPrice) => {
       )}
       {counter > 0 && counter != retail && (
         <Text
-          className={classNames("counter", priceClassName)}
+          className={classNames("cPrice_counter", priceClassName)}
           style={counterStyle}
         >
           ¥{(+counter).toFixed(2)}
