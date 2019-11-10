@@ -4,6 +4,8 @@ import "./index.scss";
 import DCard from "../card";
 import { CPrice } from "@/components";
 
+// NOTE:此处用 detail_page_title|detail_page_detail 两个样式是由于微信小程序样式需要按BEM规范，用CSS 层叠的方案无法生效
+
 const DetailCard = ({ data = {} }) => {
   let address =
     data.shopAddress && data.shopAddress.includes("市")

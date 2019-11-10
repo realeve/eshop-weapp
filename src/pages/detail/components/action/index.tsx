@@ -154,24 +154,26 @@ const DetailAction = ({
         </AtBadge>
       </View>
       <View className="action">
-        <CButton
-          className="btn"
-          theme="blackgardient"
-          disabled={data.number === 0}
-          onClick={addToCart}
-        >
-          加入购物车
-        </CButton>
-        <CButton
-          className="btn"
-          theme="gardient"
-          disabled={!data.canBuy}
-          onClick={() => {
-            addToCart(true);
-          }}
-        >
-          立即购买
-        </CButton>
+        <View className="btn">
+          <CButton
+            theme="blackgardient"
+            disabled={data.number === 0}
+            onClick={addToCart}
+          >
+            加入购物车
+          </CButton>
+        </View>
+        <View className="btn">
+          <CButton
+            theme="gardient"
+            disabled={!data.canBuy}
+            onClick={() => {
+              addToCart(true);
+            }}
+          >
+            立即购买
+          </CButton>
+        </View>
       </View>
     </View>
   );

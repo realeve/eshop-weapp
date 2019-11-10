@@ -15,7 +15,10 @@ export default class CButton extends Component {
     } = this.props;
     return (
       <Button
-        className={classnames(className, "cButton" + theme, "cButton" + size)}
+        className={classnames(className, {
+          ["cButton" + theme]: theme,
+          ["cButton" + size]: size
+        })}
         onClick={onClick}
         style={style}
       >
