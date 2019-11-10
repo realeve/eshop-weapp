@@ -45,7 +45,7 @@ const CollectionList = ({ data = { data: [] } }: IProps) => {
                 mode="aspectFit"
                 className="item"
                 key={item.titleCh}
-                src={item.imageUrl}
+                src={item.imageUrl.replace("statictest", "statictest")}
                 onClick={() => {
                   Taro.navigateTo({
                     url: "/pages/detail/index?id=" + item.commonId

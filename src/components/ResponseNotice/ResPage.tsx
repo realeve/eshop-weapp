@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View, RichText } from "@tarojs/components";
 import { AtFloatLayout } from "taro-ui";
-import { CButton } from "@/components/";
+import CButton from "@/components/CButton";
 import "./index.scss";
 
 //  process.env.TARO_ENV === 'weapp'

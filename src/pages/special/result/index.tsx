@@ -5,7 +5,8 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
 import { API } from "@/utils/setting";
-import { useFetch, CButton, CDot } from "@/components/";
+import { CButton, CDot } from "@/components/";
+import useFetch from "@/components/hooks/useFetch";
 import { handleSubscribe, ISubscribe } from "../db";
 
 import SpecialPanel from "./panel";

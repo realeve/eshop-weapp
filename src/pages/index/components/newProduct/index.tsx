@@ -17,7 +17,7 @@ const NewProduct = ({ data = { data: [] } }: IProps) => {
                 <Image
                   mode="aspectFit"
                   key={item.titleCh}
-                  src={item.imageUrl}
+                  src={item.imageUrl.replace("statictest", "statictest")}
                 />
                 <View className="detail">
                   <View className="title">{item.goodsTitle}</View>

@@ -15,10 +15,15 @@ import "./index.scss";
 
 const handlePos = (res: Taro.PageScrollObject) =>
   Math.min(Math.ceil(res.scrollTop / 50), 10);
-export interface IProps extends IGlobalModel {
-  [key: string]: any;
-}
-const Index = ({ special, cateList, collectionList, newProduct }: IProps) => {
+// export interface IProps extends IGlobalModel {
+//   [key: string]: any;
+// }
+const Index = ({
+  special,
+  cateList,
+  collectionList,
+  newProduct
+}: IGlobalModel) => {
   let [pos, setPos] = useState(0);
 
   const onScroll = event => {

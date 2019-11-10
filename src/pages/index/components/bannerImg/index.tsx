@@ -27,7 +27,10 @@ const BannerImg = ({ special }: IProps) => {
         <View />
       ) : (
         <Image
-          src={special.imageUrl}
+          src={((special && special.imageUrl) || "").replace(
+            "statictest",
+            "statictest"
+          )}
           className="bannerImg"
           mode="scaleToFill"
           onClick={() => {

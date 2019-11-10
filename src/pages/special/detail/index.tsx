@@ -8,7 +8,7 @@ import "./index.scss";
 import { connect } from "@tarojs/redux";
 import SpecialAction from "../components/Actions";
 import { API } from "@/utils/setting";
-import { useFetch } from "@/components/";
+import useFetch from "@/components/hooks/useFetch";
 import { handleSubscribe, ISubscribe } from "../db";
 import Skeleton from "taro-skeleton";
 

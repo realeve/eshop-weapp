@@ -191,7 +191,7 @@ export default {
             categoryList: menu.subitemData.map(sub => ({
               id: sub.data,
               name: sub.name,
-              url: sub.imageUrl
+              url: sub.imageUrl.replace("statictest", "statictest") // 开发者模式
             }))
           }))
         }));

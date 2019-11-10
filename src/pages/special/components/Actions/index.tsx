@@ -24,7 +24,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
             <Text style={{ marginRight: 5 }}>预约价</Text>
             <CPrice retail={data.goodsPrice} />
           </View>
-          <View className="tips">10天15小时20分后关闭预约</View>
+          <View className="tips">10天15小时后关闭预约</View>
         </View>
         <CButton
           onClick={() => {

@@ -16,7 +16,7 @@
     @extend .alignRow;
     align-items: center;
     .text {
-      font-size: $font-size-xs;
+      font-size: $font-size-sm;
       margin-right: 10px;
       .price {
         @extend .alignRow;
