@@ -4,9 +4,11 @@ import CCard, { ICardProp } from "@/components/CCard";
 import classnames from "classnames";
 
 const SpecialCard = (prop: ICardProp) => {
-  const { className, ...rest } = prop;
+  const { className, children, title } = prop;
   return (
-    <CCard className={classnames("SpecialCard", className)} {...rest}></CCard>
+    <CCard className={classnames("SpecialCard", className)} title={title}>
+      {children}
+    </CCard>
   );
 };
 

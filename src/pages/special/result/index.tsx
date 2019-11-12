@@ -1,6 +1,6 @@
 import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 import "./index.scss";
 import { connect } from "@tarojs/redux";
@@ -37,10 +37,16 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
       <SpecialCard title="中签公告" className="result_container">
         <View className="result__content">
           <View className="list-item">
-            <CDot /> 本次活动共有123456人预约，共抽取中签号95个
+            <CDot />
+            <Text style="margin-left:10px;">
+              本次活动共有123456人预约，共抽取中签号95个
+            </Text>
           </View>
           <View className="list-item">
-            <CDot /> 如有疑问，请联系在线客服或者致电15647368479
+            <CDot />
+            <Text style="margin-left:10px;">
+              如有疑问，请联系在线客服或者致电15647368479
+            </Text>
           </View>
         </View>
         <View className="result__footer">
