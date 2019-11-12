@@ -22,23 +22,27 @@ const DetailComment = ({ id: commonId }: { id: string }) => {
   });
 
   return (
-    <Skeleton loading={loading} animate row={2} avatar>
+    <Skeleton loading={commonId > "0" && loading} animate row={2} avatar>
       <DCard className="detail_page_comment">
-        <View className="title">
+        <View className="detail_page_comment_title">
           <Text>用户评价</Text>
           <Text>更多</Text>
         </View>
         {data && (
-          <View className="item">
-            <View className="avatar">
+          <View className="detail_page_comment_item">
+            <View className="detail_page_comment_avatar">
               <AtAvatar size="small" circle image={data.memberAvatarUrl} />
             </View>
-            <View className="detail">
-              <View className="username">
+            <View className="detail_page_comment_detail">
+              <View className="detail_page_comment_detail_username">
                 <Text>{data.memberNameHidden}</Text>
-                <Text className="time">{ymdFormat(data.evaluateTime)}</Text>
+                <Text className="detail_page_comment_username_time">
+                  {ymdFormat(data.evaluateTime)}
+                </Text>
               </View>
-              <Text className="content">{data.content}</Text>
+              <Text className="detail_page_comment_detail_content">
+                {data.content}
+              </Text>
             </View>
           </View>
         )}

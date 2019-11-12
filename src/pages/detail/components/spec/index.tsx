@@ -43,29 +43,27 @@ const DetailCard = ({
   return (
     <DCard className="detail_page_spec">
       {/* 选择规格 */}
-      <View className="item">
-        <Text className="title">选择</Text>
-        <View className="detail">
-          <View
-            className="spec"
-            onClick={() => {
-              setShowPanel(true);
-            }}
-          >
-            <View>
-              {data.goodsFullSpecs ||
-                (spec.length > 0
-                  ? spec.map(item => item.title).join(" ")
-                  : "请选择规格/包装")}
-            </View>
-            <View className="at-icon at-icon-chevron-right" />
+      <View className="detail_page_spec_item">
+        <Text className="detail_page_spec_item_title">选择</Text>
+        <View
+          className="detail_page_spec_item_spec"
+          onClick={() => {
+            setShowPanel(true);
+          }}
+        >
+          <View>
+            {data.goodsFullSpecs ||
+              (spec.length > 0
+                ? spec.map(item => item.title).join(" ")
+                : "请选择规格/包装")}
           </View>
+          <View className="at-icon at-icon-chevron-right" />
         </View>
       </View>
 
       {/* 服务列表 */}
-      <View className="item" style="margin-top:20px;">
-        <Text className="title">服务</Text>
+      <View className="detail_page_spec_item" style="margin-top:20px;">
+        <Text className="detail_page_spec_item_title">服务</Text>
         <View className="serviceList" onClick={() => setShowService(true)}>
           <View className="services">
             {data.services &&
@@ -80,7 +78,7 @@ const DetailCard = ({
       </View>
 
       {data.goodsSaleTime && (
-        <View className="selltime">
+        <View className="detail_page_spec_selltime">
           <View className="at-icon at-icon-clock"></View>
           该商品售卖时间为{data.goodsSaleTime.text}
         </View>
@@ -93,14 +91,18 @@ const DetailCard = ({
         className="specServices"
         onClose={() => setShowService(false)}
       >
-        <View className="title">服务说明</View>
+        <View className="specServices_title">服务说明</View>
         {data.services &&
           data.services.map(service => (
-            <View key={service.title} className="item">
+            <View key={service.title} className="specServices_item">
               <Image className="icon" src={iconList[service.icon]} />
-              <View className="service">
-                <View className="serviceTitle">{service.title}</View>
-                <View className="serviceSubtitle">{service.subTitle}</View>
+              <View className="specServices_item_service">
+                <View className="specServices_item_serviceTitle">
+                  {service.title}
+                </View>
+                <View className="specServices_item_serviceSubtitle">
+                  {service.subTitle}
+                </View>
               </View>
             </View>
           ))}
@@ -113,7 +115,7 @@ const DetailCard = ({
         onClose={() => setShowPanel(false)}
       >
         {/* 商品基本信息 */}
-        <View className="title">
+        <View className="specPanel_title">
           <Image className="img" src={data.img} />
           <View className="detail">
             <CPrice retail={data.price} retailStyle="font-size:20px;" />
@@ -123,12 +125,12 @@ const DetailCard = ({
         </View>
         {/* 规格列表 */}
         {(data.specs || []).map((item, idx) => (
-          <View className="specs" key={item.specId}>
-            <View className="specs__title">{item.specName}</View>
-            <View className="list">
+          <View className="specPanel_specs" key={item.specId}>
+            <View className="specPanel_specs_title">{item.specName}</View>
+            <View className="specPanel_specs_list">
               {item.specValueList.map(specItem => (
                 <Text
-                  className={classnames("item", {
+                  className={classnames("specPanel_specs_list_item", {
                     itemActive:
                       spec[idx] &&
                       spec[idx].specValueId &&
@@ -158,8 +160,8 @@ const DetailCard = ({
           </View>
         ))}
         {/* 数量选择 */}
-        <View className="specs">
-          <View className="specs__title">数量</View>
+        <View className="specPanel_specs">
+          <View className="specPanel_specs_title">数量</View>
           <View>
             <AtInputNumber
               type="number"

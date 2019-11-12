@@ -9,6 +9,8 @@ import { AtTabs, AtTabsPane } from "taro-ui";
 import Skeleton from "taro-skeleton";
 import { appAfterService } from "@/utils/cbpm_doc";
 
+// console.log(afterService)
+
 const DetailContent = ({ id }: { id: string | number }) => {
   const [current, setCurrent] = useState(0);
   let { data: imgs, loading } = useFetch({
@@ -23,7 +25,7 @@ const DetailContent = ({ id }: { id: string | number }) => {
   });
 
   return (
-    <Skeleton loading={loading} animate row={4} rowHeight={400}>
+    <Skeleton loading={id > 0 && loading} animate row={4} rowHeight={400}>
       <DCard className="detail_page_content">
         <AtTabs
           tabList={[{ title: "商品详情" }, { title: "售后服务" }]}
@@ -38,7 +40,9 @@ const DetailContent = ({ id }: { id: string | number }) => {
             </View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <RichText className="container" nodes={appAfterService} />
+            <View className="goods_detail_container">
+              <RichText nodes={appAfterService} />
+            </View>
           </AtTabsPane>
         </AtTabs>
       </DCard>

@@ -8,16 +8,20 @@ import { IProductInfo } from "../../lib";
 const DetailShop = ({ data }: { data: IProductInfo }) => {
   return (
     <DCard className="detail_page_shop">
-      <View className="title">
-        <Image mode="aspectFit" className="img" src={data.logo} />
+      <View className="detail_page_shop_title">
+        <Image
+          mode="aspectFit"
+          className="detail_page_shop_title_img"
+          src={data.logo}
+        />
         <Text style="margin-left:10px;">{data.name}</Text>
       </View>
 
-      <View className="detail">
+      <View className="detail_page_shop_detail">
         {data.info.map(item => (
           <View key={item.name} className="alignRow">
             <Text>{item.name}</Text>
-            <Text className="score">{item.score}</Text>
+            <Text className="detail_page_shop_detail_score">{item.score}</Text>
           </View>
         ))}
       </View>

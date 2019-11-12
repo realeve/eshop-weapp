@@ -1,12 +1,12 @@
 @import "@/styles/theme.scss";
 .detail_page_comment {
   color: $mainTitle;
-  .title {
+  &_title {
     font-size: $fontSizeBase;
     @extend .alignRow;
     justify-content: space-between;
   }
-  .item {
+  &_item {
     padding: 24px;
     margin-top: 24px;
     /* prettier-ignore */
@@ -14,21 +14,21 @@
     border-radius: $border-radius;
     @extend .alignRow;
   }
-  .avatar {
+  &_avatar {
     margin-right: 10px;
   }
-  .detail {
+  &_detail {
     flex: 1;
-    .username {
+    &_username {
       font-size: $fontSizeNormal;
       color: $mainTitle;
       @extend .alignRow;
       justify-content: space-between;
-      .time {
+      &_time {
         color: $subTitle;
       }
     }
-    .content {
+    &_content {
       font-size: $fontSizeNormal;
       color: $subTitle;
     }

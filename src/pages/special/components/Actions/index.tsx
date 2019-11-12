@@ -51,6 +51,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           }}
           theme="gardient"
           size="small"
+          style="width:100px;"
         >
           立即预约
         </CButton>

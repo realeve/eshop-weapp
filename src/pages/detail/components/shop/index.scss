@@ -1,21 +1,21 @@
 @import "@/styles/theme.scss";
 .detail_page_shop {
   color: $mainTitle;
-  .title {
+  &_title {
     font-size: $fontSizeBase;
     @extend .alignRow;
     // justify-content: space-between;
     align-items: center;
-    .img {
+    &_img {
       width: unset;
       height: 70px;
     }
   }
-  .detail {
+  &_detail {
     @extend .alignRow;
     font-size: $fontSizeBase;
     justify-content: space-between;
-    .score {
+    &_score {
       margin-left: 5px;
       color: $yellow;
     }

@@ -1,30 +1,30 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/weapp/style/components/icon.scss";
 
 .detail_page_spec {
-  .selltime {
+  &_selltime {
     margin-top: 30px;
     font-size: $fontSizeSmall;
     color: $disabledTitle;
   }
 
-  .item {
+  &_item {
     font-size: $fontSize30;
     @extend .alignRow;
-    .title {
+    &_title {
       margin-right: 30px;
       color: $subTitle;
     }
     .at-icon {
       color: $subTitle;
     }
-    .detail {
+
+    &_spec {
       flex: 1;
-      .spec {
-        @extend .alignRow;
-        justify-content: space-between;
-        align-items: center;
-        color: $mainTitle;
-      }
+      @extend .alignRow;
+      justify-content: space-between;
+      align-items: center;
+      color: $mainTitle;
     }
 
     .serviceList {
@@ -46,7 +46,7 @@
 
 .specPanel {
   $imgSize: 180px;
-  .title {
+  &_title {
     @extend .alignRow;
     height: $imgSize;
     .img {
@@ -69,18 +69,18 @@
   }
 
   // 规格列表
-  .specs {
-    &__title {
+  &_specs {
+    &_title {
       font-weight: bold;
       margin: 40px 0 16px 0;
       color: $mainTitle;
       font-size: $fontSize30;
     }
-    .list {
+    &_list {
       @extend .alignRow;
       flex-wrap: wrap;
 
-      .item {
+      &_item {
         @extend .center;
         margin-right: 20px;
         max-width: 240px;
@@ -102,14 +102,14 @@
 }
 
 .specServices {
-  .title {
+  &_title {
     text-align: center;
     padding-bottom: 24px;
     font-size: $fontSizeBase;
     /* prettier-ignore */
     border-bottom: 1PX solid $borderColorGrey;
   }
-  .item {
+  &_item {
     margin-top: 45px;
     @extend .alignRow;
     .icon {
@@ -117,7 +117,7 @@
       width: 56px;
       height: 56px;
     }
-    .service {
+    &_service {
       flex: 1;
       &Title {
         font-size: $fontSize30;

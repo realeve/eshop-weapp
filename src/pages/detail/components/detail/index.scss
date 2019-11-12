@@ -1,11 +1,13 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/weapp/style/components/tabs.scss";
+
 .detail_page_content {
   color: $mainTitle;
   .at-tabs {
     &__item {
       border: 1px solid $mainTitle;
       // padding: 10px 12px;
-      .at-tabs__item-underline {
+      &-underline {
         height: 0;
       }
       &--active {
@@ -15,7 +17,7 @@
     }
     &-pane {
       padding: 34px 0;
-      height: auto;
+      // height: auto;
 
       .goodsDetail {
         @extend .alignColumn;
@@ -25,7 +27,7 @@
         }
       }
 
-      .container {
+      .goods_detail_container {
         .title,
         .bold {
           font-weight: bold;
