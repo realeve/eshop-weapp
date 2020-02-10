@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import "./index.scss";
+import "./OrderDetail.scss";
 const OrderDetail = ({
   data
 }: {
@@ -10,7 +10,7 @@ const OrderDetail = ({
     link: string;
   };
 }) => (
-  <View className="linkItem">
+  <View className="link_item">
     <View>
       <Image src={data.img} className="icon" />
     </View>

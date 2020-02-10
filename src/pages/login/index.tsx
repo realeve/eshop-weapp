@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import "./index.scss";
 import DefaultAvatar from "@/pages/user/components/userHeader/headerLogo.png";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import LoginPhone from "./components/LoginPhone";
+import LoginPhone from "./components/LoginPhone/index";
 import LoginPassword from "./components/LoginPassword";
 
 // interface IProps {
@@ -26,12 +26,11 @@ const Login = () => {
         onClick={setCurrent}
       >
         <AtTabsPane current={current} index={0}>
-          <LoginPhone />
+          {/* <LoginPhone /> */}1
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
           {/* <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;"> */}
-          <LoginPassword />
-          {/* </View> */}
+          {/* <LoginPassword /> */}2{/* </View> */}
         </AtTabsPane>
       </AtTabs>
 

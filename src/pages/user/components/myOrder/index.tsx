@@ -13,7 +13,6 @@ import Skeleton from "taro-skeleton";
 import { ORDER } from "@/utils/api";
 
 import OrderItem from "./OrderItem";
-import "@/components/CCard/index.scss";
 import "./index.scss";
 
 // ordersStatePayCount 待发货数量
@@ -82,6 +81,7 @@ const MyOrder = ({ dispatch, isLogin }) => {
           <View className="at-icon at-icon-chevron-right" />
         </View>
       </View>
+
       <Skeleton animate loading={loading && isLogin} row={2}>
         <View className="content">
           <View className="usercenterOrderLinkList">

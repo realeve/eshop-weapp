@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
 
-import { CButton, useSetState, useTimeoutFn } from "@/components";
+import { CButton, useSetState } from "@/components";
 import MobileWithCode from "../MobileWithCode";
 import {
   SMS_TYPE,

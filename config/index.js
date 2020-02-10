@@ -17,15 +17,16 @@ const sassImporter = function(url) {
 };
 
 const config = {
-  projectName: "eshop-weapp",
-  date: "2019-10-17",
+  projectName: "weapp",
+  date: "2020-2-10",
   alias: {
     "@/components": path.resolve(__dirname, "..", "src/components"),
-    "@/utils": path.resolve(__dirname, "..", "src/utils"),
+    "@/images": path.resolve(__dirname, "..", "src/images"),
     "@/models": path.resolve(__dirname, "..", "src/models"),
-    "@/services": path.resolve(__dirname, "..", "src/services"),
     "@/pages": path.resolve(__dirname, "..", "src/pages"),
-    "@/styles": path.resolve(__dirname, "..", "src/styles")
+    "@/services": path.resolve(__dirname, "..", "src/services"),
+    "@/styles": path.resolve(__dirname, "..", "src/styles"),
+    "@/utils": path.resolve(__dirname, "..", "src/utils")
   },
   designWidth: 750,
   deviceRatio: {
@@ -35,57 +36,57 @@ const config = {
   },
   sourceRoot: "src",
   outputRoot: "dist",
-  plugins: {
-    babel: {
-      sourceMap: true,
-      presets: [
-        [
-          "env",
-          {
-            modules: false
-          }
-        ]
-      ],
-      plugins: [
-        "transform-decorators-legacy",
-        "transform-class-properties",
-        "transform-object-rest-spread"
+  // sass: {
+  //   importer: sassImporter
+  // },
+  babel: {
+    sourceMap: true,
+    presets: [
+      [
+        "env",
+        {
+          modules: false
+        }
       ]
-    },
-    sass: {
-      importer: sassImporter
-    }
+    ],
+    plugins: [
+      "transform-decorators-legacy",
+      "transform-class-properties",
+      "transform-object-rest-spread",
+      [
+        "transform-runtime",
+        {
+          helpers: false,
+          polyfill: false,
+          regenerator: true,
+          moduleName: "babel-runtime"
+        }
+      ]
+    ]
   },
+  // plugins: {
+  //   sass: {
+  //     importer: sassImporter
+  //   }
+  // },
   defineConstants: {},
-  copy: {
-    patterns: [],
-    options: {}
-  },
-  weapp: {
-    module: {
-      postcss: {
-        autoprefixer: {
-          enable: true,
-          config: {
-            browsers: ["last 3 versions", "Android >= 4.1", "ios >= 8"]
-          }
-        },
-        pxtransform: {
-          enable: true,
-          config: {}
-        },
-        url: {
-          enable: true,
-          config: {
-            limit: 10240 // 设定转换尺寸上限
-          }
-        },
-        cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
-          config: {
-            namingPattern: "module", // 转换模式，取值为 global/module
-            generateScopedName: "[name]__[local]___[hash:base64:5]"
-          }
+  mini: {
+    postcss: {
+      pxtransform: {
+        enable: true,
+        config: {}
+      },
+      url: {
+        enable: true,
+        config: {
+          limit: 10240 // 设定转换尺寸上限
+        }
+      },
+      cssModules: {
+        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: "module", // 转换模式，取值为 global/module
+          generateScopedName: "[name]__[local]___[hash:base64:5]"
         }
       }
     }
@@ -93,40 +94,18 @@ const config = {
   h5: {
     publicPath: "/",
     staticDirectory: "static",
-    output: {
-      filename: "js/[name].[hash].js",
-      chunkFilename: "js/[name].[chunkhash].js"
-    },
-    imageUrlLoaderOption: {
-      limit: 5000,
-      name: "static/images/[name].[hash].[ext]"
-    },
-    miniCssExtractPluginOption: {
-      filename: "css/[name].[hash].css",
-      chunkFilename: "css/[name].[chunkhash].css"
-    },
-
-    esnextModules: ["taro-ui"],
-    devServer: {
-      host: "localhost", // 如需局域网（如手机）访问，请更换为0.0.0.0
-      // host: '0.0.0.0', // 如需局域网（如手机）访问，请更换为0.0.0.0
-      port: 8000,
-      https: false
-    },
-    module: {
-      postcss: {
-        autoprefixer: {
-          enable: true,
-          config: {
-            browsers: ["last 3 versions", "Android >= 4.1", "ios >= 8"]
-          }
-        },
-        cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
-          config: {
-            namingPattern: "module", // 转换模式，取值为 global/module
-            generateScopedName: "[name]__[local]___[hash:base64:5]"
-          }
+    postcss: {
+      autoprefixer: {
+        enable: true,
+        config: {
+          browsers: ["last 3 versions", "Android >= 4.1", "ios >= 8"]
+        }
+      },
+      cssModules: {
+        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: "module", // 转换模式，取值为 global/module
+          generateScopedName: "[name]__[local]___[hash:base64:5]"
         }
       }
     },

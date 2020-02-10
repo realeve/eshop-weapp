@@ -1,15 +1,13 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "eshop-weapp",
-	"description": "eshop-weapp",
-	"appid": "wx3d2c979e91715daa",
+	"projectname": "weapp",
+	"description": "eshop",
+	"appid": "touristappid",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
-		"minified": false,
-		"newFeature": true,
-		"autoAudits": false
+		"minified": false
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",

@@ -1,4 +1,3 @@
-import "@tarojs/async-await";
 import Taro, { Component, Config } from "@tarojs/taro";
 import Index from "./pages";
 import dva from "./utils/dva";
@@ -36,7 +35,7 @@ class App extends Component {
       // "pages/order/confirm/index", // 立即购买
       "pages/user/index", // 个人中心
       "pages/find/index", // 发现
-      // "pages/login/index", // 登录
+      "pages/login/index", // 登录
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
       "pages/special/result/index", // 特品结果
@@ -52,6 +51,12 @@ class App extends Component {
 
     tabBar: {
       list: [
+        {
+          pagePath: "pages/user/index",
+          text: "我的",
+          iconPath: "./images/tab/user.png",
+          selectedIconPath: "./images/tab/user-active.png"
+        },
         {
           pagePath: "pages/index/index",
           text: "首页",
@@ -75,12 +80,6 @@ class App extends Component {
           text: "购物车",
           iconPath: "./images/tab/cart.png",
           selectedIconPath: "./images/tab/cart-active.png"
-        },
-        {
-          pagePath: "pages/user/index",
-          text: "我的",
-          iconPath: "./images/tab/user.png",
-          selectedIconPath: "./images/tab/user-active.png"
         }
       ],
       color: "#333",

@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import classnames from "classnames";
 import { TReactNode } from "@/components";
-import * as R from "ramda";
+
 export interface ICardProp {
   title: TReactNode;
   extra?: TReactNode;
