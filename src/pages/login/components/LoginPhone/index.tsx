@@ -3,7 +3,8 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
 
-import { CButton, useSetState } from "@/components";
+import { CButton } from "@/components";
+import useSetState from "@/components/hooks/useSetState";
 import MobileWithCode from "../MobileWithCode";
 import {
   SMS_TYPE,
@@ -84,7 +85,6 @@ const LoginPhone = ({ callback, dispatch }) => {
     </View>
   );
 };
-
 export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
   user,
   isLogin

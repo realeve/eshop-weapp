@@ -2,7 +2,8 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
-import { CButton, useSetState, } from "../../../../components";
+import { CButton } from "../../../../components";
+import useSetState from "@/components/hooks/useSetState";
 import CCaptcha, { TCaptchaVal } from "../../../../components/CCaptcha";
 import { AtInput, AtModal, AtModalContent } from "taro-ui";
 import {
@@ -22,7 +23,7 @@ const LoginPassword = ({ callback, dispatch }) => {
     password: string;
   }>({
     username: "",
-    password: "",
+    password: ""
   });
   const [valid, setValid] = useState(false);
   const [showVerifycode, setShowVerifycode] = useState(false);
@@ -39,11 +40,11 @@ const LoginPassword = ({ callback, dispatch }) => {
       password: account.password,
       captchaVal: str.captchaVal,
       captchaKey: str.captchaKey,
-      clientType: CLIENT_TYPE.WAP,
-    }).catch((res) => {
-      console.log(res)
+      clientType: CLIENT_TYPE.WAP
+    }).catch(res => {
+      console.log(res);
       Taro.showToast({
-        title: res.message,//"验证码无效",
+        title: res.message, //"验证码无效",
         icon: "none"
       });
     });

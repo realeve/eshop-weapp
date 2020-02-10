@@ -4,7 +4,8 @@ import { AtInput, AtModal, AtModalContent } from "taro-ui";
 import classname from "classname";
 import dayjs from "dayjs";
 
-import { useInterval, useSetState } from "@/components";
+import useSetState from "@/components/hooks/useSetState";
+import useInterval from "@/components/hooks/useInterval";
 import CCaptcha, { TCaptchaVal } from "@/components/CCaptcha";
 import {
   reg,
@@ -136,42 +137,47 @@ const MobileWithCode = ({
 
   return (
     <View className="mobileWithCode">
-      <AtInput
-        name="username"
-        title={<Image className="icon" src={UserIcon} />}
-        type="phone"
-        placeholder="手机号码"
-        value={account.username}
-        onChange={username => setAccount({ username })}
-        error={phoneDisabled}
-        clear
-        autoFocus
-      />
-      <AtInput
-        name="password"
-        title={<View className="at-icon at-icon-lock" />}
-        type="number"
-        maxLength="6"
-        minLength="6"
-        placeholder="6位验证码"
-        value={account.password}
-        onChange={password => setAccount({ password })}
-      >
-        <View
-          className={classname("sendSn", {
-            disabled:
-              nextTime > 0 || account.username.length < 11 || phoneDisabled
-          })}
-          onClick={() =>
-            !nextTime &&
-            account.username.length === 11 &&
-            !phoneDisabled &&
-            setShowVerifycode(true)
-          }
+      <View className="item">
+        <Image className="icon" src={UserIcon} />
+        <AtInput
+          name="username"
+          type="phone"
+          placeholder="手机号码"
+          value={account.username}
+          onChange={username => setAccount({ username })}
+          error={phoneDisabled}
+          clear
+          autoFocus
+        />
+      </View>
+      <View className="item">
+        <View className="at-icon at-icon-lock" />
+        <AtInput
+          name="password"
+          type="number"
+          maxLength="6"
+          minLength="6"
+          placeholder="6位验证码"
+          value={account.password}
+          onChange={password => setAccount({ password })}
         >
-          发送验证码{!nextTime ? "" : `(${nextTime})`}
-        </View>
-      </AtInput>
+          <View
+            className={classname("sendSn", {
+              disabled:
+                nextTime > 0 || account.username.length < 11 || phoneDisabled
+            })}
+            onClick={() =>
+              !nextTime &&
+              account.username.length === 11 &&
+              !phoneDisabled &&
+              setShowVerifycode(true)
+            }
+          >
+            发送验证码{!nextTime ? "" : `(${nextTime})`}
+          </View>
+        </AtInput>
+      </View>
+
       {showVerifycode && (
         <AtModal isOpened>
           <AtModalContent>

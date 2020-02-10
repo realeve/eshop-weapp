@@ -52,12 +52,6 @@ class App extends Component {
     tabBar: {
       list: [
         {
-          pagePath: "pages/user/index",
-          text: "我的",
-          iconPath: "./images/tab/user.png",
-          selectedIconPath: "./images/tab/user-active.png"
-        },
-        {
           pagePath: "pages/index/index",
           text: "首页",
           iconPath: "./images/tab/home.png",
@@ -80,6 +74,12 @@ class App extends Component {
           text: "购物车",
           iconPath: "./images/tab/cart.png",
           selectedIconPath: "./images/tab/cart-active.png"
+        },
+        {
+          pagePath: "pages/user/index",
+          text: "我的",
+          iconPath: "./images/tab/user.png",
+          selectedIconPath: "./images/tab/user-active.png"
         }
       ],
       color: "#333",

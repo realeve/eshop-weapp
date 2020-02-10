@@ -1,27 +1,35 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/weapp/style/components/icon.scss";
 
 .mobileWithCode {
-  .at-input__title {
-    width: unset;
-  }
-  .icon {
-    width: 35px;
-    height: 35px;
-  }
-  .at-icon {
-    color: $yellow;
-  }
-  .at-input__icon-alert {
-    color: #ff4949;
-  }
-  .sendSn {
-    color: $blue;
-    font-size: $heading-5-size;
-  }
-  .disabled {
-    color: $grey;
-  }
+  .item {
+    @extend .alignRow;
+    align-items: center;
 
+    .icon {
+      width: 35px;
+      height: 35px;
+    }
+
+    .at-icon {
+      @extend .icon;
+      color: $yellow;
+    }
+    .at-input__title {
+      width: unset;
+    }
+
+    .at-input__icon-alert {
+      color: #ff4949;
+    }
+    .sendSn {
+      color: $blue;
+      font-size: $heading-5-size;
+    }
+    .disabled {
+      color: $grey;
+    }
+  }
   .at-modal {
     &__overlay {
       background: none;

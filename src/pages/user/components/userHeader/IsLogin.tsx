@@ -1,6 +1,6 @@
 import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-import "./NotLogin.scss";
+import "./isLogin.scss";
 import { AtAvatar } from "taro-ui";
 import { IGlobalUser } from "@/models/common";
 
@@ -13,12 +13,12 @@ const IsLogin = ({ data }: ILoginProp) => {
   }
   let { avatar, trueName, isRealNamePassed } = data;
   return (
-    <View className="avatar">
-      <View className="avatarImg">
+    <View className="is_login">
+      <View className="avatar_img">
         <AtAvatar circle size="large" image={avatar} />
       </View>
       <View className="detail">
-        <View className="userName">
+        <View className="detail_user_name">
           <Text className="name">{trueName}</Text>
           {isRealNamePassed ? (
             <Text className="valid">已实名认证</Text>
@@ -26,7 +26,7 @@ const IsLogin = ({ data }: ILoginProp) => {
             <Text className="invalid">未实名认证</Text>
           )}
         </View>
-        <Text className="welcome">欢迎畅享中钞电商购物体验</Text>
+        <Text className="detail_welcome">欢迎畅享中钞电商购物体验</Text>
       </View>
     </View>
   );
