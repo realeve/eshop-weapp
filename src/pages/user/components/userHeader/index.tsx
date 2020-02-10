@@ -3,7 +3,7 @@ import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
-import NotLogin from "./NotLogin";
+import NotLogin from "./notLogin";
 import IsLogin from "./IsLogin";
 import Skeleton from "taro-skeleton";
 
@@ -17,7 +17,8 @@ const UserHeader = ({ user, loading }) => {
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
         {/* <TestComponent /> */}
-        {!user.uid ? <NotLogin /> : <IsLogin data={user} />}
+        {/* {!user.uid ? <NotLogin /> : <IsLogin data={user} />} */}
+        <NotLogin />
         <View className="at-icon at-icon-settings setting" />
       </View>
     </Skeleton>
