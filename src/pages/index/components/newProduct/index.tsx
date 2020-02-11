@@ -2,8 +2,9 @@ import Taro from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./index.scss";
 import * as R from "ramda";
-import { TitleItem, IProps } from "../CollectionList";
+import { IProps } from "../CollectionList";
 import { CPrice } from "@/components/";
+import TitleItem from "../CollectionList/titleItem";
 
 const NewProduct = ({ data = { data: [] } }: IProps) => {
   return (
@@ -13,7 +14,7 @@ const NewProduct = ({ data = { data: [] } }: IProps) => {
         {R.splitEvery(3, data.data).map((row, rowId) => (
           <View className="row" key={rowId + ""}>
             {row.map(item => (
-              <View className="item">
+              <View className="item" key={item.commonId}>
                 <Image
                   mode="aspectFit"
                   key={item.titleCh}

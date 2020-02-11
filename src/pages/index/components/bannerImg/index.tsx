@@ -24,7 +24,7 @@ const BannerImg = ({ special }: IProps) => {
   return (
     <Skeleton loading={loading} row={1} rowHeight={240} animate>
       {loading ? (
-        <View />
+        <View> 载入中</View>
       ) : (
         <Image
           src={((special && special.imageUrl) || "").replace(
@@ -32,6 +32,7 @@ const BannerImg = ({ special }: IProps) => {
             "statictest"
           )}
           className="bannerImg"
+          style="height:480px;"
           mode="scaleToFill"
           onClick={() => {
             Taro.navigateTo({

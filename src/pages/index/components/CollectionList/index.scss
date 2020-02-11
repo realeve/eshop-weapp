@@ -1,6 +1,6 @@
 @import "@/styles/theme.scss";
-// @import "~taro-ui/dist/style/components/button.scss";
-// @import "~taro-ui/dist/style/components/loading.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
 
 .collectionList {
   margin-top: $componentSpan;
@@ -26,20 +26,5 @@
     }
     @extend .alignColumn;
     align-items: center;
-  }
-}
-
-.title-homePage {
-  padding: 48px 0 30px 0;
-  @extend .alignColumn;
-  align-items: center;
-  .main {
-    color: $title;
-    margin-bottom: 10px;
-    font-size: $fontSizeMid;
-  }
-  .sub {
-    font-size: $heading-4-size;
-    color: $yellow;
   }
 }
