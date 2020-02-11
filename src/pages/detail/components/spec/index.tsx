@@ -1,7 +1,7 @@
 import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./index.scss";
-import DCard from "../card";
+// import DCard from "../card";
 import { AtInputNumber } from "taro-ui";
 
 import { CPrice, CModal } from "@/components";
@@ -41,7 +41,7 @@ const DetailCard = ({
   const [showService, setShowService] = useState<boolean>(false);
 
   return (
-    <DCard className="detail_page_spec">
+    <view className="detail_card detail_page_spec">
       {/* 选择规格 */}
       <View className="detail_page_spec_item">
         <Text className="detail_page_spec_item_title">选择</Text>
@@ -174,7 +174,7 @@ const DetailCard = ({
           </View>
         </View>
       </CModal>
-    </DCard>
+    </view>
   );
 };
 

@@ -9,7 +9,8 @@ import { handleGoodsData, ISpecValueItem } from "./lib";
 import Skeleton from "taro-skeleton";
 
 import DTitle from "./components/title";
-import DSpec, { getGoodsInfoBySpec } from "./components/spec";
+import DSpec from "./components/spec";
+import { getGoodsInfoBySpec } from "./components/spec";
 
 import { ITypeImageItem } from "@/pages/detail/lib";
 import * as R from "ramda";

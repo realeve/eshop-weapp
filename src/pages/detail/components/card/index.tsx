@@ -13,7 +13,7 @@ const DetailCard = ({
   children?: TReactNode;
 }) => {
   return (
-    <View className={classnames("detail-card", className)} style={style}>
+    <View className={classnames("detail_card", className)} style={style}>
       {children}
     </View>
   );
