@@ -3,6 +3,9 @@
   padding: 100px;
   .imgWrapper {
     @extend .hcenter;
+    .img {
+      width: 80%;
+    }
   }
   .title {
     font-size: $heading-4-size;

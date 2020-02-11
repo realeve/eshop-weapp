@@ -21,17 +21,6 @@
       }
     }
   }
-  &__actions {
-    @extend .alignRow;
-    justify-content: space-around;
-    margin: 80px 0 40px 0;
-    width: 100%;
-    // .btn {
-    //   width: 240px;
-    //   height: 72px;
-    //   font-size: $font-size-sm;
-    // }
-  }
 
   $iconSize: 30px;
   &__title {

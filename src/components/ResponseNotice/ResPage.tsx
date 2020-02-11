@@ -2,7 +2,7 @@ import Taro from "@tarojs/taro";
 import { View, RichText } from "@tarojs/components";
 import { AtFloatLayout } from "taro-ui";
 import CButton from "@/components/CButton";
-import "./index.scss";
+import "./resPage.scss";
 
 //  process.env.TARO_ENV === 'weapp'
 const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;

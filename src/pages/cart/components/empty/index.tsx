@@ -7,7 +7,7 @@ import CButton from "@/components/CButton";
 const EmptyCart = () => (
   <View className="cart-page-empty">
     <View className="imgWrapper">
-      <Image className="img" src={CartImg} />
+      <Image mode="aspectFit" className="img" src={CartImg} />
     </View>
     <View className="title">您当前购物车空空如也~</View>
     <CButton
