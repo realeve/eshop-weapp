@@ -14,6 +14,9 @@ import { loadMember } from "@/pages/login/db";
 
 import { get as getGlobalData } from "@/utils/global_data";
 
+import { OSS_URL } from "@/utils/setting";
+import * as R from "ramda";
+
 export { Dispatch };
 export interface RouteData {
   pathname: string;
@@ -147,6 +150,18 @@ export const loadUserInfo = async (dispatch: Dispatch) => {
 
 const namespace = "common";
 export const updateStore = namespace + "/setStore";
+
+const handleData = data => {
+  let res = R.clone(data);
+  res.data = res.data.map(item => {
+    if (!item.imageUrl.includes("://")) {
+      item.imageUrl = OSS_URL + item.imageUrl;
+    }
+    return item;
+  });
+  return res;
+};
+
 export default {
   namespace,
   state,
@@ -169,11 +184,18 @@ export default {
           payload = { ...payload, cateList: componentB.data };
         }
         if (componentC) {
-          payload = { ...payload, collectionList: componentC };
+          payload = {
+            ...payload,
+            collectionList: handleData(componentC)
+          };
         }
         if (componentD) {
-          payload = { ...payload, newProduct: componentD };
+          payload = {
+            ...payload,
+            newProduct: handleData(componentD)
+          };
         }
+        console.log(payload);
         dispatch({
           type: "setStore",
           payload

@@ -11,17 +11,12 @@ import classnames from "classnames";
 import iconYou from "./you.png";
 import iconBao from "./bao.png";
 import iconZheng from "./zheng.png";
+import { getGoodsInfoBySpec } from "./lib";
 
 const iconList = {
   you: iconYou,
   bao: iconBao,
   zheng: iconZheng
-};
-
-// 根据规格获取商品信息
-export const getGoodsInfoBySpec = (res, data) => {
-  let specValueIds = res.map(item => item.specValueId).join(",");
-  return data.goodsList.find(item => item.specValueIds === specValueIds);
 };
 
 const DetailCard = ({

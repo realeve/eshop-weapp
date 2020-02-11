@@ -20,7 +20,7 @@ export let DEV: boolean =
  */
 const SETTING: { [key: string]: string } = {
   host: "https://apitest.ccgold.cn/api",
-  oss: "https://statictest.ccgold.cn",
+  oss: "https://statictest.ccgold.cn/",
   base: "/",
   publicPath: "/",
   IM: "https://imtest.ccgold.cn/member",
