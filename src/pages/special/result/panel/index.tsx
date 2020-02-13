@@ -19,8 +19,10 @@ interface IProps {
   [key: string]: any;
 }
 const SpecialPanel = ({ data }: IProps) => {
-  const failed = ["unsigned", "lost", "other", "unlucky"].includes(data.status);
   console.log(data);
+
+  const failed =
+    !data || ["unsigned", "lost", "other", "unlucky"].includes(data.status);
 
   return (
     <View className="special-page__panel">

@@ -15,5 +15,9 @@ module.exports = {
   },
   defineConstants: {},
   mini: {},
-  h5: {}
+  h5: {
+    devServer: {
+      port: 8000
+    }
+  }
 };

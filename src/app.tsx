@@ -67,7 +67,7 @@ class App extends Component {
           pagePath: "pages/find/index",
           text: "发现",
           iconPath: "./images/tab/logo.png",
-          selectedIconPath: "./images/tab/logo-active.png"
+          selectedIconPath: "./images/tab/logo.png"
         },
         {
           pagePath: "pages/cart/index",

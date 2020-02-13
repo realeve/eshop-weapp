@@ -8,10 +8,13 @@ const sassImporter = function(url) {
     };
   }
 
-  const reg = /^@\/styles\/(.*)/;
+  // 处理 @符号
+  // '@/styles/dasd'.match(/^@\/(.*)/) === 'styles/dasd'
+  const reg = /^@\/(.*)/;
+
   return {
     file: reg.test(url)
-      ? path.resolve(__dirname, "..", "src/styles", url.match(reg)[1])
+      ? path.resolve(__dirname, "..", "src/", url.match(reg)[1])
       : url
   };
 };

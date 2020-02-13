@@ -10,8 +10,11 @@ import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
 import useFetch from "@/components/hooks/useFetch";
 // import * as R from "ramda";
-import { CSwiperItem, CSwiper } from "@/components/";
-// , CSwiperItem, CSwiper
+// import { CSwiperItem, CSwiper } from "@/components/";
+
+import CSwiper from "@/components/swiper/index";
+import CSwiperItem from "@/components/swiper/item";
+
 const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;
 
 interface IProps {
@@ -32,18 +35,18 @@ const Special = ({ dispatch }: IProps) => {
     <View className="special_page">
       {/* web 端 */}
       {isWEB && subscribe && (
-        <CSwiper
+        <Swiper
           className="swiper_card"
           circular
           autoplay
-          interval={3000}
+          interval={30000}
           indicatorDots
           indicatorColor="#999"
           indicatorActiveColor="#b98a4e"
           displayMultipleItems={1.2}
         >
           {subscribe.thumbList.map((item, id) => (
-            <CSwiperItem key={item}>
+            <SwiperItem key={item}>
               <Image
                 className="swiper_img"
                 src={item}
@@ -57,9 +60,9 @@ const Special = ({ dispatch }: IProps) => {
                   });
                 }}
               />
-            </CSwiperItem>
+            </SwiperItem>
           ))}
-        </CSwiper>
+        </Swiper>
       )}
 
       {!isWEB && subscribe && (

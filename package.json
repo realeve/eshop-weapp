@@ -33,6 +33,7 @@
     "@tarojs/components": "2.0.3",
     "@tarojs/components-qa": "2.0.3",
     "@tarojs/redux": "^2.0.3",
+    "@tarojs/redux-h5": "^2.0.3",
     "@tarojs/router": "2.0.3",
     "@tarojs/taro": "2.0.3",
     "@tarojs/taro-alipay": "2.0.3",

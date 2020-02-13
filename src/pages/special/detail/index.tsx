@@ -36,6 +36,7 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
       setTabList(imgs);
     }
   }, [subscribe]);
+ 
 
   return (
     <View className="special-page__detail">

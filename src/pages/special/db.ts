@@ -1,5 +1,7 @@
 import * as R from "ramda";
 import { Dispatch } from "redux";
+import { axios } from "@/utils/axios";
+import { API } from "@/utils/setting";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -40,6 +42,9 @@ export const SUBSCRIBE_PHASE = [
   [50],
   [50, 60, 70, 100, 20, -1]
 ];
+
+const getPhase = () =>
+  SUBSCRIBE_PHASE.findIndex(p => p.includes(subscribe ? subscribe.state : 0));
 
 //活动状态：0:未发布; 1:已发布; 10:申购中; 20:申购结束;  30:抽签中; 40:抽签结束; 50:订单创建结束; 60:付款结束; 70:发货结束; 100:结束; -1:中止;
 export const SUBSCRIBE_STATE: {
@@ -135,17 +140,20 @@ export interface ISubscribe {
  * @param {data}
  * @returns {ISubscribe}
  */
+
 export const handleSubscribe: (
   data: {
     specialtyProductSubscriberVO: ISubscribe;
   },
   dispatch: Dispatch
 ) => ISubscribe = ({ specialtyProductSubscriberVO: sp }, dispatch) => {
+  console.log(sp);
   if (!sp) {
     return sp;
   }
   sp.denyCode = sp.denyCode < 0 ? 9999 : sp.denyCode;
   sp.state = sp.state < 0 ? 9999 : sp.state;
+  sp.isWin = sp.state <= 20 ? 0 : sp.isWin;
 
   let imgList = [
     {
@@ -187,7 +195,15 @@ export const handleSubscribe: (
       "state",
       "subscribeState",
       "subscribeStateStr",
-      "subscribeTime"
+      "subscribeTime",
+      "subscriberSn",
+      "drawTime",
+      "endTime",
+      "phone",
+      "subscribeQuantity",
+      "commonId",
+      "remainDrawTime",
+      "issueQuantity"
     ],
     sp
   );
@@ -199,3 +215,135 @@ export const handleSubscribe: (
   });
   return { ...special, imgList, thumbList };
 };
+
+export const doSubscribe = async (id: number): Promise<ISubscribe> =>
+  await axios({
+    method: "put",
+    url: `${API.SUBSCRIBE}/${id}`
+  });
+
+export const getMySubscribeOrder = async (orderid: number) =>
+  await axios({
+    ...(API.MY_SUBSCRIBE_ORDER as {})
+  });
+
+export interface IGoodsCommon {
+  imageName: string;
+  imageSrc: string;
+  jingle: string;
+  specJson: string;
+  stateRemark: string;
+  storeId: number;
+  unitName: string;
+  updateTime: string;
+  web: number;
+  webPrice0: number;
+  webUsable: number;
+}
+
+export interface IGoods {
+  colorId: number;
+  goodsCommon: IGoodsCommon;
+  goodsFullSpecs: string;
+  goodsPrice0: number;
+  goodsStorage: number;
+  imageName: string;
+  imageSrc: string;
+  web: number;
+  webPrice0: number;
+  webUsable: number;
+}
+
+export interface ISpecialtyBatch {
+  activityId: number;
+  autoStartEnd: number;
+  beginTime: string;
+  drawTime: string;
+  endTime: string;
+  goodsPrice: number;
+  id: number;
+  isDel: number;
+  issueQuantity: number;
+  payExpireTime: string;
+  payQuantity: number;
+  phone: string;
+  sendQuantity: number;
+  state: number;
+  subscribeQuantity: number;
+}
+
+export interface IMySubscribe {
+  activityId: number;
+  batchId: number;
+  commonId: number;
+  computeId: number | null;
+  createDate: number;
+  goods: IGoods;
+  goodsId: number;
+  id: number;
+  isDel: number;
+  isExpired: number | null;
+  isPay: number | null;
+  isWin: number;
+  orderId: number;
+  orderSn: number;
+  payId: number;
+  payTime: number;
+  specialtyBatch: ISpecialtyBatch;
+  subscribeState: number;
+  subscribeStateStr: string;
+  subscribeTime: number;
+  subscriberId: number;
+  subscriberSn: number;
+}
+
+/**
+ *
+ * @param params {page,pageSize,subscribeState}
+ */
+export const getMySubscribe: (
+  param: any
+) => Promise<IMySubscribe[]> = async params =>
+  await axios({
+    ...(API.MY_SUBSCRIBE as {}),
+    params
+  });
+
+/**
+ *
+ * @param data {orderId,addressId}
+ */
+export const updateSubscribeAddress = async (data: any) =>
+  await axios({
+    ...(API.UPDATE_SPECIAL_ADDRESS as {}),
+    data
+  })
+    .then(res => {
+      res;
+    })
+    .catch(error => error);
+
+export interface ICompute {
+  activityId: number;
+  baseNumber: number;
+  batchId: number;
+  createBy: null;
+  createDate: number;
+  id: number;
+  isDel: number;
+  issueQuantity: number;
+  luckyNumbers: null;
+  reverseBaseNumber: number;
+  seed: null;
+  shenZhenIndicator: number;
+  smallMediumIndicator: number;
+  step: null;
+  subscribeTotal: number;
+}
+
+export const getSubscribeCompute: (
+  id: number
+) => Promise<ICompute> = async id =>
+  await axios({
+    url: `${(API.SP_SUBSCRIBER_COMPUTE as { url: string }).url}/${id}`
+  }).then((d: { compute: ICompute }) => d.compute);

@@ -24,12 +24,12 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
 
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${id}` },
-    callback: e => handleSubscribe(e, dispatch),
-    valid: () => id > "0" && !special
+    callback: e => handleSubscribe(e, dispatch)
+    valid: () => id > "0"&& !special
   });
 
   const status = "unlucky";
-  console.log(subscribe);
+  console.log("subscribe,special", special);
 
   return (
     <View className="special-page__result">

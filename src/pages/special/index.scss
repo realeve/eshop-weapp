@@ -4,18 +4,24 @@ $actionHeight: 100px;
 .special_page {
   @extend .alignColumn;
   height: 100vh;
+
   .swiper_card {
     flex: 1;
     width: 100%;
     .swiper-slide {
       @extend .center;
       transition: 300ms transform;
+
       transform: scale(1.2);
+
       &-next,
       &-prev {
         transform: scale(0.95);
       }
     }
+  }
+  .swiper-wrapper {
+    height: unset;
   }
   .swiper_img {
     width: 90%;
