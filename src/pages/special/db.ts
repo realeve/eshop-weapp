@@ -154,17 +154,20 @@ export const handleSubscribe: (
     },
     {
       title: "工艺技术",
-      detail: [sp.detailImage2, sp.detailImage2_1]
+      detail: [sp.detailImage2, sp.detailImage2_2]
     },
     {
       title: "商品信息",
-      detail: [sp.detailImage3, sp.detailImage3_1]
+      detail: [sp.detailImage3, sp.detailImage3_3]
     },
     {
       title: "尺寸参数",
-      detail: [sp.detailImage4, sp.detailImage4_1]
+      detail: [sp.detailImage4, sp.detailImage4_4]
     }
-  ];
+  ].map(item => {
+    item.detail = item.detail.filter(img => img);
+    return item;
+  });
   let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3];
   sp = { ...sp, imgList, thumbList };
   let special = R.pick(

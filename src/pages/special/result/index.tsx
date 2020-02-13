@@ -29,6 +29,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
   });
 
   const status = "unlucky";
+  console.log(subscribe);
 
   return (
     <View className="special-page__result">

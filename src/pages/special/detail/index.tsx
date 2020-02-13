@@ -23,9 +23,9 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
 
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${specialId}` },
-    callback: e => handleSubscribe(e, dispatch),
-    valid: () => id > "0" && !special
-  });
+    callback: e => handleSubscribe(e, dispatch)
+    valid: () =>  !special
+  }); 
 
   const [current, setCurrent] = useState(Number(id) || 0);
 
@@ -48,23 +48,15 @@ const SpecialDetail = ({ dispatch, special }: IProps) => {
         {tabList.map((item, idx) => (
           <AtTabsPane current={current} index={idx} key={item.title}>
             {/* <ScrollView scrollY className="imgWrapper"> */}
-            {item.detail.map(
-              item =>
-                item && (
-                  <Image
-                    src={item}
-                    key={item}
-                    mode="widthFix"
-                    className="img"
-                  />
-                )
-            )}
+            {item.detail.map(img => (
+              <Image src={img} key={img} mode="widthFix" className="img" />
+            ))}
             {/* </ScrollView> */}
           </AtTabsPane>
         ))}
       </AtTabs>
 
-      <Skeleton loading={loading} row={2} avatar>
+      <Skeleton loading={loading&&!subscribe&&!special} row={2} avatar>
         <View className="action">
           <SpecialAction
             data={
