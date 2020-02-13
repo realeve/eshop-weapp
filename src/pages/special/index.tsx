@@ -3,15 +3,16 @@ import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
 import { handleSubscribe, ISubscribe } from "./db";
-import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components";
+import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components"; // , Swiper, SwiperItem
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
 import Skeleton from "taro-skeleton";
 import useFetch from "@/components/hooks/useFetch";
 // import * as R from "ramda";
-
+import { CSwiperItem, CSwiper } from "@/components/";
 // , CSwiperItem, CSwiper
+const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;
 
 interface IProps {
   [key: string]: any;
@@ -28,22 +29,54 @@ const Special = ({ dispatch }: IProps) => {
   console.log(loading, subscribe);
 
   return (
-    <View className="special-page">
-      {subscribe && (
-        <Swiper
-          className="swiperCard"
+    <View className="special_page">
+      {/* web 端 */}
+      {isWEB && subscribe && (
+        <CSwiper
+          className="swiper_card"
           circular
           autoplay
-          interval={1000}
+          interval={3000}
           indicatorDots
           indicatorColor="#999"
           indicatorActiveColor="#b98a4e"
-          displayMultipleItems={1.6}
+          displayMultipleItems={1.2}
+        >
+          {subscribe.thumbList.map((item, id) => (
+            <CSwiperItem key={item}>
+              <Image
+                className="swiper_img"
+                src={item}
+                onClick={() => {
+                  jump({
+                    url: "/pages/special/detail/index",
+                    payload: {
+                      id,
+                      specialId
+                    }
+                  });
+                }}
+              />
+            </CSwiperItem>
+          ))}
+        </CSwiper>
+      )}
+
+      {!isWEB && subscribe && (
+        <Swiper
+          className="swiper_card"
+          circular
+          autoplay
+          interval={3000}
+          indicatorDots
+          indicatorColor="#999"
+          indicatorActiveColor="#b98a4e"
+          // displayMultipleItems={1.2}
         >
           {subscribe.thumbList.map((item, id) => (
             <SwiperItem key={item}>
               <Image
-                className="img"
+                className="swiper_imgWeapp"
                 src={item}
                 onClick={() => {
                   jump({

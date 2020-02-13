@@ -3,25 +3,9 @@ import { View } from "@tarojs/components";
 import classNames from "classnames";
 import Swipers from "./swiper";
 
-import "swiper/dist/css/swiper.min.css";
 import "./index.scss";
 
 let INSTANCE_ID = 0;
-
-class CSwiperItem extends Taro.Component {
-  render() {
-    const cls = classNames("swiper-slide", this.props.className);
-    return (
-      <View
-        className={cls}
-        style={this.props.style}
-        item-id={this.props.itemId}
-      >
-        {this.props.children}
-      </View>
-    );
-  }
-}
 
 const createEvent = type => {
   let e;
@@ -34,7 +18,7 @@ const createEvent = type => {
   return e;
 };
 
-class CSwiper extends Taro.Component {
+export default class CSwiper extends Taro.Component {
   constructor() {
     super(...arguments);
     this.$el = null;
@@ -163,9 +147,9 @@ class CSwiper extends Taro.Component {
       "swiper-pagination-bullets": this.props.indicatorDots
     });
     return (
-      <div
+      <View
         className={cls}
-        style={style}
+        style={{ width: "100%", height: "100%", ...style }}
         ref={el => {
           this.$el = el;
         }}
@@ -178,9 +162,7 @@ class CSwiper extends Taro.Component {
         /> */}
         <View className="swiper-wrapper">{this.props.children}</View>
         <View className={paginationCls} />
-      </div>
+      </View>
     );
   }
 }
-
-export { CSwiper, CSwiperItem };

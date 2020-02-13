@@ -10,7 +10,9 @@ export { default as useSetState } from "./hooks/useSetState";
 export { default as useFetch } from "./hooks/useFetch";
 export { default as useTimeoutFn } from "./hooks/useTimeoutFn";
 
-export { CSwiper, CSwiperItem } from "./swiper/index";
+export { default as CSwiper } from "./swiper/index";
+export { default as CSwiperItem } from "./swiper/item";
+
 export { default as CStep } from "./step";
 
 export { default as CDot } from "./CDot";
