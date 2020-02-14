@@ -27,6 +27,9 @@ $actionHeight: 100px;
     width: 90%;
     width: 100%;
     height: unset;
+    img {
+      height: -webkit-fill-available;
+    }
   }
   .swiper_imgWeapp {
     width: 100%;

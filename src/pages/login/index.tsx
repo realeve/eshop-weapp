@@ -2,7 +2,6 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
-import DefaultAvatar from "@/pages/user/components/userHeader/headerLogo.png";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import LoginPhone from "./components/LoginPhone";
 import LoginPassword from "./components/LoginPassword";
@@ -17,7 +16,10 @@ const Login = () => {
   return (
     <View className="login-page">
       <View className="logo">
-        <Image src={DefaultAvatar} className="img" />
+        <Image
+          src={"https://www.cbpc.ltd/ccgold/static/headerLogo.png"}
+          className="img"
+        />
       </View>
       <AtTabs
         current={current}

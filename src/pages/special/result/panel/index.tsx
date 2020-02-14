@@ -5,7 +5,6 @@ import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import classnames from "classnames";
 
-// import bg from "./main_bg.png";
 import Grass from "./grass.svg";
 import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";

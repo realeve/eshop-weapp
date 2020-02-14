@@ -12,8 +12,8 @@ import useFetch from "@/components/hooks/useFetch";
 // import * as R from "ramda";
 // import { CSwiperItem, CSwiper } from "@/components/";
 
-import CSwiper from "@/components/swiper/index";
-import CSwiperItem from "@/components/swiper/item";
+// import CSwiper from "@/components/swiper/index";
+// import CSwiperItem from "@/components/swiper/item";
 
 const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;
 
@@ -43,7 +43,7 @@ const Special = ({ dispatch }: IProps) => {
           indicatorDots
           indicatorColor="#999"
           indicatorActiveColor="#b98a4e"
-          displayMultipleItems={1.6}
+          // displayMultipleItems={1.6}banner
         >
           {subscribe.thumbList.map((item, id) => (
             <SwiperItem key={item}>

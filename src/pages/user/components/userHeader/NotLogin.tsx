@@ -2,7 +2,6 @@ import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import "./notLogin.scss";
 import { AtAvatar } from "taro-ui";
-import DefaultAvatar from "./headerLogo.png";
 
 const NotLogin = () => (
   <View
@@ -14,7 +13,11 @@ const NotLogin = () => (
     }}
   >
     <View className="avatar_img">
-      <AtAvatar circle size="large" image={DefaultAvatar} />
+      <AtAvatar
+        circle
+        size="large"
+        image="https://www.cbpc.ltd/ccgold/static/headerLogo.png"
+      />
     </View>
     <View className="detail">
       <Text className="detail_user_name">您好，请您登录</Text>

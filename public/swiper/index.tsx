@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import classNames from "classnames";
-import Swipers from "./swiper";
+import Swipers from "swiper";
 
 import "./index.scss";
 
