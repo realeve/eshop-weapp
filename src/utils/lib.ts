@@ -8,6 +8,44 @@ import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
 export { getType, axios } from "./axios";
 
+export const tabConfig: {
+  pagePath: string;
+  text: string;
+  iconPath: string;
+  selectedIconPath: string;
+}[] = [
+  {
+    pagePath: "pages/index/index",
+    text: "首页",
+    iconPath: "./images/tab/home.png",
+    selectedIconPath: "./images/tab/home-active.png"
+  },
+  {
+    pagePath: "pages/cate/index",
+    text: "分类",
+    iconPath: "./images/tab/cate.png",
+    selectedIconPath: "./images/tab/cate-active.png"
+  },
+  {
+    pagePath: "pages/find/index",
+    text: "发现",
+    iconPath: "./images/tab/logo.png",
+    selectedIconPath: "./images/tab/logo.png"
+  },
+  {
+    pagePath: "pages/cart/index",
+    text: "购物车",
+    iconPath: "./images/tab/cart.png",
+    selectedIconPath: "./images/tab/cart-active.png"
+  },
+  {
+    pagePath: "pages/user/index",
+    text: "我的",
+    iconPath: "./images/tab/user.png",
+    selectedIconPath: "./images/tab/user-active.png"
+  }
+];
+
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
 
@@ -320,6 +358,12 @@ function urlStringify(url, payload, encode = true) {
  */
 export function jump(options) {
   const { url, title = "", payload = {}, method = "navigateTo" } = options;
+
+  // tab 页面路由
+  const isTabPage = tabConfig.find(item => item.pagePath === url);
+  if (isTabPage) {
+    Taro.switchTab({ url });
+  }
 
   if (/^https?:\/\//.test(url)) {
     Taro[method]({

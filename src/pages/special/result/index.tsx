@@ -163,14 +163,14 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
           <View className="result__content">
             <View className="list-item">
               <CDot />
-              <Text style="margin-left:10px;">
+              <Text style="margin-left:10px;font-size:14px;">
                 本次活动共有{specialResult.data.curPeople}人预约，共抽取中签号
                 {specialResult.data.lucky}个
               </Text>
             </View>
             <View className="list-item">
               <CDot />
-              <Text style="margin-left:10px;">
+              <Text style="margin-left:10px;font-size:14px;">
                 如有疑问，请联系在线客服或者致电{specialResult.data.phone}
               </Text>
             </View>

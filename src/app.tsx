@@ -1,10 +1,13 @@
 import Taro, { Component, Config } from "@tarojs/taro";
-import Index from "./pages";
+import Index from "./pages/index";
 import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
 import "./app.scss";
 import "./styles/custom-theme.scss";
+
+// 用import的方式会报错
+// import { tabConfig } from "./utils/lib";
 
 const dvaApp = dva.createApp({
   initialState: {},
@@ -48,7 +51,6 @@ class App extends Component {
       navigationBarTitleText: "WeChat",
       navigationBarTextStyle: "black"
     },
-
     tabBar: {
       list: [
         {
