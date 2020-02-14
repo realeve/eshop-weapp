@@ -2,6 +2,7 @@ import * as R from "ramda";
 import { Dispatch } from "redux";
 import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
+import * as lib from "@/utils/lib";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -9,12 +10,21 @@ export const DENY_CODE: {
   0: "未登录",
   1: "未实名认证",
   2: "申购中",
-  3: "已申购",
+  3: "您已申购",
   4: "申购未开始",
   5: "申购已结束，请下次再来",
   6: "其他批次中过签",
   9999: "没有权限"
 };
+
+export type TOrderState =
+  | "signed"
+  | "unsigned"
+  | "lucky"
+  | "unlucky"
+  | "payed"
+  | "lost"
+  | "other";
 
 /**
  * 禁入编码：0，1
@@ -43,7 +53,56 @@ export const SUBSCRIBE_PHASE = [
   [50, 60, 70, 100, 20, -1]
 ];
 
-const getPhase = () =>
+export const getTimeDescByScribe = (scribe: ISubscribe | null) => {
+  if (!scribe) {
+    return false;
+  }
+
+  let now = lib.now();
+
+  // if (now > scribe.drawTime) {
+  //   return false;
+  // }
+  // return {
+  //   title: '公布摇号',
+  //   time: scribe.drawTime,
+  // };
+
+  // 超过支付时间，活动结束
+  if (now > scribe.payExpireTime) {
+    return false;
+  }
+
+  if (now > scribe.drawTime) {
+    return {
+      title: "支付截止",
+      time: scribe.payExpireTime
+    };
+  }
+
+  if (now > scribe.endTime) {
+    return {
+      title: "公布摇号",
+      time: scribe.drawTime
+    };
+  }
+
+  if (now > scribe.beginTime) {
+    return {
+      title: "预约结束",
+      time: scribe.endTime
+    };
+  }
+
+  if (now < scribe.beginTime) {
+    return {
+      title: "预约开始",
+      time: scribe.beginTime
+    };
+  }
+};
+
+export const getPhase = subscribe =>
   SUBSCRIBE_PHASE.findIndex(p => p.includes(subscribe ? subscribe.state : 0));
 
 //活动状态：0:未发布; 1:已发布; 10:申购中; 20:申购结束;  30:抽签中; 40:抽签结束; 50:订单创建结束; 60:付款结束; 70:发货结束; 100:结束; -1:中止;
@@ -60,15 +119,6 @@ export const SUBSCRIBE_STATE: {
   100: "结束",
   9999: "中止"
 };
-
-export type TOrderState =
-  | "signed"
-  | "unsigned"
-  | "lucky"
-  | "unlucky"
-  | "payed"
-  | "lost"
-  | "other";
 
 export interface ISubscribe {
   activityId: number;

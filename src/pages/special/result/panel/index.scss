@@ -104,6 +104,11 @@
         margin-top: 40px;
         font-size: $fontSizeNormal;
         color: $yellow;
+        &__main {
+          display: block;
+          width: 100%;
+          text-align: center;
+        }
       }
     }
   }

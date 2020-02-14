@@ -10,28 +10,37 @@ import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
 import { CButton } from "@/components";
 
+export interface IResultProp {
+  countDown: string;
+  curPeople: number;
+  current: number | string;
+  lotteryDate: string;
+  lucky: number;
+  payedBefore: string;
+  phases: any;
+  phone: string;
+  sn?: string;
+  total: number;
+  type: string;
+  typeDesc: string;
+}
 interface IProps {
-  data: {
-    status: string;
-    loading: boolean;
-    sn?: string;
-  };
+  data: IResultProp;
+  loading: boolean;
   [key: string]: any;
 }
-const SpecialPanel = ({ data }: IProps) => {
-  console.log(data);
-
+const SpecialPanel = ({ data, loading }: IProps) => {
   const failed =
-    !data || ["unsigned", "lost", "other", "unlucky"].includes(data.status);
+    !data || ["unsigned", "lost", "other", "unlucky"].includes(data.type);
 
   return (
     <View className="special-page__panel">
-      <Skeleton loading={!data || data.loading} row={6} rowHeight={30}>
+      <Skeleton loading={loading} row={6} rowHeight={30}>
         <View className="head">
           {/* <Image src={bg} mode="widthFix" className="img" /> */}
           <View
             className={classnames("content", {
-              unlucky: data && data.status === "unlucky"
+              unlucky: failed
             })}
           >
             <View className="content-title">
@@ -39,7 +48,7 @@ const SpecialPanel = ({ data }: IProps) => {
                 <View className="top" />
                 <View className="btm" />
               </View>
-              {data && data.status === "lucky" ? "CONGRATULATIONS" : "预约失败"}
+              {data && data.type === "lucky" ? "CONGRATULATIONS" : "预约失败"}
               <View className="right">
                 <View className="top" />
                 <View className="btm" />
@@ -48,14 +57,12 @@ const SpecialPanel = ({ data }: IProps) => {
             <View className="detail">
               <Image src={Grass} className="grassLeft" mode="aspectFit" />
               <View className="result">
-                <Text className="title">{orderDesc[data.status]}</Text>
-                {data.status === "other" && data.typeDesc && (
+                <Text className="title">{orderDesc[data.type]}</Text>
+                {data && data.typeDesc && (
                   <Text className="desc">{data.typeDesc}</Text>
                 )}
 
-                {(data.status === "signed" || true) && (
-                  <Text className="code">抽签码：{data.sn || "23332"}</Text>
-                )}
+                {data.sn && <Text className="code">抽签码：{data.sn}</Text>}
               </View>
               <Image src={Grass} className="grassRight" mode="aspectFit" />
             </View>
@@ -70,13 +77,13 @@ const SpecialPanel = ({ data }: IProps) => {
                   console.log("checkOrder");
                 }}
               >
-                {data.status === "lucky" ? "立即付款" : "查看订单"}
+                {data.type === "lucky" ? "立即付款" : "查看订单"}
               </CButton>
             )}
 
             <View className="tips">
-              <Text className="tips__main">感谢您参与!</Text>
-              <Text className="tips__desc">欢迎您关注最新的特品活动</Text>
+              <Text className="tips__main">感谢您的参与!</Text>
+              <Text className="tips__desc">{getDescDetail(data)}</Text>
             </View>
           </View>
         </View>

@@ -165,23 +165,23 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
     return res;
   });
 
-  /**
+/**
  * 使用手机号+密码登录
  *
  * @param {Object} data
  * @returns {Promise<ILoginToken>}
  */
 export const loginPsw = (data: Object): Promise<ILoginToken> =>
-axios({
-  method: "post",
-  url: API.LOGIN_BOX as string,
-  data
-}).then(res => {
-  if (res.token) {
-    setGlobalData("token", res.token);
-  }
-  return res;
-});
+  axios({
+    method: "post",
+    url: API.LOGIN_BOX as string,
+    data
+  }).then(res => {
+    if (res.token) {
+      setGlobalData("token", res.token);
+    }
+    return res;
+  });
 
 export interface IMemberInfo {
   memberId: number;
@@ -283,7 +283,7 @@ export const storeMember = (
 
   callback &&
     callback({
-      type: "common/setUserStore",
+      type: "setUserStore", //common/
       payload: {
         user,
         isLogin: true

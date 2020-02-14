@@ -1,11 +1,13 @@
+import moment from "dayjs";
 export const orderDesc = {
   lucky: "恭喜您，中签啦!",
   lost: "很遗憾，您失去认购资格",
-  payed: "恭喜您，中签啦!",
+  payed: "支付成功",
+  signed: "预约成功", // 等待抽签
   unsigned: "很遗憾，您未中签!",
   unlucky: "很遗憾，您未中签!",
   notAttend: "您未参与，请下次再来!",
-  other: ""
+  other: "预约失败"
 };
 
 export const getDescDetail = ({
