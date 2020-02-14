@@ -34,52 +34,21 @@ const Special = ({ dispatch }: IProps) => {
   return (
     <View className="special_page">
       {/* web 端 */}
-      {isWEB && subscribe && (
+      {subscribe && (
         <Swiper
-          className="swiper_card"
+          className={isWEB ? "swiper_card" : "swiper"}
           circular
           autoplay
           interval={30000}
           indicatorDots
           indicatorColor="#999"
           indicatorActiveColor="#b98a4e"
-          displayMultipleItems={1.2}
+          displayMultipleItems={1.6}
         >
           {subscribe.thumbList.map((item, id) => (
             <SwiperItem key={item}>
               <Image
                 className="swiper_img"
-                src={item}
-                onClick={() => {
-                  jump({
-                    url: "/pages/special/detail/index",
-                    payload: {
-                      id,
-                      specialId
-                    }
-                  });
-                }}
-              />
-            </SwiperItem>
-          ))}
-        </Swiper>
-      )}
-
-      {!isWEB && subscribe && (
-        <Swiper
-          className="swiper_card"
-          circular
-          autoplay
-          interval={3000}
-          indicatorDots
-          indicatorColor="#999"
-          indicatorActiveColor="#b98a4e"
-          // displayMultipleItems={1.2}
-        >
-          {subscribe.thumbList.map((item, id) => (
-            <SwiperItem key={item}>
-              <Image
-                className="swiper_imgWeapp"
                 src={item}
                 onClick={() => {
                   jump({
