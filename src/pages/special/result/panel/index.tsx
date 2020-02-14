@@ -30,8 +30,10 @@ interface IProps {
   [key: string]: any;
 }
 const SpecialPanel = ({ data, loading }: IProps) => {
-  const failed =
-    !data || ["unsigned", "lost", "other", "unlucky"].includes(data.type);
+  if (!data) {
+    return null;
+  }
+  const failed = ["unsigned", "lost", "other", "unlucky"].includes(data.type);
 
   return (
     <View className="special-page__panel">
@@ -48,7 +50,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
                 <View className="top" />
                 <View className="btm" />
               </View>
-              {data && data.type === "lucky" ? "CONGRATULATIONS" : "预约失败"}
+              {data.type === "lucky" ? "CONGRATULATIONS" : "预约失败"}
               <View className="right">
                 <View className="top" />
                 <View className="btm" />
@@ -58,9 +60,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <Image src={Grass} className="grassLeft" mode="aspectFit" />
               <View className="result">
                 <Text className="title">{orderDesc[data.type]}</Text>
-                {data && data.typeDesc && (
-                  <Text className="desc">{data.typeDesc}</Text>
-                )}
+                {data.typeDesc && <Text className="desc">{data.typeDesc}</Text>}
 
                 {data.sn && <Text className="code">抽签码：{data.sn}</Text>}
               </View>
@@ -83,9 +83,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
 
             <View className="tips">
               <Text className="tips__main">感谢您的参与!</Text>
-              <Text className="tips__desc">
-                {data.type && getDescDetail(data)}
-              </Text>
+              <Text className="tips__desc">{getDescDetail(data)}</Text>
             </View>
           </View>
         </View>
