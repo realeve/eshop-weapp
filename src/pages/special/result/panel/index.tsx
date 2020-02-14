@@ -83,7 +83,9 @@ const SpecialPanel = ({ data, loading }: IProps) => {
 
             <View className="tips">
               <Text className="tips__main">感谢您的参与!</Text>
-              <Text className="tips__desc">{getDescDetail(data)}</Text>
+              <Text className="tips__desc">
+                {data.type && getDescDetail(data)}
+              </Text>
             </View>
           </View>
         </View>
