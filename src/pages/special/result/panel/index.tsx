@@ -8,6 +8,7 @@ import classnames from "classnames";
 import Grass from "./grass.svg";
 import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
+import { CButton } from "@/components";
 
 interface IProps {
   data: {
@@ -48,12 +49,12 @@ const SpecialPanel = ({ data }: IProps) => {
               <Image src={Grass} className="grassLeft" mode="aspectFit" />
               <View className="result">
                 <Text className="title">{orderDesc[data.status]}</Text>
-                <Text className="desc">
-                  {data.status === "other" && data.typeDesc}
-                </Text>
+                {data.status === "other" && data.typeDesc && (
+                  <Text className="desc">{data.typeDesc}</Text>
+                )}
 
                 {(data.status === "signed" || true) && (
-                  <Text className="code">{data.sn || "23332"}</Text>
+                  <Text className="code">抽签码：{data.sn || "23332"}</Text>
                 )}
               </View>
               <Image src={Grass} className="grassRight" mode="aspectFit" />

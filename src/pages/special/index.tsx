@@ -36,7 +36,7 @@ const Special = ({ dispatch }: IProps) => {
       {/* web 端 */}
       {subscribe && (
         <Swiper
-          className={isWEB ? "swiper_card" : "swiper"}
+          className="swiper_card"
           circular
           autoplay
           interval={30000}
@@ -48,7 +48,7 @@ const Special = ({ dispatch }: IProps) => {
           {subscribe.thumbList.map((item, id) => (
             <SwiperItem key={item}>
               <Image
-                className="swiper_img"
+                className={isWEB ? "swiper_img" : "swiper_imgWeapp"}
                 src={item}
                 onClick={() => {
                   jump({

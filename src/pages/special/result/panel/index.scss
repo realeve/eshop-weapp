@@ -81,10 +81,15 @@
           @extend .alignColumn;
           .title {
             font: {
-              size: 24px * $hd;
+              size: 20px * $hd;
               weight: bold;
             }
           }
+          .code {
+            margin-top: 10px;
+            color: $yellow;
+          }
+
           background-image: -webkit-linear-gradient(top, #f3e6cb, #af6c00);
           background-clip: text;
           -webkit-background-clip: text;
