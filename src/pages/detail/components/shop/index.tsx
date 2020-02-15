@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
@@ -6,6 +6,7 @@ import DCard from "../card";
 import { IProductInfo } from "../../lib";
 
 const DetailShop = ({ data }: { data: IProductInfo }) => {
+  const [err, setErr] = useState(true);
   return (
     <DCard className="detail_page_shop">
       <View className="detail_page_shop_title">
@@ -13,8 +14,12 @@ const DetailShop = ({ data }: { data: IProductInfo }) => {
           mode="aspectFit"
           className="detail_page_shop_title_img"
           src={data.logo}
+          style={!err ? "margin-right:10px;" : ""}
+          onLoad={() => {
+            setErr(false);
+          }}
         />
-        <Text style="margin-left:10px;">{data.name}</Text>
+        <Text>{data.name}</Text>
       </View>
 
       <View className="detail_page_shop_detail">

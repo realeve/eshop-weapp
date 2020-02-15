@@ -13,7 +13,7 @@
   }
   &_detail {
     @extend .alignRow;
-    font-size: $fontSizeBase;
+    font-size: $heading-5-size;
     justify-content: space-between;
     &_score {
       margin-left: 5px;

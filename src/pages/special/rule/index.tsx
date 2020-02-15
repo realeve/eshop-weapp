@@ -6,7 +6,7 @@ import { responseText } from "@/utils/cbpm_doc";
 const SpecialRule = () => (
   <View className="special_rule_page">
     <View className="rule_card">
-      <RichText nodes={responseText} />
+      <RichText space="ensp" nodes={responseText} />
     </View>
   </View>
 );

@@ -22,13 +22,13 @@ const DetailComment = ({ id: commonId }: { id: string }) => {
   });
 
   return (
-    <Skeleton loading={commonId > "0" && loading} animate row={2} avatar>
-      <DCard className="detail_page_comment">
-        <View className="detail_page_comment_title">
-          <Text>用户评价</Text>
-          <Text>更多</Text>
-        </View>
-        {data && (
+    data && (
+      <Skeleton loading={commonId > "0" && loading} animate row={2} avatar>
+        <DCard className="detail_page_comment">
+          <View className="detail_page_comment_title">
+            <Text>用户评价</Text>
+            <Text>更多</Text>
+          </View>
           <View className="detail_page_comment_item">
             <View className="detail_page_comment_avatar">
               <AtAvatar size="small" circle image={data.memberAvatarUrl} />
@@ -45,9 +45,9 @@ const DetailComment = ({ id: commonId }: { id: string }) => {
               </Text>
             </View>
           </View>
-        )}
-      </DCard>
-    </Skeleton>
+        </DCard>
+      </Skeleton>
+    )
   );
 };
 

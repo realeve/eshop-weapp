@@ -31,7 +31,7 @@ const ResPage = ({
     {isWEB ? (
       <View dangerouslySetInnerHTML={{ __html: html }} />
     ) : (
-      <RichText nodes={html || ""} style="line-height:2em;" />
+      <RichText space="ensp" nodes={html || ""} style="line-height:2em;" />
     )}
     <View className="response__actions">
       <CButton

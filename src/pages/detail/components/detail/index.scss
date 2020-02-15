@@ -1,23 +1,11 @@
 @import "@/styles/theme.scss";
-@import "~taro-ui/dist/style/components/tabs.scss";
 
-.detail_page_content {
+.detail_content {
   color: $mainTitle;
+
   .at-tabs {
-    &__item {
-      border: 1px solid $mainTitle;
-      // padding: 10px 12px;
-      &-underline {
-        height: 0;
-      }
-      &--active {
-        background: $mainTitle;
-        color: $white;
-      }
-    }
     &-pane {
       padding: 34px 0;
-      // height: auto;
 
       .goodsDetail {
         @extend .alignColumn;

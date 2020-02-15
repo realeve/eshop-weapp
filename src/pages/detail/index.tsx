@@ -83,10 +83,12 @@ const Detail = () => {
         <CMaginify data={imgs} circular={data && data.specs.length < 2} />
       </Skeleton>
 
+      {/* 标题 */}
       <Skeleton loading={loading} animate row={3}>
         <DTitle data={data || {}} />
       </Skeleton>
 
+      {/* 规格与服务 */}
       <Skeleton loading={loading} animate row={2}>
         <DSpec
           goodsnum={goodsnum}
@@ -96,6 +98,7 @@ const Detail = () => {
         />
       </Skeleton>
 
+      {/* 店铺热销 */}
       <Skeleton loading={loading} animate row={3}>
         <DGoodsList data={(data && data.hotData) || []} title="店铺热销" />
       </Skeleton>

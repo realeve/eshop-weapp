@@ -4,10 +4,11 @@ import "./index.scss";
 import DCard from "../card";
 import { API } from "@/utils/setting";
 import useFetch from "@/components/hooks/useFetch";
-import { AtTabs, AtTabsPane } from "taro-ui";
+import { AtTabsPane } from "taro-ui";
 
 import Skeleton from "taro-skeleton";
 import { appAfterService } from "@/utils/cbpm_doc";
+import CTabs from "./tabs";
 
 // console.log(afterService)
 
@@ -26,8 +27,8 @@ const DetailContent = ({ id }: { id: string | number }) => {
 
   return (
     <Skeleton loading={id > 0 && loading} animate row={4} rowHeight={400}>
-      <DCard className="detail_page_content">
-        <AtTabs
+      <DCard>
+        <CTabs
           tabList={[{ title: "商品详情" }, { title: "售后服务" }]}
           current={current}
           onClick={setCurrent}
@@ -41,10 +42,14 @@ const DetailContent = ({ id }: { id: string | number }) => {
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <View className="goods_detail_container">
-              <RichText nodes={appAfterService} />
+              <RichText
+                space="ensp"
+                nodes={appAfterService}
+                style="line-height:2em;"
+              />
             </View>
           </AtTabsPane>
-        </AtTabs>
+        </CTabs>
       </DCard>
     </Skeleton>
   );

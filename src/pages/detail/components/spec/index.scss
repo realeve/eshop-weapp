@@ -12,7 +12,10 @@
   &_item {
     font-size: $fontSize30;
     @extend .detail_card;
-    @extend .alignRow;
+    // @extend .alignRow;
+    display: flex;
+    flex-direction: row;
+
     &_title {
       margin-right: 30px;
       color: $subTitle;
