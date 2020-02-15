@@ -1,5 +1,5 @@
 import Taro, { useState } from "@tarojs/taro";
-import { View, Image, RichText } from "@tarojs/components";
+import { View, Image, RichText, Text } from "@tarojs/components";
 import "./index.scss";
 import DCard from "../card";
 import { API } from "@/utils/setting";
@@ -10,9 +10,7 @@ import Skeleton from "taro-skeleton";
 import { appAfterService } from "@/utils/cbpm_doc";
 import CTabs from "./tabs";
 
-// console.log(afterService)
-
-const DetailContent = ({ id }: { id: string | number }) => {
+const DetailContent = ({ goods_id: id }: { goods_id: string | number }) => {
   const [current, setCurrent] = useState(0);
   let { data: imgs, loading } = useFetch({
     param: {
@@ -33,19 +31,19 @@ const DetailContent = ({ id }: { id: string | number }) => {
           current={current}
           onClick={setCurrent}
         >
-          <AtTabsPane current={this.state.current} index={0}>
-            <View className="goodsDetail">
+          <AtTabsPane current={current} index={0}>
+            <View className="goods_detail_container">
               {(imgs || []).map(src => (
                 <Image src={src} className="img" key={src} />
               ))}
             </View>
           </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <View className="goods_detail_container">
+          <AtTabsPane current={current} index={1}>
+            <View className="goods_detail_service">
               <RichText
                 space="ensp"
                 nodes={appAfterService}
-                style="line-height:2em;"
+                style="line-height:1.5em;"
               />
             </View>
           </AtTabsPane>

@@ -104,13 +104,13 @@ const Detail = () => {
       </Skeleton>
 
       {/* 评论卡片，下间隔存在异常 */}
-      <DComment id={id} />
+      <DComment goods_id={id} />
 
       <Skeleton loading={loading} avatar animate row={2}>
         <DShop data={(data && data.storeData) || {}} />
       </Skeleton>
 
-      <DContent id={id} />
+      <DContent goods_id={id} />
 
       <Skeleton loading={loading} action animate row={1}>
         <DAction data={data || {}} goodsnum={goodsnum} />

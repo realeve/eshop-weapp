@@ -76,6 +76,18 @@ import useSetState from "@/components/hooks/useState";
 }
 ```
 
+5.不要用 <kbd>id</kbd> 作为参数名
+
+> id 作为 html 保留属性，传入参数 _id={goodsId}_ ，等价于 jQuery 中 \$('#goodsId')。
+
+```tsx
+// bad
+<DContent id={id} />
+
+// god
+<DContent goods_id={id} />
+```
+
 ---
 
 ## 设计稿：

@@ -8,7 +8,7 @@ import { API } from "@/utils/setting";
 import { AtAvatar } from "taro-ui";
 import { ymdFormat } from "@/utils/lib";
 
-const DetailComment = ({ id: commonId }: { id: string }) => {
+const DetailComment = ({ goods_id: commonId }: { goods_id: string }) => {
   const { data, loading } = useFetch({
     param: {
       url: API.GOODS_EVALUATE as string,

@@ -260,7 +260,7 @@ export const afterService = `
 `;
 
 export const appAfterService = `
-<h4 class="title">权利声明：</h4>
+<h4 class="title">权利声明</h4>
 <p class="content">商城上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是商城重要的经营资源，未经许可，禁止非法转载使用。</p>
 <p class="content">
 <strong class="bold">注：</strong>本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。
