@@ -36,7 +36,7 @@ const DetailCard = ({
   const [showService, setShowService] = useState<boolean>(false);
 
   return (
-    <view className="detail_card detail_page_spec">
+    <view className="detail_page_spec">
       {/* 选择规格 */}
       <View className="detail_page_spec_item">
         <Text className="detail_page_spec_item_title">选择</Text>
@@ -57,7 +57,7 @@ const DetailCard = ({
       </View>
 
       {/* 服务列表 */}
-      <View className="detail_page_spec_item" style="margin-top:20px;">
+      <View className="detail_page_spec_item">
         <Text className="detail_page_spec_item_title">服务</Text>
         <View className="serviceList" onClick={() => setShowService(true)}>
           <View className="services">

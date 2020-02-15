@@ -11,38 +11,26 @@ export { getType, axios } from "./axios";
 export const tabConfig: {
   pagePath: string;
   text: string;
-  iconPath: string;
-  selectedIconPath: string;
 }[] = [
   {
-    pagePath: "pages/index/index",
-    text: "首页",
-    iconPath: "./images/tab/home.png",
-    selectedIconPath: "./images/tab/home-active.png"
+    pagePath: "/pages/index/index",
+    text: "首页"
   },
   {
-    pagePath: "pages/cate/index",
-    text: "分类",
-    iconPath: "./images/tab/cate.png",
-    selectedIconPath: "./images/tab/cate-active.png"
+    pagePath: "/pages/cate/index",
+    text: "分类"
   },
   {
-    pagePath: "pages/find/index",
-    text: "发现",
-    iconPath: "./images/tab/logo.png",
-    selectedIconPath: "./images/tab/logo.png"
+    pagePath: "/pages/find/index",
+    text: "发现"
   },
   {
-    pagePath: "pages/cart/index",
-    text: "购物车",
-    iconPath: "./images/tab/cart.png",
-    selectedIconPath: "./images/tab/cart-active.png"
+    pagePath: "/pages/cart/index",
+    text: "购物车"
   },
   {
-    pagePath: "pages/user/index",
-    text: "我的",
-    iconPath: "./images/tab/user.png",
-    selectedIconPath: "./images/tab/user-active.png"
+    pagePath: "/pages/user/index",
+    text: "我的"
   }
 ];
 
@@ -363,13 +351,16 @@ export function jump(options) {
   const isTabPage = tabConfig.find(item => item.pagePath === url);
   if (isTabPage) {
     Taro.switchTab({ url });
+    return;
   }
 
   if (/^https?:\/\//.test(url)) {
     Taro[method]({
       url: urlStringify(PAGE_WEBVIEW, { url, title })
     });
-  } else if (/^(|\/)pages\//.test(url)) {
+    return;
+  }
+  if (/^(|\/)pages\//.test(url)) {
     // TODO H5 不支持 switchTab，暂时 hack 下
     if (process.env.TARO_ENV === "h5" && method === "switchTab") {
       Taro.navigateBack({ delta: Taro.getCurrentPages().length - 1 });
@@ -378,6 +369,7 @@ export function jump(options) {
       }, 100);
       return;
     }
+
     Taro[method]({
       url: urlStringify(url, payload)
     });

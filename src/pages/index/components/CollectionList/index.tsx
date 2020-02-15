@@ -4,6 +4,7 @@ import "./index.scss";
 import * as R from "ramda";
 import { AtButton } from "taro-ui";
 import TitleItem from "./titleItem";
+import { jump } from "@/utils/lib";
 
 export interface ICollectionItem {
   commonId: number;
@@ -41,7 +42,7 @@ const CollectionList = ({ data = { data: [] } }: IProps) => {
                 key={item.titleCh}
                 src={item.imageUrl.replace("statictest", "statictest")}
                 onClick={() => {
-                  Taro.navigateTo({
+                  jump({
                     url: "/pages/detail/index?id=" + item.commonId
                   });
                 }}
@@ -57,7 +58,7 @@ const CollectionList = ({ data = { data: [] } }: IProps) => {
           type="secondary"
           size="small"
           onClick={() => {
-            Taro.navigateTo({
+            jump({
               url: "/pages/index/suggest/index"
             });
           }}

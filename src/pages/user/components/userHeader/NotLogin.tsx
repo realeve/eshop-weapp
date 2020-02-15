@@ -3,11 +3,13 @@ import { View, Text } from "@tarojs/components";
 import "./notLogin.scss";
 import { AtAvatar } from "taro-ui";
 
+import { jump } from "@/utils/lib";
+
 const NotLogin = () => (
   <View
     className="not_login"
     onClick={() => {
-      Taro.navigateTo({
+      jump({
         url: "/pages/login/index"
       });
     }}

@@ -14,6 +14,8 @@ import {
   loadMember
 } from "../../db";
 
+import { jump } from "@/utils/lib";
+
 import { IGlobalModel } from "@/models/common";
 
 const LoginPhone = ({ callback, dispatch }) => {
@@ -69,7 +71,7 @@ const LoginPhone = ({ callback, dispatch }) => {
 
     Taro.hideLoading();
 
-    Taro.switchTab({ url: "/pages/user/index" });
+    jump({ url: "/pages/user/index" });
   };
 
   return (

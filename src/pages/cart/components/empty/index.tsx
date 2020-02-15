@@ -3,6 +3,7 @@ import { View, Image } from "@tarojs/components";
 import "./index.scss";
 import CartImg from "./cartEmpty.svg";
 import CButton from "@/components/CButton";
+import { jump } from "@/utils/lib";
 
 const EmptyCart = () => (
   <View className="cart-page-empty">
@@ -12,7 +13,7 @@ const EmptyCart = () => (
     <View className="title">您当前购物车空空如也~</View>
     <CButton
       onClick={() => {
-        Taro.switchTab({
+        jump({
           url: "/pages/index/index"
         });
       }}

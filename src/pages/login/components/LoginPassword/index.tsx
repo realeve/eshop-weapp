@@ -17,6 +17,8 @@ import {
 import UserIcon from "./user.png";
 import { IGlobalModel } from "../../../../models/common";
 
+import { jump } from "@/utils/lib";
+
 const LoginPassword = ({ callback, dispatch }) => {
   const [account, setAccount] = useSetState<{
     username: string;
@@ -76,7 +78,7 @@ const LoginPassword = ({ callback, dispatch }) => {
 
     Taro.hideLoading();
 
-    Taro.switchTab({ url: "/pages/user/index" });
+    jump({ url: "/pages/user/index" });
   };
 
   const onSubmit = async () => {

@@ -4,6 +4,8 @@ import "./index.scss";
 import Skeleton from "taro-skeleton";
 import * as R from "ramda";
 
+import { jump } from "@/utils/lib";
+
 export interface IProps {
   special: {
     batchId: number;
@@ -35,7 +37,7 @@ const BannerImg = ({ special }: IProps) => {
           style="height:480px;"
           mode="scaleToFill"
           onClick={() => {
-            Taro.navigateTo({
+            jump({
               url: "/pages/special/index?id=" + special.batchId
             });
           }}

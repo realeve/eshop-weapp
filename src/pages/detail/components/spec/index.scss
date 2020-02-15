@@ -11,6 +11,7 @@
 
   &_item {
     font-size: $fontSize30;
+    @extend .detail_card;
     @extend .alignRow;
     &_title {
       margin-right: 30px;
