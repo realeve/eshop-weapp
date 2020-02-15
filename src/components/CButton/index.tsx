@@ -11,13 +11,15 @@ export default class CButton extends Component {
       className,
       onClick,
       size,
-      style
+      style,
+      round = true
     } = this.props;
     return (
       <Button
         className={classnames(className, {
           ["cButton" + theme]: theme,
-          ["cButton" + size]: size
+          ["cButton" + size]: size,
+          cButtonRect: !round
         })}
         onClick={onClick}
         style={style}

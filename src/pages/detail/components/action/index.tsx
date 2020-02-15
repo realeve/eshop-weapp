@@ -159,6 +159,8 @@ const DetailAction = ({
             theme="blackgardient"
             disabled={data.number === 0}
             onClick={addToCart}
+            size="small"
+            round={false}
           >
             加入购物车
           </CButton>
@@ -166,7 +168,9 @@ const DetailAction = ({
         <View className="btn">
           <CButton
             theme="gardient"
+            size="small"
             disabled={!data.canBuy}
+            round={false}
             onClick={() => {
               addToCart(true);
             }}

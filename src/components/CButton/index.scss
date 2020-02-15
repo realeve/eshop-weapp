@@ -17,6 +17,9 @@
     line-height: 72px;
     font-size: $font-size-base;
   }
+  &Rect {
+    border-radius: 0;
+  }
 }
 
 .at-button__text {
