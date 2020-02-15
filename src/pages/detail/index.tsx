@@ -20,6 +20,8 @@ import DShop from "./components/shop";
 import DContent from "./components/detail";
 import DGoodsList from "./components/goodsList";
 import DAction from "./components/action";
+import DGuessULike from "./components/guessulike";
+
 const Detail = () => {
   const {
     params: { id }
@@ -75,7 +77,7 @@ const Detail = () => {
   // 购买数量
   const [goodsnum, setGoodsnum] = useState(1);
 
-  console.log(spec);
+  console.log(data && data.hotData);
 
   return (
     <View className="detail-page">
@@ -111,6 +113,8 @@ const Detail = () => {
       </Skeleton>
 
       <DContent goods_id={id} />
+
+      <DGuessULike />
 
       <Skeleton loading={loading} action animate row={1}>
         <DAction data={data || {}} goodsnum={goodsnum} />
