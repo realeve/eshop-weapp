@@ -88,6 +88,14 @@ import useSetState from "@/components/hooks/useState";
 <DContent goods_id={id} />
 ```
 
+6.Taro 已知 bug
+
+命令行中出现以下信息时，删除 node 实例重新 npm run dev:weapp 即可
+
+```bash
+Maximum call stack size exceeded
+```
+
 ---
 
 ## 设计稿：

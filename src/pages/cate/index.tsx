@@ -81,7 +81,7 @@ const Index = ({ menuList, curCateId = 0 }: IProps) => {
 };
 
 Index.config = {
-  navigationBarTitleText: "类目页"
+  navigationBarTitleText: "商品分类"
 };
 
 export default connect(

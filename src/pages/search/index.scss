@@ -1,0 +1,5 @@
+@import "../index/suggest/index.scss";
+
+.detail-page {
+  @extend .suggest-page;
+}

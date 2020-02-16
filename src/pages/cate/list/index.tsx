@@ -5,7 +5,7 @@ import "./index.scss";
 const List = ({ list = [] }) => {
   const handleClick = item => {
     Taro.navigateTo({
-      url: `/pages/cate-sub/cate-sub/index?categoryId=${item.id}`
+      url: `/pages/search/index?cat=${item.id}`
     });
   };
 

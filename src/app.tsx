@@ -36,6 +36,7 @@ class App extends Component {
       "pages/index/suggest/index", // 精彩推荐
       "pages/index/special_detail/index", // 专题详情
       "pages/cate/index", // 分类
+      "pages/search/index", // 搜索
       // "pages/order/confirm/index", // 立即购买
       "pages/user/index", // 个人中心
       "pages/find/index", // 发现

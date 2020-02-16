@@ -251,12 +251,14 @@ export const getSaleTimeRange: (param: { range: string }) => string = ({
     )
     .join(" , ");
 
-export const checkSaleTimeToday: (week: number) => boolean = week => {
+export const checkSaleTimeToday: (
+  week: number
+) => boolean | Promise<string> = week => {
   if (week > 127 || week < 0) {
     return Promise.reject("销售周期设置错误");
   }
   // 此处待调试
-  let today = moment().day(0);
+  let today = Number(moment().day(0));
   return (
     week
       .toString(2)
