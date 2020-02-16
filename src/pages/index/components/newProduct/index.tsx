@@ -6,6 +6,8 @@ import { IProps } from "../CollectionList";
 import { CPrice } from "@/components/";
 import TitleItem from "../CollectionList/titleItem";
 
+import { jump } from "@/utils/lib";
+
 const NewProduct = ({ data = { data: [] } }: IProps) => {
   return (
     <View className="newProduct">
@@ -14,7 +16,13 @@ const NewProduct = ({ data = { data: [] } }: IProps) => {
         {R.splitEvery(3, data.data).map((row, rowId) => (
           <View className="row" key={rowId + ""}>
             {row.map(item => (
-              <View className="item" key={item.commonId}>
+              <View
+                className="item"
+                key={item.commonId}
+                onClick={() => {
+                  jump(`/pages/detail/index?id=${item.commonId}`);
+                }}
+              >
                 <Image
                   className="img"
                   mode="aspectFit"
