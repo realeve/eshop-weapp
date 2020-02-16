@@ -24,7 +24,8 @@ const Index = ({
   cateList,
   collectionList,
   newProduct,
-  carousel
+  specialList,
+  normalList
 }: IGlobalModel) => {
   let [pos, setPos] = useState(0);
 
@@ -42,8 +43,9 @@ const Index = ({
       >
         <BannerImg special={special} />
         <CateList data={cateList} />
-        <Carousel data={carousel} />
+        <Carousel data={normalList} ratio="1.05" />
         <CollectionList data={collectionList} />
+        <Carousel data={specialList} />
         <NewProduct data={newProduct} />
       </ScrollView>
     </View>

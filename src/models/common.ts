@@ -97,6 +97,8 @@ export interface IGlobalModel {
   orderNum: IOrderNum;
   shoppingCart: IShoppingCartCount; // 购物车
   confirmCart: IConfirmCart[]; // 立即购买商品确认
+  normalList: db.ICarouselItem[]; //普品专题列表
+  specialList: db.ICarouselItem[]; //三联播
 }
 
 const state = {
@@ -127,7 +129,8 @@ const state = {
   },
   menuList: [],
   orderNum: {},
-  carousel: []
+  normalList: [],
+  specialList: []
 };
 
 // 载入登录信息
@@ -174,8 +177,10 @@ export default {
           componentA: special, // 特品
           componentB, // 商品分类
           componentC, //精选推荐
-          componentD //新品发售
-          // componentE
+          componentD, //新品发售
+          componentF, // 三联播
+          componentG // 普品专题列表
+          // componentI // 秒杀
         } = res;
         let payload = {};
         if (special) {
@@ -196,6 +201,19 @@ export default {
             newProduct: handleData(componentD)
           };
         }
+        if (componentF) {
+          payload = {
+            ...payload,
+            specialList: db.handleSpecialItem(componentF)
+          };
+        }
+        if (componentG) {
+          payload = {
+            ...payload,
+            normalList: db.handleSpecialItem(componentG)
+          };
+        }
+
         dispatch({
           type: "setStore",
           payload
@@ -205,13 +223,20 @@ export default {
       });
 
       // 跑马灯
-      db.loadCarsouel().then(carousel => {
-        dispatch({
-          type: "setStore",
-          payload: {
-            carousel
-          }
-        });
+      // db.loadCarsouel().then(carousel => {
+      //   dispatch({
+      //     type: "setStore",
+      //     payload: {
+      //       carousel
+      //     }
+      //   });
+      // });
+
+      // 特品
+      db.loadSpecialGoods({
+        specialId: 1
+      }).then(data => {
+        console.log(data);
       });
 
       db.loadMenuList().then(menuList => {

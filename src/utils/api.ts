@@ -1,3 +1,4 @@
+import { SPECIAL_GOODS } from "./api";
 import { Method } from "axios";
 
 export const API: {
@@ -11,6 +12,7 @@ export const API: {
   LOGOUT: "/logout",
   REALNAME_AUTH: "/realName/authentication",
   INDEX_PRODUCTS: { method: "post", url: "/webIndexComponent" },
+  SPECIAL_GOODS: { method: "post", url: "/specialGoods" },
 
   // REALNAME_AUTH: '/member/real_name_auth/join_update',
   SP_SUBSCRIBER_INFO: "/specialtyProduct/getSubscriberInfo",
