@@ -345,7 +345,8 @@ function urlStringify(url, payload, encode = true) {
  * 就需要有个地方统一判断处理
  */
 export function jump(options) {
-  const { url, title = "", payload = {}, method = "navigateTo" } = options;
+  let { url, title = "", payload = {}, method = "navigateTo" } = options;
+  url = url || options;
 
   // tab 页面路由
   const isTabPage = tabConfig.find(item => item.pagePath === url);

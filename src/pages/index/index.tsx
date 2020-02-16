@@ -7,7 +7,8 @@ import {
   BannerImg,
   CateList,
   CollectionList,
-  NewProduct
+  NewProduct,
+  Carousel
 } from "./components/";
 import { getWindowHeight } from "@/utils/style";
 
@@ -22,7 +23,8 @@ const Index = ({
   special,
   cateList,
   collectionList,
-  newProduct
+  newProduct,
+  carousel
 }: IGlobalModel) => {
   let [pos, setPos] = useState(0);
 
@@ -40,6 +42,7 @@ const Index = ({
       >
         <BannerImg special={special} />
         <CateList data={cateList} />
+        <Carousel data={carousel} />
         <CollectionList data={collectionList} />
         <NewProduct data={newProduct} />
       </ScrollView>

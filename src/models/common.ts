@@ -126,7 +126,8 @@ const state = {
     titleEn: ""
   },
   menuList: [],
-  orderNum: {}
+  orderNum: {},
+  carousel: []
 };
 
 // 载入登录信息
@@ -170,10 +171,10 @@ export default {
     async setup({ dispatch }: { dispatch: Dispatch }) {
       db.loadHome().then(res => {
         let {
-          componentA: special,
-          componentB,
-          componentC,
-          componentD
+          componentA: special, // 特品
+          componentB, // 商品分类
+          componentC, //精选推荐
+          componentD //新品发售
           // componentE
         } = res;
         let payload = {};
@@ -195,7 +196,6 @@ export default {
             newProduct: handleData(componentD)
           };
         }
-        console.log(payload);
         dispatch({
           type: "setStore",
           payload
@@ -203,6 +203,17 @@ export default {
         // 热卖产品，后端暂无返回
         // console.log(componentE);
       });
+
+      // 跑马灯
+      db.loadCarsouel().then(carousel => {
+        dispatch({
+          type: "setStore",
+          payload: {
+            carousel
+          }
+        });
+      });
+
       db.loadMenuList().then(menuList => {
         let menus = menuList.map(item => ({
           name: item.menuName,
