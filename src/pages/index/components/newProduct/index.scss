@@ -10,12 +10,17 @@
       display: flex;
       .item {
         flex: 1;
+        .img {
+          width: 100%;
+        }
       }
       .taro-img {
         width: unset;
         height: unset;
       }
       .detail {
+        @extend .alignColumn;
+        @extend .vcenter;
         .title {
           font-size: $fontSizeSmall;
           text-align: center;

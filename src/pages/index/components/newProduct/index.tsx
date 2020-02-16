@@ -16,6 +16,7 @@ const NewProduct = ({ data = { data: [] } }: IProps) => {
             {row.map(item => (
               <View className="item" key={item.commonId}>
                 <Image
+                  className="img"
                   mode="aspectFit"
                   key={item.titleCh}
                   src={item.imageUrl.replace("statictest", "statictest")}

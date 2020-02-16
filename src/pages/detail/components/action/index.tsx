@@ -15,7 +15,7 @@ import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
 import fail from "./fail";
-// import success from "./success";
+import success from "./success";
 
 // 通过商品详情数据提取存储至购物车所需信息
 export const getLocalStorageConfigByData: (
@@ -107,10 +107,13 @@ const DetailAction = ({
       return;
     }
 
-    // let cartItem = {
-    //   buyNum: goodsnum,
-    //   goodsId: data.goodsId || data.id
-    // };
+    let cartItem = {
+      buyNum: goodsnum,
+      goodsId: data.goodsId || data.id
+    };
+
+    console.log(cartItem);
+    success("待对接添加购物车逻辑");
 
     // // 添加购物车
     // let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);

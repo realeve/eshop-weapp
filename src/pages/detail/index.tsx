@@ -77,8 +77,6 @@ const Detail = () => {
   // 购买数量
   const [goodsnum, setGoodsnum] = useState(1);
 
-  console.log(data && data.hotData);
-
   return (
     <View className="detail-page">
       <Skeleton loading={loading} animate rowHeight={375} row={1}>
