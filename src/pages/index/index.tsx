@@ -21,11 +21,13 @@ const handlePos = (res: Taro.PageScrollObject) =>
 // }
 const Index = ({
   special,
-  cateList,
+  // cateList,
+  menuList,
   collectionList,
   newProduct,
   specialList,
-  normalList
+  normalList,
+  dispatch
 }: IGlobalModel) => {
   let [pos, setPos] = useState(0);
 
@@ -42,7 +44,7 @@ const Index = ({
         onScroll={onScroll}
       >
         <BannerImg special={special} />
-        <CateList data={cateList} />
+        <CateList data={menuList} dispatch={dispatch} />
         <Carousel data={normalList} ratio="1.05" />
         <CollectionList data={collectionList} />
         <Carousel data={specialList} />

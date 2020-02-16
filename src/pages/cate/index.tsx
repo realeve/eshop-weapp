@@ -33,13 +33,18 @@ interface IProps {
   [key: string]: any;
 }
 
-const Index = ({ menuList }: IProps) => {
+const Index = ({ menuList, curCateId = 0 }: IProps) => {
   const height = getWindowHeight();
 
   const [state, setState] = useSetState({
-    current: 0,
+    current: curCateId,
     list: (menuList[0] && menuList[0].cates) || []
   });
+
+  useEffect(() => {
+    handleMenu(curCateId);
+  }, [curCateId]);
+
   const handleMenu = (current: number) => {
     let list = menuList.find(item => item.id == current) || { cates: [] };
     setState({
@@ -49,7 +54,7 @@ const Index = ({ menuList }: IProps) => {
   };
 
   useEffect(() => {
-    if (menuList.length === 0) {
+    if (menuList.length === 0 || state.current !== 0) {
       return;
     }
     setState({
@@ -80,7 +85,12 @@ Index.config = {
 };
 
 export default connect(
-  ({ common: { menuList } }: { common: { menuList: ICateModel } }) => ({
-    menuList
+  ({
+    common: { menuList, curCateId }
+  }: {
+    common: { menuList: ICateModel; curCateId: number };
+  }) => ({
+    menuList,
+    curCateId
   })
 )(Index as any);

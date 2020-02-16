@@ -349,7 +349,7 @@ export function jump(options) {
   url = url || options;
 
   // tab 页面路由
-  const isTabPage = tabConfig.find(item => item.pagePath === url);
+  const isTabPage = tabConfig.find(item => url.includes(item.pagePath));
   if (isTabPage) {
     Taro.switchTab({ url });
     return;

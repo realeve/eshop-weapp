@@ -130,7 +130,8 @@ const state = {
   menuList: [],
   orderNum: {},
   normalList: [],
-  specialList: []
+  specialList: [],
+  curCateId: 0
 };
 
 // 载入登录信息
