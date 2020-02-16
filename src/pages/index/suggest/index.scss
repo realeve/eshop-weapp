@@ -2,7 +2,7 @@
 
 .suggest-page {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background-color: $bg;
   .grid {
     @extend .alignColumn;
@@ -13,8 +13,9 @@
         margin-bottom: 0;
       }
       .item {
-        flex: 1;
+        // flex: 1;
         background-color: $white;
+
         &:first-child {
           margin-right: $componentSpan;
         }

@@ -17,7 +17,7 @@ export default ({
   ratio = "0.47"
 }: {
   data: ICarouselItem[];
-  ratio?: string;
+  ratio?: string | number;
 }) => {
   return (
     <Swiper

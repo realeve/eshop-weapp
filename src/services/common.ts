@@ -75,24 +75,13 @@ export const handleSpecialItem: (data: any[]) => ICarouselItem[] = data =>
   data.map(item => ({
     img: item.imageUrl,
     id: item.data,
-    href: `/pages/special_list/index?id=${item.data}`
+    href: `/pages/index/special_detail/index?id=${item.data}`
   }));
 
-// special 商品列表详情
-export const loadSpecialGoods = data =>
-  axios({
-    data,
-    ...API.SPECIAL_GOODS
-  }).then(data => {
-    if (!data.goods) {
-      return [];
-    }
-    return data.goods.map(
-      ({ goodsPrice: price, commonId, goodsName: name, imageUrl: img }) => ({
-        price,
-        commonId,
-        name,
-        img
-      })
-    );
-  });
+// 首页特品产品详情列表
+export interface ISpecialItem {
+  commonId: number;
+  img: string;
+  title: string;
+  price: string;
+}

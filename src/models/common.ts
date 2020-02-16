@@ -232,13 +232,6 @@ export default {
       //   });
       // });
 
-      // 特品
-      db.loadSpecialGoods({
-        specialId: 1
-      }).then(data => {
-        console.log(data);
-      });
-
       db.loadMenuList().then(menuList => {
         let menus = menuList.map(item => ({
           name: item.menuName,

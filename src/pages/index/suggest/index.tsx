@@ -5,6 +5,7 @@ import "./index.scss";
 import { ICollection } from "@/pages/index/components/collectionList";
 import * as R from "ramda";
 import { CPrice } from "@/components/";
+import { jump } from "@/utils/lib";
 
 export interface IProps {
   data: ICollection;
@@ -17,7 +18,13 @@ const Suggest = ({ data = { data: [] } }: IProps) => {
         {R.splitEvery(2, data.data).map((row, rowId) => (
           <View className="row" key={rowId + ""}>
             {row.map(item => (
-              <View className="item" key={item.titleCh}>
+              <View
+                className="item"
+                key={item.titleCh}
+                onClick={() => {
+                  jump(`/pages/detail/index?id=${item.commonId}`);
+                }}
+              >
                 <Image
                   mode="aspectFit"
                   src={item.imageUrl.replace("statictest", "statictest")}
