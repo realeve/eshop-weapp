@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import ImgDesc from "../img/sort.svg";
 import ImgNormal from "../img/sort_normal.svg";

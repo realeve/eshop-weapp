@@ -6,6 +6,12 @@ $cateHeight: 135px;
   position: relative;
   height: $cateHeight;
   background: $bg;
+  .more {
+    margin: 25px 0;
+    text-align: center;
+    font-size: $heading-5-size;
+    color: $subTitle;
+  }
 }
 
 .detail-page {

@@ -65,6 +65,7 @@ const Search = ({ menuList }) => {
   >([]);
 
   const [current, setCurrent] = useState(0);
+  const [inited, setInited] = useState(false);
 
   useEffect(() => {
     if (!cat || String(cat).length === 0 || menuList.length === 0) {
@@ -109,14 +110,18 @@ const Search = ({ menuList }) => {
     });
   }, [cat, keyword]);
 
+  // 没有更多了
+  const [more, setMore] = useState(false);
+
   let { data, loading } = useFetch<ICateGoodsItem[]>({
     param: {
       url: API.SEARCH as string,
       params
     },
     valid: () => !(R.isNil(cat) && (keyword || "").length === 0), // 空页面时不加载
-    callback: ({ goodsList }) => {
-      console.log(goodsList);
+    callback: ({ goodsList, pageEntity }) => {
+      setMore(pageEntity.hasMore);
+      setInited(true);
       return goodsList.map((item: IPropGoodsList) => ({
         price: item.webPrice0,
         commonId: item.commonId,
@@ -157,7 +162,12 @@ const Search = ({ menuList }) => {
         }}
       />
 
-      <Skeleton loading={loading} animate rowHeight={windowHeight / 2} row={3}>
+      <Skeleton
+        loading={loading && !inited}
+        animate
+        rowHeight={windowHeight / 2}
+        row={3}
+      >
         <View className="detail-page">
           <View className="grid">
             {R.splitEvery(2, data || []).map((row: ICateGoodsItem[], rowId) => (
@@ -203,6 +213,7 @@ const Search = ({ menuList }) => {
               </View>
             ))}
           </View>
+          {!more && <View className="more">—— 所有数据加载完毕 ——</View>}
         </View>
       </Skeleton>
     </View>

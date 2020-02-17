@@ -81,7 +81,7 @@ const useFetch = <T extends {} | void>({
     setLoading(true);
 
     // 加载时，data置为空
-    setData(null);
+    // setData(null);
 
     // 数据mock
     if (initData) {
