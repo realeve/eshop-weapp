@@ -1,0 +1,77 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.cate-sub__menu {
+  z-index: 2;
+  width: 100%;
+  background: #fff;
+  position: relative;
+
+  .right {
+    position: fixed;
+    line-height: 60px;
+    color: $yellow;
+    z-index: 2;
+  }
+  .right {
+    top: 0;
+    right: 2px;
+    animation: slideRight 2s infinite;
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(-2px);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(20px);
+      opacity: 0.3;
+    }
+  }
+}
+.cate-sub-tab {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+
+  display: flex;
+  flex-direction: row;
+  @include border(bottom, 1px, solid, rgba(0, 0, 0, 0.1));
+  @include hairline(border-bottom-width);
+
+  /**
+   * // NOTE H5、微信小程序中，横向滚动的 ScrollView 必须设置 white-space: nowrap
+   * 并且 ScrollView 的子元素必须为 display: inline-block
+   */
+  @include eject(display, block);
+  @include eject(white-space, nowrap);
+  @include eject(line-height, 0);
+}
+
+.cate-sub-tab__item {
+  position: relative;
+  margin: 0 32px;
+  display: flex;
+  flex-direction: row;
+  @include eject(display, inline-block);
+
+  &-txt {
+    padding: 0 8px;
+    height: 60px;
+    color: $text-color;
+    font-size: $heading-4-size;
+    line-height: 60px;
+    @include eject(display, inline-block);
+  }
+
+  &-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: $primary-color;
+  }
+}

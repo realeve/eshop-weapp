@@ -21,16 +21,19 @@
         }
 
         .detail {
+          font-size: $heading-4-size;
           .title {
-            font-size: $fontSizeSmall;
             text-align: center;
             padding: 0;
+            @include text-ellipsis;
+            width: 49vw;
           }
           .subTitle {
             padding: 0 16px 10px 16px;
             display: flex;
             justify-content: space-between;
             flex-direction: row;
+            align-items: center;
           }
         }
       }

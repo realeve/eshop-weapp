@@ -1,5 +1,26 @@
 @import "../index/suggest/index.scss";
+@import "@/styles/theme.scss";
+
+$cateHeight: 135px;
+.cate-sub {
+  position: relative;
+  height: $cateHeight;
+  background: $bg;
+}
 
 .detail-page {
   @extend .suggest-page;
+  position: absolute;
+  top: $cateHeight;
+  .store {
+    padding: 0 16px 10px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .logo {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
 }

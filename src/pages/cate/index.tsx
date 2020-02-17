@@ -62,7 +62,6 @@ const Index = ({ menuList, curCateId = 0 }: IProps) => {
       list: menuList[0].cates
     });
   }, [menuList]);
-
   return (
     <View className="cate-page">
       <Search />
