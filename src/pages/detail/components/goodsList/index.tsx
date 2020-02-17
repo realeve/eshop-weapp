@@ -21,10 +21,13 @@ export default ({ data = [], title }) => (
               <Image
                 mode="aspectFit"
                 className="home-pin__item-img"
-                src={item.imageSrc}
+                src={item.imageSrc || item.imageUrl}
               />
               <View className="home-pin__item-info">
-                <CPrice retail={item.appPrice0} retailStyle="font-size:16px;" />
+                <CPrice
+                  retail={item.goodsPrice || item.appPrice0}
+                  retailStyle="font-size:16px;"
+                />
                 <Text className="goodsName">
                   {item.goodsName.length > 5
                     ? item.goodsName.slice(0, 5) + "..."
