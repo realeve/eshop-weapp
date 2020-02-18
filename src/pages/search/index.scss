@@ -12,12 +12,18 @@ $cateHeight: 135px;
     font-size: $heading-5-size;
     color: $subTitle;
   }
+  &Small {
+    height: 65px;
+  }
 }
 
 .detail-page {
   @extend .suggest-page;
   position: absolute;
   top: $cateHeight;
+  &Small {
+    top: 65px;
+  }
   .store {
     padding: 0 16px 10px 16px;
     display: flex;

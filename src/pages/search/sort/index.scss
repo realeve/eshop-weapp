@@ -12,7 +12,9 @@
   background: white;
   padding: 0 20px;
   z-index: 2;
-
+  &Small {
+    top: 0;
+  }
   .item {
     flex: 1;
     &Active {

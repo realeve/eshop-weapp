@@ -20,9 +20,13 @@ const sortState = {
   asc: "desc"
 };
 
-export default ({ key = "goods", sort = "desc", onChange }) => {
+export default ({ key = "goods", sort = "desc", onChange, simple = false }) => {
   return (
-    <View className="search_sort">
+    <View
+      className={classnames("search_sort", {
+        search_sortSmall: simple
+      })}
+    >
       {searchMethods.map(item => (
         <View
           className={classnames("item", { itemActive: item.key === key })}

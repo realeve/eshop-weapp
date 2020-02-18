@@ -14,6 +14,7 @@ import { connect } from "@tarojs/redux";
 import { IMenuItem as ICateModel } from "../../models/common";
 import Tab from "./tab";
 import Sort from "./sort";
+import classnames from "classname";
 
 let { windowHeight } = Taro.getSystemInfoSync();
 
@@ -139,7 +140,7 @@ const Search = ({ menuList }) => {
         freight: item.goodsFreight
       }));
       let _data = data || [];
-      console.log(_data);
+      // console.log("加载更多页面时数据需要合并");
       return [..._data, ...res];
     }
   });
@@ -163,7 +164,7 @@ const Search = ({ menuList }) => {
       return;
     }
     setPage(page + 1);
-    console.log("加载更多");
+    // console.log("加载更多");
   };
 
   // 更新cat信息
@@ -178,8 +179,14 @@ const Search = ({ menuList }) => {
   };
 
   return (
-    <View className="cate-sub">
-      <Tab list={tabs} current={current} onChange={handleMenu} />
+    <View
+      className={classnames("cate-sub", {
+        ["cate-subSmall"]: tabs.length < 2
+      })}
+    >
+      {tabs.length > 1 && (
+        <Tab list={tabs} current={current} onChange={handleMenu} />
+      )}
       <Sort
         {...sort}
         onChange={res => {
@@ -188,6 +195,7 @@ const Search = ({ menuList }) => {
           setData(null);
           setSort(res);
         }}
+        simple={tabs.length < 2}
       />
 
       <Skeleton
@@ -196,7 +204,11 @@ const Search = ({ menuList }) => {
         rowHeight={windowHeight / 2}
         row={3}
       >
-        <View className="detail-page">
+        <View
+          className={classnames("detail-page", {
+            ["detail-pageSmall"]: tabs.length < 2
+          })}
+        >
           <View className="grid">
             {R.splitEvery(2, data || []).map((row: ICateGoodsItem[], rowId) => (
               <View className="row" key={rowId + ""}>
