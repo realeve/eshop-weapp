@@ -180,16 +180,15 @@ const Index = ({ menuList }) => {
     });
   };
 
+  const searchMode = state.keyword && state.keyword.length > 0;
+
   return (
     <View
       className={classnames("cate-sub", {
-        ["cate-subSmall"]:
-          state.keyword && state.keyword.length === 0 && tabs.length < 2
+        ["cate-subSmall"]: !searchMode && tabs.length < 2
       })}
     >
-      {state.keyword && state.keyword.length > 0 && (
-        <Search value={state.keyword || ""} fixed={true} />
-      )}
+      {searchMode && <Search value={state.keyword || ""} fixed={true} />}
       {tabs.length > 1 && (
         <Tab list={tabs} current={current} onChange={handleMenu} />
       )}
@@ -201,7 +200,7 @@ const Index = ({ menuList }) => {
           setData(null);
           setSort(res);
         }}
-        simple={tabs.length < 2 && state.keyword && state.keyword.length === 0}
+        simple={tabs.length < 2 && !searchMode}
       />
 
       <Skeleton
@@ -212,8 +211,7 @@ const Index = ({ menuList }) => {
       >
         <View
           className={classnames("detail-page", {
-            ["detail-pageSmall"]:
-              state.keyword && state.keyword.length === 0 && tabs.length < 2
+            ["detail-pageSmall"]: !searchMode && tabs.length < 2
           })}
         >
           <View className="grid">
