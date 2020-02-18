@@ -32,9 +32,8 @@ export default ({ key = "goods", sort = "desc", onChange, simple = false }) => {
           className={classnames("item", { itemActive: item.key === key })}
           onClick={() => {
             let nextDesc = "desc";
-            if (item.key === "price") {
-              let _sort =
-                key === "price" && item.key === "price" ? sort : "asc";
+            if (item.key !== "goods") {
+              let _sort = key === item.key ? sort : "asc";
               nextDesc = sortState[_sort];
             }
             onChange({
@@ -49,7 +48,7 @@ export default ({ key = "goods", sort = "desc", onChange, simple = false }) => {
             <Image
               src={item.key === key ? ImgDesc : ImgNormal}
               className={classnames("img", {
-                [sort]: item.key === "price"
+                [sort]: item.key === key
               })}
             />
           )}
