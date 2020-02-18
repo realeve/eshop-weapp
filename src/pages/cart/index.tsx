@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
 import { Dispatch } from "redux";
 import "./index.scss";
-import EmptyCart from "./components/empty";
+import { CEmpty } from "@/components";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -13,7 +13,7 @@ interface IProps extends ICartModel {
 const Cart = (props: IProps) => {
   return (
     <View className="cart-page">
-      <EmptyCart />
+      <CEmpty type="cart" />
     </View>
   );
 };

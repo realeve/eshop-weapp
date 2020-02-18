@@ -20,3 +20,4 @@ export type TReactNode = string | null | never[]; // JSX.Element | JSX.Element[]
 
 export { default as CModal } from "./CModal";
 export { default as CCardLite } from "./CCardLite";
+export { default as CEmpty } from "./CEmpty";
