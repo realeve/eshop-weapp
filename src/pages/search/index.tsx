@@ -5,7 +5,7 @@ import * as R from "ramda";
 import { CPrice } from "@/components/";
 import useFetch from "@/components/hooks/useFetch";
 import Skeleton from "taro-skeleton";
-
+import { AtLoadMore } from "taro-ui";
 import { API } from "@/utils/setting";
 import { jump } from "@/utils/lib";
 import { IPropGoodsList } from "./lib";
@@ -41,21 +41,33 @@ const Search = ({ menuList }) => {
     return null;
   }
 
-  let { keyword, cat } = router.params || {};
+  const [state, setState] = useState<{
+    keyword: string;
+    cat: string;
+  }>(router.params || { keyword: "", cat: "" });
+  useEffect(() => {
+    setState(router.params);
+  }, [router.params]);
+
+  // let { keyword, cat } = router.params || {};
 
   const [sort, setSort] = useState({
     key: "goods",
     sort: "desc"
   });
 
+  const getParam = (_page = page) => {
+    return {
+      pageSize: 6,
+      sort: `${sort.key}_${sort.sort}`,
+      page: _page,
+      express: 0,
+      ...initState(state)
+    };
+  };
+
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState({
-    pageSize: 10,
-    sort: `${sort.key}_${sort.sort}`,
-    page,
-    express: 0,
-    ...initState({ cat, keyword })
-  });
+  const [params, setParams] = useState(getParam());
 
   const [tabs, setTabs] = useState<
     {
@@ -68,7 +80,7 @@ const Search = ({ menuList }) => {
   const [inited, setInited] = useState(false);
 
   useEffect(() => {
-    if (!cat || String(cat).length === 0 || menuList.length === 0) {
+    if (!state.cat || String(state.cat).length === 0 || menuList.length === 0) {
       return;
     }
     let res: null | {
@@ -83,7 +95,7 @@ const Search = ({ menuList }) => {
         return;
       }
       cates.forEach(item => {
-        let dist = R.findIndex(cateItem => cateItem.id == cat)(
+        let dist = R.findIndex(cateItem => cateItem.id == state.cat)(
           item.categoryList
         );
         if (dist > -1) {
@@ -101,28 +113,21 @@ const Search = ({ menuList }) => {
     Taro.setNavigationBarTitle({
       title: res.name
     });
-  }, [cat, menuList]);
-
-  useEffect(() => {
-    setParams({
-      ...params,
-      ...initState({ keyword, cat })
-    });
-  }, [cat, keyword]);
+  }, [state.cat, menuList]);
 
   // 没有更多了
   const [more, setMore] = useState(false);
 
-  let { data, loading } = useFetch<ICateGoodsItem[]>({
+  let { data, loading, setData } = useFetch<ICateGoodsItem[]>({
     param: {
       url: API.SEARCH as string,
       params
     },
-    valid: () => !(R.isNil(cat) && (keyword || "").length === 0), // 空页面时不加载
+    valid: () => !(R.isNil(state.cat) && (state.keyword || "").length === 0), // 空页面时不加载
     callback: ({ goodsList, pageEntity }) => {
       setMore(pageEntity.hasMore);
       setInited(true);
-      return goodsList.map((item: IPropGoodsList) => ({
+      let res = goodsList.map((item: IPropGoodsList) => ({
         price: item.webPrice0,
         commonId: item.commonId,
         title: item.goodsName,
@@ -133,17 +138,41 @@ const Search = ({ menuList }) => {
         goodsSaleNum: item.goodsSaleNum, //已售
         freight: item.goodsFreight
       }));
+      let _data = data || [];
+      console.log(_data);
+      return [..._data, ...res];
     }
   });
 
+  useEffect(() => {
+    setPage(1);
+    setData(null);
+  }, [state.cat, state.keyword]);
+
+  useEffect(() => {
+    setParams({
+      ...params,
+      ...initState(state),
+      sort: `${sort.key}_${sort.sort}`,
+      page
+    });
+  }, [state.cat, state.keyword, sort, page]);
+
+  const loadMore = () => {
+    if (!more) {
+      return;
+    }
+    setPage(page + 1);
+    console.log("加载更多");
+  };
+
+  // 更新cat信息
   const handleMenu = index => {
     const menu = tabs[index];
     setCurrent(index);
     let nextCat = menu.id;
-
-    // 载入对应数据
-    setParams({
-      ...params,
+    setState({
+      ...state,
       cat: nextCat
     });
   };
@@ -154,11 +183,10 @@ const Search = ({ menuList }) => {
       <Sort
         {...sort}
         onChange={res => {
+          // 点击sort排序后，页码重置，数据重置
+          setPage(1);
+          setData(null);
           setSort(res);
-          setParams({
-            ...params,
-            sort: `${res.key}_${res.sort}`
-          });
         }}
       />
 
@@ -213,7 +241,13 @@ const Search = ({ menuList }) => {
               </View>
             ))}
           </View>
-          {!more && <View className="more">—— 所有数据加载完毕 ——</View>}
+
+          <AtLoadMore
+            onClick={loadMore}
+            status={loading ? "loading" : more ? "more" : "noMore"}
+            noMoreText="—— 所有数据加载完毕 ——"
+            className="more"
+          />
         </View>
       </Skeleton>
     </View>
