@@ -1,11 +1,11 @@
 @import "../index/suggest/index.scss";
 @import "@/styles/theme.scss";
 
-$cateHeight: 135px;
+$cateHeight: 145px;
 .cate-sub {
   position: relative;
   height: $cateHeight;
-  background: $bg;
+  background: $white;
   .more {
     margin: 25px 0;
     text-align: center;
@@ -21,6 +21,7 @@ $cateHeight: 135px;
   @extend .suggest-page;
   position: absolute;
   top: $cateHeight;
+  background: $bg;
   &Small {
     top: 65px;
   }

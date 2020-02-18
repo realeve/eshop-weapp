@@ -13,6 +13,11 @@
     backdrop-filter: saturate(180%) blur(20px);
   }
 
+  &0 {
+    .at-search-bar {
+      background-color: #fff;
+    }
+  }
   &1 {
     .at-search-bar {
       background-color: rgba(185, 138, 78, 0.1);
@@ -63,4 +68,11 @@
       background-color: rgba(185, 138, 78, 0.7);
     }
   }
+}
+
+.search_header {
+  width: 100%;
+  z-index: 2;
+  background: #fff;
+  position: fixed;
 }

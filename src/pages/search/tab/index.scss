@@ -1,6 +1,7 @@
 @import "@/styles/theme.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
 
+$cateHeight: 80px;
 .cate-sub__menu {
   z-index: 2;
   width: 100%;
@@ -9,7 +10,7 @@
 
   .right {
     position: fixed;
-    line-height: 60px;
+    line-height: $cateHeight;
     color: $yellow;
     z-index: 2;
   }
@@ -34,7 +35,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: white;
+  background: $white;
 
   display: flex;
   flex-direction: row;
@@ -59,10 +60,10 @@
 
   &-txt {
     padding: 0 8px;
-    height: 60px;
+    height: $cateHeight;
     color: $text-color;
     font-size: $heading-4-size;
-    line-height: 60px;
+    line-height: $cateHeight;
     @include eject(display, inline-block);
   }
 

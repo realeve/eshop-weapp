@@ -6,12 +6,14 @@
   width: 100%;
   line-height: 60px;
   position: fixed;
-  top: 62px;
+  top: 80px;
   left: 0;
   font-size: $heading-4-size;
-  background: white;
+  background: $white;
   padding: 0 20px;
   z-index: 2;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
   &Small {
     top: 0;
   }

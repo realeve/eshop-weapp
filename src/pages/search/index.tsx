@@ -1,8 +1,7 @@
 import Taro, { useState, useRouter, useEffect } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import "./index.scss";
 import * as R from "ramda";
-import { CPrice } from "@/components/";
+import { CPrice, CEmpty } from "@/components/";
 import useFetch from "@/components/hooks/useFetch";
 import Skeleton from "taro-skeleton";
 import { AtLoadMore } from "taro-ui";
@@ -15,12 +14,15 @@ import { IMenuItem as ICateModel } from "../../models/common";
 import Tab from "./tab";
 import Sort from "./sort";
 import classnames from "classname";
+import Search from "@/pages/index/components/search/";
+
+import "./index.scss";
 
 let { windowHeight } = Taro.getSystemInfoSync();
 
 const initState = ({ keyword, cat }) => ({
   keyword: keyword || "",
-  cat: cat || 1070
+  cat: cat || ""
 });
 
 interface ICateGoodsItem {
@@ -35,7 +37,7 @@ interface ICateGoodsItem {
   freight: number;
 }
 
-const Search = ({ menuList }) => {
+const Index = ({ menuList }) => {
   let router = useRouter();
   // 页面未加载时仍会载入数据
   if (router.path !== "/pages/search/index") {
@@ -181,9 +183,13 @@ const Search = ({ menuList }) => {
   return (
     <View
       className={classnames("cate-sub", {
-        ["cate-subSmall"]: tabs.length < 2
+        ["cate-subSmall"]:
+          state.keyword && state.keyword.length === 0 && tabs.length < 2
       })}
     >
+      {state.keyword && state.keyword.length > 0 && (
+        <Search value={state.keyword || ""} fixed={true} />
+      )}
       {tabs.length > 1 && (
         <Tab list={tabs} current={current} onChange={handleMenu} />
       )}
@@ -195,7 +201,7 @@ const Search = ({ menuList }) => {
           setData(null);
           setSort(res);
         }}
-        simple={tabs.length < 2}
+        simple={tabs.length < 2 && state.keyword && state.keyword.length === 0}
       />
 
       <Skeleton
@@ -206,7 +212,8 @@ const Search = ({ menuList }) => {
       >
         <View
           className={classnames("detail-page", {
-            ["detail-pageSmall"]: tabs.length < 2
+            ["detail-pageSmall"]:
+              state.keyword && state.keyword.length === 0 && tabs.length < 2
           })}
         >
           <View className="grid">
@@ -254,19 +261,23 @@ const Search = ({ menuList }) => {
             ))}
           </View>
 
-          <AtLoadMore
-            onClick={loadMore}
-            status={loading ? "loading" : more ? "more" : "noMore"}
-            noMoreText="—— 所有数据加载完毕 ——"
-            className="more"
-          />
+          {data !== null && data.length === 0 ? (
+            <CEmpty type="goods" />
+          ) : (
+            <AtLoadMore
+              onClick={loadMore}
+              status={loading ? "loading" : more ? "more" : "noMore"}
+              noMoreText="—— 所有数据加载完毕 ——"
+              className="more"
+            />
+          )}
         </View>
       </Skeleton>
     </View>
   );
 };
 
-Search.config = {
+Index.config = {
   navigationBarTitleText: "搜索",
   backgroundColor: "#f8f8f8"
 };
@@ -275,4 +286,4 @@ export default connect(
   ({ common: { menuList } }: { common: { menuList: ICateModel } }) => ({
     menuList
   })
-)(Search as any);
+)(Index as any);
