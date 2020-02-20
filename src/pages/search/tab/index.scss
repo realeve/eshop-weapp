@@ -57,6 +57,7 @@ $cateHeight: 80px;
   display: flex;
   flex-direction: row;
   @include eject(display, inline-block);
+  height: 80px;
 
   &-txt {
     padding: 0 8px;

@@ -1,7 +1,16 @@
 @import "@/styles/theme.scss";
 
-.user_header {
+.user_order {
   width: 100%;
   height: 100%;
   background-color: $bg;
+  @extend .alignColumn;
+  .order_detail {
+    flex: 1;
+  }
+  .at-list__item--thumb .item-thumb {
+    margin-right: 0.512rem;
+    width: 1.19467rem;
+    height: 1.19467rem;
+  }
 }

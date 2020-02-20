@@ -4,10 +4,24 @@
 	"description": "eshop",
 	"appid": "wxa2c4f6478bd975db",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
+		"enhance": false,
 		"postcss": false,
-		"minified": false
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": false
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
