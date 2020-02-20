@@ -39,6 +39,8 @@ class App extends Component {
       "pages/search/index", // 搜索
       // "pages/order/confirm/index", // 立即购买
       "pages/user/index", // 个人中心
+      "pages/user/order/index", // 我的订单
+
       "pages/find/index", // 发现
       "pages/login/index", // 登录
       "pages/special/index", // 特品

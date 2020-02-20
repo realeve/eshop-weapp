@@ -11,7 +11,7 @@ import { IGlobalModel, updateStore } from "@/models/common";
 import useFetch from "@/components/hooks/useFetch";
 import Skeleton from "taro-skeleton";
 import { ORDER } from "@/utils/api";
-
+import { jump } from "@/utils/lib";
 import OrderItem from "./OrderItem";
 import "./index.scss";
 
@@ -28,29 +28,29 @@ const handleOrderNum = e => ({
   refund: e.refundAndReturnCount
 });
 
-const linkList = [
+export const linkList = [
   {
-    text: "待付款",
+    name: "待付款",
     img: needPay,
     link: "/order/list/0"
   },
   {
-    text: "待发货",
+    name: "待发货",
     img: needSend,
     link: "/order/list/0"
   },
   {
-    text: "待收货",
+    name: "待收货",
     img: needReceive,
     link: "/order/list/0"
   },
   {
-    text: "待评价",
+    name: "待评价",
     img: needConfirm,
     link: "/order/list/0"
   },
   {
-    text: "退款/售后",
+    name: "退款/售后",
     img: refund,
     link: "/order/list/0"
   }
@@ -76,7 +76,12 @@ const MyOrder = ({ dispatch, isLogin }) => {
     <View className="CCard" style="margin-top:10px;">
       <View className="head">
         <View className="title">我的订单</View>
-        <View className="extra">
+        <View
+          className="extra"
+          onClick={() => {
+            jump("/pages/user/order/index");
+          }}
+        >
           <Text>全部订单</Text>
           <View className="at-icon at-icon-chevron-right" />
         </View>
@@ -87,7 +92,7 @@ const MyOrder = ({ dispatch, isLogin }) => {
           <View className="usercenterOrderLinkList">
             {linkList.map((item, idx) => (
               <OrderItem
-                key={item.text}
+                key={item.name}
                 data={item}
                 value={(orderNumber || [])[idx]}
               />

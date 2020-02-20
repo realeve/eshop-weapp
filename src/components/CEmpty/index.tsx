@@ -46,7 +46,7 @@ const empConfig: {
     img: "order.svg",
     description: "您还没有相关的订单",
     btnText: "去逛逛",
-    href: "/pages/user/order"
+    href: "/pages/index/index"
   },
   comment: {
     img: "comment.svg",

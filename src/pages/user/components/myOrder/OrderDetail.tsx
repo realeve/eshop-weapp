@@ -5,7 +5,7 @@ const OrderDetail = ({
   data
 }: {
   data: {
-    text: string;
+    name: string;
     img: any;
     link: string;
   };
@@ -14,7 +14,7 @@ const OrderDetail = ({
     <View>
       <Image src={data.img} className="icon" />
     </View>
-    <Text>{data.text}</Text>
+    <Text>{data.name}</Text>
   </View>
 );
 export default OrderDetail;

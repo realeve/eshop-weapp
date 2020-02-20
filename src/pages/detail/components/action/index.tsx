@@ -14,8 +14,8 @@ import { IProductInfo, ISpecItem } from "../../lib";
 import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
-import fail from "./fail";
-import success from "./success";
+import success from "@/components/Toast/success";
+import fail from "@/components/Toast/fail";
 
 // 通过商品详情数据提取存储至购物车所需信息
 export const getLocalStorageConfigByData: (
