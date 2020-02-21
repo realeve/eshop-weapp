@@ -29,6 +29,10 @@
   display: flex;
   flex-direction: row;
 }
+.spaceBetween {
+  @extend .alignRow;
+  justify-content: space-between;
+}
 
 .alignColumn {
   display: flex;
