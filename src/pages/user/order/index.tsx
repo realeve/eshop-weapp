@@ -61,59 +61,42 @@ const Order = () => {
   return (
     <View className="user_order">
       <Tab list={db.orderStateList} current={current} onChange={handleMenu} />
-      <View className="skeleton lazy-view order_detail">
-        <ListView
-          lazy
-          isLoaded={state.isLoaded}
-          hasMore={state.hasMore}
-          style={{ height: "100%" }}
-          onScrollToLower={onScrollToLower}
-          onPullDownRefresh={onScrollToLower}
-        >
-          {state.list.map((item, index) => {
-            return (
-              <View className="item" key={item.id}>
-                <LazyBlock current={index} className="avatar">
-                  <Image
-                    className="avatar skeleton-radius"
-                    src={item.author.avatar_url}
-                  />
-                </LazyBlock>
-                <View className="title skeleton-rect">{item.title}</View>
-              </View>
-            );
-          })}
-        </ListView>
-        <View className="at-list">
-          <View className="at-list__item at-list__item--thumb">
-            <View className="at-list__item-container">
-              <View className="at-list__item-thumb item-thumb">
-                <View className="taro-img item-thumb__info">
+      <ListView
+        lazy=".lazy-view"
+        isLoaded={state.isLoaded}
+        hasMore={state.hasMore}
+        style={{ height: "calc(100% - 40px)" }}
+        onScrollToLower={onScrollToLower}
+        onPullDownRefresh={onScrollToLower}
+        className="order_detail at-list"
+      >
+        {state.list.map(item => {
+          return (
+            <View className="at-list__item at-list__item--thumb" key={item.id}>
+              <View className="at-list__item-container">
+                <View className="at-list__item-thumb">
                   <Image
                     mode="scaleToFill"
-                    style={{
-                      width: "24px",
-                      height: "24px",
-                      marginRight: "12px"
-                    }}
+                    className="item-thumb"
                     src="https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png"
                   />
                 </View>
-              </View>
-              <View className="at-list__item-content item-content">
-                <View className="item-content__info">
-                  <View className="item-content__info-title">标题文字</View>
-                </View>
-              </View>
-              <View className="at-list__item-extra item-extra">
-                <View className="item-extra__icon">
-                  <Text className="taro-text at-icon item-extra__icon-arrow at-icon-chevron-right"></Text>
+
+                <View className="at-list__item-content item-content">
+                  <View className="item-content__info">
+                    <View className="item-content__info-title">
+                      {item.title}
+                    </View>
+                    <View className="item-content__info-subtitle">
+                      {item.title.slice(0, 8)}
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
-        </View>
-      </View>
+          );
+        })}
+      </ListView>
     </View>
   );
 };

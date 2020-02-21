@@ -5,12 +5,37 @@
   height: 100%;
   background-color: $bg;
   @extend .alignColumn;
+
   .order_detail {
     flex: 1;
+    position: fixed;
+    top: 85px;
+    left: 0;
   }
-  .at-list__item--thumb .item-thumb {
-    margin-right: 0.512rem;
-    width: 1.19467rem;
-    height: 1.19467rem;
+
+  $imgSize: 48px;
+  $imgPadding: 12px;
+
+  .at-list__item {
+    height: 100 + $imgSize;
+    &--thumb {
+      .item-thumb {
+        margin-right: $imgPadding;
+        width: 2 * $imgSize;
+        height: 2 * $imgSize;
+      }
+    }
+    &-content {
+      margin-right: 0;
+      .item-content__info {
+        &-subtitle {
+          color: $subTitle;
+          font-size: $heading-4-size;
+        }
+        &-title {
+          font-size: $heading-4-size;
+        }
+      }
+    }
   }
 }
