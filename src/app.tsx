@@ -37,7 +37,7 @@ class App extends Component {
       "pages/index/special_detail/index", // 专题详情
       "pages/cate/index", // 分类
       "pages/search/index", // 搜索
-      // "pages/order/confirm/index", // 立即购买
+      "pages/order/confirm/index", // 立即购买
       "pages/user/index", // 个人中心
       "pages/user/order/index", // 我的订单
 

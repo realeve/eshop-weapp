@@ -6,6 +6,7 @@ import * as db from "./db";
 import ListView from "taro-listview";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
+import useLogin from "@/components/hooks/useLogin";
 import HomeIcon from "@/pages/order/confirm/shop.svg";
 import classnames from "classname";
 import { ORDER } from "@/utils/api";
@@ -117,6 +118,8 @@ const { EOrderStatus } = db;
 // ];
 
 const Order = () => {
+  useLogin();
+
   const [current, setCurrent] = useState(0);
 
   const [page, setPage] = useState(1);

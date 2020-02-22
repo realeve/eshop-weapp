@@ -23,6 +23,7 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const res = loadCart<IConfirmCart[]>(cart);
+    console.log(res);
     let nextState = R.values(R.groupBy(item => item.shop.name)(res));
     setData(nextState);
   }, [cart]);

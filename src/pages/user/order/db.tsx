@@ -496,5 +496,5 @@ export const addOrderAgain = (
     type: "cart"
   }));
   updateShoppingCart(goods);
-  jump("/order/confirm");
+  jump("/pages/order/confirm/index");
 };

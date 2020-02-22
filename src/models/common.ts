@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { setStore, setUserStore } from "@/utils/lib";
+import { setStore, setUserStore, jump } from "@/utils/lib";
 import * as db from "../services/common";
 import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
@@ -9,7 +9,7 @@ import {
   IShoppingCartCount,
   loadShoppingCart,
   IConfirmCart
-} from "@/utils/cartDB";
+} from "@/utils/cartDb";
 import { loadMember } from "@/pages/login/db";
 
 import { get as getGlobalData } from "@/utils/global_data";
@@ -254,7 +254,8 @@ export default {
       });
 
       let token = getGlobalData("token");
-      if (token.length > 0) {
+      const isLogin = token.length > 0;
+      if (isLogin) {
         // 载入用户登录信息
         await loadUserInfo(dispatch).then(() => {
           // 载入购物车信息
