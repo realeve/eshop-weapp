@@ -148,9 +148,10 @@ let handleCartItem: (res: ICartStoreVoList) => IShoppingCartItem = res => {
 };
 
 export const combineCartData = (res: IShoppingCartItem[]) => {
-  let num = R.reduce((sum, item: IShoppingCartItem) => sum + item.total.num, 0)(
-    res
-  );
+  let num = R.reduce(
+    (sum, item: IShoppingCartItem) => sum + item.total.num,
+    0
+  )(res);
   let price = R.reduce(
     (sum, item: IShoppingCartItem) => sum + item.total.price,
     0
@@ -363,3 +364,6 @@ export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
   });
   Taro.setStorageSync(LocalStorageKeys.confirm, confirmCart);
 };
+
+export const updateShoppingCart = (nextState: any[]) =>
+  Taro.setStorageSync(LocalStorageKeys.confirm, JSON.stringify(nextState));

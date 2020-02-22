@@ -20,132 +20,136 @@ import Rebuy from "./components/Rebuy";
 import CountTime from "./components/CountTime";
 const { EOrderStatus } = db;
 
+// let list = [
+//   {
+//     payId: 100,
+//     shop: "lwgsh001测试专卖店",
+//     shopId: 12,
+//     orderId: 100,
+//     orderSN: 5420000000010000,
+//     orderTime: "2020-02-21 15:58:47",
+//     autoCancelTime: "2020-02-22 16:58:47",
+//     autoReceiveTime: null,
+//     ordersRefundState: 0,
+//     payAmount: 0.02,
+//     isVirtual: 0,
+//     shipSn: "",
+//     shipCode: "",
+//     sendTime: null,
+//     type: "",
+//     price: 0.02,
+//     express: 0.01,
+//     status: 10,
+//     statusName: "待付款",
+//     invoice: {},
+//     goods: [
+//       {
+//         spuid: 92,
+//         goodsId: 94,
+//         ordersGoodsId: 1199,
+//         title: "lwgsh001贵金属-养生银器-茶具01",
+//         url:
+//           "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
+//         type: "颜色：粉色",
+//         price: 0.01,
+//         count: 1
+//       },
+//       {
+//         spuid: 92,
+//         goodsId: 95,
+//         ordersGoodsId: 1199,
+//         title: "lwgsh001贵金属-养生银器-茶具01",
+//         url:
+//           "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
+//         type: "颜色：粉色",
+//         price: 0.01,
+//         count: 1
+//       }
+//     ],
+//     address: {
+//       name: "moren",
+//       phone: "13399990000",
+//       detail: "北京 北京市 东城区",
+//       address: "mmmrrr"
+//     }
+//   },
+//   {
+//     payId: 99,
+//     shop: "中钞贵金属",
+//     shopId: 3,
+//     orderId: 99,
+//     orderSN: 5230000000009900,
+//     orderTime: "2020-02-21 15:57:50",
+//     autoCancelTime: "2020-02-22 16:57:50",
+//     autoReceiveTime: null,
+//     ordersRefundState: 0,
+//     payAmount: 5,
+//     isVirtual: 0,
+//     shipSn: "",
+//     shipCode: "",
+//     sendTime: null,
+//     type: "",
+//     price: 5,
+//     express: 0,
+//     status: 10,
+//     statusName: "待付款",
+//     invoice: {},
+//     goods: [
+//       {
+//         spuid: 108,
+//         goodsId: 113,
+//         ordersGoodsId: 1198,
+//         title: "秒杀六号",
+//         url:
+//           "https://statictest.ccgold.cn/image/a3/60/a360786e9984ce666bb168f4c16277cc.jpg",
+//         type: "",
+//         price: 5,
+//         count: 1
+//       }
+//     ],
+//     address: {
+//       name: "moren",
+//       phone: "13399990000",
+//       detail: "北京 北京市 东城区",
+//       address: "mmmrrr"
+//     }
+//   }
+// ];
+
 const Order = () => {
   const [current, setCurrent] = useState(0);
+
   const [page, setPage] = useState(1);
+
   const [state, setState] = useSetState({
     isLoaded: true,
     hasMore: false,
-    list: [
-      {
-        payId: 100,
-        shop: "lwgsh001测试专卖店",
-        shopId: 12,
-        orderId: 100,
-        orderSN: 5420000000010000,
-        orderTime: "2020-02-21 15:58:47",
-        autoCancelTime: "2020-02-22 16:58:47",
-        autoReceiveTime: null,
-        ordersRefundState: 0,
-        payAmount: 0.02,
-        isVirtual: 0,
-        shipSn: "",
-        shipCode: "",
-        sendTime: null,
-        type: "",
-        price: 0.02,
-        express: 0.01,
-        status: 10,
-        statusName: "待付款",
-        invoice: {},
-        goods: [
-          {
-            spuid: 92,
-            goodsId: 94,
-            ordersGoodsId: 1199,
-            title: "lwgsh001贵金属-养生银器-茶具01",
-            url:
-              "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-            type: "颜色：粉色",
-            price: 0.01,
-            count: 1
-          },
-          {
-            spuid: 92,
-            goodsId: 95,
-            ordersGoodsId: 1199,
-            title: "lwgsh001贵金属-养生银器-茶具01",
-            url:
-              "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-            type: "颜色：粉色",
-            price: 0.01,
-            count: 1
-          }
-        ],
-        address: {
-          name: "moren",
-          phone: "13399990000",
-          detail: "北京 北京市 东城区",
-          address: "mmmrrr"
-        }
-      },
-      {
-        payId: 99,
-        shop: "中钞贵金属",
-        shopId: 3,
-        orderId: 99,
-        orderSN: 5230000000009900,
-        orderTime: "2020-02-21 15:57:50",
-        autoCancelTime: "2020-02-22 16:57:50",
-        autoReceiveTime: null,
-        ordersRefundState: 0,
-        payAmount: 5,
-        isVirtual: 0,
-        shipSn: "",
-        shipCode: "",
-        sendTime: null,
-        type: "",
-        price: 5,
-        express: 0,
-        status: 10,
-        statusName: "待付款",
-        invoice: {},
-        goods: [
-          {
-            spuid: 108,
-            goodsId: 113,
-            ordersGoodsId: 1198,
-            title: "秒杀六号",
-            url:
-              "https://statictest.ccgold.cn/image/a3/60/a360786e9984ce666bb168f4c16277cc.jpg",
-            type: "",
-            price: 5,
-            count: 1
-          }
-        ],
-        address: {
-          name: "moren",
-          phone: "13399990000",
-          detail: "北京 北京市 东城区",
-          address: "mmmrrr"
-        }
-      }
-    ]
+    list: []
   });
 
-  //   const { loading } = useFetch({
-  //     param: {
-  //       ...ORDER.list,
-  //       params: {
-  //         ordersState: ["all", "new", "pay", "send", "noeval", "cancel"][current], //全部订单
-  //         ordersType: db.EOrderTypes.real, // 实物订单
-  //         keyword: "" // 搜索关键词 订单号或商品
-  //       }
-  //     },
-  //     callback: (e: {
-  //       pageEntity;
-  //       ordersPayVoList: db.IOrderItem[];
-  //       [key: string]: any;
-  //     }) => {
-  //       let { hasMore } = e.pageEntity;
-  //       let list = db.convertOrderData(e.ordersPayVoList);
-  //       setState({
-  //         hasMore,
-  //         list,
-  //         isLoaded: page === 1
-  //       });
-  //     }
-  //   });
+  const { loading, reFetch } = useFetch({
+    param: {
+      ...ORDER.list,
+      params: {
+        ordersState: ["all", "new", "pay", "send", "noeval", "cancel"][current], //全部订单
+        ordersType: db.EOrderTypes.real, // 实物订单
+        keyword: "" // 搜索关键词 订单号或商品
+      }
+    },
+    callback: (e: {
+      pageEntity;
+      ordersPayVoList: db.IOrderItem[];
+      [key: string]: any;
+    }) => {
+      let { hasMore } = e.pageEntity;
+      let list = db.convertOrderData(e.ordersPayVoList);
+      setState({
+        hasMore,
+        list,
+        isLoaded: page === 1
+      });
+    }
+  });
 
   // 更新cat信息
   const handleMenu = index => {
@@ -180,6 +184,7 @@ const Order = () => {
   };
 
   const onRefresh = () => {
+    reFetch();
     console.log("刷新数据");
   };
 
@@ -242,16 +247,20 @@ const Order = () => {
 
               <View className="footer">
                 <Text>
-                  运费：￥{order.express || "包邮"}，共 {order.goods.length}
+                  运费：{"￥" + order.express || "包邮"}，共{order.goods.length}
                   件商品
                 </Text>
                 <Text className="payAmount">实付：￥{order.payAmount}</Text>
               </View>
-              <View className="closeTime">
-                {[EOrderStatus.sending, EOrderStatus.needPay].includes(
-                  order.status
-                ) && <CountTime time={order.autoCancelTime} />}
-              </View>
+
+              {[EOrderStatus.sending, EOrderStatus.needPay].includes(
+                order.status
+              ) && (
+                <View className="closeTime">
+                  <CountTime time={order.autoCancelTime} />
+                </View>
+              )}
+
               <View className="action">
                 {/* 取消订单 */}
                 {[EOrderStatus.needPay].includes(order.status) && (
@@ -284,19 +293,16 @@ const Order = () => {
                   <Comment orderId={order.orderId} />
                 )}
 
-                {/* 再次购买 */}
+                {/* 已完成、已评价、已追评、已关闭 */}
                 {[
+                  EOrderStatus.complete,
                   EOrderStatus.commented,
                   EOrderStatus.appendCommented,
                   EOrderStatus.closed
                 ].includes(order.status) &&
                   order.ordersTypeName !== "特品" && (
-                    <Rebuy orderId={order.orderId} />
+                    <Rebuy goods={order.goods} />
                   )}
-
-                {[EOrderStatus.closed].includes(order.status) && (
-                  <View className="closed">已关闭</View>
-                )}
               </View>
             </View>
           );

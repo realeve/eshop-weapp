@@ -1,9 +1,8 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
-import * as db from "../db";
+import Taro, { useState } from "@tarojs/taro";
 import { CButton } from "@/components";
 import { Text, View } from "@tarojs/components";
 import { AtModal } from "taro-ui";
-import "./index.scss";
+import * as db from "../../db";
 
 export default ({ orderId, onRefresh }) => {
   const [open, setOpen] = useState(false);
@@ -20,6 +19,7 @@ export default ({ orderId, onRefresh }) => {
       >
         <Text>取消订单</Text>
       </CButton>
+
       <AtModal
         isOpened={open}
         title="提示"
@@ -31,10 +31,9 @@ export default ({ orderId, onRefresh }) => {
         onCancel={() => {
           setOpen(false);
         }}
-        onConfirm={() => {
-          console.log("cancel,orderId=", orderId);
+        onConfirm={async () => {
+          await db.cancelOrder(orderId, onRefresh);
           setOpen(false);
-          onRefresh && onRefresh();
         }}
         content="取消订单?"
       />

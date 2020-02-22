@@ -2,7 +2,10 @@ import { axios } from "@/utils/axios";
 import { ORDER, API } from "@/utils/api";
 import { CLIENT_TYPE } from "@/utils/setting";
 import success from "@/components/Toast/success";
+import fail from "@/components/Toast/fail";
 import * as R from "ramda";
+import { jump } from "@/utils/lib";
+import { updateShoppingCart } from "@/utils/cartDb";
 
 export const orderStateList: {
   name: string;
@@ -467,3 +470,31 @@ export const serviceStatus = [
   "退款失败",
   "退款成功"
 ];
+
+// 取消订单
+export let cancelOrder = (ordersId: number | string, callback: () => void) =>
+  axios({
+    ...ORDER.cancel,
+    data: {
+      ordersId
+    }
+  })
+    .then(() => {
+      success("成功取消");
+      callback && callback();
+    })
+    .catch(error => {
+      fail(error.description);
+    });
+
+export const addOrderAgain = (
+  goodsList: { goodsId: number; count: number }[]
+) => {
+  let goods = goodsList.map(item => ({
+    id: item.goodsId,
+    num: item.count,
+    type: "cart"
+  }));
+  updateShoppingCart(goods);
+  jump("/order/confirm");
+};
