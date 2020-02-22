@@ -1,0 +1,7 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.count_time {
+  @extend .alignRow;
+  line-height: 1;
+}

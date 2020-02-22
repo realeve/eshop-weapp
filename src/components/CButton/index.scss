@@ -6,11 +6,21 @@
     border: none;
     background: $yellowGardiant;
   }
+
   &blackgardient {
     color: $white;
     border: none;
     background: $blackGardiant;
   }
+
+  &yellow {
+    color: $yellow;
+    background: $white;
+    &::after {
+      border-color: $yellow;
+    }
+  }
+
   &small {
     min-width: 180px;
     height: 72px;
@@ -19,6 +29,9 @@
   }
   &Rect {
     border-radius: 0;
+    &::after {
+      border-radius: 0;
+    }
   }
 }
 

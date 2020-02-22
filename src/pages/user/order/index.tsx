@@ -6,10 +6,19 @@ import * as db from "./db";
 import ListView from "taro-listview";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
-
 import HomeIcon from "@/pages/order/confirm/shop.svg";
-
+import classnames from "classname";
 import { ORDER } from "@/utils/api";
+import CancelOrder from "./components/CancelOrder";
+import EditAddr from "./components/EditAddr";
+import Refund from "./components/Refund";
+import Pay from "./components/Pay";
+import Receive from "./components/Receive";
+import Comment from "./components/Comment";
+import Rebuy from "./components/Rebuy";
+
+import CountTime from "./components/CountTime";
+const { EOrderStatus } = db;
 
 const Order = () => {
   const [current, setCurrent] = useState(0);
@@ -25,7 +34,7 @@ const Order = () => {
         orderId: 100,
         orderSN: 5420000000010000,
         orderTime: "2020-02-21 15:58:47",
-        autoCancelTime: "2020-02-21 16:58:47",
+        autoCancelTime: "2020-02-22 16:58:47",
         autoReceiveTime: null,
         ordersRefundState: 0,
         payAmount: 0.02,
@@ -61,28 +70,6 @@ const Order = () => {
             type: "颜色：粉色",
             price: 0.01,
             count: 1
-          },
-          {
-            spuid: 92,
-            goodsId: 96,
-            ordersGoodsId: 1199,
-            title: "lwgsh001贵金属-养生银器-茶具01",
-            url:
-              "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-            type: "颜色：粉色",
-            price: 0.01,
-            count: 1
-          },
-          {
-            spuid: 92,
-            goodsId: 97,
-            ordersGoodsId: 1199,
-            title: "lwgsh001贵金属-养生银器-茶具01",
-            url:
-              "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-            type: "颜色：粉色",
-            price: 0.01,
-            count: 1
           }
         ],
         address: {
@@ -99,7 +86,7 @@ const Order = () => {
         orderId: 99,
         orderSN: 5230000000009900,
         orderTime: "2020-02-21 15:57:50",
-        autoCancelTime: "2020-02-21 16:57:50",
+        autoCancelTime: "2020-02-22 16:57:50",
         autoReceiveTime: null,
         ordersRefundState: 0,
         payAmount: 5,
@@ -192,6 +179,10 @@ const Order = () => {
     fn();
   };
 
+  const onRefresh = () => {
+    console.log("刷新数据");
+  };
+
   console.log(state);
 
   return (
@@ -217,9 +208,11 @@ const Order = () => {
                 <View className="status">{order.statusName}</View>
               </View>
 
-              {order.goods.map(goodsItem => (
+              {order.goods.map((goodsItem, idx) => (
                 <View
-                  className="at-list__item at-list__item--thumb"
+                  className={classnames("at-list__item at-list__item--thumb", {
+                    noBorder: idx === order.goods.length - 1
+                  })}
                   key={goodsItem.goodsId}
                 >
                   <View className="at-list__item-container">
@@ -252,6 +245,57 @@ const Order = () => {
                   运费：￥{order.express}，共 {order.goods.length} 件商品
                 </Text>
                 <Text className="payAmount">实付：￥{order.payAmount}</Text>
+              </View>
+              <View className="closeTime">
+                {[EOrderStatus.sending, EOrderStatus.needPay].includes(
+                  order.status
+                ) && <CountTime time={order.autoCancelTime} />}
+              </View>
+              <View className="action">
+                {/* 取消订单 */}
+                {[EOrderStatus.needPay].includes(order.status) && (
+                  <CancelOrder orderId={order.orderId} onRefresh={onRefresh} />
+                )}
+
+                {/* 地址编辑 */}
+                {[EOrderStatus.needPay].includes(order.status) && (
+                  <EditAddr orderId={order.orderId} onRefresh={onRefresh} />
+                )}
+
+                {/* 退款 */}
+                {(!order.refund || order.refund.length === 0) &&
+                  [EOrderStatus.payed].includes(order.status) && (
+                    <Refund orderId={order.orderId} onRefresh={onRefresh} />
+                  )}
+
+                {/* 去付款 */}
+                {[EOrderStatus.needPay].includes(order.status) && (
+                  <Pay orderId={order.orderId} onRefresh={onRefresh} />
+                )}
+
+                {/* 确认收货 */}
+                {[EOrderStatus.sending].includes(order.status) && (
+                  <Receive orderId={order.orderId} onRefresh={onRefresh} />
+                )}
+
+                {/* 评价 */}
+                {[EOrderStatus.complete].includes(order.status) && (
+                  <Comment orderId={order.orderId} />
+                )}
+
+                {/* 再次购买 */}
+                {[
+                  EOrderStatus.commented,
+                  EOrderStatus.appendCommented,
+                  EOrderStatus.closed
+                ].includes(order.status) &&
+                  order.ordersTypeName !== "特品" && (
+                    <Rebuy orderId={order.orderId} />
+                  )}
+
+                {[EOrderStatus.closed].includes(order.status) && (
+                  <View className="closed">已关闭</View>
+                )}
               </View>
             </View>
           );
