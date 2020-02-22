@@ -242,7 +242,8 @@ const Order = () => {
 
               <View className="footer">
                 <Text>
-                  运费：￥{order.express}，共 {order.goods.length} 件商品
+                  运费：￥{order.express || "包邮"}，共 {order.goods.length}
+                  件商品
                 </Text>
                 <Text className="payAmount">实付：￥{order.payAmount}</Text>
               </View>
