@@ -118,7 +118,7 @@ const { EOrderStatus } = db;
 // ];
 
 const Order = () => {
-  useLogin();
+  let isLogin = useLogin();
 
   const [current, setCurrent] = useState(0);
 
@@ -151,7 +151,8 @@ const Order = () => {
         list,
         isLoaded: page === 1
       });
-    }
+    },
+    valid: () => isLogin
   });
 
   // 更新cat信息
