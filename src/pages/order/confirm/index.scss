@@ -1,44 +1,53 @@
 @import "@/styles/theme.scss";
 
-.order-confirm {
+.order_confirm {
   width: 100%;
   min-height: 100%;
   background: $bg;
-  .goodslist {
-    .shop {
-      .icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
+
+  .shop {
+    .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    .title {
+      font-size: $fontSizeNormal;
+      color: $subTitle;
+    }
+    margin-bottom: 20px;
+  }
+  .item {
+    @extend .alignRow;
+    .img {
+      width: 150px;
+      height: 150px;
+      margin-right: 20px;
+    }
+    .detail {
+      flex: 1;
+      @extend .alignColumn;
+      justify-content: space-between;
+      width: calc(100% - 170px);
+      .main {
+        @extend .alignRow;
+        justify-content: space-between;
+        color: $mainTitle;
+        font-size: $heading-4-size;
+        .goods_name {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          color: inherit;
+          line-height: 1.5;
+          margin-right: 10px;
+        }
       }
-      .title {
+      .sub {
+        @extend .alignRow;
+        justify-content: space-between;
         font-size: $fontSizeNormal;
         color: $subTitle;
-      }
-    }
-    .item {
-      @extend .alignRow;
-      .img {
-        width: 150px;
-        height: 150px;
-        margin-right: 20px;
-      }
-      .detail {
-        flex: 1;
-        @extend .alignColumn;
-        justify-content: space-between;
-        .main {
-          @extend .alignRow;
-          justify-content: space-between;
-          color: $mainTitle;
-          font-size: $fontSizeBase;
-        }
-        .sub {
-          @extend .alignRow;
-          justify-content: space-between;
-          font-size: $fontSizeNormal;
-          color: $subTitle;
-        }
       }
     }
   }

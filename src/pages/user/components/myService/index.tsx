@@ -6,6 +6,7 @@ import address from "./address.png";
 import comment from "./comment.png";
 import order from "./order.png";
 import service from "./service.png";
+import { jump } from "@/utils/lib";
 
 const MyService = () => {
   const list = [
@@ -28,6 +29,11 @@ const MyService = () => {
       title: "我的预约",
       img: order,
       url: ""
+    },
+    {
+      title: "功能调试_订单确认",
+      img: order,
+      url: "/pages/order/confirm/index"
     }
   ];
   return (
@@ -40,6 +46,9 @@ const MyService = () => {
             title={item.title}
             arrow="right"
             thumb={item.img}
+            onClick={() => {
+              jump(item.url);
+            }}
           />
         ))}
       </AtList>

@@ -42,12 +42,15 @@ const CPrice = (props: IPropPrice) => {
       {...rest}
     >
       {retail > 0 && (
-        <Text
+        <View
           className={classNames("cPrice_retail", priceClassName)}
-          style={retailStyle}
+          style={{
+            width: "34px",
+            ...retailStyle
+          }}
         >
           ¥ {(+retail).toFixed(2)}
-        </Text>
+        </View>
       )}
       {counter > 0 && counter != retail && (
         <Text

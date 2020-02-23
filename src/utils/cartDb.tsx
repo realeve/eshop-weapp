@@ -1,5 +1,5 @@
 import { axios } from "@/utils/axios";
-import { API, CLIENT_TYPE, LocalStorageKeys } from "@/utils/setting";
+import { API, CLIENT_TYPE, LocalStorageKeys, PAYMENT } from "@/utils/setting";
 import {
   IShoppingCart,
   ICartStoreVoList,
@@ -20,6 +20,127 @@ import * as R from "ramda";
 import * as lib from "@/utils/lib";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
+
+import fail from "@/components/Toast/fail";
+import success from "@/components/Toast/success";
+
+export interface IBuyGoodsItemVoList {
+  allowSend: number;
+  appPrice0: number;
+  appPrice1: number;
+  appPrice2: number;
+  appUsable: number;
+  bargainOpenId: number;
+  basePrice: number;
+  batchNum0: number;
+  batchNum0End: number;
+  batchNum1: number;
+  batchNum1End: number;
+  batchNum2: number;
+  batchNumState: number;
+  book: any;
+  bundlingId: number;
+  buyNum: number;
+  cartId: number;
+  categoryId: number;
+  categoryId1: number;
+  categoryId2: number;
+  categoryId3: number;
+  chainId: number;
+  chainName: string;
+  commonId: number;
+  contractItem1: number;
+  contractItem10: number;
+  contractItem2: number;
+  contractItem3: number;
+  contractItem4: number;
+  contractItem5: number;
+  contractItem6: number;
+  contractItem7: number;
+  contractItem8: number;
+  contractItem9: number;
+  couponAmount: number;
+  distributionOrders: {
+    addTime: string;
+    commissionRate: number;
+    commonId: number;
+    distributionOrdersId: number;
+    distributionOrdersType: number;
+    distributionStorePay: number;
+    distributionStorePayTime: string;
+    distributorId: number;
+    finishTime: string;
+    memberId: number;
+    ordersFinishTime: string;
+    ordersGoodsId: number;
+    storeId: number;
+  };
+  downAmount: number;
+  finalAmount: number;
+  foreignTaxAmount: number;
+  foreignTaxRate: number;
+  freightTemplateId: number;
+  freightVolume: number;
+  freightWeight: number;
+  giftVoList: [];
+  goodsContractVoList: [];
+  goodsFreight: number;
+  goodsFullSpecs: string;
+  goodsId: number;
+  goodsModal: number;
+  goodsName: string;
+  goodsPrice: number;
+  goodsPrice0: number;
+  goodsPrice1: number;
+  goodsPrice2: number;
+  goodsSerial: number | any;
+  goodsStatus: number;
+  goodsStorage: number;
+  groupPrice: number;
+  imageName: string;
+  imageSrc: string;
+  isForeign: number;
+  isGift: number;
+  isLevelMarketing: number;
+  isOwnShop: number;
+  isSecKill: number;
+  isStoreVIPDiscount: number;
+  itemAmount: number;
+  joinBigSale: number;
+  limitAmount: number;
+  payAmount: number;
+  pointsMoneyAmount: number;
+  promotionBeginTime: string;
+  promotionEndTime: string;
+  promotionId: number;
+  promotionTitle: string;
+  promotionType: number;
+  promotionTypeText: string;
+  savePrice: number;
+  seckillGoodsId: number;
+  shopCommitmentAmount: number;
+  shopCommitmentRate: number;
+  spuBuyNum: number;
+  spuImageSrc: string;
+  storageStatus: number;
+  storeId: string;
+  storeName: string;
+  storeVIPDiscount: number;
+  trysApplyId: number;
+  trysPostUseState: number;
+  trysSendUseState: number;
+  unitName: string;
+  variableItemAmount: number;
+  virtualOverdueRefund: number;
+  webPrice0: number;
+  webPrice1: number;
+  webPrice2: number;
+  webUsable: number;
+  wechatPrice0: number;
+  wechatPrice1: number;
+  wechatPrice2: number;
+  wechatUsable: number;
+}
 
 /**
  *
@@ -367,3 +488,286 @@ export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
 
 export const updateShoppingCart = (nextState: any[]) =>
   Taro.setStorageSync(LocalStorageKeys.confirm, JSON.stringify(nextState));
+
+// 立即购买
+export const getConfirmCart = () => {
+  let str = Taro.getStorageSync(LocalStorageKeys.confirm);
+  return JSON.parse(str);
+};
+
+/**
+ * 从localstorage 读取购物车信息,用于下单
+ */
+export const getShoppingCartAxiosParam: () =>
+  | boolean
+  | { buyData: string; clientType: string } = () => {
+  let res: ILocalStorageCartDetail[] = getConfirmCart();
+
+  if (res.length === 0) {
+    return false;
+  }
+
+  // 需将购买数据转换为数值型，否则做加法运算时会出现 '1'+'2' === '12' 的 bug
+  let data = R.map(
+    (item: ILocalStorageCartDetail) => ({
+      buyNum: item.num,
+      goodsId: item.id
+    }),
+    res
+  );
+
+  return {
+    buyData: JSON.stringify(data),
+    clientType: CLIENT_TYPE.web,
+    isCart: 0,
+    isExistBundling: 0,
+    isGroup: 0
+  };
+};
+
+export interface IBookingDetail {
+  buyData: string;
+  isCart?: number;
+  isExistBundling?: number;
+  isGroup?: number;
+  bargainOpenId?: number;
+}
+
+export interface IRecievingAddress {
+  addressId: number;
+  memberId: number;
+  realName: string;
+  areaId1: number;
+  address1: string;
+  areaId2: number;
+  address2: string;
+  areaId3: number;
+  address3: string;
+  areaId4: number;
+  areaId: number;
+  areaInfo: string;
+  address: string;
+  mobPhone: string;
+  telPhone: string;
+  isDefault: number;
+}
+
+export interface IOrderAddress extends IRecievingAddress {
+  createTm?: number;
+  memberId: number;
+  modifyTm?: null;
+  telPhone: string;
+}
+
+export interface IBooking {
+  address: IOrderAddress;
+  allowOffline: number;
+  allowPointsMoney: number;
+  buyStoreVoList?: {
+    buyGoodsSpuVoList: {
+      buyGoodsItemVoList: IBuyGoodsItemVoList[];
+      commonId: number;
+      goodsName: string;
+      imageSrc: string;
+    }[];
+    buyItemAmount: number;
+    buyItemExcludejoinBigSaleAmount: number;
+    buyStoreExcludejoinBigSaleAmount: number;
+    cartBundlingVoList: [];
+    conform: any;
+    foreignTaxAmount: number;
+    freightAmount: number;
+    isOnline: number;
+    isOwnShop: number;
+    itemCount: number;
+    sellerId: number;
+    storeId: number;
+    storeName: string;
+    voucherVoList: [];
+  }[];
+  groupPrice?: number;
+  invoiceContentList: string[];
+  isCart: number;
+  isExistTrys: number;
+  isForeign: number;
+  isGroup: number;
+  idCard: string;
+  memberPoints: number;
+  memberPointsCanUse: number;
+  memberPointsMoney: number;
+  mobile: string;
+  paymentTypeCode?: string;
+  pointsMoneyValue: number;
+  realName: string;
+  shipTimeTypeList: { name: string; id: number }[];
+}
+
+export const step1Detail: (
+  params: IBookingDetail
+) => Promise<IBooking> = params =>
+  axios({
+    method: "post",
+    url: API.BUY_STEP1 as string,
+    data: params
+  });
+
+/**
+ *
+ *
+ * @export
+ * @interface IOrder
+ *
+ * @example buyData: JSON.stringify(buyData:IBuyData)
+ */
+export interface IOrder {
+  clientType: CLIENT_TYPE;
+  buyData: string;
+}
+
+export interface ICalcFreight {
+  address: {
+    addressId: number;
+    realName: string;
+  };
+  freightAmount: number;
+  storeList: {
+    storeId: number;
+    freightAmount: number;
+    goodsList: {
+      goodsId: number;
+      allowSend: number;
+    }[];
+  }[];
+}
+
+export const calcFreight: (data: IOrder) => Promise<ICalcFreight> = data =>
+  axios({
+    method: "post",
+    url: API.CALC_FREIGHT as string,
+    data
+  });
+
+export interface ICalcResult {
+  buyGoodsItemAmount: number;
+  storeTotalDiscountAmount: number | null;
+  platTotalDiscountAmount: number | null;
+  taxAmount: number | null;
+  storeList: {
+    storeId: number;
+    buyAmount2: number;
+  }[];
+}
+
+export const calcFee: (data: IOrder) => Promise<ICalcResult> = data =>
+  axios({
+    method: "post",
+    url: API.CALC as string,
+    data
+  });
+
+export interface IOrderReq {
+  clientType: CLIENT_TYPE;
+  buyData: string;
+}
+
+export const step2Order: (
+  data: IOrderReq
+) => Promise<{ payId: number }> = data =>
+  axios({
+    method: "post",
+    url: API.BUY_STEP2 as string,
+    data
+  });
+
+export interface IPaymentreq {
+  clientType: CLIENT_TYPE;
+  payId: number;
+}
+
+export interface IPaymentResp {
+  payAmount: number;
+  payId: number;
+  predepositAmount: number;
+  allowPredeposit: number;
+  paymentList: [
+    {
+      paymentCode: string;
+      paymentName: string;
+    },
+    {
+      paymentCode: string;
+      paymentName: string;
+    }
+  ];
+}
+
+export const getPayment: (data: IPaymentreq) => Promise<IPaymentResp> = data =>
+  axios({
+    ...(API.BUY_STEP3 as {}),
+    data
+  });
+
+export interface IPayReq {
+  payId: number;
+  predepositPay: number;
+}
+
+export const getAlipayPrepayId: <T>(
+  payment: string,
+  data: IPayReq
+) => Promise<T> = (payment, data) => {
+  let url =
+    payment === PAYMENT.alipay
+      ? API.BUY_STEP4_ALIPAY
+      : payment === PAYMENT.wechat
+      ? API.BUY_STEP4_WECHAT
+      : false;
+  if (!url) {
+    fail("不支持的支付方式");
+    throw `不支持的支付方式：${payment}`;
+  }
+  return axios({
+    method: "post",
+    url: url as string,
+    data
+  });
+};
+
+export const getUnionpaySignature: <T>(data: IPayReq) => Promise<T> = data =>
+  axios({
+    ...(API.BUY_STEP4_UNIONPAY as {}),
+    data
+  });
+export const postPay: (payId: string) => Promise<number> = payId =>
+  axios({
+    url: API.BUY_POST as string,
+    method: "post",
+    data: { payId }
+  });
+
+export type InvoiceType = {
+  type: string;
+  title: string;
+  username: string;
+  sn: string;
+  content: string;
+  mount: number;
+  email: string;
+  [key: string]: any;
+};
+
+export const getFlatBooking: (booking: IBooking) => IBuyGoodsItemVoList[] = ({
+  buyStoreVoList
+}) => {
+  return !buyStoreVoList
+    ? []
+    : R.flatten(
+        buyStoreVoList.map(({ buyGoodsSpuVoList }) =>
+          R.flatten(
+            buyGoodsSpuVoList.map(({ buyGoodsItemVoList }) => [
+              ...buyGoodsItemVoList
+            ])
+          )
+        )
+      );
+};
