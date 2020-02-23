@@ -1,0 +1,14 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+.address_list {
+  background: $bg;
+  height: 100%;
+  .at-list__item {
+    .header {
+      @extend .bold;
+    }
+    .content {
+      color: $subTitle;
+    }
+  }
+}

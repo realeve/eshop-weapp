@@ -13,7 +13,7 @@ const MyService = () => {
     {
       title: "我的收货地址",
       img: address,
-      url: ""
+      url: "/pages/user/address/index"
     },
     {
       title: "我的评价",

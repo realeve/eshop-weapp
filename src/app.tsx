@@ -41,6 +41,8 @@ class App extends Component {
       "pages/user/index", // 个人中心
       "pages/user/order/index", // 我的订单
 
+      "pages/user/address/index", //我的地址
+
       "pages/find/index", // 发现
       "pages/login/index", // 登录
       "pages/special/index", // 特品
