@@ -5,7 +5,9 @@ import EmptyAddress from "./empty";
 import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 import * as R from "ramda";
-import { AtList, AtListItem, AtSwipeAction } from "taro-ui";
+import { AtList, AtSwipeAction } from "taro-ui";
+import { CButton } from "@/components";
+
 export interface IADDRESS {
   realName: string;
   areaId1: number;
@@ -62,8 +64,6 @@ interface IPropsInitState extends IModPanelItem {
 //   });
 
 const Address = () => {
-  const [address, setAddress] = useState([]);
-
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
@@ -103,7 +103,7 @@ const Address = () => {
 
   return (
     <View className="address_list">
-      {address.length === 0 && <EmptyAddress />}
+      {data && data.length === 0 && <EmptyAddress />}
       <AtList>
         {(data || []).map((item, index) => (
           <AtSwipeAction
@@ -132,7 +132,12 @@ const Address = () => {
                     <View className="item-content__info-title">
                       <View className="header">
                         <Text>{item.name}</Text>
-                        <Text style={{ marginLeft: "20px" }}>{item.phone}</Text>
+                        <Text style={{ margin: "0 10px 0 20px" }}>
+                          {item.phone}
+                        </Text>
+                        {item.isDefault === 1 && (
+                          <Text className="gardient">默认</Text>
+                        )}
                       </View>
                       <View className="content">
                         {item.province}
@@ -153,6 +158,10 @@ const Address = () => {
       </AtList>
     </View>
   );
+};
+
+Address.config = {
+  navigationBarTitleText: "我的地址"
 };
 
 export default Address;
