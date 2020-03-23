@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
+import { View, Text, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
 import useFetch from "@/components/hooks/useFetch";
@@ -114,7 +114,7 @@ const Address = () => {
   return (
     <View className="address_list">
       {data && data.length === 0 && <EmptyAddress />}
-      <View className="address_list_wrap">
+      <ScrollView scrollY className="address_list_wrap">
         <AtList>
           {(data || []).map((item, index) => (
             <AtSwipeAction
@@ -178,7 +178,7 @@ const Address = () => {
             </AtSwipeAction>
           ))}
         </AtList>
-      </View>
+      </ScrollView>
 
       <AtModal
         isOpened={show}
