@@ -5,7 +5,7 @@ import EmptyAddress from "./empty";
 import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 import * as R from "ramda";
-import { AtList, AtSwipeAction } from "taro-ui";
+import { AtList, AtSwipeAction, AtModal } from "taro-ui";
 import { CButton } from "@/components";
 
 export interface IADDRESS {
@@ -90,7 +90,10 @@ const Address = () => {
       return resdata;
     }
   });
-  console.log(data);
+
+  const [show, setShow] = useState(false);
+  const [curIdx, setCurIdx] = useState(0);
+  // console.log(data);
 
   const handleSingle = idx => {
     let res = R.clone(data);
@@ -98,6 +101,13 @@ const Address = () => {
       item.isOpened = idx === index;
       return item;
     });
+    setData(res);
+    setCurIdx(idx);
+  };
+
+  const closeItem = idx => {
+    let res = R.clone(data);
+    res[idx].isOpened = false;
     setData(res);
   };
 
@@ -118,12 +128,23 @@ const Address = () => {
                 }
               },
               {
-                text: "确认",
+                text: "删除",
                 style: {
                   backgroundColor: "#FF4949"
                 }
               }
             ]}
+            onClick={e => {
+              switch (e.text) {
+                case "删除":
+                  // console.log("delete it");
+                  setShow(true);
+                  break;
+                default:
+                  closeItem(index);
+                  break;
+              }
+            }}
           >
             <View className="at-list__item">
               <View className="at-list__item-container">
@@ -156,6 +177,25 @@ const Address = () => {
           </AtSwipeAction>
         ))}
       </AtList>
+      <AtModal
+        isOpened={show}
+        title="提示"
+        cancelText="取消"
+        confirmText="确认"
+        onClose={() => {
+          setShow(false);
+        }}
+        onCancel={() => {
+          setShow(false);
+        }}
+        onConfirm={() => {
+          console.log("执行删除操作");
+          // 然后刷新列表
+          onRefresh();
+          setShow(false);
+        }}
+        content="确认删除此收货地址吗?"
+      />
     </View>
   );
 };
