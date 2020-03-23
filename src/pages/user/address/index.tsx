@@ -114,69 +114,72 @@ const Address = () => {
   return (
     <View className="address_list">
       {data && data.length === 0 && <EmptyAddress />}
-      <AtList>
-        {(data || []).map((item, index) => (
-          <AtSwipeAction
-            key={item.address_id}
-            onOpened={() => handleSingle(index)}
-            isOpened={item.isOpened}
-            options={[
-              {
-                text: "取消",
-                style: {
-                  backgroundColor: "#6190E8"
+      <View className="address_list_wrap">
+        <AtList>
+          {(data || []).map((item, index) => (
+            <AtSwipeAction
+              key={item.address_id}
+              onOpened={() => handleSingle(index)}
+              isOpened={item.isOpened}
+              options={[
+                {
+                  text: "取消",
+                  style: {
+                    backgroundColor: "#6190E8"
+                  }
+                },
+                {
+                  text: "删除",
+                  style: {
+                    backgroundColor: "#FF4949"
+                  }
                 }
-              },
-              {
-                text: "删除",
-                style: {
-                  backgroundColor: "#FF4949"
+              ]}
+              onClick={e => {
+                switch (e.text) {
+                  case "删除":
+                    // console.log("delete it");
+                    setShow(true);
+                    break;
+                  default:
+                    closeItem(index);
+                    break;
                 }
-              }
-            ]}
-            onClick={e => {
-              switch (e.text) {
-                case "删除":
-                  // console.log("delete it");
-                  setShow(true);
-                  break;
-                default:
-                  closeItem(index);
-                  break;
-              }
-            }}
-          >
-            <View className="at-list__item">
-              <View className="at-list__item-container">
-                <View className="at-list__item-content item-content">
-                  <View className="item-content__info">
-                    <View className="item-content__info-title">
-                      <View className="header">
-                        <Text>{item.name}</Text>
-                        <Text style={{ margin: "0 10px 0 20px" }}>
-                          {item.phone}
-                        </Text>
-                        {item.isDefault === 1 && (
-                          <Text className="gardient">默认</Text>
-                        )}
-                      </View>
-                      <View className="content">
-                        {item.province}
-                        {item.city}
-                        {item.area}
-                        {item.address}
+              }}
+            >
+              <View className="at-list__item">
+                <View className="at-list__item-container">
+                  <View className="at-list__item-content item-content">
+                    <View className="item-content__info">
+                      <View className="item-content__info-title">
+                        <View className="header">
+                          <Text>{item.name}</Text>
+                          <Text style={{ margin: "0 10px 0 20px" }}>
+                            {item.phone}
+                          </Text>
+                          {item.isDefault === 1 && (
+                            <Text className="gardient">默认</Text>
+                          )}
+                        </View>
+                        <View className="content">
+                          {item.province}
+                          {item.city}
+                          {item.area}
+                          {item.address}
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
-                <View className="at-list__item-extra item-extra">
-                  <View className="at-icon at-icon-edit" />
+                  <View className="at-list__item-extra item-extra">
+                    <View className="at-icon at-icon-edit" />
+                  </View>
                 </View>
               </View>
-            </View>
-          </AtSwipeAction>
-        ))}
-      </AtList>
+            </AtSwipeAction>
+          ))}
+        </AtList>
+      </View>
+
       <AtModal
         isOpened={show}
         title="提示"
@@ -196,6 +199,9 @@ const Address = () => {
         }}
         content="确认删除此收货地址吗?"
       />
+      <View className="address_list_action">
+        <CButton theme="gardient">添加新地址</CButton>
+      </View>
     </View>
   );
 };
