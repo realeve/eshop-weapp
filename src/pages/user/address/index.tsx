@@ -7,6 +7,7 @@ import { API } from "@/utils/setting";
 import * as R from "ramda";
 import { AtList, AtSwipeAction, AtModal } from "taro-ui";
 import { CButton } from "@/components";
+import * as lib from "@/utils/lib";
 
 export interface IADDRESS {
   realName: string;
@@ -200,7 +201,14 @@ const Address = () => {
         content="确认删除此收货地址吗?"
       />
       <View className="address_list_action">
-        <CButton theme="gardient">添加新地址</CButton>
+        <CButton
+          theme="gardient"
+          onClick={() => {
+            lib.jump("/pages/user/address/new");
+          }}
+        >
+          添加新地址
+        </CButton>
       </View>
     </View>
   );
