@@ -3,7 +3,7 @@ import { View, Text, Image } from "@tarojs/components";
 import "./new.scss";
 // import { API } from "@/utils/setting";
 // import * as R from "ramda";
-import { AtInput, AtForm, AtSwitch } from "taro-ui";
+import { AtInput, AtSwitch } from "taro-ui";
 import UserIcon from "../../login/components/LoginPassword/user.png";
 import useSetState from "@/components/hooks/useSetState";
 import { CButton } from "@/components/";
@@ -16,9 +16,13 @@ const AddAddress = () => {
     detail: "",
     is_default: true
   });
+
+  const saveAddress = () => {
+    console.log(account);
+  };
   return (
     <View className="address_list">
-      <View>
+      <View style={{ flex: 1 }}>
         <AtInput
           name="username"
           title="收货人"
@@ -70,7 +74,9 @@ const AddAddress = () => {
         </View>
       </View>
       <View className="address_list_action">
-        <CButton theme="gardient">保存</CButton>
+        <CButton theme="gardient" onClick={saveAddress}>
+          保存
+        </CButton>
       </View>
     </View>
   );
