@@ -47,20 +47,10 @@ const AddAddress = () => {
           clear
           autoFocus
         />
-        <AtInput
-          name="address"
+        <CityPicker
           title="所在地区"
-          type="text"
-          placeholder="请输入所在地区"
           value={account.address}
           onChange={address => setAccount({ address })}
-          clear
-          autoFocus
-        />
-        <CityPicker
-          onChange={city => {
-            console.log(city);
-          }}
         />
         <AtInput
           name="detail"

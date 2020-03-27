@@ -1,117 +1,129 @@
-import Taro, { Component } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, Text, Picker } from "@tarojs/components";
 import dataCity from "./dataCity";
+import useSetState from "@/components/hooks/useSetState";
 import "./index.scss";
-let shen = [];
-let shi = [];
-let qu = [];
-// 市
-for (let is in dataCity[340000]) {
-  shi.push(dataCity[340000][is]);
-}
-// 区
-for (let is in dataCity[340100]) {
-  qu.push(dataCity[340100][is]);
-}
-// 省
-dataCity[86].map(item => {
-  shen.push(item.address);
-});
-// 当前省
-let indexsheng = "340000";
-// 当前市
-let indexshi = "340100";
 
-class PagePicker extends Component {
-  state = {
-    selector: [shen, shi, qu],
+const PagePicker = props => {
+  let [idxProv, setIdxProv] = useState("340000");
+  let [idxCity, setIdxCity] = useState("340100");
+
+  let [prov, setProv] = useState([]);
+  let [city, setCity] = useState([]);
+  let [area, setArea] = useState([]);
+
+  const [state, setState] = useSetState({
+    selector: [prov, city, area],
     selectorChecked: "安徽省 - " + "合肥市 - " + "瑶海区"
-  };
+  });
 
-  onChange = e => {
-    let division = this.props.Division || "-";
-    this.setState(
+  useEffect(() => {
+    let _city = Object.values(dataCity[340000]),
+      _prov = dataCity[86].map(item => item.address),
+      _area = Object.values(dataCity[340100]);
+
+    setProv(_prov);
+    setArea(_area);
+    setCity(_city);
+    setState({
+      selector: [_prov, _city, _area]
+    });
+
+    props.onChange && props.onChange(state.selectorChecked.toString());
+  }, []);
+
+  const onChange = e => {
+    let division = props.Division || "-";
+    setState(
       {
         selectorChecked:
-          this.state.selector[0][e.detail.value[0]] +
+          state.selector[0][e.detail.value[0]] +
           division +
-          this.state.selector[1][e.detail.value[1]] +
+          state.selector[1][e.detail.value[1]] +
           division +
-          this.state.selector[2][e.detail.value[2]]
+          state.selector[2][e.detail.value[2]]
       },
       () => {
-        this.props.onChange &&
-          this.props.onChange(this.state.selectorChecked.toString());
+        props.onChange && props.onChange(state.selectorChecked.toString());
       }
     );
   };
 
-  onColumnChange = e => {
-    let indexVal = e.detail;
+  const onColumnChange = e => {
+    let indexVal = e && e.detail;
+    if (!indexVal) {
+      return;
+    }
+    // console.log(indexVal);
+
     // 如果为第一个把后面两个改变,最后一个选第二个的第一个，第一个继承之前的
     // 如果为第二个则把最后一个改变，第一个第二继承之前的
     // 如果为第三个则不作任何改变
 
+    let _city = [];
+    let _area = [];
+
     if (indexVal.column == 0) {
       let code = dataCity[86][indexVal.value].code;
-      indexsheng = code;
-      let shi = [];
-      let qu = [];
+
+      setIdxProv(code);
+      // console.log(code);
+
       let one = 0;
       let codes = "";
-      for (let is in dataCity[code]) {
+
+      Object.keys(dataCity[code]).forEach((item: string) => {
         if (one == 0) {
-          codes = is;
-          indexshi = is;
+          codes = item;
+          setIdxCity(item);
           one++;
         }
-        shi.push(dataCity[code][is]);
-      }
-      for (let is in dataCity[codes]) {
-        qu.push(dataCity[codes][is]);
-      }
-      this.setState(old => {
+        _city.push(dataCity[code][item]);
+      });
+
+      Object.keys(dataCity[codes]).forEach((item: string) => {
+        _area.push(dataCity[codes][item]);
+      });
+
+      setState(old => {
         return {
-          selector: [old.selector[0], shi, qu]
+          selector: [old.selector[0], _city, _area]
         };
       });
     } else if (indexVal.column == 1) {
-      let shi = [];
-      let qu = [];
-      for (let is in dataCity[indexsheng]) {
-        shi.push(is);
-        indexshi = shi[indexVal.value];
-      }
-      for (let is in dataCity[indexshi]) {
-        qu.push(dataCity[indexshi][is]);
-      }
-      this.setState(old => {
+      Object.keys(dataCity[idxProv]).forEach(item => {
+        _city.push(item);
+        setIdxCity(city[indexVal.value]);
+      });
+      Object.keys(dataCity[idxCity]).forEach(item => {
+        _area.push(dataCity[idxCity][item]);
+      });
+
+      setState(old => {
         return {
-          selector: [old.selector[0], old.selector[1], qu]
+          selector: [old.selector[0], old.selector[1], _area]
         };
       });
     }
+    // console.log(_city, _area);
+    setArea(_area);
+    setCity(_city);
   };
-  componentDidMount() {
-    this.props.onChange &&
-      this.props.onChange(this.state.selectorChecked.toString());
-  }
-  render() {
-    return (
-      <View className="city_picker">
-        <Picker
-          mode="multiSelector"
-          range={this.state.selector}
-          onColumnChange={this.onColumnChange}
-          onChange={this.onChange}
-        >
-          <View className="wrap">
-            <View className="title">地址</View>
-            <Text>{this.state.selectorChecked.toString()}</Text>
-          </View>
-        </Picker>
-      </View>
-    );
-  }
-}
+
+  return (
+    <View className="city_picker">
+      <Picker
+        mode="multiSelector"
+        range={state.selector}
+        onColumnChange={onColumnChange}
+        onChange={onChange}
+      >
+        <View className="wrap">
+          <View className="title">{props.title || "地址"}</View>
+          <Text>{state.selectorChecked.toString()}</Text>
+        </View>
+      </Picker>
+    </View>
+  );
+};
 export default PagePicker;
