@@ -8,13 +8,9 @@ const PagePicker = props => {
   let [idxProv, setIdxProv] = useState("340000");
   let [idxCity, setIdxCity] = useState("340100");
 
-  let [prov, setProv] = useState([]);
-  let [city, setCity] = useState([]);
-  let [area, setArea] = useState([]);
-
   const [state, setState] = useSetState({
-    selector: [prov, city, area],
-    selectorChecked: "安徽省 - " + "合肥市 - " + "瑶海区"
+    selector: [[], [], []],
+    selectorChecked: props.value
   });
 
   useEffect(() => {
@@ -22,18 +18,13 @@ const PagePicker = props => {
       _prov = dataCity[86].map(item => item.address),
       _area = Object.values(dataCity[340100]);
 
-    setProv(_prov);
-    setArea(_area);
-    setCity(_city);
     setState({
       selector: [_prov, _city, _area]
     });
-
-    props.onChange && props.onChange(state.selectorChecked.toString());
   }, []);
 
   const onChange = e => {
-    let division = props.Division || "-";
+    let division = props.Division || " ";
     setState(
       {
         selectorChecked:
@@ -44,7 +35,7 @@ const PagePicker = props => {
           state.selector[2][e.detail.value[2]]
       },
       () => {
-        props.onChange && props.onChange(state.selectorChecked.toString());
+        props.onChange && props.onChange(state.selectorChecked);
       }
     );
   };
@@ -93,7 +84,7 @@ const PagePicker = props => {
     } else if (indexVal.column == 1) {
       Object.keys(dataCity[idxProv]).forEach(item => {
         _city.push(item);
-        setIdxCity(city[indexVal.value]);
+        setIdxCity(_city[indexVal.value]);
       });
       Object.keys(dataCity[idxCity]).forEach(item => {
         _area.push(dataCity[idxCity][item]);
@@ -105,9 +96,6 @@ const PagePicker = props => {
         };
       });
     }
-    // console.log(_city, _area);
-    setArea(_area);
-    setCity(_city);
   };
 
   return (
@@ -120,7 +108,7 @@ const PagePicker = props => {
       >
         <View className="wrap">
           <View className="title">{props.title || "地址"}</View>
-          <Text>{state.selectorChecked.toString()}</Text>
+          <Text>{state.selectorChecked}</Text>
         </View>
       </Picker>
     </View>

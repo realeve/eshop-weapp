@@ -171,7 +171,14 @@ const Address = () => {
                       </View>
                     </View>
                   </View>
-                  <View className="at-list__item-extra item-extra">
+                  <View
+                    className="at-list__item-extra item-extra"
+                    onClick={() => {
+                      lib.jump(
+                        `/pages/user/address/new?address_id=${item.address_id}`
+                      );
+                    }}
+                  >
                     <View className="at-icon at-icon-edit" />
                   </View>
                 </View>
