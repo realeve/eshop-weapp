@@ -7,6 +7,7 @@ import { AtInput, AtSwitch } from "taro-ui";
 import UserIcon from "../../login/components/LoginPassword/user.png";
 import useSetState from "@/components/hooks/useSetState";
 import { CButton } from "@/components/";
+import CityPicker from "@/components/CityPicker";
 
 const AddAddress = () => {
   const [account, setAccount] = useSetState({
@@ -20,6 +21,7 @@ const AddAddress = () => {
   const saveAddress = () => {
     console.log(account);
   };
+
   return (
     <View className="address_list">
       <View style={{ flex: 1 }}>
@@ -54,6 +56,11 @@ const AddAddress = () => {
           onChange={address => setAccount({ address })}
           clear
           autoFocus
+        />
+        <CityPicker
+          onChange={city => {
+            console.log(city);
+          }}
         />
         <AtInput
           name="detail"
