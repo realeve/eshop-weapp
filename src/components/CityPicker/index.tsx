@@ -14,6 +14,10 @@ const PagePicker = props => {
   });
 
   useEffect(() => {
+    setState({ selectorChecked: props.value });
+  }, [props.value]);
+
+  useEffect(() => {
     let _city = Object.values(dataCity[340000]),
       _prov = dataCity[86].map(item => item.address),
       _area = Object.values(dataCity[340100]);
