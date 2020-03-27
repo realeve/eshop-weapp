@@ -44,6 +44,8 @@ class App extends Component {
       "pages/user/address/index", //我的地址
       "pages/user/address/new", //新增地址
 
+      "pages/user/comment/index", // 我的评价
+
       "pages/find/index", // 发现
       "pages/login/index", // 登录
       "pages/special/index", // 特品
