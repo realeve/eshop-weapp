@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
+import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import Tab from "@/pages/search/tab/";
@@ -119,8 +119,16 @@ const { EOrderStatus } = db;
 
 const Order = () => {
   let isLogin = useLogin();
+  const router = useRouter();
 
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(router.params.state || 0);
+
+  useEffect(() => {
+    if ("undefined" == typeof router.params.state) {
+      return;
+    }
+    setCurrent(+router.params.state);
+  }, [router.params]);
 
   const [page, setPage] = useState(1);
 

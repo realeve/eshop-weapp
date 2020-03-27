@@ -14,7 +14,6 @@ const OrderDetail = ({
   <View
     className="link_item"
     onClick={() => {
-      console.log(data.link);
       lib.jump(data.link);
     }}
   >
