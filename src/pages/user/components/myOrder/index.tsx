@@ -32,27 +32,27 @@ export const linkList = [
   {
     name: "待付款",
     img: needPay,
-    link: "/order/list/0"
+    link: "/order/index?state=1"
   },
   {
     name: "待发货",
     img: needSend,
-    link: "/order/list/0"
+    link: "/order/index?state=2"
   },
   {
     name: "待收货",
     img: needReceive,
-    link: "/order/list/0"
+    link: "/order/index?state=3"
   },
   {
     name: "待评价",
     img: needConfirm,
-    link: "/order/list/0"
+    link: "/order/index?state=4"
   },
   {
     name: "退款/售后",
     img: refund,
-    link: "/order/list/0"
+    link: "/order/aftersale/"
   }
 ];
 

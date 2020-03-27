@@ -192,7 +192,7 @@ const Order = () => {
     console.log("刷新数据");
   };
 
-  console.log(state);
+  // console.log(state);
 
   return (
     <View className="user_order">

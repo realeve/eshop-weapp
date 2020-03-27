@@ -98,17 +98,19 @@ class PagePicker extends Component {
   }
   render() {
     return (
-      <Picker
-        mode="multiSelector"
-        range={this.state.selector}
-        onColumnChange={this.onColumnChange}
-        onChange={this.onChange}
-      >
-        <View className="pickerCity">
-          <Text>地址</Text>
-          <Text>{this.state.selectorChecked.toString()}</Text>
-        </View>
-      </Picker>
+      <View className="city_picker">
+        <Picker
+          mode="multiSelector"
+          range={this.state.selector}
+          onColumnChange={this.onColumnChange}
+          onChange={this.onChange}
+        >
+          <View className="wrap">
+            <View className="title">地址</View>
+            <Text>{this.state.selectorChecked.toString()}</Text>
+          </View>
+        </Picker>
+      </View>
     );
   }
 }
