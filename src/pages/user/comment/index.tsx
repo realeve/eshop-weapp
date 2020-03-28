@@ -2,16 +2,31 @@ import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import Tab from "@/pages/search/tab/";
-import * as db from "./db";
+
 import ListView from "taro-listview";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
 import useLogin from "@/components/hooks/useLogin";
-import HomeIcon from "@/pages/order/confirm/shop.svg";
-import classnames from "classname";
 import { ORDER } from "@/utils/api";
 
 import { CLIENT_TYPE } from "@/utils/setting";
+
+export const commentStateList: {
+  name: string;
+  key: string;
+  id: number;
+}[] = [
+  {
+    name: "全部评价",
+    key: "all", // 不传时显示全部订单
+    id: 0
+  },
+  {
+    name: "有图评价",
+    key: "pic",
+    id: 1
+  }
+];
 
 interface ICommentItem {
   id: string;
@@ -87,7 +102,7 @@ const Comment = () => {
     list: []
   });
 
-  const { loading } = useFetch({
+  const { loading, reFetch } = useFetch({
     param: {
       ...ORDER.evaluate,
       method: "get",
@@ -155,8 +170,13 @@ const Comment = () => {
 
     // 重置数据列表
     setState({
-      list: []
+      list: [],
+      hasMore: true
     });
+
+    reFetch();
+
+    setPage(1);
   };
 
   const onScrollToLower = async fn => {
@@ -166,7 +186,7 @@ const Comment = () => {
 
   return (
     <View className="user_comment">
-      <Tab list={db.commentStateList} current={current} onChange={handleMenu} />
+      <Tab list={commentStateList} current={current} onChange={handleMenu} />
       <ListView
         lazy=".lazy-view"
         isLoaded={!loading}
