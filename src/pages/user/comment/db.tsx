@@ -7,57 +7,22 @@ import * as R from "ramda";
 import { jump } from "@/utils/lib";
 import { updateShoppingCart } from "@/utils/cartDb";
 
-export const orderStateList: {
+export const commentStateList: {
   name: string;
   key: string;
   id: number;
 }[] = [
   {
-    name: "全部订单",
+    name: "全部评价",
     key: "all", // 不传时显示全部订单
     id: 0
   },
   {
-    name: "待付款",
-    key: "new",
+    name: "有图评价",
+    key: "pic",
     id: 1
-  },
-  {
-    name: "待发货",
-    key: "pay",
-    id: 2
-  },
-  {
-    name: "待收货",
-    key: "send",
-    id: 3
-  },
-  {
-    name: "待评价",
-    key: "noeval",
-    id: 4
-  },
-  // {
-  //   name: '已完成',
-  //   key: 'finish'
-  //   ,id:5
-  // },
-  {
-    name: "已取消",
-    key: "cancel",
-    id: 6
   }
 ];
-
-/*
- real-实物订单，
- virtual-虚拟订单
- chain-门店订单
- foreign-海外购订单
- groups-拼团
- book-预定
- cut砍价 
-*/
 
 export enum EOrderTypes {
   real = "real",
