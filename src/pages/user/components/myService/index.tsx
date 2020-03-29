@@ -28,7 +28,7 @@ const MyService = () => {
     {
       title: "我的预约",
       img: order,
-      url: ""
+      url: "/pages/user/lottery/index"
     },
     {
       title: "功能调试_订单确认",

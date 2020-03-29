@@ -41,6 +41,13 @@ export const DRAW_STATE = [10, 20, 30];
  */
 export const DRAWED_STATE = [40, 50, 100];
 
+export enum SUBSCRIBE_STATUS {
+  NOT_START,
+  SUBSCRIBING,
+  LOTTERY,
+  NEED_PAY,
+  END
+}
 /**
  * 预约活动的阶段：未开始，预约，抽签，购买，结束
  * 不包括状态9999的中止
