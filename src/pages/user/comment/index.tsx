@@ -3,6 +3,7 @@ import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import Tab from "@/pages/search/tab/";
 
+import { AtCurtain, AtModal } from "taro-ui";
 import ListView from "taro-listview";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
@@ -11,20 +12,34 @@ import { ORDER } from "@/utils/api";
 
 import { CLIENT_TYPE } from "@/utils/setting";
 
+/**
+ * 商品评价定义
+ */
+export enum EvalLevel {
+  all = -1,
+  good = 1, // 好评
+  mid = 2, // 中评
+  weak = 3, //差评
+  pic = 4 // 有图
+}
+
 export const commentStateList: {
   name: string;
   key: string;
   id: number;
+  type: number;
 }[] = [
   {
     name: "全部评价",
     key: "all", // 不传时显示全部订单
-    id: 0
+    id: 0,
+    type: EvalLevel.all
   },
   {
     name: "有图评价",
     key: "pic",
-    id: 1
+    id: 1,
+    type: EvalLevel.pic
   }
 ];
 
@@ -71,17 +86,6 @@ interface ICommentListDB {
   storeName: string;
 }
 
-/**
- * 商品评价定义
- */
-export enum EvalLevel {
-  all = -1,
-  good = 1, // 好评
-  mid = 2, // 中评
-  weak = 3, //差评
-  pic = 4 // 有图
-}
-
 const Comment = () => {
   let isLogin = useLogin();
   const router = useRouter();
@@ -96,6 +100,7 @@ const Comment = () => {
   }, [router.params]);
 
   const [page, setPage] = useState(1);
+  const [modal, setModal] = useSetState({ show: false, img: null });
 
   const [state, setState] = useSetState({
     hasMore: true,
@@ -108,7 +113,7 @@ const Comment = () => {
       method: "get",
       params: {
         clientType: CLIENT_TYPE.web,
-        evalLv: EvalLevel.all,
+        evalLv: commentStateList[current].type,
         page
       }
     },
@@ -125,7 +130,7 @@ const Comment = () => {
           id: String(item.evaluateId),
           content: item.content,
           time: item.evaluateTime,
-          img: item.imagesUrlList
+          img: item.imagesUrlList || []
         };
 
         // if (item.contentAgain) {
@@ -212,17 +217,26 @@ const Comment = () => {
                   {/* <Image
                     src="https://statictest.ccgold.cn/image/8f/94/8f9439a267e0b2c0ba84304ee4a74a45.jpg"
                     className="img"
-                  />
-                  <Image
-                    src="https://statictest.ccgold.cn/image/8f/94/8f9439a267e0b2c0ba84304ee4a74a45.jpg"
-                    className="img"
-                  />
-                  <Image
-                    src="https://statictest.ccgold.cn/image/8f/94/8f9439a267e0b2c0ba84304ee4a74a45.jpg"
-                    className="img"
+                    onClick={() =>
+                      setModal({
+                        show: true,
+                        img:
+                          "https://statictest.ccgold.cn/image/8f/94/8f9439a267e0b2c0ba84304ee4a74a45.jpg"
+                      })
+                    }
                   /> */}
-                  {item.comment.img.slice(0, 3).map((img: string) => (
-                    <Image key={img} src={img} className="img" />
+                  {item.comment.img.map((img: string) => (
+                    <Image
+                      key={img}
+                      src={img}
+                      className="img"
+                      onClick={() => {
+                        setModal({
+                          show: true,
+                          img
+                        });
+                      }}
+                    />
                   ))}
                 </View>
               </View>
@@ -234,6 +248,14 @@ const Comment = () => {
           );
         })}
       </ListView>
+
+      <AtCurtain
+        isOpened={modal.show}
+        onClose={() => setModal({ show: false })}
+        closeBtnPosition="top-left"
+      >
+        <Image src={modal.img} className="modal_img" />
+      </AtCurtain>
     </View>
   );
 };

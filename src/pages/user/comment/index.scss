@@ -10,6 +10,10 @@ $shopHeight: 45px;
   background-color: $bg;
   @extend .alignColumn;
 
+  .modal_img {
+    width: 100%;
+  }
+
   .comment_detail {
     flex: 1;
     position: fixed;
