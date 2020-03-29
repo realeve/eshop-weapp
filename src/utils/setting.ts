@@ -96,3 +96,5 @@ export const copyright = {
   text: ` 2016-${new Date().getFullYear()} 中钞长城贵金属有限公司 `,
   tel: "400 8122 200"
 };
+
+export const help = "https://www.cbpc.ltd/ccgold/static/help.json";

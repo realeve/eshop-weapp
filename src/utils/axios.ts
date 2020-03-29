@@ -120,6 +120,7 @@ export const handleError = (error: {
   request?: any;
   message?: any;
 }) => {
+  // console.log(error);
   let config = error.config || {};
   let str = config.params || config.data || {};
   let { id, nonce, ...params } = typeof str === "string" ? qs.parse(str) : str;
@@ -182,6 +183,10 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     datas: T;
   }>
 ) => Promise<T> = async ({ config, request, data, headers }) => {
+  if (config.url.includes(".json")) {
+    return data;
+  }
+
   let { code, msg, datas } = data;
 
   if (datas.error) {

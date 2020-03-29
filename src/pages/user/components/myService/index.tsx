@@ -23,7 +23,7 @@ const MyService = () => {
     {
       title: "客服与帮助",
       img: service,
-      url: ""
+      url: "/pages/help/index"
     },
     {
       title: "我的预约",

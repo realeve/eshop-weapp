@@ -1,0 +1,23 @@
+@import "@/styles/theme.scss";
+
+.help_page {
+  background: linear-gradient(180deg, $lightYellow, $extrmeLightYellow);
+  padding: 20px;
+  min-height: 100%;
+  .main {
+    padding: 40px 48px;
+    background: $white;
+    border-radius: $border-radius;
+    font-size: $fontSizeBase;
+
+    color: $subTitle;
+    .title {
+      color: $mainTitle;
+      margin: 48px 0 15px 0;
+      font-weight: bold;
+    }
+    .strong {
+      color: $red;
+    }
+  }
+}
