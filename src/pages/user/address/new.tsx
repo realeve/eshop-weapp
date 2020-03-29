@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
+import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import "./new.scss";
 // import { API } from "@/utils/setting";
@@ -8,6 +8,8 @@ import UserIcon from "../../login/components/LoginPassword/user.png";
 import useSetState from "@/components/hooks/useSetState";
 import { CButton } from "@/components/";
 import CityPicker from "@/components/CityPicker";
+import useFetch from "@/components/hooks/useFetch";
+import { API } from "@/utils/api";
 
 const AddAddress = () => {
   const [account, setAccount] = useSetState({
@@ -21,6 +23,36 @@ const AddAddress = () => {
   const saveAddress = () => {
     console.log(account);
   };
+
+  const [mode, setMode] = useState("add");
+  const router = useRouter();
+
+  let { loading, error } = useFetch({
+    param: {
+      url: API.ADDRESS_DETAIL,
+      method: "post",
+      params: {
+        addressId: router.params.address_id
+      }
+    },
+    valid: () => {
+      let status = "undefined" !== (router.params && router.params.address_id);
+      if (status) {
+        setMode("update");
+      }
+      return status;
+    },
+    callback: e => {
+      let res = e.address;
+      setAccount({
+        username: res.realName,
+        phone: res.mobPhone,
+        address: res.areaInfo,
+        detail: res.address,
+        is_default: res.isDefault > 0
+      });
+    }
+  });
 
   return (
     <View className="address_list">
@@ -47,20 +79,10 @@ const AddAddress = () => {
           clear
           autoFocus
         />
-        <AtInput
-          name="address"
+        <CityPicker
           title="所在地区"
-          type="text"
-          placeholder="请输入所在地区"
           value={account.address}
           onChange={address => setAccount({ address })}
-          clear
-          autoFocus
-        />
-        <CityPicker
-          onChange={city => {
-            console.log(city);
-          }}
         />
         <AtInput
           name="detail"

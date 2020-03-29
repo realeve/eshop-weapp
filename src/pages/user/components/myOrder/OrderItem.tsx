@@ -3,16 +3,16 @@ import { AtBadge } from "taro-ui";
 import OrderDetail from "./OrderDetail";
 
 export default class OrderItem extends Taro.Component<{
-  value: number;
+  value?: number;
   data: {
-    text: string;
+    name: string;
     img: any;
     link: string;
   };
 }> {
   render() {
     let { value, data } = this.props;
-    return value > 0 ? (
+    return (value || 0) > 0 ? (
       <AtBadge value={value}>
         <OrderDetail data={data} />
       </AtBadge>

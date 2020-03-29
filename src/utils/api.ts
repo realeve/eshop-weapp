@@ -50,6 +50,7 @@ export const API: {
   BRAND: "/brand/recommend",
   MODIFY_MEMBER_SEX: "/member/sex/edit",
   MODIFY_MEMBER_BIRTH: "/member/birthday/edit",
+  ADDRESS_DETAIL: "member/address/info",
   MODIFY_MEMBER_ADDRESS_EDIT: "/member/address/edit",
   MODIFY_MEMBER_ADDRESS_ADD: "/member/address/add",
   MODIFY_MEMBER_ADDRESS_DELETE: "/member/address/delete",

@@ -18,12 +18,12 @@ const MyService = () => {
     {
       title: "我的评价",
       img: comment,
-      url: ""
+      url: "/pages/user/comment/index"
     },
     {
       title: "客服与帮助",
       img: service,
-      url: ""
+      url: "/pages/help/index"
     },
     {
       title: "我的预约",
