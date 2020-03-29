@@ -1,25 +1,35 @@
 import Taro from "@tarojs/taro";
-import { View, RichText } from "@tarojs/components";
-import "./index.scss";
 import { help as url } from "@/utils/setting";
 import useFetch from "@/components/hooks/useFetch";
-
 import { AtList, AtListItem } from "taro-ui";
 import Skeleton from "taro-skeleton";
+import * as lib from "@/utils/lib";
 
-export default () => {
-  let { data, loading, error } = useFetch({
+const Index = () => {
+  let { data, loading } = useFetch({
     param: { url }
   });
-  console.log(data, loading, error);
 
   return (
-    // <View className="help_page">
-    <Skeleton loading={loading} animate rowHeight={125} row={7}>
+    <Skeleton loading={loading} animate rowHeight={50} row={7}>
       <AtList>
-        <AtListItem title="标题文字" arrow="right" />
+        {data &&
+          data.map(item => (
+            <AtListItem
+              title={item.title}
+              key={item.title}
+              onClick={() => {
+                lib.jump(item.url);
+              }}
+              arrow="right"
+            />
+          ))}
       </AtList>
     </Skeleton>
-    // </View>
   );
 };
+
+Index.config = {
+  navigationBarTitleText: "帮助与客服"
+};
+export default Index;
