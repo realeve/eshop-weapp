@@ -10,59 +10,12 @@ import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
 
-import { IProductInfo, ISpecItem } from "../../lib";
+import { IProductInfo, ISpecItem, buyGoods } from "@/pages/detail/lib";
 import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
 import success from "@/components/Toast/success";
 import fail from "@/components/Toast/fail";
-
-// 通过商品详情数据提取存储至购物车所需信息
-export const getLocalStorageConfigByData: (
-  data: IProductInfo,
-  cartItem: ICartItem
-) => IConfirmCart = (data, cartItem) => {
-  let specValue = R.find(R.propEq("goodsId", Number(cartItem.goodsId)))(
-    data.specValue || []
-  );
-
-  let specInfo: string[] = [];
-
-  let img = "";
-  if (specValue && data.specs) {
-    specValue.specValueIds.forEach((spec: number) => {
-      (data.specs || []).forEach((item: ISpecItem) => {
-        let name = item.specName;
-        let detail = R.find(R.propEq("specValueId", spec))(item.specValueList);
-        if (detail) {
-          specInfo.push(`${name}:${detail.specValueName}`);
-          img = detail.imageSrc || img;
-        }
-      });
-    });
-  }
-
-  return {
-    type: lib.isLogin() ? "online" : "offline",
-
-    shop: {
-      id: data.shopId,
-      name: data.shopName,
-      saleService: data.saleService
-    },
-    spuid: Number(data.id),
-    id: Number(cartItem.goodsId),
-    name: data.title,
-    spec: specInfo.join(","),
-    price: Number(data.price),
-    num: Number(cartItem.buyNum),
-    valid: true,
-    storage: data.number,
-    img: img || data.img,
-    totalPrice: 0,
-    unitName: data.unitName
-  };
-};
 
 const checkTime = data => {
   if (!data.goodsSaleTime) {
@@ -113,7 +66,8 @@ const DetailAction = ({
     };
 
     console.log(cartItem);
-    success("待对接添加购物车逻辑");
+    // success("待对接添加购物车逻辑");
+    buyGoods();
 
     // // 添加购物车
     // let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
