@@ -156,11 +156,15 @@ export const loadUserInfo = async (dispatch: Dispatch) => {
 const namespace = "common";
 export const updateStore = namespace + "/setStore";
 
-const handleData = data => {
+const handleData = (data, webp) => {
   let res = R.clone(data);
+  let suffix = db.getWebpSuffix(webp);
+
   res.data = res.data.map(item => {
     if (!item.imageUrl.includes("://")) {
-      item.imageUrl = OSS_URL + item.imageUrl;
+      item.imageUrl = OSS_URL + item.imageUrl + suffix;
+    } else {
+      item.imageUrl += suffix;
     }
     return item;
   });
@@ -173,6 +177,7 @@ export default {
   reducers: { setStore, setUserStore },
   subscriptions: {
     async setup({ dispatch }: { dispatch: Dispatch }) {
+      let webp = getGlobalData("webp");
       db.loadHome().then(res => {
         let {
           componentA: special, // 特品
@@ -185,7 +190,13 @@ export default {
         } = res;
         let payload = {};
         if (special) {
-          payload = { ...payload, special };
+          payload = {
+            ...payload,
+            special: {
+              ...special,
+              imageUrl: db.getWebp(special.imageUrl, webp)
+            }
+          };
         }
         if (componentB) {
           payload = { ...payload, cateList: componentB.data };
@@ -193,25 +204,25 @@ export default {
         if (componentC) {
           payload = {
             ...payload,
-            collectionList: handleData(componentC)
+            collectionList: handleData(componentC, webp)
           };
         }
         if (componentD) {
           payload = {
             ...payload,
-            newProduct: handleData(componentD)
+            newProduct: handleData(componentD, webp)
           };
         }
         if (componentF) {
           payload = {
             ...payload,
-            specialList: db.handleSpecialItem(componentF)
+            specialList: db.handleSpecialItem(componentF, webp)
           };
         }
         if (componentG) {
           payload = {
             ...payload,
-            normalList: db.handleSpecialItem(componentG)
+            normalList: db.handleSpecialItem(componentG, webp)
           };
         }
 
@@ -233,6 +244,7 @@ export default {
       //   });
       // });
 
+      // 商品分类列表
       db.loadMenuList().then(menuList => {
         let menus = menuList.map(item => ({
           name: item.menuName,
@@ -243,7 +255,9 @@ export default {
             categoryList: menu.subitemData.map(sub => ({
               id: sub.data,
               name: sub.name,
-              url: sub.imageUrl.replace("statictest", "statictest") // 开发者模式
+              url:
+                sub.imageUrl.replace("statictest", "statictest") +
+                db.getWebpSuffix(webp) // 开发者模式
             }))
           }))
         }));

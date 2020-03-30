@@ -109,3 +109,28 @@ Maximum call stack size exceeded
 ## TODO
 
 - [ ] 调整地址组件
+
+## webp
+
+### webp
+
+[https://static.ccgold.cn/image/e5/e3/e5e320f8577ce78a62f7d5ec9fc976a7.jpg?x-oss-process=image/format,webp](https://static.ccgold.cn/image/e5/e3/e5e320f8577ce78a62f7d5ec9fc976a7.jpg?x-oss-process=image/format,webp)
+
+### resize
+
+[https://statictest.ccgold.cn/image/e9/68/e968e2a1ade28122b175aa77e9a5ddfa.jpg?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250/format,webp](https://statictest.ccgold.cn/image/e9/68/e968e2a1ade28122b175aa77e9a5ddfa.jpg?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250/format,webp)
+
+### 首屏优化
+
+- 2 组 6 宫格
+- 1 组 3\*1 slide
+- 1 组 2\*1 slide
+- 1 组 1 全屏图
+
+共 18 张图：2.3M
+
+合理的大小：1.4M
+
+合理的大小+webp: 287kb
+
+结论，优化后 287kb/2.3M = 1/8.2 约 八分之一

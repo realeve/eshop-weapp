@@ -16,6 +16,7 @@ export interface IDetailState {
   buyLocking: boolean;
   detailData: IProductInfo;
 }
+import { getWebp } from "@/services/common";
 
 export const handleStoreData = ({
   storeInfo,
@@ -96,8 +97,8 @@ const handleImageList: (
   let images = list.map(img => ({
     colorId: img.colorId,
     id: img.imageId,
-    img80: img.imageSrc,
-    img500: img.imageSrc
+    img80: getWebp(img.imageSrc),
+    img500: getWebp(img.imageSrc)
   }));
 
   return R.groupBy(R.prop("colorId"), images);
@@ -112,6 +113,7 @@ export const handleGoodsData = data => {
   let storeData = handleStoreData(data);
   let evaData = handleCommentData(data);
   let hotData = handleHotData(data);
+  console.log(hotData);
   let storeService = {
     workingTime: handleWorkingTime(data.storeInfo.storeWorkingtime),
     preSales: JSON.parse(data.storeInfo.storePresales || "[]"),
@@ -127,15 +129,15 @@ export const handleGoodsData = data => {
       res.number > 0;
   }
   let imgs = handleImageList(data.goodsDetail.goodsImageList);
-  console.log({
-    storeData,
-    goodsCount,
-    canBuy,
-    evaData,
-    hotData,
-    storeService,
-    imgs
-  });
+  // console.log({
+  //   storeData,
+  //   goodsCount,
+  //   canBuy,
+  //   evaData,
+  //   hotData,
+  //   storeService,
+  //   imgs
+  // });
 
   return {
     ...res,
@@ -297,11 +299,17 @@ export const initData: (
     goodsId: org.goodsId,
     title: org.goodsName,
     subTitle: org.jingle,
-    titleTag: isPromo ? org.promotionTypeText : "",
-    img: goods.imageSrc,
     price: isPromo ? goods.webPrice0 : org.webPrice0,
     counter: goods.goodsPrice0,
     discount: org.discount,
+    titleTag:
+      org.promotionType * org.promotionState > 0 ? org.promotionTypeText : "",
+    img: getWebp(org.goodsImageList[0].imageSrc),
+
+    goodsImageList: org.goodsImageList,
+    goodsList: org.goodsList,
+
+    // counter: '',
     unitName: org.unitName,
     shopId: store.storeId,
     shopName: store.storeName,

@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import * as lib from "@/utils/lib";
+import { getWebp } from "@/services/common";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -230,10 +231,12 @@ export const handleSubscribe: (
       detail: [sp.detailImage4, sp.detailImage4_4]
     }
   ].map(item => {
-    item.detail = item.detail.filter(img => img);
+    item.detail = item.detail.filter(img => img).map(item => getWebp(item));
     return item;
   });
-  let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3];
+  let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3].map(item =>
+    getWebp(item)
+  );
   sp = { ...sp, imgList, thumbList };
   let special = R.pick(
     [

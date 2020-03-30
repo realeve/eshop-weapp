@@ -4,6 +4,7 @@ import "./index.scss";
 import { CPrice } from "@/components";
 import * as R from "ramda";
 import DCard from "../card";
+import { getWebpSuffix } from "@/services/common";
 
 export default ({ data = [], title }) => (
   <DCard className="home-pin__wrap">
@@ -21,7 +22,7 @@ export default ({ data = [], title }) => (
               <Image
                 mode="aspectFit"
                 className="home-pin__item-img"
-                src={item.imageSrc || item.imageUrl}
+                src={(item.imageSrc || item.imageUrl) + getWebpSuffix()}
               />
               <View className="home-pin__item-info">
                 <CPrice

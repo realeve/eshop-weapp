@@ -12,7 +12,7 @@ import DTitle from "./components/title";
 import DSpec from "./components/spec";
 import { getGoodsInfoBySpec } from "./components/spec/lib";
 
-import { ITypeImageItem } from "@/pages/detail/lib";
+import { ITypeImageItem } from "./lib";
 import * as R from "ramda";
 
 import DComment from "./components/comment";

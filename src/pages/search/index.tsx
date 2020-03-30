@@ -16,6 +16,8 @@ import Sort from "./sort";
 import classnames from "classname";
 import Search from "@/pages/index/components/search/";
 
+import { getWebp } from "@/services/common";
+
 import "./index.scss";
 
 let { windowHeight } = Taro.getSystemInfoSync();
@@ -134,7 +136,7 @@ const Index = ({ menuList }) => {
         price: item.webPrice0,
         commonId: item.commonId,
         title: item.goodsName,
-        img: item.goodsImageList[0].imageSrc,
+        img: getWebp(item.goodsImageList[0].imageSrc),
         store: item.storeName,
         sellerId: item.sellerId,
         storeId: item.storeId,
