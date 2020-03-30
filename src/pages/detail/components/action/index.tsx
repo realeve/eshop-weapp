@@ -10,7 +10,12 @@ import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
 
-import { IProductInfo, ISpecItem, buyGoods } from "@/pages/detail/lib";
+import {
+  IProductInfo,
+  ISpecItem,
+  IDetailState,
+  buyGoods
+} from "@/pages/detail/lib";
 import * as R from "ramda";
 
 import { AtBadge } from "taro-ui";
@@ -51,21 +56,29 @@ const DetailAction = ({
       return;
     }
 
-    let status = checkTime(data);
-    if (!status) {
-      return;
-    }
-    if (goodsnum > data.number) {
-      fail("数量超出了限制");
-      return;
-    }
+    // let status = checkTime(data);
+    // if (!status) {
+    //   return;
+    // }
+    // if (goodsnum > data.number) {
+    //   fail("数量超出了限制");
+    //   return;
+    // }
 
-    let cartItem = {
-      buyNum: goodsnum,
-      goodsId: data.goodsId || data.id
-    };
+    // let cartItem = {
+    //   buyNum: goodsnum,
+    //   goodsId: data.goodsId || data.id
+    // };
 
-    console.log(cartItem);
+    //   let cartItem:IDetailState = {
+    //     curGoodsId: data.goodsId || data.id,
+    //     stockNum: goodsnum,
+    // number: number;
+    // limitAmount: number;
+    // buyLocking: boolean;
+    // detailData: IProductInfo;
+    //   }
+    // console.log(cartItem);
     // success("待对接添加购物车逻辑");
     buyGoods();
 

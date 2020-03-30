@@ -4,7 +4,8 @@ import { LotteryStatus } from "@/pages/special/result/step";
 import * as cartDb from "@/utils/cartDb";
 import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { Dispatch } from "redux";
-import { Toast } from "@/components/Toast";
+import success from "@/components/Toast/success";
+import fail from "@/components/Toast/fail";
 import { checkSaleTimeToday } from "@/utils/lib";
 
 export interface IDetailState {
@@ -125,13 +126,15 @@ export const handleGoodsData = data => {
       lib.canSelloutNow(data.goodsDetail.goodsSaleTime as {}) &&
       res.number > 0;
   }
+  let imgs = handleImageList(data.goodsDetail.goodsImageList);
   console.log({
     storeData,
     goodsCount,
     canBuy,
     evaData,
     hotData,
-    storeService
+    storeService,
+    imgs
   });
 
   return {
@@ -140,7 +143,8 @@ export const handleGoodsData = data => {
     canBuy,
     evaData,
     hotData,
-    storeService
+    storeService,
+    imgs
   };
 };
 
@@ -422,7 +426,7 @@ export const buyGoods = (
 ) => {
   // setShowCart(true);
   if (data.number === 0) {
-    Toast.fail("当前商品无库存，您可以看看其它商品");
+    fail("当前商品无库存，您可以看看其它商品");
     return;
   }
   let curGoodsId = detail.curGoodsId;
@@ -431,7 +435,7 @@ export const buyGoods = (
       curGoodsId = data.goodsId || 0;
     }
     if (curGoodsId <= 0) {
-      Toast.fail("请先选择规格参数");
+      fail("请先选择规格参数");
       return;
     }
   }
@@ -442,13 +446,13 @@ export const buyGoods = (
 
     let check = checkSaleTimeToday(data.goodsSaleTime.week);
     if (!check) {
-      Toast.fail(check);
+      fail(check);
       return false;
     }
     return true;
   };
   if (!checkTime()) {
-    Toast.fail("此商品不在开放销售的时间窗口中");
+    fail("此商品不在开放销售的时间窗口中");
     return;
   }
 
@@ -456,7 +460,7 @@ export const buyGoods = (
   if (
     detail.stockNum > (data.limitAmount > 0 ? data.limitAmount : data.storage)
   ) {
-    Toast.fail("数量超出了限制");
+    fail("数量超出了限制");
     return;
   }
 
@@ -501,14 +505,14 @@ export const buyGoods = (
     .cartAdd(params)
     .then(() => {
       // router.push('/order/confirm');
-      Toast.success("添加购物车成功");
+      success("添加购物车成功");
       cartDb.setShoppingCart(
         getLocalStorageConfigByData(data, cartItem),
         dispatch
       );
     })
     .catch(err => {
-      Toast.fail(`出错啦：${err.message}！`);
+      fail(`出错啦：${err.message}！`);
     })
     .finally(() => {
       dispatch({
