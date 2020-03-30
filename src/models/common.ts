@@ -170,9 +170,8 @@ export const updateStore = namespace + "/setStore";
 
 const handleData = (data, webp) => {
   let res = R.clone(data);
-  let suffix = `?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250${
-    webp ? "/format,webp" : ""
-  }`;
+  let suffix = db.getWebpSuffix(webp);
+
   res.data = res.data.map(item => {
     if (!item.imageUrl.includes("://")) {
       item.imageUrl = OSS_URL + item.imageUrl + suffix;
@@ -257,6 +256,7 @@ export default {
       //   });
       // });
 
+      // 商品分类列表
       db.loadMenuList().then(menuList => {
         let menus = menuList.map(item => ({
           name: item.menuName,
@@ -267,7 +267,9 @@ export default {
             categoryList: menu.subitemData.map(sub => ({
               id: sub.data,
               name: sub.name,
-              url: sub.imageUrl.replace("statictest", "statictest") // 开发者模式
+              url:
+                sub.imageUrl.replace("statictest", "statictest") +
+                db.getWebpSuffix(webp) // 开发者模式
             }))
           }))
         }));

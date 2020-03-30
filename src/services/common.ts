@@ -5,6 +5,11 @@ import { API } from "@/utils/setting";
 export const getWebp = (url, webp) =>
   webp ? `${url}?x-oss-process=image/format,webp` : url;
 
+export const getWebpSuffix = webp =>
+  `?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250${
+    webp ? "/format,webp" : ""
+  }`;
+
 export const loadHome = () =>
   axios({
     method: "post",
