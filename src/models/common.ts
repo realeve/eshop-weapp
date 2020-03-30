@@ -12,10 +12,20 @@ import {
 } from "@/utils/cartDb";
 import { loadMember } from "@/pages/login/db";
 
-import { get as getGlobalData } from "@/utils/global_data";
+import {
+  get as getGlobalData,
+  set as setGlobalData
+} from "@/utils/global_data";
 
 import { OSS_URL } from "@/utils/setting";
 import * as R from "ramda";
+
+const supportWebp = () => {
+  const res = Taro.getSystemInfoSync();
+  let webp = res.system.includes("Android");
+  setGlobalData("webp", webp);
+  return webp;
+};
 
 export { Dispatch };
 export interface RouteData {
@@ -99,6 +109,7 @@ export interface IGlobalModel {
   confirmCart: IConfirmCart[]; // 立即购买商品确认
   normalList: db.ICarouselItem[]; //普品专题列表
   specialList: db.ICarouselItem[]; //三联播
+  webp: boolean;
 }
 
 const state = {
@@ -131,7 +142,8 @@ const state = {
   orderNum: {},
   normalList: [],
   specialList: [],
-  curCateId: 0
+  curCateId: 0,
+  webp: supportWebp()
 };
 
 // 载入登录信息
@@ -156,11 +168,16 @@ export const loadUserInfo = async (dispatch: Dispatch) => {
 const namespace = "common";
 export const updateStore = namespace + "/setStore";
 
-const handleData = data => {
+const handleData = (data, webp) => {
   let res = R.clone(data);
+  let suffix = `?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250${
+    webp ? "/format,webp" : ""
+  }`;
   res.data = res.data.map(item => {
     if (!item.imageUrl.includes("://")) {
-      item.imageUrl = OSS_URL + item.imageUrl;
+      item.imageUrl = OSS_URL + item.imageUrl + suffix;
+    } else {
+      item.imageUrl += suffix;
     }
     return item;
   });
@@ -173,6 +190,7 @@ export default {
   reducers: { setStore, setUserStore },
   subscriptions: {
     async setup({ dispatch }: { dispatch: Dispatch }) {
+      let webp = getGlobalData("webp");
       db.loadHome().then(res => {
         let {
           componentA: special, // 特品
@@ -185,7 +203,13 @@ export default {
         } = res;
         let payload = {};
         if (special) {
-          payload = { ...payload, special };
+          payload = {
+            ...payload,
+            special: {
+              ...special,
+              imageUrl: db.getWebp(special.imageUrl, webp)
+            }
+          };
         }
         if (componentB) {
           payload = { ...payload, cateList: componentB.data };
@@ -193,25 +217,25 @@ export default {
         if (componentC) {
           payload = {
             ...payload,
-            collectionList: handleData(componentC)
+            collectionList: handleData(componentC, webp)
           };
         }
         if (componentD) {
           payload = {
             ...payload,
-            newProduct: handleData(componentD)
+            newProduct: handleData(componentD, webp)
           };
         }
         if (componentF) {
           payload = {
             ...payload,
-            specialList: db.handleSpecialItem(componentF)
+            specialList: db.handleSpecialItem(componentF, webp)
           };
         }
         if (componentG) {
           payload = {
             ...payload,
-            normalList: db.handleSpecialItem(componentG)
+            normalList: db.handleSpecialItem(componentG, webp)
           };
         }
 

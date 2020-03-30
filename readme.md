@@ -109,3 +109,13 @@ Maximum call stack size exceeded
 ## TODO
 
 - [ ] 调整地址组件
+
+## webp
+
+### webp
+
+[https://static.ccgold.cn/image/e5/e3/e5e320f8577ce78a62f7d5ec9fc976a7.jpg?x-oss-process=image/format,webp](https://static.ccgold.cn/image/e5/e3/e5e320f8577ce78a62f7d5ec9fc976a7.jpg?x-oss-process=image/format,webp)
+
+### resize
+
+[https://statictest.ccgold.cn/image/e9/68/e968e2a1ade28122b175aa77e9a5ddfa.jpg?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250/format,webp](https://statictest.ccgold.cn/image/e9/68/e968e2a1ade28122b175aa77e9a5ddfa.jpg?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250/format,webp)
