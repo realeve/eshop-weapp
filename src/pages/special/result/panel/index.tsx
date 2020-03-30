@@ -72,7 +72,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <CButton
                 theme="gardient"
                 size="small"
-                style="width:100px;"
+                style={{ width: "100px", marginTop: "10px" }}
                 onClick={() => {
                   console.log("checkOrder");
                 }}

@@ -24,7 +24,7 @@ export const API: {
     method: "post",
     url: "/specialtyProduct/getOrdersInfo"
   },
-  MY_SUBSCRIBE: { url: "/specialtyProduct/selectPersonalSubscribe" },
+  MY_SUBSCRIBE: "/specialtyProduct/selectPersonalSubscribe",
   UPDATE_SPECIAL_ADDRESS: {
     method: "post",
     url: "/specialtyProduct/updateAddress"

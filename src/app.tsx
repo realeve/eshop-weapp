@@ -49,6 +49,8 @@ class App extends Component {
 
       "pages/user/comment/index", // 我的评价
 
+      "pages/user/lottery/index", // 我的预约
+
       "pages/find/index", // 发现
       "pages/login/index", // 登录
       "pages/special/index", // 特品
