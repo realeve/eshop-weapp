@@ -18,22 +18,22 @@ import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { I${titleCase(dirName)}Model } from "./model";
 import { Dispatch } from "redux";
-import "./index.less";
+import "./index.scss";
  
 interface IProps extends I${titleCase(dirName)}Model {
   dispatch: Dispatch;
   [key: string]: any;
 }
-const ${titleCase(dirName)} = ({ dispatch, ...props }: IProps) => {
+const ${titleCase(dirName)} = ({ dispatch, stateName }: IProps) => {
   useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
+    console.log("这里对数据的引用", stateName);
     dispatch({
       type: "${dirName}/setStore",
       payload: {
         stateName: "变更数据"
       }
     });
-  }, [props.stateName]);
+  }, [stateName]);
 
   return (
     <View className="${dirName}-page">
@@ -46,17 +46,18 @@ ${titleCase(dirName)}.config = {
   navigationBarTitleText: "这是页面标题信息"
 };
 
-export default connect(({${dirName}}) => ({
-  ...${dirName},
-}))(${titleCase(dirName)} as any);
+export default connect(({${dirName}}) => ${dirName})(${titleCase(
+  dirName
+)} as any);
 `;
 
-// less文件模版
-const lessTep = `@import "../../styles/index.less";
+// scss 文件模板
+const scssTep = `@import "@/styles/theme.scss";
 
 .${dirName}-page {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  background: $bg;
 }  
 `;
 
@@ -111,7 +112,7 @@ fs.mkdirSync(`./src/pages/${dirName}`); // mkdir $1
 process.chdir(`./src/pages/${dirName}`); // cd $1
 
 fs.writeFileSync("index.tsx", indexTep);
-fs.writeFileSync("index.less", lessTep);
+fs.writeFileSync("index.scss", scssTep);
 fs.writeFileSync("model.ts", modelTep);
 fs.writeFileSync("service.ts", serviceTep);
 

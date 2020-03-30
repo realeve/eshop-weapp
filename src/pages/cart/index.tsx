@@ -3,34 +3,27 @@ import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
 import { Dispatch } from "redux";
-import "./index.less";
+import "./index.scss";
+import { CEmpty } from "@/components";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
   [key: string]: any;
 }
-const Cart = ({ dispatch, ...props }: IProps) => {
-  useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
-    dispatch({
-      type: "cart/setStore",
-      payload: {
-        stateName: "变更数据"
-      }
-    });
-  }, [props.stateName]);
-
+const Cart = (props: IProps) => {
   return (
     <View className="cart-page">
-      <Text>cart</Text>
+      <CEmpty type="cart" />
     </View>
   );
 };
 
 Cart.config = {
-  navigationBarTitleText: "这是页面标题信息"
+  navigationBarTitleText: "购物车"
 };
 
-export default connect(({ cart }) => ({
+export default Cart;
+
+connect(({ cart }) => ({
   ...cart
 }))(Cart as any);

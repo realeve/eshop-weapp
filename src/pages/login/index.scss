@@ -1,0 +1,28 @@
+@import "@/styles/theme.scss";
+
+.login-page {
+  height: 100%;
+  padding: 0 80px;
+  .logo {
+    @extend .hcenter;
+    margin: 80px auto;
+    .img {
+      height: unset;
+      width: 200px;
+    }
+  }
+  .at-tabs {
+    height: unset;
+    .at-modal{
+      position: absolute;
+    }
+  }
+  .action {
+    margin: 56px auto 40px auto;
+  }
+  .register {
+    color: $mainTitle;
+    font-size: $fontSizeNormal;
+    text-align: center;
+  }
+}

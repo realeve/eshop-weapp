@@ -1,0 +1,33 @@
+@import "@/styles/theme.scss";
+
+.special__action {
+  height: 100px;
+  background: $white;
+  box-shadow: 0px 3px 7px 1px rgba(0, 0, 0, 0.2);
+  @extend .alignRow;
+  justify-content: space-between;
+  align-items: center;
+  font-size: $font-size-sm;
+  padding-right: 10px;
+  .readme {
+    color: $yellow;
+  }
+  .buy {
+    @extend .alignRow;
+    align-items: center;
+    .text {
+      font-size: $font-size-sm;
+      margin-right: 10px;
+      .price {
+        @extend .alignRow;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+    // .btn {
+    //   width: 240px;
+    //   height: 72px;
+    //   font-size: $font-size-sm;
+    // }
+  }
+}

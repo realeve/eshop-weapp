@@ -1,0 +1,19 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+// 规格选择
+.at-float-layout .layout-body {
+  padding: 0;
+}
+
+.CModal {
+  padding: 32px;
+  position: relative;
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 50px;
+    color: $subTitle;
+  }
+}

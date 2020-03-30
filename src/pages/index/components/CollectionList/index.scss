@@ -1,0 +1,30 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/loading.scss";
+
+.collectionList {
+  margin-top: $componentSpan;
+  background-color: $white;
+  padding-bottom: 56px;
+  .grid {
+    @extend .alignColumn;
+    .row {
+      display: flex;
+      .item {
+        flex: 1;
+      }
+      .taro-img {
+        width: unset;
+        height: unset;
+      }
+    }
+  }
+  .footer {
+    font-size: $heading-4-size;
+    .summary {
+      padding: 32px 0;
+    }
+    @extend .alignColumn;
+    align-items: center;
+  }
+}

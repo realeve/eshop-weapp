@@ -1,0 +1,48 @@
+@import "@/styles/theme.scss";
+@import "@/components/modal.scss";
+
+.taro-tabbar {
+  &__tabbar {
+    box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 25px;
+    .weui-tabbar__item {
+      &:nth-child(3) {
+        img {
+          border-radius: 50% 50% 0 0;
+          background: #fff;
+          /* prettier-ignore */
+          border-top: 1PX solid rgba(0, 0, 0, 0.1);
+          transform: scale(2);
+          margin-top: -25px;
+        }
+      }
+    }
+  }
+  &__panel {
+    overflow-x: hidden;
+  }
+}
+
+@font-face {
+  font-family: "priceFont";
+  src: url("./components/CPrice/price.ttf");
+}
+
+.at-checkbox {
+  &__title {
+    font-size: $font-size-sm !important;
+  }
+  &:before,
+  &:after {
+    border: none !important;
+  }
+}
+
+.at-countdown__time-box {
+  transform: scaleX(1.5);
+}
+
+.item-extra__icon-arrow {
+  font-size: 36rpx !important;
+  color: #888 !important;
+}

@@ -1,0 +1,15 @@
+@import "@/styles/theme.scss";
+
+.detail_page {
+  &_title {
+    font-size: $font-size-lg;
+    color: $mainTitle;
+    margin: 10px 0;
+  }
+  &_detail {
+    color: $subTitle;
+    font-size: $fontSizeSmall;
+    @extend .alignRow;
+    justify-content: space-between;
+  }
+}

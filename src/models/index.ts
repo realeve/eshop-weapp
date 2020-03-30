@@ -1,3 +1,3 @@
 import common from "./common";
-import cate from "../pages/cate/model";
-export default [common, cate];
+import special from "@/pages/special/model";
+export default [common, special];

@@ -1,0 +1,26 @@
+@import "@/styles/theme.scss";
+.page-empty {
+  @extend .center;
+  @extend .alignColumn;
+  width: 100%;
+  .imgWrapper {
+    @extend .hcenter;
+    margin-top: 100px;
+    width: 100%;
+    .img {
+      width: 60%;
+    }
+  }
+  .title {
+    font-size: $heading-4-size;
+    color: $subTitle;
+    margin: 40px 0 10px 0;
+    text-align: center;
+  }
+  .sub_title {
+    font-size: $heading-4-size;
+    color: $subTitle;
+    margin: 5px 0 10px 0;
+    text-align: center;
+  }
+}

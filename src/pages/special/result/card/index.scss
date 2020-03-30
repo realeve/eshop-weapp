@@ -1,0 +1,56 @@
+@import "@/styles/theme.scss";
+
+.SpecialCard {
+  /* prettier-ignore */
+  padding: 30px 48PX;
+  background-color: $white;
+  overflow: hidden;
+  .head {
+    @extend .alignRow;
+    justify-content: center;
+    align-items: flex-end;
+    .title {
+      font: {
+        weight: bold;
+        size: $fontSizeBase;
+      }
+      color: $mainTitle;
+      padding-bottom: 30px;
+    }
+    .extra {
+      color: $subTitle;
+      font-size: $fontSizeNormal;
+    }
+    padding-bottom: 5px;
+
+    /* prettier-ignore */
+    border-bottom: 1PX dashed $borderColorGrey;
+  }
+  .content {
+    padding: 50px 0 30px 0;
+    font-size: $fontSizeNormal;
+    position: relative;
+    &::before,
+    &::after {
+      content: "";
+      border-radius: 50%;
+      /* prettier-ignore */
+      width: 20PX;
+      /* prettier-ignore */
+      height: 20PX;
+      background: $bg;
+      position: absolute;
+      /* prettier-ignore */
+      left: -58PX;
+      top: 0;
+    }
+    &::after {
+      left: unset;
+      /* prettier-ignore */
+      right:-58PX;
+    }
+  }
+
+  /* prettier-ignore */
+  // box-shadow: 2PX 2PX 8PX 1PX rgba(0,0,0,0.2)
+}

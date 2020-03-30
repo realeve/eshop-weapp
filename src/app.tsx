@@ -1,10 +1,13 @@
-import "@tarojs/async-await";
 import Taro, { Component, Config } from "@tarojs/taro";
 import Index from "./pages/index";
 import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
-import "./app.less";
+import "./app.scss";
+import "./styles/custom-theme.scss";
+
+// 用import的方式会报错
+// import { tabConfig } from "./utils/lib";
 
 const dvaApp = dva.createApp({
   initialState: {},
@@ -28,11 +31,33 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      "pages/index/index",
-      "pages/cate/index",
-      "pages/cart/index",
-      "pages/user/index",
-      "pages/find/index"
+      "pages/index/index", // 首页
+      "pages/cart/index", // 购物车
+      "pages/index/suggest/index", // 精彩推荐
+      "pages/index/special_detail/index", // 专题详情
+      "pages/cate/index", // 分类
+      "pages/search/index", // 搜索
+      "pages/order/confirm/index", // 立即购买
+      "pages/user/index", // 个人中心
+      "pages/user/order/index", // 我的订单
+
+      "pages/help/index", // 帮助中心
+      "pages/help/view", // 查看
+
+      "pages/user/address/index", //我的地址
+      "pages/user/address/new", //新增地址
+
+      "pages/user/comment/index", // 我的评价
+
+      "pages/user/lottery/index", // 我的预约
+
+      "pages/find/index", // 发现
+      "pages/login/index", // 登录
+      "pages/special/index", // 特品
+      "pages/special/detail/index", // 特品详情
+      "pages/special/result/index", // 特品结果
+      "pages/special/rule/index", // 特品规则
+      "pages/detail/index"
     ],
     window: {
       backgroundTextStyle: "light",
@@ -40,7 +65,6 @@ class App extends Component {
       navigationBarTitleText: "WeChat",
       navigationBarTextStyle: "black"
     },
-
     tabBar: {
       list: [
         {
@@ -57,9 +81,9 @@ class App extends Component {
         },
         {
           pagePath: "pages/find/index",
-          text: "",
+          text: "发现",
           iconPath: "./images/tab/logo.png",
-          selectedIconPath: "./images/tab/logo-active.png"
+          selectedIconPath: "./images/tab/logo.png"
         },
         {
           pagePath: "pages/cart/index",
@@ -75,8 +99,10 @@ class App extends Component {
         }
       ],
       color: "#333",
-      selectedColor: "#333",
+      custom: false,
+      selectedColor: "#b98a4e",
       backgroundColor: "#fff",
+      // backgroundColor: "#f8f9fb",
       borderStyle: "white"
     }
   };

@@ -1,0 +1,23 @@
+@import "@/styles/theme.scss";
+.detail_page_shop {
+  color: $mainTitle;
+  &_title {
+    font-size: $fontSizeBase;
+    @extend .alignRow;
+    // justify-content: space-between;
+    align-items: center;
+    &_img {
+      width: unset;
+      height: 70px;
+    }
+  }
+  &_detail {
+    @extend .alignRow;
+    font-size: $heading-5-size;
+    justify-content: space-between;
+    &_score {
+      margin-left: 5px;
+      color: $yellow;
+    }
+  }
+}

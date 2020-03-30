@@ -1,0 +1,46 @@
+@import "@/styles/theme.scss";
+
+.suggest-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $bg;
+  .grid {
+    @extend .alignColumn;
+    .row {
+      display: flex;
+      margin-bottom: $componentSpan;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .item {
+        // flex: 1;
+        background-color: $white;
+
+        &:first-child {
+          margin-right: $componentSpan;
+        }
+
+        .detail {
+          font-size: $heading-4-size;
+          .title {
+            text-align: center;
+            padding: 0;
+            @include text-ellipsis;
+            width: 49vw;
+          }
+          .subTitle {
+            padding: 0 16px 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+          }
+        }
+      }
+      .img {
+        width: 49vw;
+        height: 51vw;
+      }
+    }
+  }
+}

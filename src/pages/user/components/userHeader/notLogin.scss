@@ -1,0 +1,21 @@
+@import "@/styles/theme.scss";
+.not_login {
+  @extend .alignRow;
+  .avatar_img {
+    width: 120px;
+    margin-right: 20px;
+  }
+  .detail {
+    color: $white;
+    @extend .alignColumn;
+    @extend .hcenter;
+    &_user_name {
+      @extend .alignRow;
+      @extend .vcenter;
+      font-size: $heading-3-size;
+    }
+    &_welcome {
+      font-size: $heading-5-size;
+    }
+  }
+}

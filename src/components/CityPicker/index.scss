@@ -1,0 +1,35 @@
+@import "@/styles/theme.scss";
+
+.city_picker {
+  padding: 24rpx 32rpx;
+  color: #2c2e36;
+  background-color: #fff;
+  margin-bottom: 1px;
+  position: relative;
+  font-size: $fontSizeBase;
+  &:after {
+    content: "";
+    position: absolute;
+    transform-origin: center;
+    box-sizing: border-box;
+    pointer-events: none;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    border: 0 solid #d6e4ef;
+    transform: scale(0.5);
+    border-bottom-width: 1px;
+  }
+  .wrap {
+    display: flex;
+    // justify-content: space-between;
+    .title {
+      width: 172px;
+      margin-right: 16px;
+      line-height: 1.5;
+      vertical-align: middle;
+      text-align: left;
+    }
+  }
+}

@@ -5,6 +5,34 @@ import { getType, axios } from "./axios";
 
 import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
+import Taro from "@tarojs/taro";
+export { getType, axios } from "./axios";
+
+export const tabConfig: {
+  pagePath: string;
+  text: string;
+}[] = [
+  {
+    pagePath: "/pages/index/index",
+    text: "首页"
+  },
+  {
+    pagePath: "/pages/cate/index",
+    text: "分类"
+  },
+  {
+    pagePath: "/pages/find/index",
+    text: "发现"
+  },
+  {
+    pagePath: "/pages/cart/index",
+    text: "购物车"
+  },
+  {
+    pagePath: "/pages/user/index",
+    text: "我的"
+  }
+];
 
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
@@ -149,14 +177,18 @@ export const setUserStore = (state: any, store: Store) => {
   }
 
   if (payload && payload.isLogin && payload.user) {
-    let localStore = window.localStorage.getItem(LocalStorageKeys.user);
-    if (localStore) {
-      let store = { ...JSON.parse(localStore), ...payload.user };
+    let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
+    let store = { ...JSON.parse(localStore), ...payload.user };
+    // 存储手机号
+    Taro.setStorage({
+      key: LocalStorageKeys.phone,
+      data: store.phone
+    });
 
-      // 存储手机号
-      window.localStorage.setItem(LocalStorageKeys.phone, store.phone);
-      window.localStorage.setItem(LocalStorageKeys.user, JSON.stringify(store));
-    }
+    Taro.setStorage({
+      key: LocalStorageKeys.user,
+      data: JSON.stringify(store)
+    });
   }
   return setStore(state, store);
 };
@@ -219,12 +251,14 @@ export const getSaleTimeRange: (param: { range: string }) => string = ({
     )
     .join(" , ");
 
-export const checkSaleTimeToday: (week: number) => boolean = week => {
+export const checkSaleTimeToday: (
+  week: number
+) => boolean | Promise<string> = week => {
   if (week > 127 || week < 0) {
-    throw "销售周期设置错误";
+    return Promise.reject("销售周期设置错误");
   }
   // 此处待调试
-  let today = moment().day(0);
+  let today = Number(moment().day(0));
   return (
     week
       .toString(2)
@@ -270,7 +304,77 @@ export const canSelloutNow: (param?: {
 
 // 判断是否登录，用于购物车条件请求
 export const isLogin: () => boolean = () =>
-  window.localStorage.getItem(LocalStorageKeys.user) !== null;
+  typeof Taro.getStorageSync(LocalStorageKeys.user) !== "string";
 
 export const hidePhone = (phone: string) =>
   phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
+
+// 记录验证码发送状态
+export const setSNSendStatus = (status: boolean | string) => {
+  if (status) {
+    Taro.setStorage({ key: LocalStorageKeys.SNS, data: status });
+    return;
+  }
+  Taro.removeStorage({ key: LocalStorageKeys.SNS });
+};
+
+export const loadSNSendStatus: () => null | string = () =>
+  Taro.getStorageSync(LocalStorageKeys.SNS);
+
+export const setPhone = (data: string) => {
+  Taro.setStorage({
+    key: LocalStorageKeys.phone,
+    data
+  });
+};
+
+export const loadPhone: () => string = () =>
+  Taro.getStorageSync(LocalStorageKeys.phone) || "";
+
+const PAGE_WEBVIEW = "/pages/webview/webview";
+function urlStringify(url, payload, encode = true) {
+  const arr = Object.keys(payload).map(
+    key => `${key}=${encode ? encodeURIComponent(payload[key]) : payload[key]}`
+  );
+
+  // NOTE 注意支付宝小程序跳转链接如果没有参数，就不要带上 ?，否则可能无法跳转
+  return arr.length ? `${url}?${arr.join("&")}` : url;
+}
+
+/**
+ * // NOTE 后端返回的 url 可能是网页链接，需要在 webview 中打开
+ * 也可能是小程序自身的链接，只能用 navigate/redirect 之类的打开
+ * 就需要有个地方统一判断处理
+ */
+export function jump(options) {
+  let { url, title = "", payload = {}, method = "navigateTo" } = options;
+  url = url || options;
+
+  // tab 页面路由
+  const isTabPage = tabConfig.find(item => url.includes(item.pagePath));
+  if (isTabPage) {
+    Taro.switchTab({ url });
+    return;
+  }
+
+  if (/^https?:\/\//.test(url)) {
+    Taro[method]({
+      url: urlStringify(PAGE_WEBVIEW, { url, title })
+    });
+    return;
+  }
+  if (/^(|\/)pages\//.test(url)) {
+    // TODO H5 不支持 switchTab，暂时 hack 下
+    if (process.env.TARO_ENV === "h5" && method === "switchTab") {
+      Taro.navigateBack({ delta: Taro.getCurrentPages().length - 1 });
+      setTimeout(() => {
+        Taro.redirectTo({ url });
+      }, 100);
+      return;
+    }
+
+    Taro[method]({
+      url: urlStringify(url, payload)
+    });
+  }
+}

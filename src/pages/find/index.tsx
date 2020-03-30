@@ -1,36 +1,25 @@
-import Taro, { useEffect } from "@tarojs/taro";
-import { View, Text } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
-import { IFindModel } from "./model";
-import { Dispatch } from "redux";
-import "./index.less";
+import Taro from "@tarojs/taro";
+import { View, Image } from "@tarojs/components";
+import "./index.scss";
 
-interface IProps extends IFindModel {
-  dispatch: Dispatch;
-  [key: string]: any;
-}
-const Find = ({ dispatch, ...props }: IProps) => {
-  useEffect(() => {
-    console.log("这里对数据的引用", props.stateName);
-    dispatch({
-      type: "find/setStore",
-      payload: {
-        stateName: "变更数据"
-      }
-    });
-  }, [props.stateName]);
+// mode?: 'scaleToFill' | 'aspectFit' | 'aspectFill' | 'widthFix' | 'top' |
+// 'bottom' | 'center' | 'left' | 'right' | 'top left' | 'top right' |
+// 'bottom left' | 'bottom right',
 
+const Find = () => {
   return (
     <View className="find-page">
-      <Text>find</Text>
+      <Image
+        src="https://www.cbpc.ltd/ccgold/static/find.jpg"
+        mode="widthFix"
+        className="img"
+      />
     </View>
   );
 };
 
 Find.config = {
-  navigationBarTitleText: "这是页面标题信息"
+  navigationBarTitleText: "发现"
 };
 
-export default connect(({ find }) => ({
-  ...find
-}))(Find as any);
+export default Find;

@@ -1,0 +1,31 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+.address_list {
+  background: $bg;
+  height: 100vh;
+  @extend .alignColumn;
+  &_wrap {
+    flex: 1;
+    .at-list__item {
+      .header {
+        @extend .bold;
+        align-items: center;
+        display: flex;
+      }
+      .gardient {
+        color: $white;
+        background: $yellowGardiant;
+        padding: 5px 10px;
+        font-size: $fontSizeSmall;
+        font-weight: 200;
+      }
+      .content {
+        color: $subTitle;
+      }
+    }
+  }
+  &_action {
+    margin: 24px;
+    width: calc(100% - 48px);
+  }
+}

@@ -1,0 +1,36 @@
+@import "@/styles/theme.scss";
+
+.detail_content {
+  color: $mainTitle;
+}
+
+.goods_detail {
+  &_container {
+    padding: 34px 0;
+    @extend .alignColumn;
+    width: 100%;
+    height: auto;
+    .img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  &_service {
+    padding: 34px 0;
+    width: 100%;
+    height: auto;
+    .title,
+    .bold {
+      font-weight: bold;
+      font-size: $heading-4-size;
+    }
+    .title {
+      margin-top: 20px;
+    }
+    .content {
+      margin: 10px 0;
+      font-size: $heading-4-size;
+      display: inline-block;
+    }
+  }
+}

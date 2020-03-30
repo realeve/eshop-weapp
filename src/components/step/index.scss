@@ -1,0 +1,58 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/steps.scss";
+.cStep {
+  .at-steps {
+    &__right-line {
+      width: 100%;
+      left: 50%;
+      // z-index: -2;
+      background-color: $subTitle;
+    }
+    &__left-line {
+      background-color: $subTitle;
+    }
+
+    /* prettier-ignore */
+    &__item--inactive,
+    &__item--active {
+      .at-steps__circular {
+        width: 16PX;
+        height: 16PX;
+        border: 2PX solid $subTitle;
+        z-index: 1;
+        @extend .center;
+        .border {
+          width: 12PX;
+          height: 12PX;
+          border: 2PX solid $white;
+          background: $subTitle;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    &__item--active {
+      .at-steps {
+        &__circular {
+          background-color: $yellow;
+          /* prettier-ignore */
+          border: 2PX solid $yellow;
+          .border {
+            background: $yellow;
+          }
+        }
+        &__right-line,
+        &__left-line {
+          background-color: $yellow;
+        }
+      }
+      .grey__line {
+        background-color: $subTitle;
+      }
+    }
+
+    &__title {
+      font-size: $fontSizeSmall;
+    }
+  }
+}

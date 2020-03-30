@@ -1,35 +1,64 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.less'
+import Taro, { useState } from "@tarojs/taro"; //  usePageScroll,
+import { View, ScrollView } from "@tarojs/components";
+import { connect } from "@tarojs/redux";
+import { IGlobalModel } from "@/models/common";
+import {
+  Search,
+  BannerImg,
+  CateList,
+  CollectionList,
+  NewProduct,
+  Carousel
+} from "./components/";
+import { getWindowHeight } from "@/utils/style";
 
-export default class Index extends Component {
+import "./index.scss";
 
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
-  config: Config = {
-    navigationBarTitleText: '首页'
-  }
+const handlePos = (res: Taro.PageScrollObject) =>
+  Math.min(Math.ceil(res.scrollTop / 50), 10);
+// export interface IProps extends IGlobalModel {
+//   [key: string]: any;
+// }
+const Index = ({
+  special,
+  // cateList,
+  menuList,
+  collectionList,
+  newProduct,
+  specialList,
+  normalList,
+  dispatch
+}: IGlobalModel) => {
+  let [pos, setPos] = useState(0);
 
-  componentWillMount () { }
+  const onScroll = event => {
+    setPos(handlePos(event.detail));
+  };
 
-  componentDidMount () { }
+  return (
+    <View className="index-page">
+      <Search pos={pos} />
+      <ScrollView
+        scrollY
+        style={{ height: getWindowHeight() }}
+        onScroll={onScroll}
+      >
+        <BannerImg special={special} />
+        <CateList data={menuList} dispatch={dispatch} />
+        <Carousel data={normalList} ratio="1.05" />
+        <CollectionList data={collectionList} />
+        <Carousel data={specialList} />
+        <NewProduct data={newProduct} />
+      </ScrollView>
+    </View>
+  );
+};
 
-  componentWillUnmount () { }
+Index.config = {
+  navigationBarTitleText: "首页"
+  // backgroundColor: "#f8f9fb"
+};
 
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='index'>
-        <Text>Hello world!</Text>
-      </View>
-    )
-  }
-}
+export default connect(({ common }: { common: IGlobalModel }) => common)(
+  Index as any
+);

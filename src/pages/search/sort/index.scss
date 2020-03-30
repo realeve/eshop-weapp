@@ -1,0 +1,36 @@
+@import "@/styles/theme.scss";
+.search_sort {
+  @extend .alignRow;
+  justify-content: space-between;
+  color: $text-color;
+  width: 100%;
+  line-height: 60px;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  font-size: $heading-4-size;
+  background: $white;
+  padding: 0 20px;
+  z-index: 2;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+  &Small {
+    top: 0;
+  }
+  .item {
+    flex: 1;
+    &Active {
+      color: $yellow;
+    }
+    .img {
+      width: 24px;
+      height: 24px;
+      margin-left: 5px;
+      transform: rotate(0deg);
+      transition: transform 0.3s linear;
+    }
+    .asc {
+      transform: rotate(180deg);
+    }
+  }
+}

@@ -1,8 +1,13 @@
-import http, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { axios as http, AxiosRequestConfig, AxiosResponse } from "taro-axios";
 import qs from "qs";
 import { host } from "./setting";
 import * as R from "ramda";
 import { LocalStorageKeys } from "@/utils/setting";
+import Taro from "@tarojs/taro";
+import {
+  set as setGlobalData,
+  get as getGlobalData
+} from "@/utils/global_data";
 
 export interface GlobalAxios {
   host: string;
@@ -87,28 +92,18 @@ export const getType: (data: any) => VariableType = data =>
 export const loadUserInfo = (user: null | string) => {
   if (user == null) {
     return {};
-    // window.g_axios.token = refreshNoncer;
-    // saveToken();
-    // return {
-    //   token: refreshNoncer,
-    // };
   }
 
   let setting: {
     token: string;
     [key: string]: any;
   } = JSON.parse(user);
-  window.g_axios.token = setting.token;
+  setGlobalData("token", setting.token);
   return { token: setting.token };
 };
 
 const saveToken = (token: string) => {
-  window.sessionStorage.setItem(
-    LocalStorageKeys.user,
-    JSON.stringify({
-      token: token
-    })
-  );
+  Taro.setStorage({ key: LocalStorageKeys.token, data: token });
 };
 
 export interface AxiosError {
@@ -125,6 +120,7 @@ export const handleError = (error: {
   request?: any;
   message?: any;
 }) => {
+  // console.log(error);
   let config = error.config || {};
   let str = config.params || config.data || {};
   let { id, nonce, ...params } = typeof str === "string" ? qs.parse(str) : str;
@@ -187,6 +183,10 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     datas: T;
   }>
 ) => Promise<T> = async ({ config, request, data, headers }) => {
+  if (config.url.includes(".json")) {
+    return data;
+  }
+
   let { code, msg, datas } = data;
 
   if (datas.error) {
@@ -228,12 +228,15 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     };
   }
   if (headers.Authorization) {
-    window.g_axios.token = headers.Authorization;
+    // window.g_axios.token = headers.Authorization;
+    setGlobalData("token", headers.Authorization);
     saveToken(headers.Authorization);
   }
   // 刷新token
   if (typeof datas.token !== "undefined") {
-    window.g_axios.token = datas.token;
+    // window.g_axios.token = datas.token;
+    setGlobalData("token", datas.token);
+
     saveToken(datas.token);
     // 移除token
     Reflect.deleteProperty(datas, "token");
@@ -243,13 +246,14 @@ export const handleData: <T extends { token?: string; error?: {} }>(
 
 export const handleUrl = (option: AxiosRequestConfig) => {
   if (option.url && option.url[0] === ".") {
-    option.url = window.location.origin + option.url.slice(1);
+    option.url = host + "/" + option.url.slice(1);
   }
   return option;
 };
 
-const getFp = (): string =>
-  window.localStorage.getItem(LocalStorageKeys.FingerPrint) || "";
+// const getFp = (): string =>
+//   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
+const getFp = (): string => "weapp";
 
 // 自动处理token更新，data 序列化等
 export let axios: <T extends {}>(
@@ -257,23 +261,30 @@ export let axios: <T extends {}>(
 ) => Promise<
   T | { token?: string | undefined; error?: {} | undefined }
 > = _option => {
-  let fp = (window.g_axios && window.g_axios.fp) || "";
-  if (fp.length === 0) {
-    fp = getFp();
+  let g_axios = getGlobalData("g_axios");
+
+  if (!g_axios) {
+    let g_fp = getGlobalData("fp");
+    let fp = g_fp || "";
+    if (fp.length === 0) {
+      fp = getFp();
+    }
+    let token = getGlobalData("token");
+
+    if (!token) {
+      token = Taro.getStorageSync(LocalStorageKeys.token);
+      setGlobalData("token", token);
+    }
+
+    g_axios = {
+      host,
+      token,
+      fp
+    };
+    setGlobalData("g_axios", g_axios);
   }
-  window.g_axios = window.g_axios || {
-    host,
-    token: "",
-    fp
-  };
 
   // token为空时自动获取
-  if (window.g_axios.token === "") {
-    let user: null | string = window.sessionStorage.getItem(
-      LocalStorageKeys.user
-    );
-    loadUserInfo(user);
-  }
 
   let option = R.clone(_option);
 
@@ -281,8 +292,8 @@ export let axios: <T extends {}>(
 
   option = Object.assign(option, {
     headers: {
-      Authorization: window.g_axios.token,
-      fp: window.g_axios.fp,
+      Authorization: g_axios.token,
+      fp: g_axios.fp,
       ...option.headers
     },
     method: option.method || "get"

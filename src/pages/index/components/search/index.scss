@@ -1,0 +1,78 @@
+// @import "~taro-ui/dist/style/components/search-bar.scss";
+// @import "~taro-ui/dist/style/components/button.scss";
+// @import "~taro-ui/dist/style/components/icon.scss";
+
+.searchWrap {
+  .at-search-bar {
+    width: 100%;
+    position: fixed;
+    height: 80px;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(185, 138, 78, 0);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  &0 {
+    .at-search-bar {
+      background-color: #fff;
+    }
+  }
+  &1 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.1);
+    }
+  }
+  &2 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.2);
+    }
+  }
+  &3 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.3);
+    }
+  }
+  &4 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.4);
+    }
+  }
+  &5 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.45);
+    }
+  }
+  &6 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.5);
+    }
+  }
+  &7 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.55);
+    }
+  }
+  &8 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.6);
+    }
+  }
+  &9 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.65);
+    }
+  }
+  &10 {
+    .at-search-bar {
+      background-color: rgba(185, 138, 78, 0.7);
+    }
+  }
+}
+
+.search_header {
+  width: 100%;
+  z-index: 2;
+  background: #fff;
+  position: fixed;
+}

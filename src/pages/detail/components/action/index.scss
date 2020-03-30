@@ -1,0 +1,45 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+.detail-action {
+  background: $white;
+  z-index: 100;
+  height: 100px;
+  width: 100%;
+  border-top: 1px solid $borderColorGrey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  @extend .alignRow;
+  justify-content: space-between;
+  align-items: center;
+  .icons {
+    @extend .alignRow;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 34px;
+    .icon {
+      width: 44px;
+      height: 44px;
+      margin-right: 30px;
+      color: $mainTitle;
+      &:last-child {
+        margin-right: 40px;
+      }
+    }
+  }
+
+  .action {
+    @extend .alignRow;
+    flex: 1;
+    margin-right: 34px;
+    // padding: 0 10px;
+    .btn {
+      // height: 72px;
+      margin: unset;
+      flex: 1;
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}

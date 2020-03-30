@@ -1,0 +1,14 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+@import "@/components/CCard/index.scss";
+
+.usercenterOrderLinkList {
+  width: 100%;
+  @extend .alignRow;
+  justify-content: space-between;
+  .at-badge__num {
+    /* prettier-ignore */
+    top: -10PX;
+    right: 0px;
+  }
+}

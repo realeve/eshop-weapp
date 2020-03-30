@@ -1,0 +1,22 @@
+/* Custom Theme */
+$color-brand: #b98a4e;
+$color-brand-light: #cba77a;
+$color-brand-dark: #946e3e;
+
+/* Text Color */
+$color-text-base: #2c2e36 !default; // 文字的基本色
+$color-text-base-inverse: #fff !default; // 反色
+$color-text-secondary: #36d57d !default; // 辅助色
+$color-text-placeholder: #c9c9c9 !default;
+$color-text-disabled: #ccc !default;
+$color-text-title: #686b77 !default; // 文章标题
+$color-text-paragraph: #a7a8ad !default; // 文章段落
+
+$color-black-1: #2c2e36 !default;
+$color-black-2: #686b77 !default;
+$color-black-3: #a7a8ad !default;
+
+// $color-bg: #f8f8f8 !default;
+
+/* 引入 Taro UI 默认样式 */
+@import "~taro-ui/dist/style/index.scss";

@@ -1,0 +1,36 @@
+@import "@/styles/theme.scss";
+.detail_page_comment {
+  color: $mainTitle;
+  &_title {
+    font-size: $fontSizeBase;
+    @extend .alignRow;
+    justify-content: space-between;
+  }
+  &_item {
+    padding: 24px;
+    margin-top: 24px;
+    /* prettier-ignore */
+    border: 1PX solid $splitLine;
+    border-radius: $border-radius;
+    @extend .alignRow;
+  }
+  &_avatar {
+    margin-right: 10px;
+  }
+  &_detail {
+    flex: 1;
+    &_username {
+      font-size: $fontSizeNormal;
+      color: $mainTitle;
+      @extend .alignRow;
+      justify-content: space-between;
+      &_time {
+        color: $subTitle;
+      }
+    }
+    &_content {
+      font-size: $fontSizeNormal;
+      color: $subTitle;
+    }
+  }
+}

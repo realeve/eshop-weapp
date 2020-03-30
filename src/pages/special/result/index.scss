@@ -1,0 +1,29 @@
+@import "@/styles/theme.scss";
+
+.special-page__result {
+  background: $bg;
+  min-height: 100%;
+
+  padding-bottom: 25px;
+
+  .result {
+    &_container {
+      margin: 0 40px 20px 40px;
+    }
+    &__content {
+      padding-bottom: 30px;
+      /* prettier-ignore */
+      border-bottom : 1PX dashed $borderColorGrey;
+    }
+    &__footer {
+      margin-top: 30px;
+      @extend .alignRow;
+      justify-content: space-between;
+      align-items: center;
+      font-size: $fontSizeBase;
+    }
+  }
+  .special__result__action {
+    padding: 30px 40px 0 40px;
+  }
+}

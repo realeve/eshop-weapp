@@ -1,0 +1,39 @@
+@import "../index/suggest/index.scss";
+@import "@/styles/theme.scss";
+
+$cateHeight: 145px;
+.cate-sub {
+  position: relative;
+  height: $cateHeight;
+  background: $white;
+  .more {
+    margin: 25px 0;
+    text-align: center;
+    font-size: $heading-5-size;
+    color: $subTitle;
+  }
+  &Small {
+    height: 65px;
+  }
+}
+
+.detail-page {
+  @extend .suggest-page;
+  position: absolute;
+  top: $cateHeight;
+  background: $bg;
+  &Small {
+    top: 65px;
+  }
+  .store {
+    padding: 0 16px 10px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .logo {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+}

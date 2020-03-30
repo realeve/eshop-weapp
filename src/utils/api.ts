@@ -1,3 +1,4 @@
+import { SPECIAL_GOODS } from "./api";
 import { Method } from "axios";
 
 export const API: {
@@ -11,6 +12,7 @@ export const API: {
   LOGOUT: "/logout",
   REALNAME_AUTH: "/realName/authentication",
   INDEX_PRODUCTS: { method: "post", url: "/webIndexComponent" },
+  SPECIAL_GOODS: { method: "post", url: "/specialGoods" },
 
   // REALNAME_AUTH: '/member/real_name_auth/join_update',
   SP_SUBSCRIBER_INFO: "/specialtyProduct/getSubscriberInfo",
@@ -22,7 +24,7 @@ export const API: {
     method: "post",
     url: "/specialtyProduct/getOrdersInfo"
   },
-  MY_SUBSCRIBE: { url: "/specialtyProduct/selectPersonalSubscribe" },
+  MY_SUBSCRIBE: "/specialtyProduct/selectPersonalSubscribe",
   UPDATE_SPECIAL_ADDRESS: {
     method: "post",
     url: "/specialtyProduct/updateAddress"
@@ -48,6 +50,7 @@ export const API: {
   BRAND: "/brand/recommend",
   MODIFY_MEMBER_SEX: "/member/sex/edit",
   MODIFY_MEMBER_BIRTH: "/member/birthday/edit",
+  ADDRESS_DETAIL: "member/address/info",
   MODIFY_MEMBER_ADDRESS_EDIT: "/member/address/edit",
   MODIFY_MEMBER_ADDRESS_ADD: "/member/address/add",
   MODIFY_MEMBER_ADDRESS_DELETE: "/member/address/delete",
@@ -107,6 +110,7 @@ export const API: {
 const orderList: {
   [key: string]: string;
 } = {
+  orderStatusNumber: "/member/index", // 订单不同状态下数量显示
   list: "/member/orders/list",
   buyAgain: "/member/orders/buy/again",
   cancel: "/member/orders/cancel",

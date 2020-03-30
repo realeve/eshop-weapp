@@ -1,0 +1,18 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+.empty_address {
+  height: 230px;
+  background: $white;
+  margin-bottom: 16px;
+  @extend .alignColumn;
+  @extend .center;
+  .tips {
+    font-size: $heading-4-size;
+    color: $subTitle;
+  }
+  .icon {
+    font-size: 60px;
+    color: $subTitle;
+    margin-bottom: 16px;
+  }
+}
