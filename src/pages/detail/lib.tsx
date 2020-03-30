@@ -1,6 +1,7 @@
 import * as lib from "@/utils/lib";
 import * as R from "ramda";
 import { LotteryStatus } from "@/pages/special/result/step";
+import { getWebp } from "@/services/common";
 
 export const handleStoreData = ({
   storeInfo,
@@ -81,8 +82,8 @@ const handleImageList: (
   let images = list.map(img => ({
     colorId: img.colorId,
     id: img.imageId,
-    img80: img.imageSrc,
-    img500: img.imageSrc
+    img80: getWebp(img.imageSrc),
+    img500: getWebp(img.imageSrc)
   }));
 
   return R.groupBy(R.prop("colorId"), images);
@@ -97,6 +98,7 @@ export const handleGoodsData = data => {
   let storeData = handleStoreData(data);
   let evaData = handleCommentData(data);
   let hotData = handleHotData(data);
+  console.log(hotData);
   let storeService = {
     workingTime: handleWorkingTime(data.storeInfo.storeWorkingtime),
     preSales: JSON.parse(data.storeInfo.storePresales || "[]"),
@@ -285,7 +287,7 @@ export const initData: (
     subTitle: org.jingle,
     titleTag:
       org.promotionType * org.promotionState > 0 ? org.promotionTypeText : "",
-    img: org.goodsImageList[0].imageSrc,
+    img: getWebp(org.goodsImageList[0].imageSrc),
     price: org.webPrice0,
 
     goodsImageList: org.goodsImageList,

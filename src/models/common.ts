@@ -12,20 +12,10 @@ import {
 } from "@/utils/cartDb";
 import { loadMember } from "@/pages/login/db";
 
-import {
-  get as getGlobalData,
-  set as setGlobalData
-} from "@/utils/global_data";
+import { get as getGlobalData } from "@/utils/global_data";
 
 import { OSS_URL } from "@/utils/setting";
 import * as R from "ramda";
-
-const supportWebp = () => {
-  const res = Taro.getSystemInfoSync();
-  let webp = res.system.includes("Android");
-  setGlobalData("webp", webp);
-  return webp;
-};
 
 export { Dispatch };
 export interface RouteData {
@@ -109,7 +99,6 @@ export interface IGlobalModel {
   confirmCart: IConfirmCart[]; // 立即购买商品确认
   normalList: db.ICarouselItem[]; //普品专题列表
   specialList: db.ICarouselItem[]; //三联播
-  webp: boolean;
 }
 
 const state = {
@@ -142,8 +131,7 @@ const state = {
   orderNum: {},
   normalList: [],
   specialList: [],
-  curCateId: 0,
-  webp: supportWebp()
+  curCateId: 0
 };
 
 // 载入登录信息

@@ -1,12 +1,9 @@
-import { getWebp } from "./../../services/common";
 import * as R from "ramda";
 import { Dispatch } from "redux";
 import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import * as lib from "@/utils/lib";
 import { getWebp } from "@/services/common";
-
-import { get as getGlobalData } from "@/utils/global_data";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -216,8 +213,6 @@ export const handleSubscribe: (
   sp.state = sp.state < 0 ? 9999 : sp.state;
   sp.isWin = sp.state <= 20 ? 0 : sp.isWin;
 
-  let webp = getGlobalData("webp");
-
   let imgList = [
     {
       title: "文化历史",
@@ -236,13 +231,11 @@ export const handleSubscribe: (
       detail: [sp.detailImage4, sp.detailImage4_4]
     }
   ].map(item => {
-    item.detail = item.detail
-      .filter(img => img)
-      .map(item => getWebp(item, webp));
+    item.detail = item.detail.filter(img => img).map(item => getWebp(item));
     return item;
   });
   let thumbList = [sp.mainImage1, sp.mainImage2, sp.mainImage3].map(item =>
-    getWebp(item, webp)
+    getWebp(item)
   );
   sp = { ...sp, imgList, thumbList };
   let special = R.pick(

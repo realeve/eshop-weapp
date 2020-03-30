@@ -10,6 +10,8 @@ import { API } from "@/utils/setting";
 import { ISpecialItem } from "src/services/common";
 import { jump } from "@/utils/lib";
 
+import { getWebpSuffix } from "@/services/common";
+
 let { windowHeight } = Taro.getSystemInfoSync();
 
 const Special = () => {
@@ -30,12 +32,14 @@ const Special = () => {
           price,
           commonId,
           title,
-          img
+          img: img + getWebpSuffix()
         })
       );
     },
     valid: () => id > "0"
   });
+
+  console.log(data);
 
   return (
     <Skeleton loading={loading} animate rowHeight={windowHeight / 2} row={3}>

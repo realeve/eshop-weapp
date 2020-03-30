@@ -1,11 +1,13 @@
 import { ICarouselItem } from "@/services/common";
 import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
+import { get as getGlobalData } from "@/utils/global_data";
+let __webp = getGlobalData("webp");
 
-export const getWebp = (url, webp) =>
+export const getWebp = (url, webp = __webp) =>
   webp ? `${url}?x-oss-process=image/format,webp` : url;
 
-export const getWebpSuffix = webp =>
+export const getWebpSuffix = (webp = __webp) =>
   `?x-oss-process=image/resize,limit_0,m_fill,w_250,h_250${
     webp ? "/format,webp" : ""
   }`;
