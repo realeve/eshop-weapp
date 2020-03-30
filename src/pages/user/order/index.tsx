@@ -19,103 +19,8 @@ import Comment from "./components/Comment";
 import Rebuy from "./components/Rebuy";
 
 import CountTime from "./components/CountTime";
-const { EOrderStatus } = db;
 
-// let list = [
-//   {
-//     payId: 100,
-//     shop: "lwgsh001测试专卖店",
-//     shopId: 12,
-//     orderId: 100,
-//     orderSN: 5420000000010000,
-//     orderTime: "2020-02-21 15:58:47",
-//     autoCancelTime: "2020-02-22 16:58:47",
-//     autoReceiveTime: null,
-//     ordersRefundState: 0,
-//     payAmount: 0.02,
-//     isVirtual: 0,
-//     shipSn: "",
-//     shipCode: "",
-//     sendTime: null,
-//     type: "",
-//     price: 0.02,
-//     express: 0.01,
-//     status: 10,
-//     statusName: "待付款",
-//     invoice: {},
-//     goods: [
-//       {
-//         spuid: 92,
-//         goodsId: 94,
-//         ordersGoodsId: 1199,
-//         title: "lwgsh001贵金属-养生银器-茶具01",
-//         url:
-//           "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-//         type: "颜色：粉色",
-//         price: 0.01,
-//         count: 1
-//       },
-//       {
-//         spuid: 92,
-//         goodsId: 95,
-//         ordersGoodsId: 1199,
-//         title: "lwgsh001贵金属-养生银器-茶具01",
-//         url:
-//           "https://statictest.ccgold.cn/image/d2/a7/d2a7fbdcabec488f9edb80b8e1309d15.jpg",
-//         type: "颜色：粉色",
-//         price: 0.01,
-//         count: 1
-//       }
-//     ],
-//     address: {
-//       name: "moren",
-//       phone: "13399990000",
-//       detail: "北京 北京市 东城区",
-//       address: "mmmrrr"
-//     }
-//   },
-//   {
-//     payId: 99,
-//     shop: "中钞贵金属",
-//     shopId: 3,
-//     orderId: 99,
-//     orderSN: 5230000000009900,
-//     orderTime: "2020-02-21 15:57:50",
-//     autoCancelTime: "2020-02-22 16:57:50",
-//     autoReceiveTime: null,
-//     ordersRefundState: 0,
-//     payAmount: 5,
-//     isVirtual: 0,
-//     shipSn: "",
-//     shipCode: "",
-//     sendTime: null,
-//     type: "",
-//     price: 5,
-//     express: 0,
-//     status: 10,
-//     statusName: "待付款",
-//     invoice: {},
-//     goods: [
-//       {
-//         spuid: 108,
-//         goodsId: 113,
-//         ordersGoodsId: 1198,
-//         title: "秒杀六号",
-//         url:
-//           "https://statictest.ccgold.cn/image/a3/60/a360786e9984ce666bb168f4c16277cc.jpg",
-//         type: "",
-//         price: 5,
-//         count: 1
-//       }
-//     ],
-//     address: {
-//       name: "moren",
-//       phone: "13399990000",
-//       detail: "北京 北京市 东城区",
-//       address: "mmmrrr"
-//     }
-//   }
-// ];
+const { EOrderStatus } = db;
 
 const Order = () => {
   let isLogin = useLogin();
@@ -144,7 +49,8 @@ const Order = () => {
       params: {
         ordersState: ["all", "new", "pay", "send", "noeval", "cancel"][current], //全部订单
         ordersType: db.EOrderTypes.real, // 实物订单
-        keyword: "" // 搜索关键词 订单号或商品
+        keyword: "", // 搜索关键词 订单号或商品
+        page
       }
     },
     callback: (e: {
@@ -156,7 +62,7 @@ const Order = () => {
       let list = db.convertOrderData(e.ordersPayVoList);
       setState({
         hasMore,
-        list,
+        list: [...state.list, ...list],
         isLoaded: page === 1
       });
     },
@@ -165,33 +71,19 @@ const Order = () => {
 
   // 更新cat信息
   const handleMenu = index => {
+    // 重置数据
+    setState({
+      list: [],
+      hasMore: true
+    });
+    setPage(1);
     setCurrent(index);
   };
 
-  const getData = async (pageIndex = page) => {
-    if (pageIndex === 1) {
-      setState({ isLoaded: false });
-    }
-    const {
-      data: { data }
-    } = await Taro.request({
-      url: "https://cnodejs.org/api/v1/topics",
-      data: {
-        limit: 10,
-        page: pageIndex
-      }
-    });
-    return { list: data, hasMore: true, isLoaded: pageIndex === 1 };
-  };
-
   const onScrollToLower = async fn => {
-    const { list } = state;
-    const { list: newList, hasMore } = await getData(page + 1);
-    setPage(page + 1);
-    setState({
-      list: list.concat(newList),
-      hasMore
-    });
+    if (state.hasMore) {
+      setPage(page + 1);
+    }
     fn();
   };
 
@@ -200,13 +92,11 @@ const Order = () => {
     console.log("刷新数据");
   };
 
-  // console.log(state);
-
   return (
     <View className="user_order">
       <Tab list={db.orderStateList} current={current} onChange={handleMenu} />
       <ListView
-        lazy=".lazy-view"
+        // lazy
         isLoaded={state.isLoaded}
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}

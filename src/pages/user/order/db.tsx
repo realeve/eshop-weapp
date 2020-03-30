@@ -6,6 +6,7 @@ import fail from "@/components/Toast/fail";
 import * as R from "ramda";
 import { jump } from "@/utils/lib";
 import { updateShoppingCart } from "@/utils/cartDb";
+import { getWebpSuffix } from "@/services/common";
 
 export const orderStateList: {
   name: string;
@@ -246,7 +247,7 @@ export let convertOrderData = (data: IOrderItem[] | null) => {
         goodsId: voList.goodsId,
         ordersGoodsId: voList.ordersGoodsId,
         title: voList.goodsName,
-        url: voList.imageSrc,
+        url: voList.imageSrc + getWebpSuffix(),
         type: voList.goodsFullSpecs,
         price: voList.goodsPrice,
         count: voList.buyNum

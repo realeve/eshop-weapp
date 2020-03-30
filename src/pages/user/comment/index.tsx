@@ -12,6 +12,8 @@ import { ORDER } from "@/utils/api";
 
 import { CLIENT_TYPE } from "@/utils/setting";
 
+import { getWebpSuffix } from "@/services/common";
+
 /**
  * 商品评价定义
  */
@@ -130,7 +132,7 @@ const Comment = () => {
           id: String(item.evaluateId),
           content: item.content,
           time: item.evaluateTime,
-          img: item.imagesUrlList || []
+          img: (item.imagesUrlList || []).map(img => img + getWebpSuffix())
         };
 
         // if (item.contentAgain) {
@@ -153,7 +155,7 @@ const Comment = () => {
           shopName: item.storeName,
           goodsName: item.goodsName,
           goodsType: item.goodsFullSpecs,
-          goodsImg: item.goodsImageUrl,
+          goodsImg: item.goodsImageUrl + getWebpSuffix(),
           user: {
             avatar: item.memberAvatarUrl,
             name: item.memberNameHidden
