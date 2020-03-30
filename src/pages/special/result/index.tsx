@@ -148,11 +148,11 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     }
     let res = getSpecialResult(special);
     setSpecialResult(res);
-    console.log(res);
+    // console.log(res);
   }, [special]);
 
-  console.log("subscribe", subscribe);
-  console.log("special", special);
+  // console.log("subscribe", subscribe);
+  // console.log("special", special);
 
   return (
     <View className="special-page__result">
