@@ -4,6 +4,36 @@ import { IModPanelItem } from "@/pages/user/address";
 import * as lib from "@/utils/lib";
 import "./AddressItem.scss";
 import classnames from "classnames";
+import { API } from "@/utils/api";
+import { axios } from "@/utils/axios";
+export const convertSubmitAddress = item => ({
+  realName: item.name,
+  areaId3: item.areaId,
+  areaId2: item.cityId,
+  areaId1: item.provId,
+  areaId4: "", // 存疑
+  areaId: item.code, // 存疑
+  areaInfo: `${item.province} ${item.city} ${item.area}`,
+  address: item.address,
+  mobPhone: item.phone,
+  isDefault: item.isDefault ? 1 : 0,
+  addressId: item.address_id,
+  address1: item.province,
+  address2: item.city,
+  addres3: item.area
+});
+
+export const editAddress = item => {
+  let url = API.MODIFY_MEMBER_ADDRESS_EDIT;
+
+  let data = convertSubmitAddress(item);
+
+  return axios({
+    method: "post",
+    url,
+    data
+  });
+};
 
 export default ({
   data: item,

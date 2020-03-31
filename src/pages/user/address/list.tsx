@@ -7,7 +7,7 @@ import { API } from "@/utils/setting";
 import { AtList } from "taro-ui";
 import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
-import AddressItem from "./AddressItem";
+import AddressItem, { editAddress } from "./AddressItem";
 import { IModPanelItem, handleAddressList as callback } from "./index";
 
 const Address = () => {
@@ -30,6 +30,12 @@ const Address = () => {
                 type="choose"
                 data={item}
                 callback={() => {
+                  editAddress({
+                    ...item,
+                    isDefault: true
+                  }).then(res => {
+                    console.log(res);
+                  });
                   console.log(index);
                 }}
               />

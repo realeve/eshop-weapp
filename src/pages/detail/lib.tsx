@@ -1,7 +1,6 @@
 import * as lib from "@/utils/lib";
 import * as R from "ramda";
 import { LotteryStatus } from "@/pages/special/result/step";
-import { getWebp } from "@/services/common";
 import * as cartDb from "@/utils/cartDb";
 import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { Dispatch } from "redux";
@@ -17,6 +16,7 @@ export interface IDetailState {
   buyLocking: boolean;
   detailData: IProductInfo;
 }
+import { getWebp } from "@/services/common";
 
 export const handleStoreData = ({
   storeInfo,
@@ -496,12 +496,14 @@ export const buyGoods = (
 
     cartDb.addConfirmCart(nextState);
 
+    console.log(storeDetailType);
     dispatch({
       type: storeDetailType,
       payload: {
         buyLocking: false
       }
     });
+    console.log("success???");
     lib.jump({ url: "/order/confirm" });
     return;
   }
