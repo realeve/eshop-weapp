@@ -99,6 +99,7 @@ export interface IGlobalModel {
   confirmCart: IConfirmCart[]; // 立即购买商品确认
   normalList: db.ICarouselItem[]; //普品专题列表
   specialList: db.ICarouselItem[]; //三联播
+  buyLocking: boolean;
 }
 
 const state = {
@@ -131,7 +132,8 @@ const state = {
   orderNum: {},
   normalList: [],
   specialList: [],
-  curCateId: 0
+  curCateId: 0,
+  buyLocking: false
 };
 
 // 载入登录信息

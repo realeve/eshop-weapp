@@ -423,7 +423,7 @@ export const getLocalStorageConfigByData: (
   };
 };
 
-const storeDetailType = "detail/setStore";
+const storeDetailType = "common/setStore";
 
 // 导出函数，用于兄弟组件调用
 export const buyGoods = (
