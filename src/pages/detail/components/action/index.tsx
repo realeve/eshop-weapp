@@ -61,7 +61,7 @@ const DetailAction = ({
     let detail: IDetailState = {
       curGoodsId: data.goodsId || data.id,
       stockNum: goodsnum,
-      number: 1,
+      number: data.storage,
       limitAmount: data.limitAmount,
       buyLocking: false,
       detailData: data
