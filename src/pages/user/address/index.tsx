@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View, Text, ScrollView } from "@tarojs/components";
+import { View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
 import useFetch from "@/components/hooks/useFetch";
@@ -8,6 +8,7 @@ import * as R from "ramda";
 import { AtList, AtSwipeAction, AtModal } from "taro-ui";
 import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
+import AddressItem from "./AddressItem";
 
 export interface IADDRESS {
   realName: string;
@@ -42,27 +43,26 @@ export interface IModPanelItem {
   isDefault: number;
 }
 
-interface IAddressPage {
-  editData: IModPanelItem;
-  data: IModPanelItem[];
-  option: string;
-  visible: boolean;
-  defaultSite: string;
-}
-
-interface IPropsInitState extends IModPanelItem {
-  defaultSite: string | boolean;
-  option: string;
-}
-
-// const { data: areas } = useFetch({
-//     param: {
-//       url: "/area/list",
-//       params: {
-//         areaId: 0
-//       }
-//     }
-//   });
+export const handleAddressList: (res: {
+  addressList: IADDRESS[];
+}) => IModPanelItem = res =>
+  R.map((item: IADDRESS) => {
+    return {
+      address_id: item.addressId + "",
+      name: item.realName,
+      phone: item.mobPhone,
+      province: item.address1,
+      provId: item.areaId1,
+      city: item.address2,
+      cityId: item.areaId2,
+      area: item.address3,
+      areaId: item.areaId3,
+      address: item.address,
+      code: item.areaId3 + "", //item.areaId + '',
+      isDefault: item.isDefault,
+      isOpened: false
+    };
+  })(res.addressList);
 
 const Address = () => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
@@ -70,26 +70,7 @@ const Address = () => {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
     },
-    callback: (res: { addressList: IADDRESS[] }) => {
-      let resdata: IModPanelItem[] = R.map((item: IADDRESS) => {
-        return {
-          address_id: item.addressId + "",
-          name: item.realName,
-          phone: item.mobPhone,
-          province: item.address1,
-          provId: item.areaId1,
-          city: item.address2,
-          cityId: item.areaId2,
-          area: item.address3,
-          areaId: item.areaId3,
-          address: item.address,
-          code: item.areaId3 + "", //item.areaId + '',
-          isDefault: item.isDefault,
-          isOpened: false
-        };
-      })(res.addressList);
-      return resdata;
-    }
+    callback: handleAddressList
   });
 
   const [show, setShow] = useState(false);
@@ -149,39 +130,7 @@ const Address = () => {
               }}
             >
               <View className="at-list__item">
-                <View className="at-list__item-container">
-                  <View className="at-list__item-content item-content">
-                    <View className="item-content__info">
-                      <View className="item-content__info-title">
-                        <View className="header">
-                          <Text>{item.name}</Text>
-                          <Text style={{ margin: "0 10px 0 20px" }}>
-                            {item.phone}
-                          </Text>
-                          {item.isDefault === 1 && (
-                            <Text className="gardient">默认</Text>
-                          )}
-                        </View>
-                        <View className="content">
-                          {item.province}
-                          {item.city}
-                          {item.area}
-                          {item.address}
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    className="at-list__item-extra item-extra"
-                    onClick={() => {
-                      lib.jump(
-                        `/pages/user/address/new?address_id=${item.address_id}`
-                      );
-                    }}
-                  >
-                    <View className="at-icon at-icon-edit" />
-                  </View>
-                </View>
+                <AddressItem type="edit" data={item} />
               </View>
             </AtSwipeAction>
           ))}

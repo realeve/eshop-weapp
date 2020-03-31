@@ -46,6 +46,7 @@ class App extends Component {
 
       "pages/user/address/index", //我的地址
       "pages/user/address/new", //新增地址
+      "pages/user/address/list", // 选择地址
 
       "pages/user/comment/index", // 我的评价
 

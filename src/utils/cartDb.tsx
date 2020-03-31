@@ -477,6 +477,7 @@ export const clearConfirmCart = (dispatch: Dispatch) => {
 };
 
 export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
+  console.log(confirmCart);
   dispatch({
     type: "common/setStore",
     payload: {
@@ -491,7 +492,7 @@ export const updateShoppingCart = (nextState: any[]) =>
 
 // 立即购买
 export const getConfirmCart = () => {
-  let str = Taro.getStorageSync(LocalStorageKeys.confirm);
+  let str = Taro.getStorageSync(LocalStorageKeys.confirm) || "[]";
   return JSON.parse(str);
 };
 

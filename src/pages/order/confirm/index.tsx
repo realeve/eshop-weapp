@@ -12,7 +12,16 @@ import HomeIcon from "./shop.svg";
 import { IConfirmCart } from "@/utils/cart";
 import * as cartDb from "@/utils/cartDb";
 import fail from "@/components/Toast/fail";
-import EmptyAddress from "@/pages/user/address/empty/";
+
+import useFetch from "@/components/hooks/useFetch";
+import { API } from "@/utils/setting";
+
+import {
+  IModPanelItem,
+  IADDRESS,
+  handleAddressList
+} from "@/pages/user/address";
+import AddressPanel from "./components/AddressPanel";
 
 interface IProps extends IOrderModel {
   dispatch: Dispatch;
@@ -35,9 +44,22 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
   });
   const [origin, setOrigin] = useState<cartDb.IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
-  const [address, setAddress] = useState<cartDb.IOrderAddress | undefined>(
-    undefined
-  );
+
+  const { data: address } = useFetch<IModPanelItem>({
+    param: {
+      method: "post",
+      url: API.MEMBER_ADDRESS_LIST as string
+    },
+    callback: (res: { addressList: IADDRESS[] }) => {
+      let resdata: IModPanelItem[] = handleAddressList(res);
+      let dist = resdata.filter(item => item.isDefault)[0];
+      if (!dist) {
+        dist = resdata[0] || null;
+      }
+      return dist;
+    }
+  });
+
   const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
 
   useEffect(() => {
@@ -74,11 +96,11 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
   //   setData(nextState);
   // }, [cart]);
 
-  console.log(goodsList);
+  console.log(goodsList, address);
 
   return (
     <View className="order_confirm">
-      <EmptyAddress />
+      <AddressPanel data={address} />
 
       {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
         <CCardLite className="goodslist" key={goodsItem.commonId}>
