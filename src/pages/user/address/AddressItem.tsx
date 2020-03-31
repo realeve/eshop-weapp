@@ -7,14 +7,33 @@ import classnames from "classnames";
 
 export default ({
   data: item,
-  type = "edit"
+  type = "edit",
+  callback
 }: {
   data: IModPanelItem;
-  type: "edit" | "view";
+  type: "edit" | "view" | "choose";
+  callback?: () => void;
 }) => {
+  // 选择模式下，未选中的地址更改透明度
+  const style =
+    type == "choose" && item.isDefault !== 1 ? { opacity: 0.4 } : {};
+
   return (
-    <View className="at-list__item">
-      <View className="at-list__item-container">
+    <View className="at-list__item" style={style}>
+      <View
+        className="at-list__item-container"
+        onClick={() => {
+          if (type === "choose") {
+            callback && callback();
+            return;
+          }
+          let url =
+            type === "edit"
+              ? `/pages/user/address/new?address_id=${item.address_id}`
+              : "/pages/user/address/list";
+          lib.jump(url);
+        }}
+      >
         <View className="at-list__item-content item-content">
           <View className="item-content__info">
             <View className="item-content__info-title">
@@ -32,22 +51,13 @@ export default ({
             </View>
           </View>
         </View>
-        <View
-          className="at-list__item-extra item-extra"
-          onClick={() => {
-            let url =
-              type === "edit"
-                ? `/pages/user/address/new?address_id=${item.address_id}`
-                : "`/pages/user/address/list`";
-            lib.jump(url);
-          }}
-        >
+        <View className="at-list__item-extra item-extra">
           <View
             className={classnames(
               "at-icon",
               { "at-icon-chevron-right": type === "view" },
               {
-                "at-icon-edit": type === "edit"
+                "at-icon-edit": ["edit", "choose"].includes(type)
               }
             )}
           />

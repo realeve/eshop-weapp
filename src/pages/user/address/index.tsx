@@ -43,27 +43,26 @@ export interface IModPanelItem {
   isDefault: number;
 }
 
-interface IAddressPage {
-  editData: IModPanelItem;
-  data: IModPanelItem[];
-  option: string;
-  visible: boolean;
-  defaultSite: string;
-}
-
-interface IPropsInitState extends IModPanelItem {
-  defaultSite: string | boolean;
-  option: string;
-}
-
-// const { data: areas } = useFetch({
-//     param: {
-//       url: "/area/list",
-//       params: {
-//         areaId: 0
-//       }
-//     }
-//   });
+export const handleAddressList: (res: {
+  addressList: IADDRESS[];
+}) => IModPanelItem = res =>
+  R.map((item: IADDRESS) => {
+    return {
+      address_id: item.addressId + "",
+      name: item.realName,
+      phone: item.mobPhone,
+      province: item.address1,
+      provId: item.areaId1,
+      city: item.address2,
+      cityId: item.areaId2,
+      area: item.address3,
+      areaId: item.areaId3,
+      address: item.address,
+      code: item.areaId3 + "", //item.areaId + '',
+      isDefault: item.isDefault,
+      isOpened: false
+    };
+  })(res.addressList);
 
 const Address = () => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
@@ -71,26 +70,7 @@ const Address = () => {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
     },
-    callback: (res: { addressList: IADDRESS[] }) => {
-      let resdata: IModPanelItem[] = R.map((item: IADDRESS) => {
-        return {
-          address_id: item.addressId + "",
-          name: item.realName,
-          phone: item.mobPhone,
-          province: item.address1,
-          provId: item.areaId1,
-          city: item.address2,
-          cityId: item.areaId2,
-          area: item.address3,
-          areaId: item.areaId3,
-          address: item.address,
-          code: item.areaId3 + "", //item.areaId + '',
-          isDefault: item.isDefault,
-          isOpened: false
-        };
-      })(res.addressList);
-      return resdata;
-    }
+    callback: handleAddressList
   });
 
   const [show, setShow] = useState(false);
@@ -149,7 +129,9 @@ const Address = () => {
                 }
               }}
             >
-              <AddressItem type="edit" data={item} />
+              <View className="at-list__item">
+                <AddressItem type="edit" data={item} />
+              </View>
             </AtSwipeAction>
           ))}
         </AtList>

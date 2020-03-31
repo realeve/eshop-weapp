@@ -16,7 +16,11 @@ import fail from "@/components/Toast/fail";
 import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 
-import { IModPanelItem, IADDRESS } from "@/pages/user/address";
+import {
+  IModPanelItem,
+  IADDRESS,
+  handleAddressList
+} from "@/pages/user/address";
 import AddressPanel from "./components/AddressPanel";
 
 interface IProps extends IOrderModel {
@@ -47,24 +51,7 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
       url: API.MEMBER_ADDRESS_LIST as string
     },
     callback: (res: { addressList: IADDRESS[] }) => {
-      let resdata: IModPanelItem[] = R.map((item: IADDRESS) => {
-        return {
-          address_id: item.addressId + "",
-          name: item.realName,
-          phone: item.mobPhone,
-          province: item.address1,
-          provId: item.areaId1,
-          city: item.address2,
-          cityId: item.areaId2,
-          area: item.address3,
-          areaId: item.areaId3,
-          address: item.address,
-          code: item.areaId3 + "", //item.areaId + '',
-          isDefault: item.isDefault,
-          isOpened: false
-        };
-      })(res.addressList);
-
+      let resdata: IModPanelItem[] = handleAddressList(res);
       let dist = resdata.filter(item => item.isDefault)[0];
       if (!dist) {
         dist = resdata[0] || null;
