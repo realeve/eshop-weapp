@@ -1,0 +1,24 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+.at-list__item {
+  .header {
+    @extend .bold;
+    align-items: center;
+    display: flex;
+  }
+  .gardient {
+    color: $white;
+    background: $yellowGardiant;
+    padding: 5px 10px;
+    font-size: $fontSizeSmall;
+    font-weight: 200;
+  }
+  .content {
+    color: $subTitle;
+  }
+  &-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

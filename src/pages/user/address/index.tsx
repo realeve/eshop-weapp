@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View, Text, ScrollView } from "@tarojs/components";
+import { View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
 import useFetch from "@/components/hooks/useFetch";
@@ -8,6 +8,7 @@ import * as R from "ramda";
 import { AtList, AtSwipeAction, AtModal } from "taro-ui";
 import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
+import AddressItem from "./AddressItem";
 
 export interface IADDRESS {
   realName: string;
@@ -148,41 +149,7 @@ const Address = () => {
                 }
               }}
             >
-              <View className="at-list__item">
-                <View className="at-list__item-container">
-                  <View className="at-list__item-content item-content">
-                    <View className="item-content__info">
-                      <View className="item-content__info-title">
-                        <View className="header">
-                          <Text>{item.name}</Text>
-                          <Text style={{ margin: "0 10px 0 20px" }}>
-                            {item.phone}
-                          </Text>
-                          {item.isDefault === 1 && (
-                            <Text className="gardient">默认</Text>
-                          )}
-                        </View>
-                        <View className="content">
-                          {item.province}
-                          {item.city}
-                          {item.area}
-                          {item.address}
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    className="at-list__item-extra item-extra"
-                    onClick={() => {
-                      lib.jump(
-                        `/pages/user/address/new?address_id=${item.address_id}`
-                      );
-                    }}
-                  >
-                    <View className="at-icon at-icon-edit" />
-                  </View>
-                </View>
-              </View>
+              <AddressItem type="edit" data={item} />
             </AtSwipeAction>
           ))}
         </AtList>
