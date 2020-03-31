@@ -1,7 +1,6 @@
 import * as lib from "@/utils/lib";
 import * as R from "ramda";
 import { LotteryStatus } from "@/pages/special/result/step";
-import { getWebp } from "@/services/common";
 import * as cartDb from "@/utils/cartDb";
 import { ShoppingCartItem, ICartItem, IConfirmCart } from "@/utils/cart";
 import { Dispatch } from "redux";
@@ -17,6 +16,7 @@ export interface IDetailState {
   buyLocking: boolean;
   detailData: IProductInfo;
 }
+import { getWebp } from "@/services/common";
 
 export const handleStoreData = ({
   storeInfo,
@@ -129,15 +129,15 @@ export const handleGoodsData = data => {
       res.number > 0;
   }
   let imgs = handleImageList(data.goodsDetail.goodsImageList);
-  console.log({
-    storeData,
-    goodsCount,
-    canBuy,
-    evaData,
-    hotData,
-    storeService,
-    imgs
-  });
+  // console.log({
+  //   storeData,
+  //   goodsCount,
+  //   canBuy,
+  //   evaData,
+  //   hotData,
+  //   storeService,
+  //   imgs
+  // });
 
   return {
     ...res,
@@ -299,20 +299,17 @@ export const initData: (
     goodsId: org.goodsId,
     title: org.goodsName,
     subTitle: org.jingle,
-    // titleTag:
-    //   org.promotionType * org.promotionState > 0 ? org.promotionTypeText : "",
-    // img: getWebp(org.goodsImageList[0].imageSrc),
-    // price: org.webPrice0,
+    price: isPromo ? goods.webPrice0 : org.webPrice0,
+    counter: goods.goodsPrice0,
+    discount: org.discount,
+    titleTag:
+      org.promotionType * org.promotionState > 0 ? org.promotionTypeText : "",
+    img: getWebp(org.goodsImageList[0].imageSrc),
 
     goodsImageList: org.goodsImageList,
     goodsList: org.goodsList,
 
     // counter: '',
-    titleTag: isPromo ? org.promotionTypeText : "",
-    img: getWebp(org.goodsImageList[0].imageSrc),
-    price: isPromo ? goods.webPrice0 : org.webPrice0,
-    counter: goods.goodsPrice0,
-    discount: org.discount,
     unitName: org.unitName,
     shopId: store.storeId,
     shopName: store.storeName,
@@ -426,7 +423,7 @@ export const getLocalStorageConfigByData: (
   };
 };
 
-const storeDetailType = "detail/setStore";
+const storeDetailType = "common/setStore";
 
 // 导出函数，用于兄弟组件调用
 export const buyGoods = (
@@ -499,12 +496,14 @@ export const buyGoods = (
 
     cartDb.addConfirmCart(nextState);
 
+    console.log(storeDetailType);
     dispatch({
       type: storeDetailType,
       payload: {
         buyLocking: false
       }
     });
+    console.log("success???");
     lib.jump({ url: "/order/confirm" });
     return;
   }

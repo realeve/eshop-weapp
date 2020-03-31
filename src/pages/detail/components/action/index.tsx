@@ -22,6 +22,7 @@ import * as R from "ramda";
 import { AtBadge } from "taro-ui";
 import success from "@/components/Toast/success";
 import fail from "@/components/Toast/fail";
+import { IDetailState } from "../../lib";
 
 const checkTime = data => {
   if (!data.goodsSaleTime) {
@@ -57,6 +58,15 @@ const DetailAction = ({
       return;
     }
 
+    let detail: IDetailState = {
+      curGoodsId: data.goodsId || data.id,
+      stockNum: goodsnum,
+      number: 1,
+      limitAmount: data.limitAmount,
+      buyLocking: false,
+      detailData: data
+    };
+    buyGoods(detail, data, dispatch, directBuy);
     // let status = checkTime(data);
     // if (!status) {
     //   return;
@@ -71,17 +81,8 @@ const DetailAction = ({
     //   goodsId: data.goodsId || data.id
     // };
 
-    //   let cartItem:IDetailState = {
-    //     curGoodsId: data.goodsId || data.id,
-    //     stockNum: goodsnum,
-    // number: number;
-    // limitAmount: number;
-    // buyLocking: boolean;
-    // detailData: IProductInfo;
-    //   }
     // console.log(cartItem);
     // success("待对接添加购物车逻辑");
-    buyGoods();
 
     // // 添加购物车
     // let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
@@ -157,7 +158,7 @@ const DetailAction = ({
 };
 
 export default connect(
-  ({ common: { isLogin, shoppingCart } }: IGlobalModel) => ({
+  ({ common: { isLogin, shoppingCart } }: { common: IGlobalModel }) => ({
     isLogin,
     shoppingCart
   })
