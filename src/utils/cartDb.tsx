@@ -477,7 +477,6 @@ export const clearConfirmCart = (dispatch: Dispatch) => {
 };
 
 export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
-  console.log(confirmCart);
   dispatch({
     type: "common/setStore",
     payload: {

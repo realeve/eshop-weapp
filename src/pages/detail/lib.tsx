@@ -430,7 +430,7 @@ export const buyGoods = (
   detail: IDetailState,
   data: IProductInfo,
   dispatch: Dispatch,
-  addToCart: boolean = false
+  directBuy: boolean = false
 ) => {
   // setShowCart(true);
   if (data.number === 0) {
@@ -487,24 +487,23 @@ export const buyGoods = (
   let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
 
   // 不是添加到购物车，直接购买
-  if (!addToCart) {
+  if (directBuy) {
     let nextState = getLocalStorageConfigByData(data, cartItem);
 
     nextState.type = "confirm";
 
     cartDb.setShoppingCart(nextState, dispatch);
 
-    cartDb.addConfirmCart(nextState);
+    cartDb.addConfirmCart(dispatch, nextState);
 
-    console.log(storeDetailType);
     dispatch({
       type: storeDetailType,
       payload: {
         buyLocking: false
       }
     });
-    console.log("success???");
-    lib.jump({ url: "/order/confirm" });
+
+    lib.jump("/pages/order/confirm/index");
     return;
   }
 
