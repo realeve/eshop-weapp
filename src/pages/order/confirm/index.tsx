@@ -29,7 +29,7 @@ import AddressPanel from "./components/AddressPanel";
 //   [key: string]: any;
 // }
 
-const OrderConfirm = () => {
+const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [invalid, setInvalid] = useState(false);
   const [isInited, setIsInited] = useState<boolean>(false);
@@ -45,7 +45,9 @@ const OrderConfirm = () => {
   const [origin, setOrigin] = useState<cartDb.IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  const { data: address, reFetch: refreshAddress } = useFetch<IModPanelItem>({
+  const { data: address, reFetch: refreshAddress, setData } = useFetch<
+    IModPanelItem
+  >({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
@@ -59,6 +61,10 @@ const OrderConfirm = () => {
       return dist;
     }
   });
+
+  useEffect(() => {
+    setData(currentAddress);
+  }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
 
@@ -96,8 +102,6 @@ const OrderConfirm = () => {
   //   setData(nextState);
   // }, [cart]);
 
-  console.log(goodsList, address);
-
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
@@ -134,8 +138,6 @@ OrderConfirm.config = {
   navigationBarTitleText: "订单确认"
 };
 
-export default OrderConfirm;
-
-// connect(({ common: { confirmCart } }) => ({
-//   cart: confirmCart
-// }))(OrderConfirm as any);
+export default connect(({ order: { currentAddress } }) => ({
+  currentAddress
+}))(OrderConfirm as any);

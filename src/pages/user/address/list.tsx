@@ -9,8 +9,9 @@ import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
 import AddressItem, { editAddress } from "./AddressItem";
 import { IModPanelItem, handleAddressList as callback } from "./index";
+import { connect } from "@tarojs/redux";
 
-const Address = () => {
+const Address = ({ dispatch }) => {
   const { data } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
@@ -33,10 +34,17 @@ const Address = () => {
                   editAddress({
                     ...item,
                     isDefault: true
-                  }).then(res => {
-                    console.log(res);
+                  }).then(() => {
+                    // 返回确认页
+                    dispatch({
+                      type: "order/setStore",
+                      currentAddress: {
+                        ...item,
+                        isDefault: true
+                      }
+                    });
+                    Taro.navigateBack();
                   });
-                  console.log(index);
                 }}
               />
             </View>
@@ -62,4 +70,4 @@ Address.config = {
   navigationBarTitleText: "选择地址"
 };
 
-export default Address;
+export default connect(() => ({}))(Address as any);
