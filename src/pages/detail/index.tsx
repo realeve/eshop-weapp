@@ -125,4 +125,4 @@ Detail.config = {
   navigationBarTitleText: "商品详情"
 };
 
-export default connect(({ detail }) => detail)(Detail as any);
+export default Detail;
