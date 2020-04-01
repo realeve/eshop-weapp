@@ -63,6 +63,9 @@ const OrderConfirm = ({ currentAddress }) => {
   });
 
   useEffect(() => {
+    if (!currentAddress.address_id) {
+      return;
+    }
     setData(currentAddress);
   }, [JSON.stringify(currentAddress)]);
 
