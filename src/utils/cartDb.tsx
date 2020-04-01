@@ -508,7 +508,7 @@ export const getShoppingCartAxiosParam: () =>
     return false;
   }
 
-  console.log(res);
+  // console.log(res);
 
   // 需将购买数据转换为数值型，否则做加法运算时会出现 '1'+'2' === '12' 的 bug
   let data = R.map(

@@ -44,7 +44,7 @@ const LoginPassword = ({ callback, dispatch }) => {
       captchaKey: str.captchaKey,
       clientType: CLIENT_TYPE.WAP
     }).catch(res => {
-      console.log(res);
+      // console.log(res);
       Taro.showToast({
         title: res.message, //"验证码无效",
         icon: "none"
