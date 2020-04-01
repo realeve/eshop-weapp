@@ -12,9 +12,7 @@ export default ({ data }: { data: IModPanelItem }) => {
 
   return (
     <View className="address_panel">
-      <View className="address_list_wrap">
-        <AddressItem type="view" data={data} />
-      </View>
+      <AddressItem type="view" data={data} />
     </View>
   );
 };

@@ -96,6 +96,10 @@ import useSetState from "@/components/hooks/useState";
 Maximum call stack size exceeded
 ```
 
+7.setStorage 可以直接存 obj,但建议用 JSON.stringify 转为字符串
+
+否则在解析时如果报错，会导致 useFetch 无限加载
+
 ---
 
 ## 设计稿：

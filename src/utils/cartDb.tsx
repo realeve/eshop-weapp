@@ -483,7 +483,7 @@ export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
       confirmCart
     }
   });
-  Taro.setStorageSync(LocalStorageKeys.confirm, confirmCart);
+  Taro.setStorageSync(LocalStorageKeys.confirm, JSON.stringify(confirmCart));
 };
 
 export const updateShoppingCart = (nextState: any[]) =>
@@ -492,6 +492,7 @@ export const updateShoppingCart = (nextState: any[]) =>
 // 立即购买
 export const getConfirmCart = () => {
   let str = Taro.getStorageSync(LocalStorageKeys.confirm) || "[]";
+
   return JSON.parse(str);
 };
 
@@ -506,6 +507,8 @@ export const getShoppingCartAxiosParam: () =>
   if (res.length === 0) {
     return false;
   }
+
+  console.log(res);
 
   // 需将购买数据转换为数值型，否则做加法运算时会出现 '1'+'2' === '12' 的 bug
   let data = R.map(

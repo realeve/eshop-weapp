@@ -494,7 +494,7 @@ export const buyGoods = (
 
     cartDb.setShoppingCart(nextState, dispatch);
 
-    cartDb.addConfirmCart(dispatch, nextState);
+    cartDb.addConfirmCart(dispatch, [nextState]);
 
     dispatch({
       type: storeDetailType,
