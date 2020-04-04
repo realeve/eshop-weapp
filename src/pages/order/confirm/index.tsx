@@ -19,15 +19,9 @@ import { API } from "@/utils/setting";
 import {
   IModPanelItem,
   IADDRESS,
-  handleAddressList
+  handleAddressList,
 } from "@/pages/user/address";
 import AddressPanel from "./components/AddressPanel";
-
-// interface IProps extends IOrderModel {
-//   dispatch: Dispatch;
-//   cart: IConfirmCart[];
-//   [key: string]: any;
-// }
 
 const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,33 +34,35 @@ const OrderConfirm = ({ currentAddress }) => {
     sn: "",
     content: "明细",
     mount: 0,
-    email: ""
+    email: "",
   });
   const [origin, setOrigin] = useState<cartDb.IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  const { data: address, reFetch: refreshAddress, setData } = useFetch<
-    IModPanelItem
-  >({
-    param: {
-      method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string
-    },
-    callback: (res: { addressList: IADDRESS[] }) => {
-      let resdata: IModPanelItem[] = handleAddressList(res);
-      let dist = resdata.filter(item => item.isDefault)[0];
-      if (!dist) {
-        dist = resdata[0] || null;
-      }
-      return dist;
-    }
-  });
+  // const { data: address, reFetch: refreshAddress, setData } = useFetch<
+  //   IModPanelItem
+  // >({
+  //   param: {
+  //     method: "post",
+  //     url: API.MEMBER_ADDRESS_LIST as string,
+  //   },
+  //   callback: (res: { addressList: IADDRESS[] }) => {
+  //     let resdata: IModPanelItem[] = handleAddressList(res);
+  //     let dist = resdata.filter((item) => item.isDefault)[0];
+  //     if (!dist) {
+  //       dist = resdata[0] || null;
+  //     }
+  //     return dist;
+  //   },
+  // });
+
+  // console.log(address);
 
   useEffect(() => {
     if (!currentAddress.address_id) {
       return;
     }
-    setData(currentAddress);
+    // setData(currentAddress);
   }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
@@ -92,7 +88,7 @@ const OrderConfirm = ({ currentAddress }) => {
         setGoodsList(flatGoods);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         fail(`出错啦：${err.message}！`);
         setLoading(false);
       });
@@ -107,9 +103,9 @@ const OrderConfirm = ({ currentAddress }) => {
 
   return (
     <View className="order_confirm">
-      <AddressPanel data={address} />
-
-      {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
+      address panel
+      {/* <AddressPanel data={address} /> */}
+      {/* {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
         <CCardLite className="goodslist" key={goodsItem.commonId}>
           <View className="shop">
             <Image src={HomeIcon} className="icon" />
@@ -132,15 +128,15 @@ const OrderConfirm = ({ currentAddress }) => {
             </View>
           </View>
         </CCardLite>
-      ))}
+      ))} */}
     </View>
   );
 };
 
 OrderConfirm.config = {
-  navigationBarTitleText: "订单确认"
+  navigationBarTitleText: "订单确认",
 };
 
 export default connect(({ order: { currentAddress } }) => ({
-  currentAddress
+  currentAddress,
 }))(OrderConfirm as any);

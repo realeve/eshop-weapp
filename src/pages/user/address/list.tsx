@@ -15,9 +15,9 @@ const Address = ({ dispatch }) => {
   const { data } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string
+      url: API.MEMBER_ADDRESS_LIST as string,
     },
-    callback
+    callback,
   });
 
   return (
@@ -33,15 +33,15 @@ const Address = ({ dispatch }) => {
                 callback={() => {
                   editAddress({
                     ...item,
-                    isDefault: true
+                    isDefault: true,
                   }).then(() => {
                     // 返回确认页
                     dispatch({
                       type: "order/setStore",
                       currentAddress: {
                         ...item,
-                        isDefault: true
-                      }
+                        isDefault: true,
+                      },
                     });
                     Taro.navigateBack();
                   });
@@ -67,7 +67,7 @@ const Address = ({ dispatch }) => {
 };
 
 Address.config = {
-  navigationBarTitleText: "选择地址"
+  navigationBarTitleText: "选择地址",
 };
 
 export default connect(() => ({}))(Address as any);

@@ -45,7 +45,7 @@ export interface IModPanelItem {
 
 export const handleAddressList: (res: {
   addressList: IADDRESS[];
-}) => IModPanelItem = res =>
+}) => IModPanelItem = (res) =>
   R.map((item: IADDRESS) => {
     return {
       address_id: item.addressId + "",
@@ -60,7 +60,7 @@ export const handleAddressList: (res: {
       address: item.address,
       code: item.areaId3 + "", //item.areaId + '',
       isDefault: item.isDefault,
-      isOpened: false
+      isOpened: false,
     };
   })(res.addressList);
 
@@ -68,16 +68,16 @@ const Address = () => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string
+      url: API.MEMBER_ADDRESS_LIST as string,
     },
-    callback: handleAddressList
+    callback: handleAddressList,
   });
 
   const [show, setShow] = useState(false);
   const [curIdx, setCurIdx] = useState(0);
   // console.log(data);
 
-  const handleSingle = idx => {
+  const handleSingle = (idx) => {
     let res = R.clone(data);
     res = res.map((item, index) => {
       item.isOpened = idx === index;
@@ -87,7 +87,7 @@ const Address = () => {
     setCurIdx(idx);
   };
 
-  const closeItem = idx => {
+  const closeItem = (idx) => {
     let res = R.clone(data);
     res[idx].isOpened = false;
     setData(res);
@@ -107,17 +107,17 @@ const Address = () => {
                 {
                   text: "取消",
                   style: {
-                    backgroundColor: "#6190E8"
-                  }
+                    backgroundColor: "#6190E8",
+                  },
                 },
                 {
                   text: "删除",
                   style: {
-                    backgroundColor: "#FF4949"
-                  }
-                }
+                    backgroundColor: "#FF4949",
+                  },
+                },
               ]}
-              onClick={e => {
+              onClick={(e) => {
                 switch (e.text) {
                   case "删除":
                     // console.log("delete it");
@@ -171,7 +171,7 @@ const Address = () => {
 };
 
 Address.config = {
-  navigationBarTitleText: "我的地址"
+  navigationBarTitleText: "我的地址",
 };
 
 export default Address;
