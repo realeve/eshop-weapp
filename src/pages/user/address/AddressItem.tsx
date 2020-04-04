@@ -2,10 +2,11 @@ import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { IModPanelItem } from "@/pages/user/address";
 import * as lib from "@/utils/lib";
-import "./AddressItem.scss";
 import classnames from "classnames";
 import { API } from "@/utils/api";
 import { axios } from "@/utils/axios";
+import "./AddressItem.scss";
+
 export const convertSubmitAddress = item => ({
   realName: item.name,
   areaId3: item.areaId,
@@ -20,7 +21,7 @@ export const convertSubmitAddress = item => ({
   addressId: item.address_id,
   address1: item.province,
   address2: item.city,
-  addres3: item.area
+  address3: item.area
 });
 
 export const editAddress = item => {

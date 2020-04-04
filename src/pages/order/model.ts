@@ -1,12 +1,13 @@
 import { setStore } from "@/utils/lib";
+import { IModPanelItem } from "../user/address";
 
 export interface IOrderModel {
-  stateName: string;
+  currentAddress: IModPanelItem | {};
   [key: string]: any;
 }
 
 const state: IOrderModel = {
-  stateName: "这里是全局挂载的数据"
+  currentAddress: {}
 };
 
 export default {

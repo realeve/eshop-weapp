@@ -23,13 +23,13 @@ import {
 } from "@/pages/user/address";
 import AddressPanel from "./components/AddressPanel";
 
-interface IProps extends IOrderModel {
-  dispatch: Dispatch;
-  cart: IConfirmCart[];
-  [key: string]: any;
-}
+// interface IProps extends IOrderModel {
+//   dispatch: Dispatch;
+//   cart: IConfirmCart[];
+//   [key: string]: any;
+// }
 
-const OrderConfirm = ({ cart, dispatch }: IProps) => {
+const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [invalid, setInvalid] = useState(false);
   const [isInited, setIsInited] = useState<boolean>(false);
@@ -45,7 +45,9 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
   const [origin, setOrigin] = useState<cartDb.IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  const { data: address } = useFetch<IModPanelItem>({
+  const { data: address, reFetch: refreshAddress, setData } = useFetch<
+    IModPanelItem
+  >({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
@@ -59,6 +61,10 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
       return dist;
     }
   });
+
+  useEffect(() => {
+    setData(currentAddress);
+  }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
 
@@ -96,8 +102,6 @@ const OrderConfirm = ({ cart, dispatch }: IProps) => {
   //   setData(nextState);
   // }, [cart]);
 
-  console.log(goodsList, address);
-
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
@@ -134,6 +138,6 @@ OrderConfirm.config = {
   navigationBarTitleText: "订单确认"
 };
 
-export default connect(({ common: { confirmCart } }) => ({
-  cart: confirmCart
+export default connect(({ order: { currentAddress } }) => ({
+  currentAddress
 }))(OrderConfirm as any);
