@@ -94,18 +94,10 @@ const OrderConfirm = ({ currentAddress }) => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   const res = loadCart<IConfirmCart[]>(cart);
-  //   console.log(res);
-  //   let nextState = R.values(R.groupBy(item => item.shop.name)(res));
-  //   setData(nextState);
-  // }, [cart]);
-
   return (
     <View className="order_confirm">
-      address panel
       {/* <AddressPanel data={address} /> */}
-      {/* {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
+      {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
         <CCardLite className="goodslist" key={goodsItem.commonId}>
           <View className="shop">
             <Image src={HomeIcon} className="icon" />
@@ -128,7 +120,7 @@ const OrderConfirm = ({ currentAddress }) => {
             </View>
           </View>
         </CCardLite>
-      ))} */}
+      ))}
     </View>
   );
 };
