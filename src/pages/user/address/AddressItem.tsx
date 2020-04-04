@@ -36,7 +36,7 @@ export const editAddress = item => {
   });
 };
 
-export default ({
+const Index = ({
   data: item,
   type = "edit",
   callback
@@ -97,3 +97,5 @@ export default ({
     </View>
   );
 };
+
+export default Index;

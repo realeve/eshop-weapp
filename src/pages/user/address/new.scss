@@ -1,16 +1,2 @@
-@import "@/styles/theme.scss";
+@import "./index.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
-.address_list {
-  background: $bg;
-  height: 100vh;
-  @extend .alignColumn;
-  .icon {
-    width: 30px;
-    height: 30px;
-  }
-
-  &_action {
-    margin: 24px;
-    width: calc(100% - 48px);
-  }
-}

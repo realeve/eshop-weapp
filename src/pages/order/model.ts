@@ -7,13 +7,13 @@ export interface IOrderModel {
 }
 
 const state: IOrderModel = {
-  currentAddress: {}
+  currentAddress: {},
 };
 
 export default {
   namespace: "order",
   state,
   reducers: {
-    setStore
-  }
+    setStore,
+  },
 };
