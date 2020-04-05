@@ -230,7 +230,7 @@ const OrderConfirm = ({ currentAddress }) => {
       });
   };
 
-  console.log(amount);
+  // console.log(amount);
 
   return (
     <View className="order_confirm">

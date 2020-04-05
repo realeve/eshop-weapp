@@ -852,5 +852,5 @@ export const getPreOrder = ({
 
 // 移除
 export const removeConfirmCart = () => {
-  Taro.removeStorage(LocalStorageKeys.confirm);
+  Taro.removeStorage({ key: LocalStorageKeys.confirm });
 };
