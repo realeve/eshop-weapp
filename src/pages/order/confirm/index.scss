@@ -59,11 +59,6 @@
         }
       }
 
-      .splitLine {
-        margin: 15px 0;
-        border-bottom: 1px solid $splitLine;
-      }
-
       .count {
         flex: 1;
         @extend .alignRow;
@@ -71,6 +66,11 @@
         font-size: $heading-4-size;
         color: $subTitle;
       }
+    }
+
+    .splitLine {
+      margin: 15px 0;
+      border-bottom: 1px solid $splitLine;
     }
     .invoice {
       margin-bottom: 16px;
@@ -81,6 +81,24 @@
       justify-content: space-between;
       font-size: $heading-4-size;
       color: $subTitle;
+    }
+    .summary {
+      margin-bottom: 16px;
+      padding: 30px 34px;
+      background: #fff;
+      font-size: $heading-4-size;
+      color: $subTitle;
+      @extend .alignColumn;
+      .title {
+        font-size: $heading-3-size;
+        padding-bottom: 15px;
+        font-weight: bold;
+      }
+      .item {
+        padding: 10px 0;
+        @extend .alignRow;
+        justify-content: space-between;
+      }
     }
   }
 
@@ -99,53 +117,5 @@
       height: 100%;
       @extend .center;
     }
-  }
-
-  .summary {
-    margin-top: 1em;
-    padding: 30px 34px;
-    background: #fff;
-
-    .title {
-      @extend .alignRow;
-      font-size: $fontSizeNormal;
-      color: $subTitle;
-    }
-
-    .sub {
-      @extend .alignRow;
-      justify-content: space-between;
-
-      .subTitle {
-        flex: 4;
-        @extend .alignColumn;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: inherit;
-        line-height: 1.5;
-        margin-right: 10px;
-      }
-
-      .subValue {
-        flex: 1;
-        @extend .alignColumn;
-      }
-
-      .total {
-        @extend .alignRow;
-        justify-content: space-between;
-        font-size: $heading-4-size;
-        color: $subTitle;
-      }
-    }
-
-    .last {
-      border-bottom: 1px solid $splitLine;
-    }
-  }
-
-  .toPay {
-    padding: 1em;
   }
 }

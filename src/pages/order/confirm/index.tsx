@@ -290,45 +290,40 @@ const OrderConfirm = ({ currentAddress }) => {
         </View>
 
         <View className="invoice">
-          <View>配送方式</View>
-          {!R.isNil(freight.freightAmount) && (
-            <View>
-              <View>
-                快递:
-                {freight.freightAmount == 0
-                  ? "免邮"
-                  : "￥" + freight.freightAmount}
-                <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
-              </View>
-              <View className="sub last">
-                <View className="subTitle">运费</View>
-                <View className="subValue">
-                  {freight && freight.freightAmount > 0
-                    ? "￥" + freight.freightAmount.toFixed(2)
-                    : "免邮"}
-                </View>
-              </View>
-
-              <View className="sub">
-                <View className="subTitle">实际应付（含运费）</View>
-                <View className="subValue">
-                  ￥
-                  {(
-                    amount.buyGoodsItemAmount +
-                    (freight && freight.freightAmount
-                      ? freight.freightAmount
-                      : 0)
-                  ).toFixed(2)}
-                </View>
-              </View>
-            </View>
-          )}
-        </View>
-
-        <View className="invoice">
           <View>发票</View>
           <View>{invoice.title}</View>
         </View>
+
+        {amount && (
+          <View className="summary">
+            <View className="title">合计</View>
+            <View className="item">
+              <View>商品总额</View>
+              <View>￥{amount.buyGoodsItemAmount.toFixed(2)}</View>
+            </View>
+            <View className="item">
+              <View>运费</View>
+              <View>
+                {freight && freight.freightAmount > 0
+                  ? "￥" + freight.freightAmount.toFixed(2)
+                  : "免邮"}
+              </View>
+            </View>
+
+            <View className="splitLine" />
+
+            <View className="item">
+              <View>实际应付（含运费）</View>
+              <View>
+                ￥
+                {(
+                  amount.buyGoodsItemAmount +
+                  (freight && freight.freightAmount ? freight.freightAmount : 0)
+                ).toFixed(2)}
+              </View>
+            </View>
+          </View>
+        )}
       </ScrollView>
 
       {amount && (
