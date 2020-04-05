@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import "./index.scss";
 
 import * as R from "ramda";
-import { CCardLite, CPrice } from "@/components/";
+import { CCardLite, CPrice, CButton } from "@/components/";
 import HomeIcon from "./shop.svg";
 
 import {
@@ -250,9 +250,7 @@ const OrderConfirm = ({ currentAddress }) => {
                     <Image src={goods.imageSrc} className="img" />
                     <View className="detail">
                       <View className="main">
-                        <Text className="goods_name">
-                          {goods.goodsName} aasd
-                        </Text>
+                        <Text className="goods_name">{goods.goodsName}</Text>
                         <CPrice retail={goods.goodsPrice} />
                       </View>
 
@@ -292,10 +290,47 @@ const OrderConfirm = ({ currentAddress }) => {
         </View>
 
         <View className="invoice">
+          <View>配送方式</View>
+          {!R.isNil(freight.freightAmount) && (
+            <View>
+              <View>
+                快递:
+                {freight.freightAmount == 0
+                  ? "免邮"
+                  : "￥" + freight.freightAmount}
+                <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
+              </View>
+              <View className="sub last">
+                <View className="subTitle">运费</View>
+                <View className="subValue">
+                  {freight && freight.freightAmount > 0
+                    ? "￥" + freight.freightAmount.toFixed(2)
+                    : "免邮"}
+                </View>
+              </View>
+
+              <View className="sub">
+                <View className="subTitle">实际应付（含运费）</View>
+                <View className="subValue">
+                  ￥
+                  {(
+                    amount.buyGoodsItemAmount +
+                    (freight && freight.freightAmount
+                      ? freight.freightAmount
+                      : 0)
+                  ).toFixed(2)}
+                </View>
+              </View>
+            </View>
+          )}
+        </View>
+
+        <View className="invoice">
           <View>发票</View>
           <View>{invoice.title}</View>
         </View>
       </ScrollView>
+
       {amount && (
         <View className="pay">
           <CPrice
