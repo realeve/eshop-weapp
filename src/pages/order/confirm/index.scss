@@ -1,8 +1,9 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 
 .order_confirm {
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background: $bg;
 
   .shop {
@@ -18,37 +19,58 @@
     margin-bottom: 20px;
   }
   .item {
-    @extend .alignRow;
-    .img {
-      width: 150px;
-      height: 150px;
-      margin-right: 20px;
-    }
-    .detail {
-      flex: 1;
-      @extend .alignColumn;
-      justify-content: space-between;
-      width: calc(100% - 170px);
-      .main {
-        @extend .alignRow;
+    @extend .alignColumn;
+    .main {
+      @extend .alignRow;
+      .img {
+        width: 150px;
+        height: 150px;
+        margin-right: 20px;
+      }
+      .detail {
+        flex: 1;
+        @extend .alignColumn;
         justify-content: space-between;
-        color: $mainTitle;
-        font-size: $heading-4-size;
-        .goods_name {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          color: inherit;
-          line-height: 1.5;
-          margin-right: 10px;
+        width: calc(100% - 170px);
+        .main {
+          @extend .alignRow;
+          justify-content: space-between;
+          color: $mainTitle;
+          font-size: $heading-4-size;
+          .goods_name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: inherit;
+            line-height: 1.5;
+            margin-right: 10px;
+          }
+        }
+        .sub {
+          @extend .alignRow;
+          justify-content: space-between;
+          font-size: $fontSizeNormal;
+          color: $mainTitle;
         }
       }
-      .sub {
-        @extend .alignRow;
-        justify-content: space-between;
-        font-size: $fontSizeNormal;
-        color: $subTitle;
-      }
     }
+    .express {
+      flex: 1;
+      @extend .alignRow;
+      justify-content: space-between;
+      font-size: $heading-4-size;
+      color: $subTitle;
+      padding: 30px 0 20px;
+      border-bottom: 1px solid $splitLine;
+    }
+  }
+  .invoice {
+    padding: 30px 34px;
+    background: #fff;
+
+    @extend .alignRow;
+    justify-content: space-between;
+    font-size: $heading-4-size;
+    color: $subTitle;
   }
 }
