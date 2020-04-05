@@ -7,7 +7,25 @@ import * as R from "ramda";
 import { CCardLite, CPrice } from "@/components/";
 import HomeIcon from "./shop.svg";
 
-import * as cartDb from "@/utils/cartDb";
+import {
+  ICalcResult,
+  ICalcFreight,
+  IStoreInfo,
+  IBuyData,
+  calcFreight,
+  step2Order,
+  IBooking,
+  IBuyGoodsItemVoList,
+  IOrderAddress,
+  step1Detail,
+  calcFee,
+  getShoppingCartAxiosParam,
+  getPreOrder,
+  getFlatBooking,
+  IBookingDetail,
+  InvoiceType,
+} from "@/utils/cartDb";
+
 import fail from "@/components/Toast/fail";
 
 import useFetch from "@/components/hooks/useFetch";
@@ -24,7 +42,8 @@ const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [invalid, setInvalid] = useState(false);
   const [isInited, setIsInited] = useState<boolean>(false);
-  const [invoice, setInvoice] = useState<cartDb.InvoiceType>({
+  const [amount, setAmount] = useState<ICalcResult>();
+  const [invoice, setInvoice] = useState<InvoiceType>({
     type: "电子发票",
     title: "个人",
     username: "个人",
@@ -33,8 +52,34 @@ const OrderConfirm = ({ currentAddress }) => {
     mount: 0,
     email: "",
   });
-  const [origin, setOrigin] = useState<cartDb.IBooking>();
+  const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
+
+  const calc = (
+    goods?: IBuyGoodsItemVoList[],
+    addr?: Partial<IOrderAddress>
+  ) => {
+    let data = goods || goodsList;
+    let _addr = addr || address;
+    if (!data || !_addr || !_addr.addressId) {
+      return;
+    }
+    let preOrder = getPreOrder({
+      data,
+      address: { addressId: _addr.addressId },
+    });
+    setLoading(true);
+    if (preOrder) {
+      calcFee(preOrder)
+        .then((a) => {
+          setLoading(false);
+          setAmount(a);
+        })
+        .catch((e) => {
+          fail(e.message);
+        });
+    }
+  };
 
   const { data: address, reFetch: refreshAddress, setData } = useFetch<
     IModPanelItem
@@ -60,11 +105,11 @@ const OrderConfirm = ({ currentAddress }) => {
     setData(currentAddress);
   }, [JSON.stringify(currentAddress)]);
 
-  const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
+  const [goodsList, setGoodsList] = useState<IBuyGoodsItemVoList[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    let params = cartDb.getShoppingCartAxiosParam();
+    let params = getShoppingCartAxiosParam();
     // console.log(params);
     setInvalid(!params);
     if (!params) {
@@ -72,14 +117,13 @@ const OrderConfirm = ({ currentAddress }) => {
     }
 
     setIsInited(true);
-    cartDb
-      .step1Detail(params as cartDb.IBookingDetail)
-      .then((data: cartDb.IBooking) => {
+    step1Detail(params as IBookingDetail)
+      .then((data: IBooking) => {
         let _data = R.clone(data);
         Reflect.deleteProperty(_data, "buyStoreVoList");
         setOrigin(_data);
         setSelectedAddr(_data.address ? _data.address.addressId || 0 : 0);
-        let flatGoods = cartDb.getFlatBooking(data) || [];
+        let flatGoods = getFlatBooking(data) || [];
         setGoodsList(flatGoods);
         setLoading(false);
       })
@@ -89,12 +133,17 @@ const OrderConfirm = ({ currentAddress }) => {
       });
   }, []);
 
-  console.log(goodsList);
+  useEffect(() => {
+    if (!goodsList || !address) {
+      return;
+    }
+    calc();
+  }, [goodsList, address]);
 
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
-      {goodsList.map((item: cartDb.IBuyGoodsItemVoList) => (
+      {goodsList.map((item: IBuyGoodsItemVoList) => (
         <CCardLite className="goodslist" key={item.commonId}>
           <View className="shop">
             <Image src={HomeIcon} className="icon" />
