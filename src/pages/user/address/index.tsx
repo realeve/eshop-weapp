@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
@@ -9,60 +9,7 @@ import { AtList, AtSwipeAction, AtModal } from "taro-ui";
 import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
 import AddressItem from "./AddressItem";
-
-export interface IADDRESS {
-  realName: string;
-  areaId1: number;
-  address1: string;
-  areaId2: number;
-  address2: string;
-  areaId3: number;
-  address3: string;
-  areaId4: number;
-  areaId: number;
-  areaInfo: string;
-  address: string;
-  mobPhone: string;
-  isDefault: number;
-  addressId?: number;
-}
-
-export interface IModPanelItem {
-  address_id: string;
-  name: string;
-  phone: string;
-  province: string;
-  provId: number;
-  city: string;
-  cityId: number;
-  area: string;
-  areaId: number;
-  address: string;
-  code?: string;
-  option?: string;
-  isDefault: number;
-}
-
-export const handleAddressList: (res: {
-  addressList: IADDRESS[];
-}) => IModPanelItem = (res) =>
-  R.map((item: IADDRESS) => {
-    return {
-      address_id: item.addressId + "",
-      name: item.realName,
-      phone: item.mobPhone,
-      province: item.address1,
-      provId: item.areaId1,
-      city: item.address2,
-      cityId: item.areaId2,
-      area: item.address3,
-      areaId: item.areaId3,
-      address: item.address,
-      code: item.areaId3 + "", //item.areaId + '',
-      isDefault: item.isDefault,
-      isOpened: false,
-    };
-  })(res.addressList);
+import { handleAddressList, IModPanelItem } from "./lib";
 
 const Address = () => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({

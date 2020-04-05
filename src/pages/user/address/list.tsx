@@ -7,8 +7,13 @@ import { API } from "@/utils/setting";
 import { AtList } from "taro-ui";
 import { CButton } from "@/components";
 import * as lib from "@/utils/lib";
-import AddressItem, { editAddress } from "./AddressItem";
-import { IModPanelItem, handleAddressList as callback } from "./index";
+import AddressItem from "./AddressItem";
+import {
+  IModPanelItem,
+  handleAddressList as callback,
+  editAddress,
+} from "./lib";
+
 import { connect } from "@tarojs/redux";
 
 const Address = ({ dispatch }) => {

@@ -100,6 +100,31 @@ Maximum call stack size exceeded
 
 否则在解析时如果报错，会导致 useFetch 无限加载
 
+8. **用于 page 显示的 tsx 文件【在 app.tsx 注册的页面】，不要导出多个元素（page 本身、数据处理函数、子组件等**，否则会导致调用的页面、被调用的页面出现不可理解的错误：
+
+> 处理方法：将需要导出的内容单独写到一个文件中，不要同 page 视图页面放在一起
+
+注意： 此处的元素同时包含子组件，将子组件写在一个 page 中导出也会导致同样的情况；
+
+```tsx
+// bad
+
+export handleAddres = res=>{
+    //
+    return res;
+}
+export default ()=>{
+    return <View>adsf</View>
+}
+
+// good
+import {handleAddress}from './lib';
+export default ()=>{
+    return <View>adsf</View>
+}
+
+```
+
 ---
 
 ## 设计稿：
