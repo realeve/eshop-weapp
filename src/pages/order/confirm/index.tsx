@@ -4,7 +4,7 @@ import { connect } from "@tarojs/redux";
 import "./index.scss";
 
 import * as R from "ramda";
-import { CCardLite, CPrice } from "@/components/";
+import { CCardLite, CPrice, CButton } from "@/components/";
 import HomeIcon from "./shop.svg";
 
 import {
@@ -23,7 +23,7 @@ import {
   getPreOrder,
   getFlatBooking,
   IBookingDetail,
-  InvoiceType,
+  InvoiceType
 } from "@/utils/cartDb";
 
 import fail from "@/components/Toast/fail";
@@ -34,7 +34,7 @@ import { API } from "@/utils/setting";
 import {
   handleAddressList,
   IADDRESS,
-  IModPanelItem,
+  IModPanelItem
 } from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
 
@@ -52,7 +52,7 @@ const OrderConfirm = ({ currentAddress }) => {
     sn: "",
     content: "明细",
     mount: 0,
-    email: "",
+    email: ""
   });
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
@@ -70,20 +70,20 @@ const OrderConfirm = ({ currentAddress }) => {
 
     let preOrder = getPreOrder({
       data,
-      address: { addressId: _addr.address_id },
+      address: { addressId: _addr.address_id }
     });
     setLoading(true);
     if (preOrder) {
       calcFee(preOrder)
-        .then((a) => {
+        .then(a => {
           setLoading(false);
           setAmount(a);
         })
-        .catch((e) => {
+        .catch(e => {
           fail(e.message);
         });
 
-      calcFreight(preOrder).then((f) => {
+      calcFreight(preOrder).then(f => {
         setLoading(false);
         setFreight(f);
       });
@@ -95,16 +95,16 @@ const OrderConfirm = ({ currentAddress }) => {
   >({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string,
+      url: API.MEMBER_ADDRESS_LIST as string
     },
     callback: (res: { addressList: IADDRESS[] }) => {
       let resdata: IModPanelItem[] = handleAddressList(res);
-      let dist = resdata.filter((item) => item.isDefault)[0];
+      let dist = resdata.filter(item => item.isDefault)[0];
       if (!dist) {
         dist = resdata[0] || null;
       }
       return dist;
-    },
+    }
   });
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const OrderConfirm = ({ currentAddress }) => {
         setGoodsList(flatGoods);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         fail(`出错啦：${err.message}！`);
         setLoading(false);
       });
@@ -155,63 +155,92 @@ const OrderConfirm = ({ currentAddress }) => {
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
-      {amount &&
-        amount.storeList.map((item: IBuyGoodsItemVoList) => (
-          <CCardLite className="goodslist" key={item.commonId}>
-            <View className="shop">
-              <Image src={HomeIcon} className="icon" />
-              <Text className="title">{item.storeName}</Text>
-            </View>
+      {amount && (
+        <View>
+          {amount.storeList.map((item: IBuyGoodsItemVoList) => (
+            <CCardLite className="goodslist" key={item.commonId}>
+              <View className="shop">
+                <Image src={HomeIcon} className="icon" />
+                <Text className="title">{item.storeName}</Text>
+              </View>
 
-            <View className="item">
-              {item.buyGoodsItemVoList.map((goods) => (
-                <View className="main" key={goods.commonId}>
-                  <Image src={item.spuImageSrc} className="img" />
-                  <View className="detail">
-                    <View className="main">
-                      <Text className="goods_name">{goods.goodsName} aasd</Text>
-                      <CPrice retail={goods.goodsPrice} />
-                    </View>
+              <View className="item">
+                {item.buyGoodsItemVoList.map(goods => (
+                  <View className="main" key={goods.commonId}>
+                    <Image src={item.spuImageSrc} className="img" />
+                    <View className="detail">
+                      <View className="main">
+                        <Text className="goods_name">{goods.goodsName}</Text>
+                        <CPrice retail={goods.goodsPrice} />
+                      </View>
 
-                    <View className="sub">
-                      <Text>{goods.goodsFullSpecs}</Text>
-                      <Text>
-                        x {goods.spuBuyNum}
-                        {goods.unitName}
-                      </Text>
+                      <View className="sub">
+                        <Text>{goods.goodsFullSpecs}</Text>
+                        <Text>
+                          x {goods.spuBuyNum}
+                          {goods.unitName}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              ))}
+                ))}
+              </View>
+            </CCardLite>
+          ))}
+          <View className="invoice">
+            <View>发票</View>
+            <View>{invoice.title}</View>
+          </View>
 
-              <View className="express">
-                <View>配送方式</View>
-                {!R.isNil(freight.freightAmount) && (
-                  <View>
-                    快递:
-                    {freight.freightAmount == 0
-                      ? "免邮"
-                      : "￥" + freight.freightAmount}
-                    <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
-                  </View>
-                )}
+          <View className="summary">
+            <Text className="title">合计</Text>
+            <View className="sub">
+              <View className="subTitle">商品总额</View>
+              <View className="subValue">
+                ￥{amount.buyGoodsItemAmount.toFixed(2)}
               </View>
             </View>
-          </CCardLite>
-        ))}
-
-      <View className="invoice">
-        <View>发票</View>
-        <View>{invoice.title}</View>
-      </View>
+            <View className="sub last">
+              <View className="subTitle">运费</View>
+              <View className="subValue">
+                {freight && freight.freightAmount > 0
+                  ? "￥" + freight.freightAmount.toFixed(2)
+                  : "免邮"}
+              </View>
+            </View>
+            <View className="sub">
+              <View className="subTitle">实际应付（含运费）</View>
+              <View className="subValue">
+                ￥
+                {(
+                  amount.buyGoodsItemAmount +
+                  (freight && freight.freightAmount ? freight.freightAmount : 0)
+                ).toFixed(2)}
+              </View>
+            </View>
+          </View>
+          <View className="toPay">
+            <CButton
+              theme="gardient"
+              size="small"
+              round={true}
+              onClick={() => {
+                console.log("to pay");
+              }}
+            >
+              立即付款
+            </CButton>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
 
 OrderConfirm.config = {
-  navigationBarTitleText: "订单确认",
+  navigationBarTitleText: "订单确认"
 };
 
 export default connect(({ order: { currentAddress } }) => ({
-  currentAddress,
+  currentAddress
 }))(OrderConfirm as any);
