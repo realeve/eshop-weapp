@@ -4,13 +4,16 @@ import dataCity from "./dataCity";
 import useSetState from "@/components/hooks/useSetState";
 import "./index.scss";
 
-const PagePicker = props => {
+// TODO - https://www.ccgold.cn/public/json/areaAll.json
+// 待对接地址列表
+
+const PagePicker = (props) => {
   let [idxProv, setIdxProv] = useState("340000");
   let [idxCity, setIdxCity] = useState("340100");
 
   const [state, setState] = useSetState({
     selector: [[], [], []],
-    selectorChecked: props.value
+    selectorChecked: props.value,
   });
 
   useEffect(() => {
@@ -19,15 +22,15 @@ const PagePicker = props => {
 
   useEffect(() => {
     let _city = Object.values(dataCity[340000]),
-      _prov = dataCity[86].map(item => item.address),
+      _prov = dataCity[86].map((item) => item.address),
       _area = Object.values(dataCity[340100]);
 
     setState({
-      selector: [_prov, _city, _area]
+      selector: [_prov, _city, _area],
     });
   }, []);
 
-  const onChange = e => {
+  const onChange = (e) => {
     let division = props.Division || " ";
     setState(
       {
@@ -36,7 +39,7 @@ const PagePicker = props => {
           division +
           state.selector[1][e.detail.value[1]] +
           division +
-          state.selector[2][e.detail.value[2]]
+          state.selector[2][e.detail.value[2]],
       },
       () => {
         props.onChange && props.onChange(state.selectorChecked);
@@ -44,7 +47,7 @@ const PagePicker = props => {
     );
   };
 
-  const onColumnChange = e => {
+  const onColumnChange = (e) => {
     let indexVal = e && e.detail;
     if (!indexVal) {
       return;
@@ -80,23 +83,23 @@ const PagePicker = props => {
         _area.push(dataCity[codes][item]);
       });
 
-      setState(old => {
+      setState((old) => {
         return {
-          selector: [old.selector[0], _city, _area]
+          selector: [old.selector[0], _city, _area],
         };
       });
     } else if (indexVal.column == 1) {
-      Object.keys(dataCity[idxProv]).forEach(item => {
+      Object.keys(dataCity[idxProv]).forEach((item) => {
         _city.push(item);
         setIdxCity(_city[indexVal.value]);
       });
-      Object.keys(dataCity[idxCity]).forEach(item => {
+      Object.keys(dataCity[idxCity]).forEach((item) => {
         _area.push(dataCity[idxCity][item]);
       });
 
-      setState(old => {
+      setState((old) => {
         return {
-          selector: [old.selector[0], old.selector[1], _area]
+          selector: [old.selector[0], old.selector[1], _area],
         };
       });
     }
