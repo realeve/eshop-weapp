@@ -42,7 +42,9 @@ const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [invalid, setInvalid] = useState(false);
   const [isInited, setIsInited] = useState<boolean>(false);
-  const [amount, setAmount] = useState<ICalcResult>();
+  const [amount, setAmount] = useState<ICalcResult>(null);
+
+  const [freight, setFreight] = useState<ICalcFreight>({});
   const [invoice, setInvoice] = useState<InvoiceType>({
     type: "电子发票",
     title: "个人",
@@ -61,12 +63,14 @@ const OrderConfirm = ({ currentAddress }) => {
   ) => {
     let data = goods || goodsList;
     let _addr = addr || address;
-    if (!data || !_addr || !_addr.addressId) {
+
+    if (!data || !_addr || !_addr.address_id) {
       return;
     }
+
     let preOrder = getPreOrder({
       data,
-      address: { addressId: _addr.addressId },
+      address: { addressId: _addr.address_id },
     });
     setLoading(true);
     if (preOrder) {
@@ -78,6 +82,11 @@ const OrderConfirm = ({ currentAddress }) => {
         .catch((e) => {
           fail(e.message);
         });
+
+      calcFreight(preOrder).then((f) => {
+        setLoading(false);
+        setFreight(f);
+      });
     }
   };
 
@@ -103,6 +112,7 @@ const OrderConfirm = ({ currentAddress }) => {
       return;
     }
     setData(currentAddress);
+    setSelectedAddr(currentAddress.addressId || 0);
   }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<IBuyGoodsItemVoList[]>([]);
@@ -140,45 +150,56 @@ const OrderConfirm = ({ currentAddress }) => {
     calc();
   }, [goodsList, address]);
 
+  console.log(amount);
+
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
-      {goodsList.map((item: IBuyGoodsItemVoList) => (
-        <CCardLite className="goodslist" key={item.commonId}>
-          <View className="shop">
-            <Image src={HomeIcon} className="icon" />
-            <Text className="title">{item.storeName}</Text>
-          </View>
+      {amount &&
+        amount.storeList.map((item: IBuyGoodsItemVoList) => (
+          <CCardLite className="goodslist" key={item.commonId}>
+            <View className="shop">
+              <Image src={HomeIcon} className="icon" />
+              <Text className="title">{item.storeName}</Text>
+            </View>
 
-          <View className="item">
-            <View className="main">
-              <Image src={item.spuImageSrc} className="img" />
-              <View className="detail">
-                <View className="main">
-                  <Text className="goods_name">{item.goodsName} aasd</Text>
-                  <CPrice retail={item.goodsPrice} />
-                </View>
+            <View className="item">
+              {item.buyGoodsItemVoList.map((goods) => (
+                <View className="main" key={goods.commonId}>
+                  <Image src={item.spuImageSrc} className="img" />
+                  <View className="detail">
+                    <View className="main">
+                      <Text className="goods_name">{goods.goodsName} aasd</Text>
+                      <CPrice retail={goods.goodsPrice} />
+                    </View>
 
-                <View className="sub">
-                  <Text>{item.goodsFullSpecs}</Text>
-                  <Text>
-                    x {item.spuBuyNum}
-                    {item.unitName}
-                  </Text>
+                    <View className="sub">
+                      <Text>{goods.goodsFullSpecs}</Text>
+                      <Text>
+                        x {goods.spuBuyNum}
+                        {goods.unitName}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
+              ))}
+
+              <View className="express">
+                <View>配送方式</View>
+                {!R.isNil(freight.freightAmount) && (
+                  <View>
+                    快递:
+                    {freight.freightAmount == 0
+                      ? "免邮"
+                      : "￥" + freight.freightAmount}
+                    <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
+                  </View>
+                )}
               </View>
             </View>
-            <View className="express">
-              <View>配送方式</View>
-              <View>
-                快递:
-                {item.goodsFreight == 0 ? "免邮" : "￥" + item.goodsFreight}
-                <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
-              </View>
-            </View>
-          </View>
-        </CCardLite>
-      ))}
+          </CCardLite>
+        ))}
+
       <View className="invoice">
         <View>发票</View>
         <View>{invoice.title}</View>

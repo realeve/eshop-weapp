@@ -14,7 +14,7 @@ import {
   TCartType,
   ILocalStorageCartDetail,
   IShopInfo,
-  IShoppingCartCount
+  IShoppingCartCount,
 } from "./cart";
 import * as R from "ramda";
 import * as lib from "@/utils/lib";
@@ -148,27 +148,27 @@ export interface IBuyGoodsItemVoList {
  */
 export const getShoppingCartParam: (
   data: ICartItem | ICartItem[]
-) => ShoppingCartItem = data => ({
+) => ShoppingCartItem = (data) => ({
   buyData: JSON.stringify(
     R.type(data) === "Array" ? R.clone(data) : [R.clone(data)]
   ),
   bundlingId: 0,
   clientType: CLIENT_TYPE.web,
-  timestamp: lib.timestamp()
+  timestamp: lib.timestamp(),
 });
 
-export const cartAdd: (
-  items: ICartItems
-) => Promise<ICartItemsResponse> = items =>
+export const cartAdd: (items: ICartItems) => Promise<ICartItemsResponse> = (
+  items
+) =>
   axios({
     method: "post",
     url: API.CART_ADD as string,
-    data: items
+    data: items,
   });
 
 export const cartEdit: ({
   cartId,
-  buyNum
+  buyNum,
 }: {
   cartId: string;
   buyNum: number;
@@ -178,15 +178,15 @@ export const cartEdit: ({
     data: {
       cartId,
       buyNum,
-      clientType: CLIENT_TYPE.web
-    }
+      clientType: CLIENT_TYPE.web,
+    },
   }).then((res: { goodsStorage?: number; error?: string }) => {
     // console.log(res, 'resress数据信息');
     if (!R.isNil(res.goodsStorage)) {
       return { success: false, num: res.goodsStorage };
     }
     return {
-      success: true
+      success: true,
     };
   });
 
@@ -201,8 +201,8 @@ export const cartDel: (
     ...(API.CART_DEL as {}),
     data: {
       cartId: cartId.join(","),
-      clientType: CLIENT_TYPE.web
-    }
+      clientType: CLIENT_TYPE.web,
+    },
   }).then(async () => {
     let data = await readShoppingCart();
     refreshShoppingCart(data, dispatch);
@@ -210,16 +210,16 @@ export const cartDel: (
 };
 
 // 购物车数据转换，用于前台显示
-export const convertCartData: (
-  data: IShoppingCart
-) => IShoppingCartCount = data => {
+export const convertCartData: (data: IShoppingCart) => IShoppingCartCount = (
+  data
+) => {
   // 有效商品
   let res = data.cartStoreVoList.map(handleCartItem);
 
   let cartData = combineCartData(res);
   return {
     ...cartData,
-    type: "online"
+    type: "online",
   };
 };
 
@@ -227,12 +227,12 @@ const readShoppingCart = () =>
   axios({
     ...(API.CART_LIST as {}),
     data: {
-      clientType: CLIENT_TYPE.web
-    }
+      clientType: CLIENT_TYPE.web,
+    },
   }).then(convertCartData);
 
 // 购物车数据转换
-let handleCartItem: (res: ICartStoreVoList) => IShoppingCartItem = res => {
+let handleCartItem: (res: ICartStoreVoList) => IShoppingCartItem = (res) => {
   let detail = R.map((item: ICartSpuVoList) =>
     item.cartItemVoList.map((cartItem: ICartItemVoList) => ({
       spuid: String(cartItem.commonId),
@@ -250,21 +250,21 @@ let handleCartItem: (res: ICartStoreVoList) => IShoppingCartItem = res => {
       storage: cartItem.goodsStorage,
       img: cartItem.imageSrc,
       totalPrice: cartItem.itemAmount,
-      unitName: cartItem.unitName
+      unitName: cartItem.unitName,
     }))
   )(res.cartSpuVoList);
 
   return {
     total: {
       num: res.buyNum,
-      price: res.cartAmount
+      price: res.cartAmount,
     },
     shop: {
       id: res.storeId,
-      name: res.storeName
+      name: res.storeName,
     },
 
-    detail: R.flatten(detail)
+    detail: R.flatten(detail),
   };
 };
 
@@ -280,7 +280,7 @@ export const combineCartData = (res: IShoppingCartItem[]) => {
 
   return {
     total: { num, price },
-    data: res
+    data: res,
   };
 };
 
@@ -293,9 +293,9 @@ export const refreshShoppingCart = (
     payload: {
       shoppingCart: {
         loading: false,
-        ...data
-      }
-    }
+        ...data,
+      },
+    },
   });
 };
 
@@ -328,19 +328,19 @@ export const setShoppingCart = async (
     lib.getType(data) === "array" ? data : [data]
   ) as ILocalStorageCartDetail[];
 
-  res = res.map(item => {
+  res = res.map((item) => {
     let id = String(item.id);
     // 可能还需要添加其它字段
     return {
       ...item,
-      id
+      id,
     };
   });
 
   // 合并购物车数量
   const combineCartItems: (
     data: ILocalStorageCartDetail[]
-  ) => ILocalStorageCartDetail = data => {
+  ) => ILocalStorageCartDetail = (data) => {
     let num = R.reduce(
       (sum, item: ILocalStorageCartDetail) => sum + Number(item.num || 0),
       0
@@ -357,18 +357,18 @@ export const setShoppingCart = async (
 
     return {
       num,
-      price
+      price,
     };
   };
 
   const loadLocalStorageToState: (
     data: ILocalStorageCartDetail[]
-  ) => IShoppingCartCount = data => {
-    let shopData = R.groupBy<ILocalStorageCartDetail>(item => item.shop.name)(
+  ) => IShoppingCartCount = (data) => {
+    let shopData = R.groupBy<ILocalStorageCartDetail>((item) => item.shop.name)(
       R.filter((value: ILocalStorageCartDetail) => !R.isNil(value.shop))(data)
     );
 
-    let res: IShoppingCartItem[] = R.values(shopData).map(item => {
+    let res: IShoppingCartItem[] = R.values(shopData).map((item) => {
       let shop = item[0].shop;
       let detail = item.map(({ shop, ...goodsDetail }) => goodsDetail);
       let total = calcTotal(detail);
@@ -376,14 +376,14 @@ export const setShoppingCart = async (
       return {
         shop,
         detail,
-        total
+        total,
       };
     });
 
     let cartData = combineCartData(res);
     return {
       ...cartData,
-      type: "offline"
+      type: "offline",
     };
   };
 
@@ -429,7 +429,7 @@ export const setShoppingCart = async (
     let nextState = combineShoppingData(res, prevState);
     Taro.setStorage({
       key: LocalStorageKeys.shoppingCart,
-      data: JSON.stringify(nextState)
+      data: JSON.stringify(nextState),
     });
     state = loadLocalStorageToState(nextState);
   } else {
@@ -448,9 +448,9 @@ export const loadShoppingCart = async (dispatch: Dispatch) => {
     payload: {
       shoppingCart: {
         loading: true,
-        data: []
-      }
-    }
+        data: [],
+      },
+    },
   });
 
   // 载入完毕
@@ -460,9 +460,9 @@ export const loadShoppingCart = async (dispatch: Dispatch) => {
     payload: {
       shoppingCart: {
         loading: false,
-        ...data
-      }
-    }
+        ...data,
+      },
+    },
   });
 };
 
@@ -471,8 +471,8 @@ export const clearConfirmCart = (dispatch: Dispatch) => {
   dispatch({
     type: "common/setStore",
     payload: {
-      confirmCart: []
-    }
+      confirmCart: [],
+    },
   });
 };
 
@@ -480,8 +480,8 @@ export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
   dispatch({
     type: "common/setStore",
     payload: {
-      confirmCart
-    }
+      confirmCart,
+    },
   });
   Taro.setStorageSync(LocalStorageKeys.confirm, JSON.stringify(confirmCart));
 };
@@ -514,7 +514,7 @@ export const getShoppingCartAxiosParam: () =>
   let data = R.map(
     (item: ILocalStorageCartDetail) => ({
       buyNum: item.num,
-      goodsId: item.id
+      goodsId: item.id,
     }),
     res
   );
@@ -524,7 +524,7 @@ export const getShoppingCartAxiosParam: () =>
     clientType: CLIENT_TYPE.web,
     isCart: 0,
     isExistBundling: 0,
-    isGroup: 0
+    isGroup: 0,
   };
 };
 
@@ -605,13 +605,13 @@ export interface IBooking {
   shipTimeTypeList: { name: string; id: number }[];
 }
 
-export const step1Detail: (
-  params: IBookingDetail
-) => Promise<IBooking> = params =>
+export const step1Detail: (params: IBookingDetail) => Promise<IBooking> = (
+  params
+) =>
   axios({
     method: "post",
     url: API.BUY_STEP1 as string,
-    data: params
+    data: params,
   });
 
 /**
@@ -643,11 +643,11 @@ export interface ICalcFreight {
   }[];
 }
 
-export const calcFreight: (data: IOrder) => Promise<ICalcFreight> = data =>
+export const calcFreight: (data: IOrder) => Promise<ICalcFreight> = (data) =>
   axios({
     method: "post",
     url: API.CALC_FREIGHT as string,
-    data
+    data,
   });
 
 export interface ICalcResult {
@@ -661,11 +661,11 @@ export interface ICalcResult {
   }[];
 }
 
-export const calcFee: (data: IOrder) => Promise<ICalcResult> = data =>
+export const calcFee: (data: IOrder) => Promise<ICalcResult> = (data) =>
   axios({
     method: "post",
     url: API.CALC as string,
-    data
+    data,
   });
 
 export interface IOrderReq {
@@ -673,13 +673,13 @@ export interface IOrderReq {
   buyData: string;
 }
 
-export const step2Order: (
-  data: IOrderReq
-) => Promise<{ payId: number }> = data =>
+export const step2Order: (data: IOrderReq) => Promise<{ payId: number }> = (
+  data
+) =>
   axios({
     method: "post",
     url: API.BUY_STEP2 as string,
-    data
+    data,
   });
 
 export interface IPaymentreq {
@@ -704,10 +704,12 @@ export interface IPaymentResp {
   ];
 }
 
-export const getPayment: (data: IPaymentreq) => Promise<IPaymentResp> = data =>
+export const getPayment: (data: IPaymentreq) => Promise<IPaymentResp> = (
+  data
+) =>
   axios({
     ...(API.BUY_STEP3 as {}),
-    data
+    data,
   });
 
 export interface IPayReq {
@@ -732,20 +734,20 @@ export const getAlipayPrepayId: <T>(
   return axios({
     method: "post",
     url: url as string,
-    data
+    data,
   });
 };
 
-export const getUnionpaySignature: <T>(data: IPayReq) => Promise<T> = data =>
+export const getUnionpaySignature: <T>(data: IPayReq) => Promise<T> = (data) =>
   axios({
     ...(API.BUY_STEP4_UNIONPAY as {}),
-    data
+    data,
   });
-export const postPay: (payId: string) => Promise<number> = payId =>
+export const postPay: (payId: string) => Promise<number> = (payId) =>
   axios({
     url: API.BUY_POST as string,
     method: "post",
-    data: { payId }
+    data: { payId },
   });
 
 export type InvoiceType = {
@@ -760,7 +762,7 @@ export type InvoiceType = {
 };
 
 export const getFlatBooking: (booking: IBooking) => IBuyGoodsItemVoList[] = ({
-  buyStoreVoList
+  buyStoreVoList,
 }) => {
   return !buyStoreVoList
     ? []
@@ -768,9 +770,82 @@ export const getFlatBooking: (booking: IBooking) => IBuyGoodsItemVoList[] = ({
         buyStoreVoList.map(({ buyGoodsSpuVoList }) =>
           R.flatten(
             buyGoodsSpuVoList.map(({ buyGoodsItemVoList }) => [
-              ...buyGoodsItemVoList
+              ...buyGoodsItemVoList,
             ])
           )
         )
       );
+};
+
+export interface IGoodsList {
+  cartId: number;
+  goodsId: number;
+  commonId: number;
+  buyNum: number;
+}
+export interface IStoreInfo {
+  storeId: string;
+  goodsList: IGoodsList[];
+  receiverMessage?: string;
+  shipTimeType?: number;
+  invoiceTitle?: string;
+  invoiceContent?: string;
+  invoiceCode?: string;
+  conformId?: null;
+  voucherId?: null;
+}
+
+export const getStoreFromBooking: (
+  booking: IBuyGoodsItemVoList[]
+) => IStoreInfo[] = (booking) => {
+  let flatGoods = booking.map((item) => ({
+    storeId: String(item.storeId),
+    goods: {
+      cartId: item.cartId,
+      goodsId: item.goodsId,
+      commonId: item.commonId,
+      buyNum: item.buyNum,
+    },
+    // TODO 📝 📝 📝 📝 📝 📝
+    receiverMessage: "",
+    shipTimeType: 0,
+    invoiceTitle: "",
+    invoiceContent: "",
+    invoiceCode: "",
+    conformId: null,
+    voucherId: null,
+  }));
+  let groupGoods = R.groupBy(R.prop("storeId"), flatGoods);
+  return Object.keys(groupGoods).map((storeId) => ({
+    storeId,
+    goodsList: groupGoods[storeId].map((item) => item.goods),
+  }));
+};
+
+export const getPreOrder = ({
+  data,
+  address,
+}: {
+  data?: IBuyGoodsItemVoList[];
+  address?: {
+    addressId: number;
+  };
+}) => {
+  if (!data || R.isEmpty(data)) {
+    return;
+  }
+  let storeList = getStoreFromBooking(data);
+  return {
+    clientType: CLIENT_TYPE.web,
+    buyData: JSON.stringify({
+      addressId: address ? address.addressId : null,
+      paymentTypeCode: "online",
+      isCart: 0,
+      isExistBundling: "0",
+      isExistTrys: "0",
+      couponIdList: [],
+      usePoints: 0,
+      storeList,
+    }),
+  };
 };
