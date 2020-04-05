@@ -3,74 +3,100 @@
 
 .order_confirm {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: $bg;
 
-  .shop {
-    .icon {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
-    }
-    .title {
-      font-size: $fontSizeNormal;
-      color: $subTitle;
-    }
-    margin-bottom: 20px;
-  }
-  .item {
+  .goods_list {
     @extend .alignColumn;
-    .main {
-      @extend .alignRow;
-      .img {
-        width: 150px;
-        height: 150px;
-        margin-right: 20px;
+    height: calc(100vh - 90px);
+    flex: 1;
+    .shop {
+      .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
       }
-      .detail {
-        flex: 1;
-        @extend .alignColumn;
-        justify-content: space-between;
-        width: calc(100% - 170px);
-        .main {
-          @extend .alignRow;
+      .title {
+        font-size: $fontSizeNormal;
+        color: $subTitle;
+      }
+      margin-bottom: 20px;
+    }
+    .item {
+      @extend .alignColumn;
+      .main {
+        @extend .alignRow;
+        .img {
+          width: 150px;
+          height: 150px;
+          margin-right: 20px;
+        }
+        .detail {
+          flex: 1;
+          @extend .alignColumn;
           justify-content: space-between;
-          color: $mainTitle;
-          font-size: $heading-4-size;
-          .goods_name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            color: inherit;
-            line-height: 1.5;
-            margin-right: 10px;
+          width: calc(100% - 170px);
+          .main {
+            @extend .alignRow;
+            justify-content: space-between;
+            color: $mainTitle;
+            font-size: $heading-4-size;
+            .goods_name {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              color: inherit;
+              line-height: 1.5;
+              margin-right: 10px;
+            }
+          }
+          .sub {
+            @extend .alignRow;
+            justify-content: space-between;
+            font-size: $fontSizeNormal;
+            color: $mainTitle;
           }
         }
-        .sub {
-          @extend .alignRow;
-          justify-content: space-between;
-          font-size: $fontSizeNormal;
-          color: $mainTitle;
-        }
+      }
+
+      .splitLine {
+        margin: 15px 0;
+        border-bottom: 1px solid $splitLine;
+      }
+
+      .count {
+        flex: 1;
+        @extend .alignRow;
+        justify-content: flex-end;
+        font-size: $heading-4-size;
+        color: $subTitle;
       }
     }
-    .express {
-      flex: 1;
+    .invoice {
+      margin-bottom: 16px;
+      padding: 30px 34px;
+      background: #fff;
+
       @extend .alignRow;
       justify-content: space-between;
       font-size: $heading-4-size;
       color: $subTitle;
-      padding: 30px 0 20px;
-      border-bottom: 1px solid $splitLine;
     }
   }
-  .invoice {
-    padding: 30px 34px;
-    background: #fff;
 
+  .pay {
     @extend .alignRow;
-    justify-content: space-between;
-    font-size: $heading-4-size;
-    color: $subTitle;
+    justify-content: flex-end;
+    align-items: center;
+    height: 90px;
+    background: $white;
+
+    .btn {
+      background: $lightYellow;
+      color: $white;
+      width: 230px;
+      height: 100%;
+      @extend .center;
+    }
   }
 }

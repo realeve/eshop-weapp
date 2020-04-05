@@ -1,5 +1,5 @@
 import Taro, { useEffect, useState } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Text, Image, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
 
@@ -154,56 +154,79 @@ const OrderConfirm = ({ currentAddress }) => {
 
   return (
     <View className="order_confirm">
-      <AddressPanel data={address} />
-      {amount &&
-        amount.storeList.map((item: IBuyGoodsItemVoList) => (
-          <CCardLite className="goodslist" key={item.commonId}>
-            <View className="shop">
-              <Image src={HomeIcon} className="icon" />
-              <Text className="title">{item.storeName}</Text>
-            </View>
-
-            <View className="item">
-              {item.buyGoodsItemVoList.map((goods) => (
-                <View className="main" key={goods.commonId}>
-                  <Image src={item.spuImageSrc} className="img" />
-                  <View className="detail">
-                    <View className="main">
-                      <Text className="goods_name">{goods.goodsName} aasd</Text>
-                      <CPrice retail={goods.goodsPrice} />
-                    </View>
-
-                    <View className="sub">
-                      <Text>{goods.goodsFullSpecs}</Text>
-                      <Text>
-                        x {goods.spuBuyNum}
-                        {goods.unitName}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              ))}
-
-              <View className="express">
-                <View>配送方式</View>
-                {!R.isNil(freight.freightAmount) && (
-                  <View>
-                    快递:
-                    {freight.freightAmount == 0
-                      ? "免邮"
-                      : "￥" + freight.freightAmount}
-                    <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
-                  </View>
-                )}
+      <ScrollView scrollY className="goods_list">
+        <AddressPanel data={address} />
+        {amount &&
+          amount.storeList.map((item: IBuyGoodsItemVoList) => (
+            <CCardLite className="goodslist" key={item.commonId}>
+              <View className="shop">
+                <Image src={HomeIcon} className="icon" />
+                <Text className="title">{item.storeName}</Text>
               </View>
-            </View>
-          </CCardLite>
-        ))}
 
-      <View className="invoice">
-        <View>发票</View>
-        <View>{invoice.title}</View>
-      </View>
+              <View className="item">
+                {item.buyGoodsItemVoList.map((goods) => (
+                  <View className="main" key={goods.commonId}>
+                    <Image src={goods.imageSrc} className="img" />
+                    <View className="detail">
+                      <View className="main">
+                        <Text className="goods_name">
+                          {goods.goodsName} aasd
+                        </Text>
+                        <CPrice retail={goods.goodsPrice} />
+                      </View>
+
+                      <View className="sub">
+                        <Text>{goods.goodsFullSpecs}</Text>
+                        <Text>
+                          x {goods.spuBuyNum}
+                          {goods.unitName}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                ))}
+
+                <View className="splitLine" />
+                <View className="count">
+                  <View style={{ marginRight: "5px" }}>
+                    共计{item.buyGoodsItemVoList.length}件, 合计
+                  </View>
+                  <CPrice retail={item.buyAmount0} />
+                </View>
+              </View>
+            </CCardLite>
+          ))}
+
+        <View className="invoice">
+          <View>配送方式</View>
+          {!R.isNil(freight.freightAmount) && (
+            <View>
+              快递:
+              {freight.freightAmount == 0
+                ? "免邮"
+                : "￥" + freight.freightAmount}
+              <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
+            </View>
+          )}
+        </View>
+
+        <View className="invoice">
+          <View>发票</View>
+          <View>{invoice.title}</View>
+        </View>
+      </ScrollView>
+      {amount && (
+        <View className="pay">
+          <CPrice
+            retail={amount.buyGoodsItemAmount}
+            retailStyle={{ color: "#2c2e36", fontSize: "22px", width: "unset" }}
+          />
+          <View className="btn" style={{ marginLeft: "10px" }}>
+            确认支付
+          </View>
+        </View>
+      )}
     </View>
   );
 };
