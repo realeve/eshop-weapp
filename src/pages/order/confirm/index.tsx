@@ -7,7 +7,25 @@ import * as R from "ramda";
 import { CCardLite, CPrice } from "@/components/";
 import HomeIcon from "./shop.svg";
 
-import * as cartDb from "@/utils/cartDb";
+import {
+  ICalcResult,
+  ICalcFreight,
+  IStoreInfo,
+  IBuyData,
+  calcFreight,
+  step2Order,
+  IBooking,
+  IBuyGoodsItemVoList,
+  IOrderAddress,
+  step1Detail,
+  calcFee,
+  getShoppingCartAxiosParam,
+  getPreOrder,
+  getFlatBooking,
+  IBookingDetail,
+  InvoiceType,
+} from "@/utils/cartDb";
+
 import fail from "@/components/Toast/fail";
 
 import useFetch from "@/components/hooks/useFetch";
@@ -24,7 +42,10 @@ const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [invalid, setInvalid] = useState(false);
   const [isInited, setIsInited] = useState<boolean>(false);
-  const [invoice, setInvoice] = useState<cartDb.InvoiceType>({
+  const [amount, setAmount] = useState<ICalcResult>(null);
+
+  const [freight, setFreight] = useState<ICalcFreight>({});
+  const [invoice, setInvoice] = useState<InvoiceType>({
     type: "电子发票",
     title: "个人",
     username: "个人",
@@ -33,8 +54,41 @@ const OrderConfirm = ({ currentAddress }) => {
     mount: 0,
     email: "",
   });
-  const [origin, setOrigin] = useState<cartDb.IBooking>();
+  const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
+
+  const calc = (
+    goods?: IBuyGoodsItemVoList[],
+    addr?: Partial<IOrderAddress>
+  ) => {
+    let data = goods || goodsList;
+    let _addr = addr || address;
+
+    if (!data || !_addr || !_addr.address_id) {
+      return;
+    }
+
+    let preOrder = getPreOrder({
+      data,
+      address: { addressId: _addr.address_id },
+    });
+    setLoading(true);
+    if (preOrder) {
+      calcFee(preOrder)
+        .then((a) => {
+          setLoading(false);
+          setAmount(a);
+        })
+        .catch((e) => {
+          fail(e.message);
+        });
+
+      calcFreight(preOrder).then((f) => {
+        setLoading(false);
+        setFreight(f);
+      });
+    }
+  };
 
   const { data: address, reFetch: refreshAddress, setData } = useFetch<
     IModPanelItem
@@ -53,20 +107,19 @@ const OrderConfirm = ({ currentAddress }) => {
     },
   });
 
-  // console.log(address);
-
   useEffect(() => {
     if (!currentAddress.address_id) {
       return;
     }
-    // setData(currentAddress);
+    setData(currentAddress);
+    setSelectedAddr(currentAddress.addressId || 0);
   }, [JSON.stringify(currentAddress)]);
 
-  const [goodsList, setGoodsList] = useState<cartDb.IBuyGoodsItemVoList[]>([]);
+  const [goodsList, setGoodsList] = useState<IBuyGoodsItemVoList[]>([]);
 
   useEffect(() => {
     setLoading(true);
-    let params = cartDb.getShoppingCartAxiosParam();
+    let params = getShoppingCartAxiosParam();
     // console.log(params);
     setInvalid(!params);
     if (!params) {
@@ -74,14 +127,13 @@ const OrderConfirm = ({ currentAddress }) => {
     }
 
     setIsInited(true);
-    cartDb
-      .step1Detail(params as cartDb.IBookingDetail)
-      .then((data: cartDb.IBooking) => {
+    step1Detail(params as IBookingDetail)
+      .then((data: IBooking) => {
         let _data = R.clone(data);
         Reflect.deleteProperty(_data, "buyStoreVoList");
         setOrigin(_data);
         setSelectedAddr(_data.address ? _data.address.addressId || 0 : 0);
-        let flatGoods = cartDb.getFlatBooking(data) || [];
+        let flatGoods = getFlatBooking(data) || [];
         setGoodsList(flatGoods);
         setLoading(false);
       })
@@ -91,33 +143,67 @@ const OrderConfirm = ({ currentAddress }) => {
       });
   }, []);
 
+  useEffect(() => {
+    if (!goodsList || !address) {
+      return;
+    }
+    calc();
+  }, [goodsList, address]);
+
+  console.log(amount);
+
   return (
     <View className="order_confirm">
       <AddressPanel data={address} />
-      {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
-        <CCardLite className="goodslist" key={goodsItem.commonId}>
-          <View className="shop">
-            <Image src={HomeIcon} className="icon" />
-            <Text className="title">{goodsItem.storeName}</Text>
-          </View>
+      {amount &&
+        amount.storeList.map((item: IBuyGoodsItemVoList) => (
+          <CCardLite className="goodslist" key={item.commonId}>
+            <View className="shop">
+              <Image src={HomeIcon} className="icon" />
+              <Text className="title">{item.storeName}</Text>
+            </View>
 
-          <View className="item">
-            <Image src={goodsItem.spuImageSrc} className="img" />
+            <View className="item">
+              {item.buyGoodsItemVoList.map((goods) => (
+                <View className="main" key={goods.commonId}>
+                  <Image src={item.spuImageSrc} className="img" />
+                  <View className="detail">
+                    <View className="main">
+                      <Text className="goods_name">{goods.goodsName} aasd</Text>
+                      <CPrice retail={goods.goodsPrice} />
+                    </View>
 
-            <View className="detail">
-              <View className="main">
-                <Text className="goods_name">{goodsItem.goodsName} aasd</Text>
-                <CPrice retail={goodsItem.goodsPrice} />
-              </View>
+                    <View className="sub">
+                      <Text>{goods.goodsFullSpecs}</Text>
+                      <Text>
+                        x {goods.spuBuyNum}
+                        {goods.unitName}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
 
-              <View className="sub">
-                <Text>{goodsItem.goodsFullSpecs}</Text>
-                <Text>x {goodsItem.spuBuyNum}</Text>
+              <View className="express">
+                <View>配送方式</View>
+                {!R.isNil(freight.freightAmount) && (
+                  <View>
+                    快递:
+                    {freight.freightAmount == 0
+                      ? "免邮"
+                      : "￥" + freight.freightAmount}
+                    <Text className="at-icon item-extra__icon-arrow at-icon-chevron-right" />
+                  </View>
+                )}
               </View>
             </View>
-          </View>
-        </CCardLite>
-      ))}
+          </CCardLite>
+        ))}
+
+      <View className="invoice">
+        <View>发票</View>
+        <View>{invoice.title}</View>
+      </View>
     </View>
   );
 };
