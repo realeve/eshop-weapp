@@ -1,15 +1,12 @@
 import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
-import { Dispatch } from "redux";
 import "./index.scss";
 
-import { IOrderModel } from "@/models/common";
 import * as R from "ramda";
 import { CCardLite, CPrice } from "@/components/";
 import HomeIcon from "./shop.svg";
 
-import { IConfirmCart } from "@/utils/cart";
 import * as cartDb from "@/utils/cartDb";
 import fail from "@/components/Toast/fail";
 
@@ -17,10 +14,10 @@ import useFetch from "@/components/hooks/useFetch";
 import { API } from "@/utils/setting";
 
 import {
-  IModPanelItem,
-  IADDRESS,
   handleAddressList,
-} from "@/pages/user/address";
+  IADDRESS,
+  IModPanelItem,
+} from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
 
 const OrderConfirm = ({ currentAddress }) => {
@@ -39,22 +36,22 @@ const OrderConfirm = ({ currentAddress }) => {
   const [origin, setOrigin] = useState<cartDb.IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  // const { data: address, reFetch: refreshAddress, setData } = useFetch<
-  //   IModPanelItem
-  // >({
-  //   param: {
-  //     method: "post",
-  //     url: API.MEMBER_ADDRESS_LIST as string,
-  //   },
-  //   callback: (res: { addressList: IADDRESS[] }) => {
-  //     let resdata: IModPanelItem[] = handleAddressList(res);
-  //     let dist = resdata.filter((item) => item.isDefault)[0];
-  //     if (!dist) {
-  //       dist = resdata[0] || null;
-  //     }
-  //     return dist;
-  //   },
-  // });
+  const { data: address, reFetch: refreshAddress, setData } = useFetch<
+    IModPanelItem
+  >({
+    param: {
+      method: "post",
+      url: API.MEMBER_ADDRESS_LIST as string,
+    },
+    callback: (res: { addressList: IADDRESS[] }) => {
+      let resdata: IModPanelItem[] = handleAddressList(res);
+      let dist = resdata.filter((item) => item.isDefault)[0];
+      if (!dist) {
+        dist = resdata[0] || null;
+      }
+      return dist;
+    },
+  });
 
   // console.log(address);
 
@@ -96,7 +93,7 @@ const OrderConfirm = ({ currentAddress }) => {
 
   return (
     <View className="order_confirm">
-      {/* <AddressPanel data={address} /> */}
+      <AddressPanel data={address} />
       {goodsList.map((goodsItem: cartDb.IBuyGoodsItemVoList) => (
         <CCardLite className="goodslist" key={goodsItem.commonId}>
           <View className="shop">
