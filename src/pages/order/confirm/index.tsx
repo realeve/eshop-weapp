@@ -10,7 +10,7 @@ import HomeIcon from "./shop.svg";
 import {
   ICalcResult,
   ICalcFreight,
-  IStoreInfo,
+  removeConfirmCart,
   IBuyData,
   calcFreight,
   step2Order,
@@ -27,9 +27,11 @@ import {
 } from "@/utils/cartDb";
 
 import fail from "@/components/Toast/fail";
+import success from "@/components/Toast/success";
 
 import useFetch from "@/components/hooks/useFetch";
-import { API } from "@/utils/setting";
+
+import { API, CLIENT_TYPE } from "@/utils/setting";
 
 import {
   handleAddressList,
@@ -38,24 +40,28 @@ import {
 } from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
 
+const invoice: InvoiceType = {
+  type: "电子发票",
+  title: "个人",
+  username: "个人",
+  sn: "",
+  content: "明细",
+  mount: 0,
+  email: "",
+};
+
 const OrderConfirm = ({ currentAddress }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [invalid, setInvalid] = useState(false);
-  const [isInited, setIsInited] = useState<boolean>(false);
+  // const [invalid, setInvalid] = useState(false);
+  // const [isInited, setIsInited] = useState<boolean>(false);
   const [amount, setAmount] = useState<ICalcResult>(null);
 
   const [freight, setFreight] = useState<ICalcFreight>({});
-  const [invoice, setInvoice] = useState<InvoiceType>({
-    type: "电子发票",
-    title: "个人",
-    username: "个人",
-    sn: "",
-    content: "明细",
-    mount: 0,
-    email: "",
-  });
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
+
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [payId, setPayId] = useState<number | null>(null);
 
   const calc = (
     goods?: IBuyGoodsItemVoList[],
@@ -90,9 +96,7 @@ const OrderConfirm = ({ currentAddress }) => {
     }
   };
 
-  const { data: address, reFetch: refreshAddress, setData } = useFetch<
-    IModPanelItem
-  >({
+  const { data: address, setData } = useFetch<IModPanelItem>({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string,
@@ -120,13 +124,12 @@ const OrderConfirm = ({ currentAddress }) => {
   useEffect(() => {
     setLoading(true);
     let params = getShoppingCartAxiosParam();
-    // console.log(params);
-    setInvalid(!params);
+    // setInvalid(!params);
     if (!params) {
       return;
     }
 
-    setIsInited(true);
+    // setIsInited(true);
     step1Detail(params as IBookingDetail)
       .then((data: IBooking) => {
         let _data = R.clone(data);
@@ -149,6 +152,83 @@ const OrderConfirm = ({ currentAddress }) => {
     }
     calc();
   }, [goodsList, address]);
+
+  let [userMessages, setUserMessages] = useState("");
+
+  const submit = () => {
+    // console.log('prepared to book an order...');
+
+    // 特品支付确认页
+    const isSpecial = false;
+
+    if (typeof goodsList === "undefined") {
+      return;
+    }
+
+    if (isSpecial) {
+      // 跳转到支付订单页
+      success(`/order/topay/{payId}`);
+      return;
+    }
+    let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
+
+    let storeList = R.keys(goodsGroupByStore).map((storeId) => ({
+      storeId: String(storeId),
+      receiverMessage: JSON.stringify(userMessages),
+      shipTimeType: 0,
+      invoiceTitle: invoice.username + "-" + invoice.title,
+      invoiceContent: invoice.content,
+      invoiceCode: invoice.code,
+      conformId: null,
+      voucherId: null,
+      goodsList: goodsGroupByStore[storeId].map(
+        ({ buyNum, goodsId, cartId, commonId }) => ({
+          buyNum,
+          goodsId,
+          cartId,
+          commonId,
+        })
+      ),
+    }));
+
+    let buyData: IBuyData = {
+      addressId: selectedAddr,
+      paymentTypeCode: "online",
+      isCart: 0,
+      isExistBundling: 0,
+      isExistTrys: origin ? origin.isExistTrys : 0,
+      couponIdList: [],
+      usePoints: 0,
+      storeList,
+    };
+
+    console.log("send to book an order:", {
+      clientType: CLIENT_TYPE.web,
+      buyData,
+    });
+    // return;
+    setLoading(true);
+
+    step2Order({
+      clientType: CLIENT_TYPE.web,
+      buyData: JSON.stringify(buyData),
+    })
+      .then(({ payId }) => {
+        setLoading(false);
+
+        // 跳转到支付页
+        success(`接下来处理这个支付id:${payId}`);
+
+        console.log(`接下来处理这个支付id:${payId}`);
+
+        // 清除localstorage购物车信息
+        removeConfirmCart();
+      })
+      .catch((err) => {
+        fail(`订单创建失败：${err.message}`);
+        setLoading(false);
+      });
+  };
 
   console.log(amount);
 
@@ -222,7 +302,7 @@ const OrderConfirm = ({ currentAddress }) => {
             retail={amount.buyGoodsItemAmount}
             retailStyle={{ color: "#2c2e36", fontSize: "22px", width: "unset" }}
           />
-          <View className="btn" style={{ marginLeft: "10px" }}>
+          <View className="btn" style={{ marginLeft: "10px" }} onClick={submit}>
             确认支付
           </View>
         </View>
