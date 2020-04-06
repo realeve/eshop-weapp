@@ -10,37 +10,46 @@
     @extend .alignColumn;
     height: calc(100vh - 90px);
     flex: 1;
+
     .shop {
       .icon {
         width: 24px;
         height: 24px;
         margin-right: 10px;
       }
+
       .title {
         font-size: $fontSizeNormal;
         color: $subTitle;
       }
+
       margin-bottom: 20px;
     }
+
     .item {
       @extend .alignColumn;
+
       .main {
         @extend .alignRow;
+
         .img {
           width: 150px;
           height: 150px;
           margin-right: 20px;
         }
+
         .detail {
           flex: 1;
           @extend .alignColumn;
           justify-content: space-between;
           width: calc(100% - 170px);
+
           .main {
             @extend .alignRow;
             justify-content: space-between;
             color: $mainTitle;
             font-size: $heading-4-size;
+
             .goods_name {
               overflow: hidden;
               text-overflow: ellipsis;
@@ -50,6 +59,7 @@
               margin-right: 10px;
             }
           }
+
           .sub {
             @extend .alignRow;
             justify-content: space-between;
@@ -71,7 +81,9 @@
     .splitLine {
       margin: 15px 0;
       border-bottom: 1px solid $splitLine;
+      min-height: 1px;
     }
+
     .invoice {
       margin-bottom: 16px;
       padding: 30px 34px;
@@ -82,6 +94,7 @@
       font-size: $heading-4-size;
       color: $subTitle;
     }
+
     .summary {
       margin-bottom: 16px;
       padding: 30px 34px;
@@ -89,11 +102,13 @@
       font-size: $heading-4-size;
       color: $subTitle;
       @extend .alignColumn;
+
       .title {
         font-size: $heading-3-size;
         padding-bottom: 15px;
         font-weight: bold;
       }
+
       .item {
         padding: 10px 0;
         @extend .alignRow;

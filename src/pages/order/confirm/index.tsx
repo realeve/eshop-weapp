@@ -23,7 +23,7 @@ import {
   getPreOrder,
   getFlatBooking,
   IBookingDetail,
-  InvoiceType,
+  InvoiceType
 } from "@/utils/cartDb";
 
 import fail from "@/components/Toast/fail";
@@ -36,7 +36,7 @@ import { API, CLIENT_TYPE } from "@/utils/setting";
 import {
   handleAddressList,
   IADDRESS,
-  IModPanelItem,
+  IModPanelItem
 } from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
 
@@ -47,7 +47,7 @@ const invoice: InvoiceType = {
   sn: "",
   content: "明细",
   mount: 0,
-  email: "",
+  email: ""
 };
 
 const OrderConfirm = ({ currentAddress }) => {
@@ -76,20 +76,20 @@ const OrderConfirm = ({ currentAddress }) => {
 
     let preOrder = getPreOrder({
       data,
-      address: { addressId: _addr.address_id },
+      address: { addressId: _addr.address_id }
     });
     setLoading(true);
     if (preOrder) {
       calcFee(preOrder)
-        .then((a) => {
+        .then(a => {
           setLoading(false);
           setAmount(a);
         })
-        .catch((e) => {
+        .catch(e => {
           fail(e.message);
         });
 
-      calcFreight(preOrder).then((f) => {
+      calcFreight(preOrder).then(f => {
         setLoading(false);
         setFreight(f);
       });
@@ -99,16 +99,16 @@ const OrderConfirm = ({ currentAddress }) => {
   const { data: address, setData } = useFetch<IModPanelItem>({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string,
+      url: API.MEMBER_ADDRESS_LIST as string
     },
     callback: (res: { addressList: IADDRESS[] }) => {
       let resdata: IModPanelItem[] = handleAddressList(res);
-      let dist = resdata.filter((item) => item.isDefault)[0];
+      let dist = resdata.filter(item => item.isDefault)[0];
       if (!dist) {
         dist = resdata[0] || null;
       }
       return dist;
-    },
+    }
   });
 
   useEffect(() => {
@@ -140,7 +140,7 @@ const OrderConfirm = ({ currentAddress }) => {
         setGoodsList(flatGoods);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         fail(`出错啦：${err.message}！`);
         setLoading(false);
       });
@@ -172,7 +172,7 @@ const OrderConfirm = ({ currentAddress }) => {
     }
     let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
 
-    let storeList = R.keys(goodsGroupByStore).map((storeId) => ({
+    let storeList = R.keys(goodsGroupByStore).map(storeId => ({
       storeId: String(storeId),
       receiverMessage: JSON.stringify(userMessages),
       shipTimeType: 0,
@@ -186,9 +186,9 @@ const OrderConfirm = ({ currentAddress }) => {
           buyNum,
           goodsId,
           cartId,
-          commonId,
+          commonId
         })
-      ),
+      )
     }));
 
     let buyData: IBuyData = {
@@ -199,19 +199,19 @@ const OrderConfirm = ({ currentAddress }) => {
       isExistTrys: origin ? origin.isExistTrys : 0,
       couponIdList: [],
       usePoints: 0,
-      storeList,
+      storeList
     };
 
     console.log("send to book an order:", {
       clientType: CLIENT_TYPE.web,
-      buyData,
+      buyData
     });
     // return;
     setLoading(true);
 
     step2Order({
       clientType: CLIENT_TYPE.web,
-      buyData: JSON.stringify(buyData),
+      buyData: JSON.stringify(buyData)
     })
       .then(({ payId }) => {
         setLoading(false);
@@ -224,7 +224,7 @@ const OrderConfirm = ({ currentAddress }) => {
         // 清除localstorage购物车信息
         removeConfirmCart();
       })
-      .catch((err) => {
+      .catch(err => {
         fail(`订单创建失败：${err.message}`);
         setLoading(false);
       });
@@ -245,7 +245,7 @@ const OrderConfirm = ({ currentAddress }) => {
               </View>
 
               <View className="item">
-                {item.buyGoodsItemVoList.map((goods) => (
+                {item.buyGoodsItemVoList.map(goods => (
                   <View className="main" key={goods.commonId}>
                     <Image src={goods.imageSrc} className="img" />
                     <View className="detail">
@@ -342,9 +342,9 @@ const OrderConfirm = ({ currentAddress }) => {
 };
 
 OrderConfirm.config = {
-  navigationBarTitleText: "订单确认",
+  navigationBarTitleText: "订单确认"
 };
 
 export default connect(({ order: { currentAddress } }) => ({
-  currentAddress,
+  currentAddress
 }))(OrderConfirm as any);
