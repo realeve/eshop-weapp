@@ -329,7 +329,10 @@ const OrderConfirm = ({ currentAddress }) => {
       {amount && (
         <View className="pay">
           <CPrice
-            retail={amount.buyGoodsItemAmount}
+            retail={(
+              amount.buyGoodsItemAmount +
+              (freight && freight.freightAmount ? freight.freightAmount : 0)
+            ).toFixed(2)}
             retailStyle={{ color: "#2c2e36", fontSize: "22px", width: "unset" }}
           />
           <View className="btn" style={{ marginLeft: "10px" }} onClick={submit}>
