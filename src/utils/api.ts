@@ -72,6 +72,7 @@ export const API: {
   BUY_STEP3: { method: "post", url: "/member/buy/show/payment" },
   BUY_STEP4_ALIPAY: "/member/buy/pay/web/alipay",
   BUY_STEP4_WECHAT: "/member/buy/pay/web/wxpay",
+  BUY_STEP4_MP: "/member/buy/pay/app/wxpay", //"/member/buy/pay/mp",// TODO 在调试中暂时以微信原生app替代，待小程序支付申请后
   BUY_STEP4_UNIONPAY: { method: "post", url: "/member/buy/pay/union" },
   BUY_POST: "/member/buy/pay/success",
   BUY_ISPAIED: { method: "post", url: "/member/buy/pay/isSuccess" },

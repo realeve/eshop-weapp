@@ -61,13 +61,15 @@ export enum CLIENT_TYPE {
   ios = "ios",
   wap = "wap",
   wechat = "wechat",
-  web = "wechat" //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
+  web = "wechat", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
+  mp = 'mp',//微信小程序
 }
 
 export enum PAYMENT {
   alipay = "alipay",
   wechat = "wxpay",
-  unionpay = "unionpay"
+  unionpay = "unionpay",
+  mp = "mp",// 微信小程序
 }
 
 export { domain, host };

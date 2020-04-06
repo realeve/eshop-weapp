@@ -14,6 +14,7 @@ import {
   IBuyData,
   calcFreight,
   step2Order,
+  getMpPrepayId,
   IBooking,
   IBuyGoodsItemVoList,
   IOrderAddress,
@@ -39,6 +40,7 @@ import {
   IModPanelItem
 } from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
+import hmacSHA512 from "crypto-js/hmac-sha512";
 
 const invoice: InvoiceType = {
   type: "电子发票",
@@ -209,20 +211,24 @@ const OrderConfirm = ({ currentAddress }) => {
     // return;
     setLoading(true);
 
+    // TODO 测试中使用app代替，待申请小程序开发者账户并开通支付后替换为mp
+    // TODO 因微信小程序支付生态的限制，在step2生成订单后，略去选择支付方式，直接调用微信支付
     step2Order({
-      clientType: CLIENT_TYPE.web,
+      clientType: CLIENT_TYPE.ios,
       buyData: JSON.stringify(buyData)
     })
       .then(({ payId }) => {
         setLoading(false);
 
         // 跳转到支付页
-        success(`接下来处理这个支付id:${payId}`);
+        // success(`接下来处理这个支付id:${payId}`);
 
-        console.log(`接下来处理这个支付id:${payId}`);
+        getMpPrepayId({ payId, predepositPay: 0 }).then(res => {
+          console.log("支付第四步", res);
 
-        // 清除localstorage购物车信息
-        removeConfirmCart();
+          // 清除localstorage购物车信息
+          removeConfirmCart();
+        });
       })
       .catch(err => {
         fail(`订单创建失败：${err.message}`);
