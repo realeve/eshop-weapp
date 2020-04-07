@@ -7,7 +7,8 @@ export const htmlFormat = body => {
       .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || ""
   )
     .replace(/(?!<((|\/)h4|(|\/)p).*?>)<.*?>/gim, "")
-    .replace(/>( |\t)+\</gim, "><");
+    .replace(/>( |\t)+\</gim, "><")
+    .trim();
 };
 
 export const HTML = `<!DOCTYPE html>
