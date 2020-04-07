@@ -378,3 +378,13 @@ export function jump(options) {
     });
   }
 }
+
+export const htmlFormat = body => {
+  return (
+    ((String(body) || "")
+      .replace(/(  +)/g, " ")
+      .replace(/\r|\n/g, "")
+      .replace(/>( |\t)+\</gim, "><")
+      .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || ""
+  ).trim();
+};

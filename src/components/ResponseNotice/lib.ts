@@ -1,15 +1,4 @@
-export const htmlFormat = body => {
-  return (
-    ((body || "")
-      .replace(/(  +)/g, " ")
-      .replace(/> /g, ">")
-      .replace(/\r|\n/g, "")
-      .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || ""
-  )
-    .replace(/(?!<((|\/)h4|(|\/)p).*?>)<.*?>/gim, "")
-    .replace(/>( |\t)+\</gim, "><")
-    .trim();
-};
+export { htmlFormat } from "@/utils/lib";
 
 export const HTML = `<!DOCTYPE html>
 <html lang="zh-cmn-Hans">

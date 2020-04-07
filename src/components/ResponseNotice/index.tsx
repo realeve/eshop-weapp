@@ -37,7 +37,7 @@ export default ({
       });
   }, [html]);
 
-  console.log(protocal);
+  // console.log(protocal);
 
   return (
     <View className="response__title">
