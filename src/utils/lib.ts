@@ -379,12 +379,26 @@ export function jump(options) {
   }
 }
 
+/**
+ * 处理htmlTag，供 Rich-Text组件调用，移除其中无效的空格、换行，防止出现多行空文字的bug
+ * <Text></Text>
+ * @params String 需要处理的html字符串
+ * @returns String 返回处理的结果
+ */
+export const handleHtmlTags = html =>
+  (String(html) || "")
+    .replace(/(  +)/g, " ")
+    .replace(/\r|\n/g, "")
+    .replace(/>( |\t)+\</gim, "><")
+    .trim();
+
+/**
+ *
+ * @param body 从服务端获取html的文本数据
+ * @returns 返回供 Rich-Text组件调用的字符串
+ */
 export const htmlFormat = body => {
-  return (
-    ((String(body) || "")
-      .replace(/(  +)/g, " ")
-      .replace(/\r|\n/g, "")
-      .replace(/>( |\t)+\</gim, "><")
-      .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || ""
-  ).trim();
+  return handleHtmlTags(
+    (String(body).match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || ""
+  );
 };
