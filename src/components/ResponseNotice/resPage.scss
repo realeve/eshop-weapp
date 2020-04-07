@@ -1,8 +1,50 @@
 @import "@/styles/theme.scss";
 
-.response__actions {
-  @extend .alignRow;
-  justify-content: space-around;
-  margin: 80px 0 40px 0;
-  width: 100%;
+.responseNotice {
+  color: $subTitle;
+
+  .reset,
+  .container,
+  .clause {
+    margin: 0;
+    padding: 0;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  .clause {
+
+    h4,
+    p,
+    div {
+      @extend .reset;
+    }
+
+
+    &_title {
+      @extend .reset;
+      text-align: center;
+      color: $mainTitle;
+      font-weight: bold;
+    }
+
+
+    &_text {
+      @extend .reset;
+      text-indent: 2em;
+    }
+
+    &_div {
+      @extend .reset;
+    }
+  }
+
+  .response__actions {
+    @extend .alignRow;
+    justify-content: space-around;
+    margin: 80px 0 40px 0;
+    width: 100%;
+  }
 }

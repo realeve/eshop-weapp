@@ -26,16 +26,19 @@ $shopHeight: 45px;
 
     .shop {
       height: $shopHeight;
+
       .icon {
         width: 24px;
         height: 24px;
         margin-right: 10px;
       }
+
       .title {
         font-size: $fontSizeNormal;
         color: $subTitle;
       }
     }
+
     .status {
       font-size: $fontSizeNormal;
       color: $yellow;
@@ -48,6 +51,7 @@ $shopHeight: 45px;
     padding: 12px 24px 18px;
     font-size: $fontSizeNormal;
   }
+
   .closeTime {
     @extend .action;
     padding: 12px 24px;
@@ -58,9 +62,11 @@ $shopHeight: 45px;
     @extend .action;
     color: $subTitle;
     position: relative;
+
     .payAmount {
       margin-left: 25px;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -103,12 +109,14 @@ $shopHeight: 45px;
 
       &-content {
         margin-right: 0;
+
         .item-content__info {
           &-subtitle {
             margin-top: 10px;
             color: $subTitle;
             font-size: $heading-4-size;
           }
+
           &-title {
             font-size: $heading-4-size;
           }

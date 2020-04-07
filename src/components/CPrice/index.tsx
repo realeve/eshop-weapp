@@ -45,7 +45,7 @@ const CPrice = (props: IPropPrice) => {
         <View
           className={classNames("cPrice_retail", priceClassName)}
           style={{
-            width: "45px",
+            minWidth: "45px",
             ...retailStyle
           }}
         >

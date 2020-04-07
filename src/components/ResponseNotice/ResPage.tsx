@@ -26,33 +26,34 @@ const ResPage = ({
     onClose={() => onCancel(false)}
     scrollY
     // scrollWithAnimation
-    className="responseNotice"
   >
-    {isWEB ? (
-      <View dangerouslySetInnerHTML={{ __html: html }} />
-    ) : (
-      <RichText space="ensp" nodes={html || ""} style="line-height:2em;" />
-    )}
-    <View className="response__actions">
-      <CButton
-        theme="gardient"
-        size="small"
-        onClick={() => {
-          setShowPanel(needAgree);
-        }}
-        style="width:100px;"
-      >
-        {needAgree ? "同意" : "关闭"}
-      </CButton>
-      {needAgree && (
-        <CButton
-          style="width:100px;"
-          size="small"
-          onClick={() => onCancel(false)}
-        >
-          不同意
-        </CButton>
+    <View className="responseNotice">
+      {isWEB ? (
+        <View dangerouslySetInnerHTML={{ __html: html }} />
+      ) : (
+        <RichText space="ensp" nodes={html || ""} style="line-height:2em;" />
       )}
+      <View className="response__actions">
+        <CButton
+          theme="gardient"
+          size="small"
+          onClick={() => {
+            setShowPanel(needAgree);
+          }}
+          style="width:100px;"
+        >
+          {needAgree ? "同意" : "关闭"}
+        </CButton>
+        {needAgree && (
+          <CButton
+            style="width:100px;"
+            size="small"
+            onClick={() => onCancel(false)}
+          >
+            不同意
+          </CButton>
+        )}
+      </View>
     </View>
   </AtFloatLayout>
 );

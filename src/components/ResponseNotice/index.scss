@@ -3,19 +3,14 @@
 
 .response {
   &Notice {
-    color: $subTitle;
-    .title {
-      text-align: center;
-      color: $mainTitle;
-      margin-top: 48px;
-      font-weight: bold;
-    }
+
     .layout {
       &-header__title {
         text-align: center;
         padding-right: unset;
         color: $mainTitle;
       }
+
       &-body {
         padding: 0 40px;
       }
@@ -23,24 +18,30 @@
   }
 
   $iconSize: 30px;
+
   &__title {
     .at-checkbox {
+
       &:before,
       &:after {
         content: unset;
       }
+
       &__option {
         padding-left: 10px;
+
         &-wrap {
           padding-right: 5px;
         }
       }
+
       &__icon-cnt {
         margin-right: 0;
         width: $iconSize;
         height: $iconSize;
         min-width: $iconSize;
       }
+
       &__title {
         font-size: $font-size-xs;
         color: $yellow;

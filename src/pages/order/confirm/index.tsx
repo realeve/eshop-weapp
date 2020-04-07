@@ -214,7 +214,7 @@ const OrderConfirm = ({ currentAddress }) => {
     // TODO 测试中使用app代替，待申请小程序开发者账户并开通支付后替换为mp
     // TODO 因微信小程序支付生态的限制，在step2生成订单后，略去选择支付方式，直接调用微信支付
     step2Order({
-      clientType: CLIENT_TYPE.ios,
+      clientType: CLIENT_TYPE.ios, // TODO ios 待替换为mp
       buyData: JSON.stringify(buyData)
     })
       .then(({ payId }) => {

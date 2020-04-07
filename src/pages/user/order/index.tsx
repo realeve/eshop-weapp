@@ -135,7 +135,7 @@ const Order = () => {
                       <View className="item-content__info">
                         <View className="item-content__info-title spaceBetween">
                           <Text>{goodsItem.title}</Text>
-                          <Text>￥{goodsItem.price}</Text>
+                          <Text>￥{goodsItem.price.toFixed(2)}</Text>
                         </View>
                         <View className="item-content__info-subtitle spaceBetween">
                           <Text>{goodsItem.type}</Text>
@@ -152,7 +152,9 @@ const Order = () => {
                   运费：{"￥" + order.express || "包邮"}，共{order.goods.length}
                   件商品
                 </Text>
-                <Text className="payAmount">实付：￥{order.payAmount}</Text>
+                <Text className="payAmount">
+                  实付：￥{order.payAmount.toFixed(2)}
+                </Text>
               </View>
 
               {[EOrderStatus.sending, EOrderStatus.needPay].includes(

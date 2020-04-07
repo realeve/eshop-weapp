@@ -5,6 +5,7 @@ import "./index.scss";
 import { ISubscribe } from "../db";
 import classnames from "classnames";
 import { jump } from "@/utils/lib";
+import { OSS_URL } from "@/utils/setting";
 
 interface IProps {
   data: ISubscribe;
@@ -15,7 +16,14 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
   return (
     <View className={classnames("special__action", className)}>
       <View className="readme">
-        <ResponseNotice needAgree onChange={setAgree} />
+        <ResponseNotice
+          needAgree
+          onChange={setAgree}
+          html={
+            data.activityId &&
+            `${OSS_URL}/rules/escapeClause_${data.activityId}.html`
+          }
+        />
       </View>
 
       <View className="buy">
