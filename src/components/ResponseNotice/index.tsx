@@ -28,16 +28,15 @@ export default ({
       url: html
     })
       .then(e => {
-        console.log("...", e.data);
+        // console.log("...", e.data);
         setProtocal(htmlFormat(e.data));
       })
       .catch(e => {
-        console.log("eee", e);
+        // console.log("eee", e);
         setProtocal(htmlFormat(HTML));
       });
   }, [html]);
 
-  console.log(protocal);
   return (
     <View className="response__title">
       {needAgree ? (

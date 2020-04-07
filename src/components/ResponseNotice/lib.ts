@@ -1,9 +1,8 @@
 export const htmlFormat = (body) => {
-  console.log('body', body)
   return (((body || '').replace(/(  +)/g, " ")
     .replace(/> /g, ">")
     .replace(/\r|\n/g, "")
-    .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || "").replace(/<\s*div[^>]*>(.*?)<\s*\/\s*div>/g, '$1')
+    .match(/\<body\>([\s\S]*)\<\/body\>/) || [])[1] || "").replace(/<\s*div[^>]*>/g, '').replace(/<\/div>/g, '');
 }
 
 export const HTML = `<!DOCTYPE html>

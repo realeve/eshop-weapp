@@ -1,5 +1,12 @@
 @import "@/styles/theme.scss";
 
+h4,
+p,
+div {
+  @extend .reset;
+  margin: 0;
+}
+
 .responseNotice {
   color: $subTitle;
 
@@ -20,6 +27,7 @@
     p,
     div {
       @extend .reset;
+      margin: 0;
     }
 
 
