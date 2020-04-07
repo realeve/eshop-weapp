@@ -1,52 +1,15 @@
 @import "@/styles/theme.scss";
 
-h4,
-p,
-div {
-  @extend .reset;
-  margin: 0;
-}
-
 .responseNotice {
   color: $subTitle;
 
-  .reset,
-  .container,
-  .clause {
-    margin: 0;
-    padding: 0;
-    margin-block-start: 0px;
-    margin-block-end: 0px;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+  .clause_text {
+    text-indent: 2em;
   }
-
-  .clause {
-
-    h4,
-    p,
-    div {
-      @extend .reset;
-      margin: 0;
-    }
-
-
-    &_title {
-      @extend .reset;
-      text-align: center;
-      color: $mainTitle;
-      font-weight: bold;
-    }
-
-
-    &_text {
-      @extend .reset;
-      text-indent: 2em;
-    }
-
-    &_div {
-      @extend .reset;
-    }
+  .clause_title {
+    text-align: center;
+    color: $mainTitle;
+    font-weight: bold;
   }
 
   .response__actions {

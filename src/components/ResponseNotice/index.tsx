@@ -37,6 +37,8 @@ export default ({
       });
   }, [html]);
 
+  console.log(protocal);
+
   return (
     <View className="response__title">
       {needAgree ? (
