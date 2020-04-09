@@ -25,7 +25,8 @@
     "dev:rn": "npm run build:rn -- --watch",
     "dev:qq": "npm run build:qq -- --watch",
     "dev:quickapp": "npm run build:quickapp -- --watch",
-    "addpage": "node template"
+    "addpage": "node template",
+    "start": "rimraf dist && npm run build:weapp -- --watch"
   },
   "author": "",
   "license": "MIT",
