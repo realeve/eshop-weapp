@@ -29,7 +29,7 @@ const Special = ({ dispatch }: IProps) => {
     callback: e => handleSubscribe(e, dispatch),
     valid: () => specialId > "0"
   });
-  console.log(loading, subscribe);
+  // console.log(loading, subscribe);
 
   return (
     <View className="special_page">

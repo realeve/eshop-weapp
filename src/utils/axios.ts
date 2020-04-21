@@ -8,6 +8,7 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
+import { jump, clearUser } from '@/utils/lib';
 
 export interface GlobalAxios {
   host: string;
@@ -143,7 +144,11 @@ export const handleError = (error: {
     // that falls out of the range of 2xx
     let { data, status } = error.response;
     if (status === 401) {
-      //   router.push('/unlogin');
+      // jump("/pages/login/index");
+      // Taro.showToast({
+      //   title: '登录已失效', //"验证码无效",
+      //   icon: "none"
+      // })
     }
 
     const errortext = (codeMessage[status] || "") + (data.msg || "");
@@ -188,6 +193,15 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   }
 
   let { code, msg, datas } = data;
+  if (code === RESPONSE_CODES.noauth) {
+    // console.log('noauth', code);
+    // jump("/pages/login/index");
+    clearUser();
+    Taro.showToast({
+      title: '登录已失效', //"验证码无效",
+      icon: "none"
+    })
+  }
 
   if (datas.error) {
     return Promise.reject({
@@ -313,7 +327,7 @@ export let axios: <T extends {}>(
       baseURL: host,
       timeout: 30 * 1000,
       transformRequest: [
-        function(data) {
+        function (data) {
           let dataType = getType(data);
           switch (dataType) {
             case "object":

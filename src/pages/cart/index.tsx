@@ -29,7 +29,7 @@ interface IProps extends ICartModel {
 // const Summary = ({ total }) => <View>summary</View>;
 
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
-  console.log("connected", isLogin, shoppingCart);
+  // console.log("connected", isLogin, shoppingCart);
   let isEmpty = !(
     shoppingCart &&
     shoppingCart.total &&

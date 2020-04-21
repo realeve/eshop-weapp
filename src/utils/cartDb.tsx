@@ -223,13 +223,14 @@ export const convertCartData: (
   };
 };
 
-const readShoppingCart = () =>
-  axios({
+const readShoppingCart = () => {
+  return axios({
     ...(API.CART_LIST as {}),
     data: {
       clientType: CLIENT_TYPE.web
     }
   }).then(convertCartData);
+};
 
 // 购物车数据转换
 let handleCartItem: (res: ICartStoreVoList) => IShoppingCartItem = res => {
@@ -454,6 +455,9 @@ export const loadShoppingCart = async (dispatch: Dispatch) => {
   });
 
   // 载入完毕
+  if (!lib.isLogin()) {
+    return;
+  }
   let data = await readShoppingCart();
   dispatch({
     type: "setStore",
