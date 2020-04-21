@@ -40,7 +40,7 @@ import {
   IModPanelItem
 } from "@/pages/user/address/lib";
 import AddressPanel from "./components/AddressPanel";
-import hmacSHA512 from "crypto-js/hmac-sha512";
+import { pay } from "@/utils/login";
 
 const invoice: InvoiceType = {
   type: "电子发票",
@@ -225,9 +225,10 @@ const OrderConfirm = ({ currentAddress }) => {
 
         getMpPrepayId({ payId, predepositPay: 0 }).then(res => {
           console.log("支付第四步", res);
+          pay(res, removeConfirmCart);
 
           // 清除localstorage购物车信息
-          removeConfirmCart();
+          // removeConfirmCart();
         });
       })
       .catch(err => {
