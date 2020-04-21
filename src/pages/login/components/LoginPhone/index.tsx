@@ -47,30 +47,13 @@ const LoginPhone = ({ callback, dispatch }) => {
 
     // {"code":200,"datas":{"memberName":"u_001515689427","memberId":16,"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkNTVmMWRkYzdlODY0ZWQxOTk1NmZlYzZiZDJlN2E1NyIsInN1YiI6IndlY2hhdCIsImlhdCI6MTU4MTM0OTEwMywiZXhwIjoxNTgxOTUzOTAzLCJwYXJhbXMiOnsidWlkIjoxNiwidW5hbWUiOiJ1XzAwMTUxNTY4OTQyNyIsImZwIjoiZjNjNWE4NzdlNDUzMDg1MGViZjY0MzlkNjJhZjRlZWQiLCJycCI6MX19.Z6MJvi-ucNBtoXJXOGLhwqp57ufgr_8YwGQRSJavTg8"},"msg":null}
 
-    if (!loginToken) {
-      Taro.hideLoading();
-      return;
-    }
-
-    if (!loginToken.token && loginToken.statusText) {
-      fail("登录失败：" + loginToken.statusText);
-      Taro.hideLoading();
-      return;
-    }
-
     Taro.hideLoading();
-    Taro.setStorage({
-      key: LocalStorageKeys.token,
-      data: loginToken.token
-    });
 
     callback && callback();
 
     // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
     await loadMember(dispatch);
     jump({ url: "/pages/user/index" });
-    // 载入购物车
-    // loadShoppingCart(dispatch);
   };
 
   return (

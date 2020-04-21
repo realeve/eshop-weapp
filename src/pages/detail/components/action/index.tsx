@@ -67,48 +67,6 @@ const DetailAction = ({
       detailData: data
     };
     buyGoods(detail, data, dispatch, directBuy);
-    // let status = checkTime(data);
-    // if (!status) {
-    //   return;
-    // }
-    // if (goodsnum > data.number) {
-    //   fail("数量超出了限制");
-    //   return;
-    // }
-
-    // let cartItem = {
-    //   buyNum: goodsnum,
-    //   goodsId: data.goodsId || data.id
-    // };
-
-    // console.log(cartItem);
-    // success("待对接添加购物车逻辑");
-
-    // // 添加购物车
-    // let params: ShoppingCartItem = cartDb.getShoppingCartParam(cartItem);
-
-    // // 需要立即购买的商品信息；
-    // const cartConfirm = getLocalStorageConfigByData(data, cartItem);
-
-    // console.log(cartConfirm, directBuy);
-    // // // 立即购买
-    // if (directBuy) {
-    //   cartConfirm.type = "confirm";
-    //   cartDb.addConfirmCart(dispatch, [cartConfirm]);
-    //   Taro.navigateTo({ url: "/pages/order/confirm/index" });
-    //   return;
-    // }
-
-    // // 加购物车
-    // cartDb
-    //   .cartAdd(params)
-    //   .then(() => {
-    //     success("添加购物车成功");
-    //     cartDb.setShoppingCart(cartConfirm, dispatch);
-    //   })
-    //   .catch(err => {
-    //     fail(`出错啦：${err.message}！`);
-    //   });
   };
 
   return (
@@ -132,7 +90,9 @@ const DetailAction = ({
           <CButton
             theme="blackgardient"
             disabled={data.number === 0}
-            onClick={addToCart}
+            onClick={() => {
+              addToCart();
+            }}
             size="small"
             round={false}
           >

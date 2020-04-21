@@ -8,6 +8,7 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
+import { jump, clearUser } from '@/utils/lib';
 
 export interface GlobalAxios {
   host: string;
@@ -103,7 +104,7 @@ export const loadUserInfo = (user: null | string) => {
 };
 
 const saveToken = (token: string) => {
-  Taro.setStorage({ key: LocalStorageKeys.token, data: token });
+  Taro.setStorageSync(LocalStorageKeys.token, token);
 };
 
 export interface AxiosError {
@@ -143,7 +144,11 @@ export const handleError = (error: {
     // that falls out of the range of 2xx
     let { data, status } = error.response;
     if (status === 401) {
-      //   router.push('/unlogin');
+      // jump("/pages/login/index");
+      // Taro.showToast({
+      //   title: '登录已失效', //"验证码无效",
+      //   icon: "none"
+      // })
     }
 
     const errortext = (codeMessage[status] || "") + (data.msg || "");
@@ -188,6 +193,15 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   }
 
   let { code, msg, datas } = data;
+  if (code === RESPONSE_CODES.noauth) {
+    // console.log('noauth', code);
+    // jump("/pages/login/index");
+    clearUser();
+    Taro.showToast({
+      title: '登录已失效', //"验证码无效",
+      icon: "none"
+    })
+  }
 
   if (datas.error) {
     return Promise.reject({
@@ -236,11 +250,13 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   if (typeof datas.token !== "undefined") {
     // window.g_axios.token = datas.token;
     setGlobalData("token", datas.token);
-
     saveToken(datas.token);
+
+    // loadMember()
     // 移除token
     Reflect.deleteProperty(datas, "token");
   }
+
   return datas;
 };
 
@@ -261,9 +277,8 @@ export let axios: <T extends {}>(
 ) => Promise<
   T | { token?: string | undefined; error?: {} | undefined }
 > = _option => {
-  let g_axios = getGlobalData("g_axios");
-
-  if (!g_axios) {
+  let g_axios = getGlobalData("g_axios") || {};
+  if (!g_axios.token || g_axios.token.length == 0) {
     let g_fp = getGlobalData("fp");
     let fp = g_fp || "";
     if (fp.length === 0) {
@@ -313,7 +328,7 @@ export let axios: <T extends {}>(
       baseURL: host,
       timeout: 30 * 1000,
       transformRequest: [
-        function(data) {
+        function (data) {
           let dataType = getType(data);
           switch (dataType) {
             case "object":

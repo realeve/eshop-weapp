@@ -12,27 +12,27 @@ export const tabConfig: {
   pagePath: string;
   text: string;
 }[] = [
-  {
-    pagePath: "/pages/index/index",
-    text: "首页"
-  },
-  {
-    pagePath: "/pages/cate/index",
-    text: "分类"
-  },
-  {
-    pagePath: "/pages/find/index",
-    text: "发现"
-  },
-  {
-    pagePath: "/pages/cart/index",
-    text: "购物车"
-  },
-  {
-    pagePath: "/pages/user/index",
-    text: "我的"
-  }
-];
+    {
+      pagePath: "/pages/index/index",
+      text: "首页"
+    },
+    {
+      pagePath: "/pages/cate/index",
+      text: "分类"
+    },
+    {
+      pagePath: "/pages/find/index",
+      text: "发现"
+    },
+    {
+      pagePath: "/pages/cart/index",
+      text: "购物车"
+    },
+    {
+      pagePath: "/pages/user/index",
+      text: "我的"
+    }
+  ];
 
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
@@ -192,6 +192,11 @@ export const setUserStore = (state: any, store: Store) => {
   }
   return setStore(state, store);
 };
+
+export const clearUser = () => {
+  Taro.removeStorage({ key: LocalStorageKeys.user });
+  Taro.removeStorage({ key: LocalStorageKeys.token });
+}
 
 // 判断字符串是不是中文
 export const isChineseWord: (str: string) => boolean = (str: string) =>

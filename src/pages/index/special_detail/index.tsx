@@ -39,7 +39,7 @@ const Special = () => {
     valid: () => id > "0"
   });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <Skeleton loading={loading} animate rowHeight={windowHeight / 2} row={3}>

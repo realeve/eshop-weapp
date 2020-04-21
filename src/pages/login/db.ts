@@ -303,3 +303,13 @@ export const loadMember = async (callback: Dispatch) => {
     auth
   };
 };
+
+export const storePhone = (phone) => {
+  if (!phone.match(/^1[0-9]{10}$/)) {
+    return;
+  }
+  Taro.setStorage({
+    key: LocalStorageKeys.phone,
+    data: phone
+  });
+}

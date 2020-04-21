@@ -16,16 +16,18 @@ import {
 } from "../../db";
 import UserIcon from "./user.png";
 import { IGlobalModel } from "../../../../models/common";
+import { LocalStorageKeys } from "@/utils/setting";
 
 import fail from "@/components/Toast/fail";
-import { jump } from "@/utils/lib";
+import { jump, loadPhone } from "@/utils/lib";
+import { storePhone } from "@/pages/login/db";
 
 const LoginPassword = ({ callback, dispatch }) => {
   const [account, setAccount] = useSetState<{
     username: string;
     password: string;
   }>({
-    username: "",
+    username: loadPhone(),
     password: ""
   });
   const [valid, setValid] = useState(false);
@@ -52,29 +54,11 @@ const LoginPassword = ({ callback, dispatch }) => {
       });
     });
 
-    if (!loginToken) {
-      Taro.hideLoading();
-      return;
-    }
-
-    if (!loginToken.token && loginToken.statusText) {
-      fail("登录失败：" + loginToken.statusText);
-
-      Taro.hideLoading();
-      return;
-    }
-
+    Taro.hideLoading();
     callback && callback();
 
     // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-    setTimeout(() => {
-      loadMember(dispatch);
-    }, 500);
-
-    // 载入购物车
-    // loadShoppingCart(dispatch);
-
-    Taro.hideLoading();
+    await loadMember(dispatch);
 
     jump({ url: "/pages/user/index" });
   };
@@ -85,30 +69,34 @@ const LoginPassword = ({ callback, dispatch }) => {
 
   return (
     <View className="login-password">
-      <AtInput
-        name="username"
-        title={<Image className="icon" src={UserIcon} />}
-        type="phone"
-        placeholder="请输入登录手机号码"
-        value={account.username}
-        onChange={username => setAccount({ username })}
-        // error={phoneDisabled}
-        clear
-        autoFocus
-      />
-      <AtInput
-        name="password"
-        title={<View className="at-icon at-icon-lock" />}
-        type="password"
-        maxLength="20"
-        minLength="8"
-        placeholder="请输入8~20位密码"
-        value={account.password}
-        onChange={password => {
-          setAccount({ password });
-          setValid(password.length > 0);
-        }}
-      />
+      <View className="item">
+        <Image className="icon" src={UserIcon} />
+        <AtInput
+          name="username"
+          type="phone"
+          placeholder="手机号码"
+          value={account.username}
+          onChange={username => {
+            setAccount({ username });
+            storePhone(username);
+          }}
+          // error={phoneDisabled}
+          clear
+          autoFocus
+        />
+      </View>
+      <View className="item">
+        <View className="at-icon at-icon-lock" />
+        <AtInput
+          name="password"
+          type="password"
+          maxLength="20"
+          minLength="6"
+          placeholder="请输入8~20位密码"
+          value={account.password}
+          onChange={password => setAccount({ password })}
+        ></AtInput>
+      </View>
       <View className="action">
         <CButton theme="gardient" onClick={onSubmit} disabled={!valid}>
           登录
