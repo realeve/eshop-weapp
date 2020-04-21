@@ -17,6 +17,7 @@ import {
 import UserIcon from "./user.png";
 import { IGlobalModel } from "../../../../models/common";
 
+import fail from "@/components/Toast/fail";
 import { jump } from "@/utils/lib";
 
 const LoginPassword = ({ callback, dispatch }) => {
@@ -57,10 +58,7 @@ const LoginPassword = ({ callback, dispatch }) => {
     }
 
     if (!loginToken.token && loginToken.statusText) {
-      Taro.atMessage({
-        type: "warning",
-        message: "登录失败：" + loginToken.statusText
-      });
+      fail("登录失败：" + loginToken.statusText);
 
       Taro.hideLoading();
       return;

@@ -5,12 +5,12 @@ import "./index.scss";
 import { AtTabs, AtTabsPane } from "taro-ui";
 import LoginPhone from "./components/LoginPhone";
 import LoginPassword from "./components/LoginPassword";
-
+import { CButton } from "@/components";
 // interface IProps {
 //   [key: string]: any;
 // }
 const Login = () => {
-  const tabList = [{ title: "手机号登录" }, { title: "账号密码登录" }];
+  const tabList = [{ title: "手机号" }, { title: "账号密码" }];
   const [current, setCurrent] = useState(0);
 
   return (
@@ -21,6 +21,7 @@ const Login = () => {
           className="img"
         />
       </View>
+
       <AtTabs
         current={current}
         swipeable={false}
