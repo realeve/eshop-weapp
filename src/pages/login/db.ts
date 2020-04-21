@@ -283,7 +283,7 @@ export const storeMember = (
 
   callback &&
     callback({
-      type: "setUserStore", //common/
+      type: 'common/setStore',
       payload: {
         user,
         isLogin: true
@@ -296,7 +296,6 @@ export const loadMember = async (callback: Dispatch) => {
     memberInfo: member,
     memberRealNameAuth: auth
   }: IMember = await getMember();
-
   storeMember(member, auth, callback);
   return {
     member,

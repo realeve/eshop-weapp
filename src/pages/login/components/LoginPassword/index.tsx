@@ -21,6 +21,7 @@ import { LocalStorageKeys } from "@/utils/setting";
 import fail from "@/components/Toast/fail";
 import { jump, loadPhone } from "@/utils/lib";
 import { storePhone } from "@/pages/login/db";
+import { RESPONSE_CODES } from "@/utils/axios";
 
 const LoginPassword = ({ callback, dispatch }) => {
   const [account, setAccount] = useSetState<{
@@ -47,15 +48,21 @@ const LoginPassword = ({ callback, dispatch }) => {
       captchaKey: str.captchaKey,
       clientType: CLIENT_TYPE.WAP
     }).catch(res => {
-      // console.log(res);
       Taro.showToast({
         title: res.message, //"验证码无效",
         icon: "none"
       });
     });
-
     Taro.hideLoading();
     callback && callback();
+    if (!loginToken) {
+      Taro.showToast({
+        title: "账户信息输入错误,请重新输入", //"验证码无效",
+        icon: "none"
+      });
+
+      return;
+    }
 
     // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
     await loadMember(dispatch);
@@ -95,6 +102,7 @@ const LoginPassword = ({ callback, dispatch }) => {
           placeholder="请输入8~20位密码"
           value={account.password}
           onChange={password => setAccount({ password })}
+          onConfirm={onSubmit}
         ></AtInput>
       </View>
       <View className="action">
