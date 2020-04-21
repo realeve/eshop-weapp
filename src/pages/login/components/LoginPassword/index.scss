@@ -1,35 +1,50 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 
 .login-password {
   padding-top: 78px;
   position: relative;
-  .at-input__title {
-    width: unset;
-  }
-  .icon {
-    width: 35px;
-    height: 35px;
-  }
-  .at-icon {
-    color: $yellow;
-  }
-  .at-input__icon-alert {
-    color: #ff4949;
-  }
-  .sendSn {
-    color: $blue;
-    font-size: $heading-5-size;
-  }
-  .disabled {
-    color: $grey;
-  }
+  height: 40vh;
 
-  .at-modal {
-    &__overlay {
-      background: none;
+  .item {
+    @extend .alignRow;
+    align-items: center;
+
+    .at-input__title {
+      width: unset;
     }
-    &__container {
-      width: 100%;
+
+    .icon {
+      width: 35px;
+      height: 35px;
+    }
+
+    .at-icon {
+      @extend .icon;
+      color: $yellow;
+    }
+
+    .at-input__icon-alert {
+      color: #ff4949;
+    }
+
+    .sendSn {
+      color: $blue;
+      font-size: $heading-5-size;
+    }
+
+    .disabled {
+      color: $grey;
+    }
+
+    .at-modal {
+      &__overlay {
+        background: none;
+      }
+
+      &__container {
+        width: 100%;
+      }
     }
   }
 }

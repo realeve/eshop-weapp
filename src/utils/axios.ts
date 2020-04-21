@@ -104,7 +104,7 @@ export const loadUserInfo = (user: null | string) => {
 };
 
 const saveToken = (token: string) => {
-  Taro.setStorage({ key: LocalStorageKeys.token, data: token });
+  Taro.setStorageSync(LocalStorageKeys.token, token);
 };
 
 export interface AxiosError {
@@ -250,11 +250,13 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   if (typeof datas.token !== "undefined") {
     // window.g_axios.token = datas.token;
     setGlobalData("token", datas.token);
-
     saveToken(datas.token);
+
+    // loadMember()
     // 移除token
     Reflect.deleteProperty(datas, "token");
   }
+
   return datas;
 };
 
@@ -275,9 +277,8 @@ export let axios: <T extends {}>(
 ) => Promise<
   T | { token?: string | undefined; error?: {} | undefined }
 > = _option => {
-  let g_axios = getGlobalData("g_axios");
-
-  if (!g_axios) {
+  let g_axios = getGlobalData("g_axios") || {};
+  if (!g_axios.token || g_axios.token.length == 0) {
     let g_fp = getGlobalData("fp");
     let fp = g_fp || "";
     if (fp.length === 0) {

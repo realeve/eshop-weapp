@@ -15,7 +15,13 @@ import {
   setPhone,
   loadPhone
 } from "@/utils/lib";
-import { sendSms, ISendSmsParams, ISendSms, SMS_TYPE } from "../../db";
+import {
+  sendSms,
+  ISendSmsParams,
+  ISendSms,
+  SMS_TYPE,
+  storePhone
+} from "../../db";
 import fail from "@/components/Toast/fail";
 
 import UserIcon from "./user.png";
@@ -135,7 +141,10 @@ const MobileWithCode = ({
           type="phone"
           placeholder="手机号码"
           value={account.username}
-          onChange={username => setAccount({ username })}
+          onChange={username => {
+            setAccount({ username });
+            storePhone(username);
+          }}
           error={phoneDisabled}
           clear
           autoFocus
