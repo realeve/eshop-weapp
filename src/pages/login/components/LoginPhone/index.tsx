@@ -10,6 +10,8 @@ import MobileWithCode from "../MobileWithCode";
 import { LocalStorageKeys } from "@/utils/setting";
 import fail from "@/components/Toast/fail";
 
+import { login as onWeixinLogin } from "@/utils/login/";
+
 import {
   SMS_TYPE,
   ILoginToken,
@@ -79,9 +81,14 @@ const LoginPhone = ({ callback, dispatch }) => {
         setValid={setValid}
       />
       <View className="action">
-        <CButton theme="gardient" onClick={onSubmit} disabled={!valid}>
-          登录
-        </CButton>
+        <View style={{ marginTop: "10px" }}>
+          <CButton theme="gardient" onClick={onSubmit} disabled={!valid}>
+            登录
+          </CButton>
+        </View>
+        <View style={{ margin: "10px 0" }}>
+          <CButton onClick={onWeixinLogin}>微信快捷登录</CButton>
+        </View>
       </View>
     </View>
   );

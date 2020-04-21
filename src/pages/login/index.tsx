@@ -6,16 +6,11 @@ import { AtTabs, AtTabsPane } from "taro-ui";
 import LoginPhone from "./components/LoginPhone";
 import LoginPassword from "./components/LoginPassword";
 import { CButton } from "@/components";
-import { login as onSubmit } from "@/utils/login/";
 // interface IProps {
 //   [key: string]: any;
 // }
 const Login = () => {
-  const tabList = [
-    { title: "微信登录" },
-    { title: "手机号" },
-    { title: "账号密码" }
-  ];
+  const tabList = [{ title: "手机号" }, { title: "账号密码" }];
   const [current, setCurrent] = useState(0);
 
   return (
@@ -26,6 +21,7 @@ const Login = () => {
           className="img"
         />
       </View>
+
       <AtTabs
         current={current}
         swipeable={false}
@@ -33,16 +29,9 @@ const Login = () => {
         onClick={setCurrent}
       >
         <AtTabsPane current={current} index={0}>
-          <View className="action">
-            <CButton theme="gardient" onClick={onSubmit}>
-              授权登录
-            </CButton>
-          </View>
-        </AtTabsPane>
-        <AtTabsPane current={current} index={1}>
           <LoginPhone />
         </AtTabsPane>
-        <AtTabsPane current={current} index={2}>
+        <AtTabsPane current={current} index={1}>
           {/* <View style="padding: 100px 50px;background-color: #FAFBFC;text-align: center;"> */}
           {/* <LoginPassword /> */}2{/* </View> */}
         </AtTabsPane>
