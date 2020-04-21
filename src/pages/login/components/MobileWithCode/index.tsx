@@ -16,6 +16,7 @@ import {
   loadPhone
 } from "@/utils/lib";
 import { sendSms, ISendSmsParams, ISendSms, SMS_TYPE } from "../../db";
+import fail from "@/components/Toast/fail";
 
 import UserIcon from "./user.png";
 import "./index.scss";
@@ -42,10 +43,7 @@ const MobileWithCode = ({
     let phoneValid = reg.phone.test(account.username);
 
     if (account.username.length === 11 && !phoneValid) {
-      Taro.showToast({
-        title: "手机号格式错误",
-        icon: "none"
-      });
+      fail("手机号格式错误");
     }
     const isValid = phoneValid && /^\d{6}$/.test(account.password);
     setValid(isValid);
@@ -100,10 +98,7 @@ const MobileWithCode = ({
       .then((sendCode: ISendSms) => {
         setLoading(false);
         if (!sendCode.status) {
-          Taro.showToast({
-            title: "未发送短信验证码：" + sendCode.err,
-            icon: "none"
-          });
+          fail("未发送短信验证码：" + sendCode.err);
 
           if ("该手机号未绑定" === sendCode.err) {
             closeCaptcha();
@@ -114,11 +109,7 @@ const MobileWithCode = ({
         }
 
         closeCaptcha();
-
-        Taro.atMessage({
-          message: "短信已发送，请在10分钟内完成验证。",
-          type: "success"
-        });
+        fail("短信已发送，请在10分钟内完成验证。");
 
         // 在LS中记录验证码发送状态
 
