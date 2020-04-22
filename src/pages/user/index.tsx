@@ -14,7 +14,9 @@ const User = ({ isLogin, dispatch }) => {
       dispatch({
         type: "common/setStore",
         payload: {
-          isLogin: false
+          isLogin: false,
+          user: {},
+          token: ""
         }
       });
       jump("/pages/index/index");

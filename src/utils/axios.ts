@@ -195,6 +195,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   let { code, msg, datas } = data;
   if (code === RESPONSE_CODES.noauth) {
     clearUser();
+
     Taro.showToast({
       title: '登录已失效', //"验证码无效",
       icon: "loading",

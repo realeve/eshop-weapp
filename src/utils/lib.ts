@@ -7,6 +7,10 @@ import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
 export { getType, axios } from "./axios";
+import {
+  set as setGlobalData,
+  get as getGlobalData
+} from "@/utils/global_data";
 
 export const tabConfig: {
   pagePath: string;
@@ -196,6 +200,10 @@ export const setUserStore = (state: any, store: Store) => {
 export const clearUser = () => {
   Taro.removeStorage({ key: LocalStorageKeys.user });
   Taro.removeStorage({ key: LocalStorageKeys.token });
+  let g_axios = getGlobalData("g_axios");
+  g_axios = { host: g_axios.host, fp: g_axios.fp }
+  setGlobalData("g_axios", g_axios);
+  setGlobalData("token", '');
 }
 
 // 判断字符串是不是中文
