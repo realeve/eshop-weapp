@@ -9,7 +9,7 @@ export default ({ orderId }) => (
     round={false}
     style="margin-left:12px"
     onClick={() => {
-      jump(`/pages/order/refund?id=${orderId}`);
+      jump(`/pages/user/order/refund?id=${orderId}`);
     }}
   >
     申请退款

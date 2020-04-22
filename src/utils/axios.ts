@@ -8,7 +8,7 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
-import { jump, clearUser } from '@/utils/lib';
+import { jump, clearUser } from "@/utils/lib";
 
 export interface GlobalAxios {
   host: string;
@@ -198,9 +198,9 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     // jump("/pages/login/index");
     clearUser();
     Taro.showToast({
-      title: '登录已失效', //"验证码无效",
+      title: "登录已失效", //"验证码无效",
       icon: "none"
-    })
+    });
   }
 
   if (datas.error) {
@@ -271,6 +271,16 @@ export const handleUrl = (option: AxiosRequestConfig) => {
 //   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
 const getFp = (): string => "weapp";
 
+export const getToken = () => {
+  let token = getGlobalData("token");
+
+  if (!token) {
+    token = Taro.getStorageSync(LocalStorageKeys.token);
+    setGlobalData("token", token);
+  }
+  return token || "";
+};
+
 // 自动处理token更新，data 序列化等
 export let axios: <T extends {}>(
   config: AxiosRequestConfig
@@ -328,7 +338,7 @@ export let axios: <T extends {}>(
       baseURL: host,
       timeout: 30 * 1000,
       transformRequest: [
-        function (data) {
+        function(data) {
           let dataType = getType(data);
           switch (dataType) {
             case "object":
