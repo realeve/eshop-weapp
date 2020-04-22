@@ -2,7 +2,7 @@ import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { CEmpty } from "@/components";
 import "./styles.scss";
-import { AtCheckbox, AtInputNumber } from "taro-ui";
+import { AtCheckbox, AtInputNumber, AtSwipeAction } from "taro-ui";
 import * as R from "ramda";
 
 export interface ICart {}
@@ -85,11 +85,11 @@ const CGroup = ({ data, callback }) => {
     }
   };
 
-  const changeNumbers = ({ cartid, spu, num }) => {
-    // const changeNumbers = value => {
-    console.log("change numbers", cartid, spu, num);
-    addGoods({ cartid, spu, num });
-  };
+  // const changeNumbers = ({ cartid, spu, num }) => {
+  //   // const changeNumbers = value => {
+  //   console.log("change numbers", cartid, spu, num);
+  //   addGoods({ cartid, spu, num });
+  // };
 
   return !shop ? (
     <CEmpty type="cart" />
@@ -105,46 +105,65 @@ const CGroup = ({ data, callback }) => {
         state &&
         state.goods.length === detail.length &&
         detail.map((goods, idx) => (
-          <View key={goods.id} className="goods-item">
-            <AtCheckbox
-              options={[{ label: "", value: goods.id }]}
-              selectedList={[state.goods[idx]]}
-              onChange={() => changeGoods(idx, goods.id)}
-            />
-            <Image
-              src={`${goods.img}?x-oss-process=image/resize,w_200`}
-              className="goods-img"
-            />
-            <View className="goods-desc">
-              <Text className="goods-name">{goods.name}</Text>
-              <View className="sub">
-                <Text className="label">单价</Text>
-                <Text className="value">{goods.price.toFixed(2)}</Text>
-              </View>
-              <View className="sub">
-                <Text className="label">数量</Text>
-                <AtInputNumber
-                  min={0}
-                  max={goods.storage || goods.num}
-                  step={1}
-                  value={state.numbers[idx]}
-                  // onChange={changeNumbers.bind(this)}
-                  onChange={value =>
-                    changeNumbers({
-                      cartid: goods.cartId,
-                      spu: goods.id,
-                      num: value
-                    })
-                  }
-                />
-                {/* <Text className="value">{goods.num}</Text> */}
-              </View>
-              <View className="sub">
-                <Text className="label">小计</Text>
-                <Text className="value">{goods.totalPrice.toFixed(2)}</Text>
+          <AtSwipeAction
+            key={goods.id}
+            onClick={() => delGoods(goods.cartId)}
+            options={[
+              // {
+              //   text: "取消",
+              //   style: {
+              //     backgroundColor: "#6190E8"
+              //   }
+              // },
+              {
+                text: "删除",
+                style: {
+                  backgroundColor: "#FF4949"
+                }
+              }
+            ]}
+          >
+            <View className="goods-item">
+              <AtCheckbox
+                options={[{ label: "", value: goods.id }]}
+                selectedList={[state.goods[idx]]}
+                onChange={() => changeGoods(idx, goods.id)}
+              />
+              <Image
+                src={`${goods.img}?x-oss-process=image/resize,w_200`}
+                className="goods-img"
+              />
+              <View className="goods-desc">
+                <Text className="goods-name">{goods.name}</Text>
+                <View className="sub">
+                  <Text className="label">单价</Text>
+                  <Text className="value">{goods.price.toFixed(2)}</Text>
+                </View>
+                <View className="sub">
+                  <Text className="label">数量</Text>
+                  <AtInputNumber
+                    min={0}
+                    max={goods.storage || goods.num}
+                    step={1}
+                    value={state.numbers[idx]}
+                    // onChange={changeNumbers.bind(this)}
+                    onChange={value =>
+                      addGoods({
+                        cartid: goods.cartId,
+                        spu: goods.id,
+                        num: value
+                      })
+                    }
+                  />
+                  {/* <Text className="value">{goods.num}</Text> */}
+                </View>
+                <View className="sub">
+                  <Text className="label">小计</Text>
+                  <Text className="value">{goods.totalPrice.toFixed(2)}</Text>
+                </View>
               </View>
             </View>
-          </View>
+          </AtSwipeAction>
         ))}
     </View>
   );
