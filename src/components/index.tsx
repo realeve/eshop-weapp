@@ -25,3 +25,5 @@ export { default as CEmpty } from "./CEmpty";
 export { default as success } from "./Toast/success";
 
 export { default as fail } from "./Toast/fail";
+
+export { default as CImageUpload } from "./CImageUpload";

@@ -11,7 +11,7 @@ import "./styles/custom-theme.scss";
 
 const dvaApp = dva.createApp({
   initialState: {},
-  models: models,
+  models: models
 });
 const store = dvaApp.getStore();
 
@@ -54,19 +54,21 @@ class App extends Component {
 
       "pages/user/lottery/index", // 我的预约
 
+      "pages/user/order/refund", // 退款申请
+
       "pages/find/index", // 发现
       "pages/login/index", // 登录
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
       "pages/special/result/index", // 特品结果
       "pages/special/rule/index", // 特品规则
-      "pages/detail/index",
+      "pages/detail/index"
     ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
       navigationBarTitleText: "WeChat",
-      navigationBarTextStyle: "black",
+      navigationBarTextStyle: "black"
     },
     tabBar: {
       list: [
@@ -74,40 +76,40 @@ class App extends Component {
           pagePath: "pages/index/index",
           text: "首页",
           iconPath: "./images/tab/home.png",
-          selectedIconPath: "./images/tab/home-active.png",
+          selectedIconPath: "./images/tab/home-active.png"
         },
         {
           pagePath: "pages/cate/index",
           text: "分类",
           iconPath: "./images/tab/cate.png",
-          selectedIconPath: "./images/tab/cate-active.png",
+          selectedIconPath: "./images/tab/cate-active.png"
         },
         {
           pagePath: "pages/find/index",
           text: "发现",
           iconPath: "./images/tab/logo.png",
-          selectedIconPath: "./images/tab/logo.png",
+          selectedIconPath: "./images/tab/logo.png"
         },
         {
           pagePath: "pages/cart/index",
           text: "购物车",
           iconPath: "./images/tab/cart.png",
-          selectedIconPath: "./images/tab/cart-active.png",
+          selectedIconPath: "./images/tab/cart-active.png"
         },
         {
           pagePath: "pages/user/index",
           text: "我的",
           iconPath: "./images/tab/user.png",
-          selectedIconPath: "./images/tab/user-active.png",
-        },
+          selectedIconPath: "./images/tab/user-active.png"
+        }
       ],
       color: "#333",
       custom: false,
       selectedColor: "#b98a4e",
       backgroundColor: "#fff",
       // backgroundColor: "#f8f9fb",
-      borderStyle: "white",
-    },
+      borderStyle: "white"
+    }
   };
 
   componentDidMount() {}

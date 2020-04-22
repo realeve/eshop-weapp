@@ -1,11 +1,17 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
-import * as db from "../db";
+import Taro from "@tarojs/taro";
 import { CButton } from "@/components/";
+import { jump } from "@/utils/lib";
 
-export default ({ orderId, onRefresh }) => {
-  return (
-    <CButton theme="yellow" size="small" round={false} style="margin-left:12px">
-      申请退款
-    </CButton>
-  );
-};
+export default ({ orderId }) => (
+  <CButton
+    theme="yellow"
+    size="small"
+    round={false}
+    style="margin-left:12px"
+    onClick={() => {
+      jump(`/pages/order/refund?id=${orderId}`);
+    }}
+  >
+    申请退款
+  </CButton>
+);
