@@ -52,8 +52,8 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     deselectGoods: spu => {
       console.log("deselectGoods", spu);
     },
-    addGoods: (spu, num) => {
-      console.log("addGoods", spu, num);
+    addGoods: ({ cartid, spu, num }) => {
+      console.log("addGoods", { cartid, spu, num });
     },
     delGoods: spu => {
       console.log("delGoods", spu);

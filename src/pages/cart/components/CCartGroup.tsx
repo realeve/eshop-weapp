@@ -85,9 +85,10 @@ const CGroup = ({ data, callback }) => {
     }
   };
 
-  // const changeNumbers = (idx, spu, value) => {
-  const changeNumbers = value => {
-    console.log("change numbers", value);
+  const changeNumbers = ({ cartid, spu, num }) => {
+    // const changeNumbers = value => {
+    console.log("change numbers", cartid, spu, num);
+    addGoods({ cartid, spu, num });
   };
 
   return !shop ? (
@@ -124,10 +125,17 @@ const CGroup = ({ data, callback }) => {
                 <Text className="label">数量</Text>
                 <AtInputNumber
                   min={0}
-                  max={100000}
+                  max={goods.storage || goods.num}
                   step={1}
                   value={state.numbers[idx]}
-                  onChange={changeNumbers.bind(this)}
+                  // onChange={changeNumbers.bind(this)}
+                  onChange={value =>
+                    changeNumbers({
+                      cartid: goods.cartId,
+                      spu: goods.id,
+                      num: value
+                    })
+                  }
                 />
                 {/* <Text className="value">{goods.num}</Text> */}
               </View>
