@@ -37,6 +37,28 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
       !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
     );
   }, [(shoppingCart || { total: {} }).total]);
+
+  const onChange = {
+    isOk: true,
+    selectShop: shop => {
+      console.log("select shop", shop);
+    },
+    deselectShop: shop => {
+      console.log("deselect shop", shop);
+    },
+    selectGoods: spu => {
+      console.log("selectGoods", spu);
+    },
+    deselectGoods: spu => {
+      console.log("deselectGoods", spu);
+    },
+    addGoods: (spu, num) => {
+      console.log("addGoods", spu, num);
+    },
+    delGoods: spu => {
+      console.log("delGoods", spu);
+    }
+  };
   return (
     <View className="cart-page">
       {isEmpty ? (
@@ -44,7 +66,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
       ) : (
         <View>
           {shoppingCart.data.map(data => (
-            <CartGroup {...data} key={data.shop.name} />
+            <CartGroup data={data} callback={onChange} key={data.shop.name} />
           ))}
           <View>
             <View>
