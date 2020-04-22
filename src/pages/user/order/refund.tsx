@@ -101,8 +101,8 @@ const Detail = () => {
     });
   }, [data]);
 
-  const doRefund = async () => {
-    let method = SERVICE.refundByAll; //SERVICE[type === serviceTypeList[0] ? 'addGoodsReturn' : 'refundByAll']; //替换退款新接口'addGoodsRefund'];
+  const doRefund = () => {
+    let method = SERVICE.refundByAll;
     let param = {
       ...method,
       data: {
@@ -111,15 +111,14 @@ const Detail = () => {
         buyerMessage: state.buyerMessage
       }
     };
-
-    let res = await axios(param)
+    axios(param)
       .then(() => {
         success(`申请成功`).then(() => {
           Taro.navigateBack();
         });
       })
       .catch(() => {
-        fail(`申请失败`); //${params.type}
+        fail(`申请失败`);
       });
   };
 
