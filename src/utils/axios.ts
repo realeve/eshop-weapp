@@ -8,7 +8,7 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
-import { jump, clearUser } from '@/utils/lib';
+import { jump, clearUser } from "@/utils/lib";
 
 export interface GlobalAxios {
   host: string;
@@ -270,6 +270,16 @@ export const handleUrl = (option: AxiosRequestConfig) => {
 // const getFp = (): string =>
 //   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
 const getFp = (): string => "weapp";
+
+export const getToken = () => {
+  let token = getGlobalData("token");
+
+  if (!token) {
+    token = Taro.getStorageSync(LocalStorageKeys.token);
+    setGlobalData("token", token);
+  }
+  return token || "";
+};
 
 // 自动处理token更新，data 序列化等
 export let axios: <T extends {}>(

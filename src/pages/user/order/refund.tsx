@@ -7,6 +7,10 @@ import useFetch from "@/components/hooks/useFetch";
 import { SERVICE } from "@/utils/api";
 import Skeleton from "taro-skeleton";
 import { CPrice, CImageUpload } from "@/components";
+import { axios } from "@/utils/axios";
+import fail from "@/components/Toast/fail";
+import success from "@/components/Toast/success";
+
 export interface IOrdersGoodsVo {
   basePrice: number;
   buyNum: number;
@@ -70,7 +74,7 @@ const Detail = () => {
     params: { id: ordersId }
   } = useRouter();
 
-  let { data, loading, error } = useFetch({
+  let { data, loading } = useFetch({
     param: {
       ...SERVICE.refundByOrder,
       data: { ordersId }
@@ -78,7 +82,7 @@ const Detail = () => {
     valid: () => ordersId > "0",
 
     // 对订单调整
-    callback: handleRefundByOrder //  handleRefundByGoods,
+    callback: handleRefundByOrder
   });
 
   const [state, setState] = useSetState<IState>({
@@ -97,6 +101,27 @@ const Detail = () => {
     });
   }, [data]);
 
+  const doRefund = () => {
+    let method = SERVICE.refundByAll;
+    let param = {
+      ...method,
+      data: {
+        ordersId,
+        picJson: state.picJson,
+        buyerMessage: state.buyerMessage
+      }
+    };
+    axios(param)
+      .then(() => {
+        success(`申请成功`).then(() => {
+          Taro.navigateBack();
+        });
+      })
+      .catch(() => {
+        fail(`申请失败`);
+      });
+  };
+
   return (
     <Skeleton loading={loading} animate row={3}>
       <View>
@@ -110,7 +135,7 @@ const Detail = () => {
         </View>
         <AtInput
           name="remark"
-          title="退款说明"
+          title="退款说明(必填)"
           type="text"
           placeholder="请输入退款说明"
           value={state.buyerMessage}
@@ -119,21 +144,27 @@ const Detail = () => {
           autoFocus
         />
         <View className="at-input">
-          <CImageUpload
-            onUpload={picJson =>
-              setState({ picJson: picJson.map(({ name }) => name).join(",") })
-            }
-          />
+          <View className="at-input__container">
+            <View className="at-input__title">相关图片</View>
+            <View className="at-input__input">
+              <CImageUpload
+                onUpload={picJson =>
+                  setState({
+                    picJson: picJson.map(({ name }) => name).join(",")
+                  })
+                }
+              />
+            </View>
+          </View>
         </View>
 
         <View style={{ margin: "16px" }}>
           <CButton
             theme="yellow"
             size="small"
+            disabled={state.buyerMessage.trim().length === 0}
             round={false}
-            onClick={() => {
-              Taro.navigateBack();
-            }}
+            onClick={doRefund}
           >
             申请退款
           </CButton>
