@@ -114,8 +114,9 @@ const Detail = () => {
 
     let res = await axios(param)
       .then(() => {
-        success(`申请成功`);
-        Taro.navigateBack();
+        success(`申请成功`).then(() => {
+          Taro.navigateBack();
+        });
       })
       .catch(() => {
         fail(`申请失败`); //${params.type}

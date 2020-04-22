@@ -5,6 +5,7 @@ import { getToken } from "@/utils/axios";
 import { View, Image } from "@tarojs/components";
 import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
+import { AtIcon } from "taro-ui";
 
 export default ({ onUpload, count = 3 }) => {
   const [files, setFiles] = useState<{ name: string; url: string }[]>([]);
@@ -67,12 +68,21 @@ export default ({ onUpload, count = 3 }) => {
             }
           });
         });
+      },
+      fail(res) {
+        if (res.errMsg === "chooseImage:fail cancel") {
+          success("未选择");
+        }
       }
     });
   };
   return (
     <View className="upload">
-      {files.length === 0 && <View className="item" onClick={upload} />}
+      {files.length === 0 && (
+        <View className="item" onClick={upload}>
+          <AtIcon value="add" size="30" color="#aaa" />
+        </View>
+      )}
       {files.map(res => (
         <Image src={res.url} className="img" key={res.url} />
       ))}
