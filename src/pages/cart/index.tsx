@@ -1,4 +1,4 @@
-import Taro, { useEffect } from "@tarojs/taro";
+import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
@@ -30,11 +30,12 @@ interface IProps extends ICartModel {
 
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   // console.log("connected", isLogin, shoppingCart);
-  let isEmpty = !(
-    shoppingCart &&
-    shoppingCart.total &&
-    shoppingCart.total.num > 0
-  );
+  const [isEmpty, setIsEmpty] = useState(true);
+  useEffect(() => {
+    setIsEmpty(
+      !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
+    );
+  }, [(shoppingCart || { total: {} }).total]);
   return (
     <View className="cart-page">
       {isEmpty ? (

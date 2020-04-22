@@ -16,7 +16,11 @@ const User = ({ isLogin, dispatch }) => {
         payload: {
           isLogin: false,
           user: {},
-          token: ""
+          token: "",
+          shoppingCart: {
+            loading: false,
+            total: { num: 0 }
+          }
         }
       });
       jump("/pages/index/index");

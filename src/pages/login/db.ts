@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
 import { set as setGlobalData } from "@/utils/global_data";
 import { clearUser } from "@/utils/lib";
+import { loadShoppingCart } from '@/utils/cartDb'
 
 /**
  * @exports
@@ -302,6 +303,7 @@ export const loadMember = async (callback: Dispatch) => {
     memberRealNameAuth: auth
   }: IMember = await getMember();
   storeMember(member, auth, callback);
+  loadShoppingCart(callback);
   return {
     member,
     auth

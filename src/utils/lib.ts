@@ -201,7 +201,7 @@ export const clearUser = () => {
   Taro.removeStorage({ key: LocalStorageKeys.user });
   Taro.removeStorage({ key: LocalStorageKeys.token });
   let g_axios = getGlobalData("g_axios");
-  g_axios = { host: g_axios.host, fp: g_axios.fp }
+  g_axios = Reflect.deleteProperty(g_axios, 'token');
   setGlobalData("g_axios", g_axios);
   setGlobalData("token", '');
 }

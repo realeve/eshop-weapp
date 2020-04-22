@@ -275,7 +275,7 @@ export default {
         // 载入用户登录信息
         await loadUserInfo(dispatch).then(() => {
           // 载入购物车信息
-          loadShoppingCart(dispatch);
+          loadShoppingCart(dispatch, true);
         });
       }
     }
