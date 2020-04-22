@@ -462,7 +462,6 @@ export const loadShoppingCart = async (dispatch: Dispatch, inModel = false) => {
     return;
   }
   let data = await readShoppingCart();
-  console.log("load 3", data);
   dispatch({
     type: (inModel ? "" : prefix) + "setStore",
     payload: {
