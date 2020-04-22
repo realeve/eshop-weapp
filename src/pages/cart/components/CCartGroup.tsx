@@ -2,7 +2,7 @@ import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { CEmpty } from "@/components";
 import "./styles.scss";
-import { AtCheckbox } from "taro-ui";
+import { AtCheckbox, AtInputNumber } from "taro-ui";
 import * as R from "ramda";
 
 export interface ICart {}
@@ -16,7 +16,7 @@ const CGroup = ({ data, callback }) => {
     addGoods,
     delGoods
   } = callback || {};
-  const [state, setState] = useState({ shop: 0, goods: [] });
+  const [state, setState] = useState({ shop: 0, goods: [], numbers: [] });
 
   useEffect(() => {
     if (!data || !data.total || !(data.total.num > 0)) {
@@ -32,7 +32,9 @@ const CGroup = ({ data, callback }) => {
     if (goods.length === 0) {
       goods = R.repeat("0", detail.length);
     }
-    let _state = R.set(R.lensProp("goods"), goods, state);
+    let numbers = detail.map(g => g.num);
+    let _state = R.clone(state);
+    Object.assign(_state, { goods, numbers });
     setState(_state);
   }, [JSON.stringify(data || { detail: "" }.detail)]);
   useEffect(() => {
@@ -70,7 +72,8 @@ const CGroup = ({ data, callback }) => {
     let goods = _state.goods;
     goods[idx] = goods[idx] > 0 ? "0" : value;
     let selectAll = goods.filter(g => g > 0).length === detail.length;
-    setState({ shop: selectAll ? shop.id : 0, goods });
+    Object.assign(_state, { shop: selectAll ? shop.id : 0, goods });
+    setState(_state);
     switch (Number(goods[idx])) {
       case 0:
         deselectGoods(value);
@@ -80,6 +83,11 @@ const CGroup = ({ data, callback }) => {
         selectGoods(value);
         break;
     }
+  };
+
+  // const changeNumbers = (idx, spu, value) => {
+  const changeNumbers = value => {
+    console.log("change numbers", value);
   };
 
   return !shop ? (
@@ -114,7 +122,14 @@ const CGroup = ({ data, callback }) => {
               </View>
               <View className="sub">
                 <Text className="label">数量</Text>
-                <Text className="value">{goods.num}</Text>
+                <AtInputNumber
+                  min={0}
+                  max={100000}
+                  step={1}
+                  value={state.numbers[idx]}
+                  onChange={changeNumbers.bind(this)}
+                />
+                {/* <Text className="value">{goods.num}</Text> */}
               </View>
               <View className="sub">
                 <Text className="label">小计</Text>
