@@ -47,7 +47,6 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   }, [(shoppingCart || { total: {} }).total]);
 
   const onChange = {
-    // isOk: true,
     selectShop: shop => {
       console.log("select shop", shop);
     },

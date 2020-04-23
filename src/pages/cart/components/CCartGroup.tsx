@@ -37,17 +37,6 @@ const CGroup = ({ data, callback }) => {
     Object.assign(_state, { goods, numbers });
     setState(_state);
   }, [JSON.stringify(data || { detail: "" }.detail)]);
-  useEffect(() => {
-    if (!callback) {
-      return;
-    }
-    selectShop = callback.selectShop;
-    deselectShop = callback.deselectShop;
-    selectGoods = callback.selectGoods;
-    deselectGoods = callback.deselectGoods;
-    addGoods = callback.addGoods;
-    delGoods = callback.delGoods;
-  }, [(callback || {}).isOk]);
 
   const changeShop = value => {
     let _state = R.set(R.lensProp("shop"), !state.shop ? value[0] : 0, state);
@@ -85,12 +74,6 @@ const CGroup = ({ data, callback }) => {
     }
   };
 
-  // const changeNumbers = ({ cartid, spu, num }) => {
-  //   // const changeNumbers = value => {
-  //   console.log("change numbers", cartid, spu, num);
-  //   addGoods({ cartid, spu, num });
-  // };
-
   return !shop ? (
     <CEmpty type="cart" />
   ) : (
@@ -110,12 +93,6 @@ const CGroup = ({ data, callback }) => {
             key={goods.id}
             onClick={() => delGoods(goods.cartId)}
             options={[
-              // {
-              //   text: "取消",
-              //   style: {
-              //     backgroundColor: "#6190E8"
-              //   }
-              // },
               {
                 text: "删除",
                 style: {
