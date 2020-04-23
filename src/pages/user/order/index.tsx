@@ -92,6 +92,8 @@ const Order = () => {
     console.log("刷新数据");
   };
 
+  // console.log(state);
+
   return (
     <View className="user_order">
       <Tab list={db.orderStateList} current={current} onChange={handleMenu} />

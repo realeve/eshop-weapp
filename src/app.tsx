@@ -55,6 +55,7 @@ class App extends Component {
       "pages/user/lottery/index", // 我的预约
 
       "pages/user/order/refund", // 退款申请
+      "pages/user/order/comment", // 发起商品评价
 
       "pages/find/index", // 发现
       "pages/login/index", // 登录

@@ -31,9 +31,9 @@ const MyService = () => {
       url: "/pages/user/lottery/index"
     },
     {
-      title: "功能调试_退款",
+      title: "功能调试_商品评论",
       img: order,
-      url: "/pages/user/order/refund?id=107707"
+      url: "/pages/user/order/comment?id=107707"
     }
   ];
   return (

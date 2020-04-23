@@ -12,6 +12,9 @@ export default ({ orderId, onRefresh }) => {
         if (!confirm) {
           return;
         }
+
+        console.log(orderId);
+
         db.cancelOrder(orderId, onRefresh);
       }
     });
