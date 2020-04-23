@@ -7,6 +7,9 @@ import "./index.scss";
 import { CEmpty, CPrice } from "@/components";
 import { IGlobalModel } from "@/models/common";
 import CartGroup from "./components/CCartGroup";
+import * as api from "@/utils/cartDb";
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
+import { ShoppingCartItem } from "@/utils/cart";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -32,6 +35,11 @@ interface IProps extends ICartModel {
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   // console.log("connected", isLogin, shoppingCart);
   const [isEmpty, setIsEmpty] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
+  const [action, setAction] = useState({
+    // args:{},
+    exe: () => new Promise((resolve, reject) => {})
+  });
   useEffect(() => {
     setIsEmpty(
       !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
@@ -54,10 +62,39 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     },
     addGoods: ({ cartid, spu, num }) => {
       console.log("addGoods", { cartid, spu, num });
+      setAction({
+        exe: () =>
+          new Promise(() => {
+            // let cartItem = {
+            //   buyNum: num,
+            //   goodsId: String(spu)
+            // };
+            // let params: ShoppingCartItem = api.getShoppingCartParam(cartItem);
+          })
+      });
     },
     delGoods: cartid => {
       console.log("delGoods", cartid);
+      setAction({
+        exe: () =>
+          new Promise(() => {
+            api.cartDel([cartid], dispatch);
+          })
+      });
+      setIsOpened(true);
     }
+  };
+
+  const handleConfirm = () => {
+    action.exe();
+    resetAction();
+  };
+
+  const resetAction = () => {
+    setAction({
+      exe: () => new Promise((resolve, reject) => {})
+    });
+    setIsOpened(false);
   };
   return (
     <View className="cart-page">
@@ -65,8 +102,19 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
         <CEmpty type="cart" />
       ) : (
         <View>
+          <AtModal
+            isOpened={isOpened}
+            closeOnClickOverlay
+            // title="标题"
+            cancelText="取消"
+            confirmText="确认"
+            // onClose={this.handleClose}
+            onCancel={() => resetAction()}
+            onConfirm={() => handleConfirm()}
+            content="R U SURE?"
+          />
           {shoppingCart.data.map(data => (
-            <CartGroup data={data} callback={onChange} key={data.shop.name} />
+            <CartGroup data={data} callback={onChange} key={data.shop.id} />
           ))}
           <View>
             <View>

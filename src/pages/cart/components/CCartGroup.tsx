@@ -106,6 +106,7 @@ const CGroup = ({ data, callback }) => {
         state.goods.length === detail.length &&
         detail.map((goods, idx) => (
           <AtSwipeAction
+            autoClose={true}
             key={goods.id}
             onClick={() => delGoods(goods.cartId)}
             options={[
