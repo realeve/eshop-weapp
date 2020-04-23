@@ -38,7 +38,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [action, setAction] = useState({
     // args:{},
-    exe: () => new Promise((resolve, reject) => {})
+    exe: async () => {}
   });
   useEffect(() => {
     setIsEmpty(
@@ -47,7 +47,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   }, [(shoppingCart || { total: {} }).total]);
 
   const onChange = {
-    isOk: true,
+    // isOk: true,
     selectShop: shop => {
       console.log("select shop", shop);
     },
@@ -63,23 +63,19 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     addGoods: ({ cartid, spu, num }) => {
       console.log("addGoods", { cartid, spu, num });
       setAction({
-        exe: () =>
-          new Promise(() => {
-            // let cartItem = {
-            //   buyNum: num,
-            //   goodsId: String(spu)
-            // };
-            // let params: ShoppingCartItem = api.getShoppingCartParam(cartItem);
-          })
+        exe: async () => {
+          // let cartItem = {
+          //   buyNum: num,
+          //   goodsId: String(spu)
+          // };
+          // let params: ShoppingCartItem = api.getShoppingCartParam(cartItem);
+        }
       });
     },
     delGoods: cartid => {
       console.log("delGoods", cartid);
       setAction({
-        exe: () =>
-          new Promise(() => {
-            api.cartDel([cartid], dispatch);
-          })
+        exe: async () => api.cartDel([cartid], dispatch)
       });
       setIsOpened(true);
     }
@@ -92,7 +88,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
 
   const resetAction = () => {
     setAction({
-      exe: () => new Promise((resolve, reject) => {})
+      exe: async () => {}
     });
     setIsOpened(false);
   };
