@@ -194,13 +194,13 @@ export const handleData: <T extends { token?: string; error?: {} }>(
 
   let { code, msg, datas } = data;
   if (code === RESPONSE_CODES.noauth) {
-    // console.log('noauth', code);
-    // jump("/pages/login/index");
     clearUser();
+
     Taro.showToast({
-      title: "登录已失效", //"验证码无效",
-      icon: "none"
-    });
+      title: '登录已失效', //"验证码无效",
+      icon: "loading",
+      duration: 3000
+    })
   }
 
   if (datas.error) {
@@ -338,7 +338,7 @@ export let axios: <T extends {}>(
       baseURL: host,
       timeout: 30 * 1000,
       transformRequest: [
-        function(data) {
+        function (data) {
           let dataType = getType(data);
           switch (dataType) {
             case "object":

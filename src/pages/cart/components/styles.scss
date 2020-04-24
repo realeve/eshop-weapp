@@ -1,0 +1,40 @@
+.at-checkbox__title {
+  font-size: unset;
+}
+
+.list {
+
+  .shop-name {
+    font-size: 32px;
+    color: #2C2E36;
+    margin: 1em 0;
+
+  }
+
+  .goods-item {
+    display: flex;
+
+    image {
+      width: unset;
+      height: unset;
+    }
+
+    .goods-img {
+      width: 200px;
+      height: 200px;
+    }
+
+    .goods-name {}
+
+    .goods-desc {
+      flex: 1;
+    }
+
+    .sub {
+      .label {}
+
+      .value {}
+    }
+
+  }
+}

@@ -7,11 +7,11 @@ import NotLogin from "./notLogin";
 import IsLogin from "./IsLogin";
 import Skeleton from "taro-skeleton";
 
-const UserHeader = ({ user, loading }) => {
+const UserHeader = ({ user, loading, isLogin }) => {
   return (
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
-        {!user.uid ? <NotLogin /> : <IsLogin data={user} />}
+        {!user.uid || !isLogin ? <NotLogin /> : <IsLogin data={user} />}
         <View className="at-icon at-icon-settings setting" />
       </View>
     </Skeleton>

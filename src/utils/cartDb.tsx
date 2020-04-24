@@ -142,6 +142,8 @@ export interface IBuyGoodsItemVoList {
   wechatUsable: number;
 }
 
+const prefix = "common/";
+
 /**
  *
  * @param data 根据单件商品的Id及数量获取 添加到购物车时所需的 axios 请求参数
@@ -442,10 +444,10 @@ export const setShoppingCart = async (
   refreshShoppingCart(state, dispatch);
 };
 
-export const loadShoppingCart = async (dispatch: Dispatch) => {
+export const loadShoppingCart = async (dispatch: Dispatch, inModel = false) => {
   // 载入中
   dispatch({
-    type: "setStore",
+    type: (inModel ? "" : prefix) + "setStore",
     payload: {
       shoppingCart: {
         loading: true,
@@ -454,13 +456,14 @@ export const loadShoppingCart = async (dispatch: Dispatch) => {
     }
   });
 
+  // console.log("load 2");
   // 载入完毕
   if (!lib.isLogin()) {
     return;
   }
   let data = await readShoppingCart();
   dispatch({
-    type: "setStore",
+    type: (inModel ? "" : prefix) + "setStore",
     payload: {
       shoppingCart: {
         loading: false,

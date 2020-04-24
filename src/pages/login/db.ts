@@ -4,6 +4,8 @@ import { API } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
 import { set as setGlobalData } from "@/utils/global_data";
+import { clearUser } from "@/utils/lib";
+import { loadShoppingCart } from '@/utils/cartDb'
 
 /**
  * @exports
@@ -165,6 +167,10 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
     return res;
   });
 
+export const logout = (): Promise<any> => axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
+  clearUser();
+})
+
 /**
  * 使用手机号+密码登录
  *
@@ -283,7 +289,7 @@ export const storeMember = (
 
   callback &&
     callback({
-      type: "setUserStore", //common/
+      type: 'common/setStore',
       payload: {
         user,
         isLogin: true
@@ -296,8 +302,8 @@ export const loadMember = async (callback: Dispatch) => {
     memberInfo: member,
     memberRealNameAuth: auth
   }: IMember = await getMember();
-
   storeMember(member, auth, callback);
+  loadShoppingCart(callback);
   return {
     member,
     auth

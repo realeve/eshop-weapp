@@ -1,4 +1,4 @@
-import Taro, { useEffect } from "@tarojs/taro";
+import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
@@ -6,6 +6,10 @@ import { Dispatch } from "redux";
 import "./index.scss";
 import { CEmpty, CPrice } from "@/components";
 import { IGlobalModel } from "@/models/common";
+import CartGroup from "./components/CCartGroup";
+import * as api from "@/utils/cartDb";
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
+import { ShoppingCartItem } from "@/utils/cart";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -30,60 +34,83 @@ interface IProps extends ICartModel {
 
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   // console.log("connected", isLogin, shoppingCart);
-  let isEmpty = !(
-    shoppingCart &&
-    shoppingCart.total &&
-    shoppingCart.total.num > 0
-  );
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
+  const [action, setAction] = useState({
+    // args:{},
+    exe: async () => {}
+  });
+  useEffect(() => {
+    setIsEmpty(
+      !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
+    );
+  }, [(shoppingCart || { total: {} }).total]);
+
+  const onChange = {
+    selectShop: shop => {
+      console.log("select shop", shop);
+    },
+    deselectShop: shop => {
+      console.log("deselect shop", shop);
+    },
+    selectGoods: spu => {
+      console.log("selectGoods", spu);
+    },
+    deselectGoods: spu => {
+      console.log("deselectGoods", spu);
+    },
+    addGoods: ({ cartid, spu, num }) => {
+      console.log("addGoods", { cartid, spu, num });
+      setAction({
+        exe: async () => {
+          // let cartItem = {
+          //   buyNum: num,
+          //   goodsId: String(spu)
+          // };
+          // let params: ShoppingCartItem = api.getShoppingCartParam(cartItem);
+        }
+      });
+    },
+    delGoods: cartid => {
+      console.log("delGoods", cartid);
+      setAction({
+        exe: async () => api.cartDel([cartid], dispatch)
+      });
+      setIsOpened(true);
+    }
+  };
+
+  const handleConfirm = () => {
+    action.exe();
+    resetAction();
+  };
+
+  const resetAction = () => {
+    setAction({
+      exe: async () => {}
+    });
+    setIsOpened(false);
+  };
   return (
     <View className="cart-page">
       {isEmpty ? (
         <CEmpty type="cart" />
       ) : (
         <View>
-          {shoppingCart.data.map(data => {
-            let { shop, detail, total } = data;
-            return (
-              <View key={shop.id} className="shop-item">
-                <Text className="shop-name">{shop.name}</Text>
-                {detail.map(goods => (
-                  <View key={goods.id} className="goods-item">
-                    <Image
-                      src={`${goods.img}?x-oss-process=image/resize,w_200`}
-                      className="goods-img"
-                    />
-                    <View className="goods-desc">
-                      <Text className="goods-name">{goods.name}</Text>
-                      <View className="sub">
-                        <Text className="label">单价</Text>
-                        <Text className="value">{goods.price.toFixed(2)}</Text>
-                      </View>
-                      <View className="sub">
-                        <Text className="label">数量</Text>
-                        <Text className="value">{goods.num}</Text>
-                      </View>
-                      <View className="sub">
-                        <Text className="label">小计</Text>
-                        <Text className="value">
-                          {goods.totalPrice.toFixed(2)}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                ))}
-                <View className="shop-total">
-                  <View>
-                    <Text>数量</Text>
-                    <Text>{total.num}</Text>
-                  </View>
-                  <View>
-                    <Text>店铺小计</Text>
-                    <Text>{total.price}</Text>
-                  </View>
-                </View>
-              </View>
-            );
-          })}
+          <AtModal
+            isOpened={isOpened}
+            closeOnClickOverlay
+            // title="标题"
+            cancelText="取消"
+            confirmText="确认"
+            // onClose={this.handleClose}
+            onCancel={() => resetAction()}
+            onConfirm={() => handleConfirm()}
+            content="R U SURE?"
+          />
+          {shoppingCart.data.map(data => (
+            <CartGroup data={data} callback={onChange} key={data.shop.id} />
+          ))}
           <View>
             <View>
               <Text>商品数量</Text>
