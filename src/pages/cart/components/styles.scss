@@ -1,40 +1,57 @@
+@import "@/styles/theme.scss";
+
 .at-checkbox__title {
-  font-size: unset;
+  // font-size: unset;
 }
 
 .list {
-
+  margin-bottom: 20px;
+  .check {
+    width: 90px;
+  }
   .shop-name {
     font-size: 32px;
-    color: #2C2E36;
+    color: #2c2e36;
     margin: 1em 0;
-
   }
 
   .goods-item {
     display: flex;
 
-    image {
-      width: unset;
-      height: unset;
-    }
+    padding: 10px 0;
 
     .goods-img {
-      width: 200px;
-      height: 200px;
+      width: 160px;
+      height: 160px;
+      margin: 0 20px 0 10px;
     }
 
-    .goods-name {}
+    .goods-name {
+      color: $title;
+      font-size: $font-size-lg;
+    }
+    .spec {
+      color: $subTitle;
+      font-size: $font-size-base;
+      margin-bottom: 10px;
+    }
 
     .goods-desc {
       flex: 1;
+      @extend .alignColumn;
+      justify-content: space-between;
+      padding: 10px 0;
     }
 
     .sub {
-      .label {}
-
-      .value {}
+      padding-right: 10px;
+      .input {
+        width: 100px;
+      }
     }
-
+    .alignRow {
+      @extend .alignRow;
+      justify-content: space-between;
+    }
   }
 }

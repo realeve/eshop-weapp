@@ -1,15 +1,14 @@
 import Taro, { useEffect, useState } from "@tarojs/taro";
-import { View, Text, Image } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { ICartModel } from "./model";
 import { Dispatch } from "redux";
 import "./index.scss";
-import { CEmpty, CPrice } from "@/components";
+import { CEmpty, CPrice, CButton } from "@/components";
 import { IGlobalModel } from "@/models/common";
 import CartGroup from "./components/CCartGroup";
 import * as api from "@/utils/cartDb";
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
-import { ShoppingCartItem } from "@/utils/cart";
+import { AtModal } from "taro-ui";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -91,6 +90,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     });
     setIsOpened(false);
   };
+
   return (
     <View className="cart-page">
       {isEmpty ? (
@@ -109,17 +109,24 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
             content="R U SURE?"
           />
           {shoppingCart.data.map(data => (
-            <CartGroup data={data} callback={onChange} key={data.shop.id} />
+            <CartGroup
+              data={data}
+              callback={onChange}
+              key={String(data.shop.id)}
+            />
           ))}
-          <View>
-            <View>
-              <Text>商品数量</Text>
-              <Text>{shoppingCart.total.num}</Text>
-            </View>
-            <View>
-              <Text>总价</Text>
+          <View className="summary">
+            <View className="alignRow">
+              <Text>合计：</Text>
               <CPrice retail={shoppingCart.total.price}></CPrice>
             </View>
+            <CButton
+              theme="gardient"
+              round={false}
+              style={{ height: "35px", lineHeight: "35px", fontSize: "15px" }}
+            >
+              结算({shoppingCart.total.num})
+            </CButton>
           </View>
         </View>
       )}
