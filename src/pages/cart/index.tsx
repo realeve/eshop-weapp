@@ -9,27 +9,16 @@ import { IGlobalModel } from "@/models/common";
 import CartGroup from "./components/CCartGroup";
 import * as api from "@/utils/cartDb";
 import { AtModal } from "taro-ui";
+import * as R from "ramda";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
   [key: string]: any;
 }
-// const GoodsItem = ({ goods }) => <View>goods</View>;
-
-// const ShopItem = ({ data: { shop, detail, total } }) => (
-//   // let { shop, detail, total } = data;
-//   // console.log("shop", shop);
-//   <View>
-//     <Text>,,,{shop.name}</Text>
-//     {detail.map(goods => (
-//       <GoodsItem key={goods.id} goods={goods} />
-//     ))}
-//     <Text>
-//       {total.num} {total.price}
-//     </Text>
-//   </View>
-// );
-// const Summary = ({ total }) => <View>summary</View>;
+export interface IGoodsItem extends api.ICartDetail {
+  checked?: boolean;
+  [key: string]: any;
+}
 
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   // console.log("connected", isLogin, shoppingCart);
@@ -46,6 +35,51 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     );
   }, [(shoppingCart || { total: {} }).total]);
 
+  const adjustCart = (cartId, buyNum) => {
+    let prevState = R.clone(shoppingCart);
+    let { data, total, loading, ...restCart } = prevState;
+    let type = "common/setStore";
+    dispatch({
+      type,
+      payload: {
+        shoppingCart: { loading: true, data, total, ...restCart }
+      }
+    });
+    total = { num: 0, price: 0 };
+    data = data.map(({ shop, detail }) => {
+      let _num = 0;
+      let _price = 0;
+      detail = detail.map(goods => {
+        let { price, num, totalPrice, ...rest } = goods;
+        if (goods.cartId != cartId) {
+          _num += goods.num;
+          _price += goods.totalPrice;
+          return goods;
+        }
+        _num += buyNum;
+        _price += price * buyNum;
+        return {
+          price,
+          num: buyNum,
+          totalPrice: price * buyNum,
+          ...rest
+        };
+      });
+      total = { num: total.num + _num, price: total.price + _price };
+      return {
+        shop,
+        detail,
+        total: { num: _num, price: _price }
+      };
+    });
+    dispatch({
+      type,
+      payload: {
+        shoppingCart: { loading: false, data, total, ...restCart }
+      }
+    });
+  };
+
   const onChange = {
     selectShop: shop => {
       console.log("select shop", shop);
@@ -59,17 +93,19 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     deselectGoods: spu => {
       console.log("deselectGoods", spu);
     },
-    addGoods: ({ cartid, spu, num }) => {
-      console.log("addGoods", { cartid, spu, num });
-      setAction({
-        content: "",
-        exe: async () => {
-          // let cartItem = {
-          //   buyNum: num,
-          //   goodsId: String(spu)
-          // };
-          // let params: ShoppingCartItem = api.getShoppingCartParam(cartItem);
+    addGoods: ({ cartId, id, buyNum, idx }) => {
+      console.log("addGoods", { cartId, id, buyNum, idx });
+      api.cartEdit({ cartId, buyNum }).then(res => {
+        if (res.success) {
+          // api.loadShoppingCart(dispatch);
+          adjustCart(cartId, buyNum);
+          return;
         }
+        Taro.showToast({
+          title: "超出库存上限:" + res.num,
+          icon: "none",
+          duration: 2000
+        });
       });
     },
     delGoods: cartid => {
