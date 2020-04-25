@@ -79,7 +79,7 @@ const DetailAction = ({
             style="font-size:24px;"
             onClick={() => {
               lib.jump({
-                url: "/pages/cart/cart"
+                url: "/pages/cart/index"
               });
             }}
           />

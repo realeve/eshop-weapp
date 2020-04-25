@@ -206,8 +206,9 @@ export const cartDel: (
       clientType: CLIENT_TYPE.web
     }
   }).then(async () => {
-    let data = await readShoppingCart();
-    refreshShoppingCart(data, dispatch);
+    // let data = await readShoppingCart();
+    // refreshShoppingCart(data, dispatch);
+    loadShoppingCart(dispatch);
   });
 };
 

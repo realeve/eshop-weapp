@@ -37,7 +37,8 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [action, setAction] = useState({
     // args:{},
-    exe: async () => {}
+    exe: async () => {},
+    content: ""
   });
   useEffect(() => {
     setIsEmpty(
@@ -61,6 +62,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     addGoods: ({ cartid, spu, num }) => {
       console.log("addGoods", { cartid, spu, num });
       setAction({
+        content: "",
         exe: async () => {
           // let cartItem = {
           //   buyNum: num,
@@ -73,6 +75,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     delGoods: cartid => {
       console.log("delGoods", cartid);
       setAction({
+        content: "确定要从购物车中删除这件商品吗？",
         exe: async () => api.cartDel([cartid], dispatch)
       });
       setIsOpened(true);
@@ -86,6 +89,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
 
   const resetAction = () => {
     setAction({
+      content: "",
       exe: async () => {}
     });
     setIsOpened(false);
@@ -99,14 +103,14 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
         <View>
           <AtModal
             isOpened={isOpened}
-            closeOnClickOverlay
-            // title="标题"
+            // closeOnClickOverlay
+            title="提示"
             cancelText="取消"
             confirmText="确认"
             // onClose={this.handleClose}
             onCancel={() => resetAction()}
             onConfirm={() => handleConfirm()}
-            content="R U SURE?"
+            content={action.content}
           />
           {shoppingCart.data.map(data => (
             <CartGroup
