@@ -21,7 +21,7 @@ export interface IGoodsItem extends api.ICartDetail {
 }
 
 const Cart = ({ isLogin, shoppingCart, dispatch }) => {
-  // console.log("connected", isLogin, shoppingCart);
+  const [selected, setSelected] = useState({ num: 0, price: 0, carts: [] });
   const [isEmpty, setIsEmpty] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
   const [action, setAction] = useState({
@@ -34,7 +34,6 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
       !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
     );
   }, [(shoppingCart || { total: {} }).total]);
-
   const adjustCart = (cartId, buyNum) => {
     let prevState = R.clone(shoppingCart);
     let { data, total, loading, ...restCart } = prevState;
@@ -79,25 +78,61 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
       }
     });
   };
+  const recalTotal = carts => {
+    if (!carts || carts.length === 0) {
+      return [];
+    }
+    let allGoods = (
+      R.flatten(shoppingCart.data.map(({ detail }) => detail)) || []
+    ).filter(g => carts.includes(g.cartId));
+    let num = R.reduce((sum, goods) => (sum += goods.num), 0)(allGoods);
+    let price = R.reduce(
+      (sum, goods) => (sum += goods.num * goods.price),
+      0
+    )(allGoods);
+    return { num, price, carts };
+  };
+  const addSelected = (cartId, withDraw = false) => {
+    let allGoods = selected.carts;
+    let arr = R.type(cartId) === "Array" ? cartId : [cartId];
+    if (withDraw) {
+      allGoods = R.filter(g => !arr.includes(g))(allGoods);
+    } else {
+      allGoods = R.union(allGoods, arr);
+    }
+    setSelected(recalTotal(allGoods));
+  };
+  const getCartsByShop = id => {
+    return R.flatten(
+      (
+        shoppingCart.data.filter(({ shop }) => shop.id === id) || []
+      ).map(({ detail }) => detail.map(d => d.cartId))
+    );
+  };
 
   const onChange = {
     selectShop: shop => {
       console.log("select shop", shop);
+      let carts = getCartsByShop(shop);
+      addSelected(carts);
     },
     deselectShop: shop => {
       console.log("deselect shop", shop);
+      let carts = getCartsByShop(shop);
+      addSelected(carts, true);
     },
-    selectGoods: spu => {
-      console.log("selectGoods", spu);
+    selectGoods: cartId => {
+      console.log("selectGoods", cartId);
+      addSelected(cartId);
     },
-    deselectGoods: spu => {
-      console.log("deselectGoods", spu);
+    deselectGoods: cartId => {
+      console.log("deselectGoods", cartId);
+      addSelected(cartId, true);
     },
     addGoods: ({ cartId, id, buyNum, idx }) => {
       console.log("addGoods", { cartId, id, buyNum, idx });
       api.cartEdit({ cartId, buyNum }).then(res => {
         if (res.success) {
-          // api.loadShoppingCart(dispatch);
           adjustCart(cartId, buyNum);
           return;
         }
@@ -158,14 +193,15 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
           <View className="summary">
             <View className="alignRow">
               <Text>合计：</Text>
-              <CPrice retail={shoppingCart.total.price}></CPrice>
+              <CPrice retail={selected.price}></CPrice>
             </View>
             <CButton
               theme="gardient"
               round={false}
+              disabled={selected.price === 0}
               style={{ height: "35px", lineHeight: "35px", fontSize: "15px" }}
             >
-              结算({shoppingCart.total.num})
+              {selected.num > 0 ? `结算(${selected.num})` : "未选择结算商品"}
             </CButton>
           </View>
         </View>

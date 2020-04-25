@@ -46,7 +46,7 @@ const CGroup = ({ data, callback }) => {
 
       default:
         selectShop(shop.id);
-        goods = detail.map(g => g.id);
+        goods = detail.map(g => g.cartId);
         break;
     }
     Object.assign(_state, { goods });
@@ -100,9 +100,9 @@ const CGroup = ({ data, callback }) => {
             <View className="goods-item">
               <View className="check">
                 <AtCheckbox
-                  options={[{ label: "", value: goods.id }]}
+                  options={[{ label: "", value: goods.cartId }]}
                   selectedList={[state.goods[idx]]}
-                  onChange={() => changeGoods(idx, goods.id)}
+                  onChange={() => changeGoods(idx, goods.cartId)}
                 />
               </View>
 
