@@ -13,6 +13,9 @@ export const API: {
   REALNAME_AUTH: "/realName/authentication",
   INDEX_PRODUCTS: { method: "post", url: "/webIndexComponent" },
   SPECIAL_GOODS: { method: "post", url: "/specialGoods" },
+  LOGIN_MINI_PROGRAM: { method: "post", url: "/wx/mini/login" },
+  MINI_PROGRAM_BINDING: { method: "post", url: "/wx/mini/bind-openid" },
+  LOGOUT_MINI_PROGRAM: { method: "post", url: "/wx/mini/logout" },
 
   // REALNAME_AUTH: '/member/real_name_auth/join_update',
   SP_SUBSCRIBER_INFO: "/specialtyProduct/getSubscriberInfo",
@@ -72,7 +75,7 @@ export const API: {
   BUY_STEP3: { method: "post", url: "/member/buy/show/payment" },
   BUY_STEP4_ALIPAY: "/member/buy/pay/web/alipay",
   BUY_STEP4_WECHAT: "/member/buy/pay/web/wxpay",
-  BUY_STEP4_MP: "/member/buy/pay/app/wxpay", //"/member/buy/pay/mp",// TODO 在调试中暂时以微信原生app替代，待小程序支付申请后
+  BUY_STEP4_MP: "/member/buy/pay/wxmini/wxpay", //"/member/buy/pay/mp",// TODO 在调试中暂时以微信原生app替代，待小程序支付申请后
   BUY_STEP4_UNIONPAY: { method: "post", url: "/member/buy/pay/union" },
   BUY_POST: "/member/buy/pay/success",
   BUY_ISPAIED: { method: "post", url: "/member/buy/pay/isSuccess" },
