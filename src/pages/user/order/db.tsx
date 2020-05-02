@@ -499,3 +499,19 @@ export const addOrderAgain = (
   updateShoppingCart(goods);
   jump("/pages/order/confirm/index");
 };
+
+export const receiveOrder = (ordersId, onRefresh) => {
+  axios({
+    ...ORDER.receive,
+    data: {
+      ordersId
+    }
+  })
+    .then(_ => {
+      success("收货成功");
+      onRefresh && onRefresh();
+    })
+    .catch(_ => {
+      fail("收货失败");
+    });
+};
