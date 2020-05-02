@@ -12,7 +12,8 @@ export default class CButton extends Component {
       onClick,
       size,
       style,
-      round = true
+      round = true,
+      disabled = false
     } = this.props;
     return (
       <Button
@@ -23,6 +24,7 @@ export default class CButton extends Component {
         })}
         onClick={onClick}
         style={style}
+        disabled={disabled}
       >
         {children}
       </Button>

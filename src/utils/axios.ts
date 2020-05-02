@@ -9,6 +9,7 @@ import {
   get as getGlobalData
 } from "@/utils/global_data";
 import { jump, clearUser } from "@/utils/lib";
+import { API } from '@/utils/api';
 
 export interface GlobalAxios {
   host: string;
@@ -193,7 +194,8 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   }
 
   let { code, msg, datas } = data;
-  if (code === RESPONSE_CODES.noauth) {
+  // TODO:微信自动登录失败也会返回noauth，此处需要调整
+  if (code === RESPONSE_CODES.noauth && !(config.url.includes(API.LOGIN_MINI_PROGRAM.url) || config.url.includes(API.MINI_PROGRAM_BINDING.url))) {
     clearUser();
 
     Taro.showToast({
@@ -203,7 +205,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     })
   }
 
-  if (datas.error) {
+  if ((datas || {}).error) {
     return Promise.reject({
       slef: true,
       config,
@@ -247,7 +249,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     saveToken(headers.Authorization);
   }
   // 刷新token
-  if (typeof datas.token !== "undefined") {
+  if (typeof (datas || {}).token !== "undefined") {
     // window.g_axios.token = datas.token;
     setGlobalData("token", datas.token);
     saveToken(datas.token);
@@ -257,7 +259,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
     Reflect.deleteProperty(datas, "token");
   }
 
-  return datas;
+  return datas || { code };
 };
 
 export const handleUrl = (option: AxiosRequestConfig) => {

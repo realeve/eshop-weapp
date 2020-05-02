@@ -3,8 +3,8 @@ import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
-import { set as setGlobalData } from "@/utils/global_data";
-import { clearUser } from "@/utils/lib";
+import { set as setGlobalData, get as getGlobalData } from "@/utils/global_data";
+import { clearUser, isLogin } from "@/utils/lib";
 import { loadShoppingCart } from '@/utils/cartDb'
 
 /**
@@ -167,9 +167,20 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
     return res;
   });
 
-export const logout = (): Promise<any> => axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
+export const logout = async (dispatch: Dispatch): Promise<any> => {
+  let mp_logout = await axios({ ...API.LOGOUT_MINI_PROGRAM }).catch(err => err);
+
+  if ((mp_logout || {}).code == 200) {
+    storeMiniProgram({ isBinding: false, isConfirmed: false })
+    Taro.setStorage({ key: LocalStorageKeys.mp, data: { isBinding: false, isConfirmed: false } });
+    dispatch({ type: 'common/setStore', payload: { miniProgram: { isBinding: false, isConfirmed: false } } })
+  }
   clearUser();
-})
+  return true;
+  // return axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
+  //   clearUser();
+  // })
+}
 
 /**
  * 使用手机号+密码登录
@@ -266,7 +277,8 @@ export const getMember = () =>
 export const storeMember = (
   member: IMemberInfo,
   auth: IMemberRealNameAuth,
-  callback: Dispatch
+  callback: Dispatch,
+  inModle?: boolean
 ) => {
   let user = {
     avatar: member.avatarUrl,
@@ -286,10 +298,9 @@ export const storeMember = (
     key: LocalStorageKeys.user,
     data: user
   });
-
   callback &&
     callback({
-      type: 'common/setStore',
+      type: inModle ? 'setStore' : 'common/setStore',
       payload: {
         user,
         isLogin: true
@@ -297,13 +308,31 @@ export const storeMember = (
     });
 };
 
-export const loadMember = async (callback: Dispatch) => {
+export const loadMember = async (callback: Dispatch, setting = { withPrefix: false, mpCode: false }) => {
   let {
     memberInfo: member,
     memberRealNameAuth: auth
   }: IMember = await getMember();
-  storeMember(member, auth, callback);
-  loadShoppingCart(callback);
+  let { withPrefix, mpCode } = setting;
+  storeMember(member, auth, callback, withPrefix);
+  loadShoppingCart(callback, withPrefix);
+
+  let isBinding = loadMiniProgram().isBinding;
+  if (isBinding) {
+    return { member, auth };
+  }
+  if (!mpCode) {
+    let wxLogin = await Taro.login({ success: (res) => res.code || false, fail: (err) => false });
+    mpCode = wxLogin ? wxLogin.code : false;
+  }
+  if (mpCode) {
+    let bindingResult = await binding(mpCode).then(res => res.code === 200).catch(err => false);
+    console.info('binding result', bindingResult);
+    if (bindingResult) {
+      storeMiniProgram({ isBinding: true, isConfirmed: false });
+      Taro.setStorage({ key: LocalStorageKeys.mp, data: { isBinding: true, isConfirmed: false } });
+    }
+  }
   return {
     member,
     auth
@@ -318,4 +347,70 @@ export const storePhone = (phone) => {
     key: LocalStorageKeys.phone,
     data: phone
   });
+}
+
+const storeMiniProgram = (mp) => {
+  Taro.setStorage({
+    key: LocalStorageKeys.mp,
+    data: mp
+  });
+}
+
+const loadMiniProgram = () => {
+  let mp = Taro.getStorageSync(LocalStorageKeys.mp);
+  if (!mp) {
+    let mp = { isBinding: false, isConfirmed: false };
+    storeMiniProgram({ isBinding: false, isConfirmed: false });
+    // dispatch({type:})
+  }
+
+  return mp;
+}
+
+const binding = (code) => axios({ ...API.MINI_PROGRAM_BINDING, data: { code } })
+const loginByCode = (code) => axios({ ...API.LOGIN_MINI_PROGRAM, data: { code } });
+
+export const loginWx = async (dispatch: Dispatch, withPrefix = false) => {
+  let logon = isLogin();
+  let isBinding = loadMiniProgram().isBinding;
+  console.log('logon,isBinding', logon, isBinding);
+  if (!logon && !isBinding) {
+    console.info('anonymous')
+    return;
+  }
+  if (logon && isBinding) {
+    console.info('logon and binded')
+    return;
+  }
+  let wxLogin = await Taro.login({ success: (res) => res.code || false, fail: (err) => false });
+  let mpCode = wxLogin ? wxLogin.code : false;
+  console.info('mpCode', mpCode)
+  if (!mpCode) {
+    Taro.showToast({ title: '微信登录失败', duration: 2000, icon: "loading" });
+    return;
+  }
+  if (!logon) {
+    console.info('not logon');
+    let autoLogin = await loginByCode(mpCode).catch(err => false);
+    if (!autoLogin) {
+      console.error('auto login failed');
+      return;
+    }
+    loadMember(dispatch, { withPrefix, mpCode });
+  }
+
+
+}
+
+export const checkWxSession = async (dispatch: Dispatch) => {
+  Taro.checkSession({
+    success: function () {
+      //session_key 未过期，并且在本生命周期一直有效
+      console.info('微信会话有效');
+    },
+    fail: function () {
+      // session_key 已经失效，需要重新执行登录流程
+      loginWx(dispatch) //重新登录
+    }
+  })
 }

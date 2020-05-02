@@ -25,9 +25,6 @@ const CGroup = ({ data, callback }) => {
     shop = data.shop;
     detail = data.detail;
 
-    if (state.goods.length === detail.length) {
-      return;
-    }
     let goods = R.clone(state.goods);
     if (goods.length === 0) {
       goods = R.repeat("0", detail.length);
@@ -49,7 +46,7 @@ const CGroup = ({ data, callback }) => {
 
       default:
         selectShop(shop.id);
-        goods = detail.map(g => g.id);
+        goods = detail.map(g => g.cartId);
         break;
     }
     Object.assign(_state, { goods });
@@ -103,9 +100,9 @@ const CGroup = ({ data, callback }) => {
             <View className="goods-item">
               <View className="check">
                 <AtCheckbox
-                  options={[{ label: "", value: goods.id }]}
+                  options={[{ label: "", value: goods.cartId }]}
                   selectedList={[state.goods[idx]]}
-                  onChange={() => changeGoods(idx, goods.id)}
+                  onChange={() => changeGoods(idx, goods.cartId)}
                 />
               </View>
 
@@ -125,15 +122,16 @@ const CGroup = ({ data, callback }) => {
                     {/* <Text className="value">{goods.price.toFixed(2)}</Text> */}
                     <AtInputNumber
                       className="input"
-                      min={0}
+                      min={1}
                       max={goods.storage || goods.num}
                       step={1}
                       value={state.numbers[idx]}
                       onChange={value =>
                         addGoods({
-                          cartid: goods.cartId,
-                          spu: goods.id,
-                          num: value
+                          cartId: goods.cartId,
+                          id: goods.id,
+                          buyNum: value,
+                          idx
                         })
                       }
                     />

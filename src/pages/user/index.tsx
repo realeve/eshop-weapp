@@ -10,7 +10,7 @@ import { connect } from "@tarojs/redux";
 
 const User = ({ isLogin, dispatch }) => {
   const logout = () => {
-    _logout().then(res => {
+    if (_logout(dispatch)) {
       dispatch({
         type: "common/setStore",
         payload: {
@@ -24,7 +24,7 @@ const User = ({ isLogin, dispatch }) => {
         }
       });
       jump("/pages/index/index");
-    });
+    }
   };
   return (
     <View className="user-page">

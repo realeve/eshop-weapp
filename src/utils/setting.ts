@@ -59,17 +59,17 @@ export const INVOICE = SETTING.invoice;
 export enum CLIENT_TYPE {
   andriod = "android",
   ios = "ios",
-  wap = "wap",
-  wechat = "wechat",
-  web = "wechat", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
-  mp = 'wechat',//微信小程序
+  wap = "miniprogram",
+  wechat = "miniprogram",
+  web = "miniprogram", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
+  mp = 'miniprogram',//微信小程序
 }
 
 export enum PAYMENT {
   alipay = "alipay",
   wechat = "wxpay",
   unionpay = "unionpay",
-  mp = "wechat",// 微信小程序
+  mp = "miniprogram",// 微信小程序
 }
 
 export { domain, host };
@@ -91,7 +91,8 @@ export const LocalStorageKeys = {
   SNS: "isSNSend", // 短信发送时间
   lastVisited: "lastVisited", // 上次访问页面
   phone: "phone", // 上次登录电话
-  confirm: "confirm" //立即购买
+  confirm: "confirm", //立即购买
+  mp: "weapp"
 };
 
 export const copyright = {

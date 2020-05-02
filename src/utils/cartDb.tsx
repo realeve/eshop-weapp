@@ -206,8 +206,9 @@ export const cartDel: (
       clientType: CLIENT_TYPE.web
     }
   }).then(async () => {
-    let data = await readShoppingCart();
-    refreshShoppingCart(data, dispatch);
+    // let data = await readShoppingCart();
+    // refreshShoppingCart(data, dispatch);
+    loadShoppingCart(dispatch);
   });
 };
 
@@ -533,6 +534,47 @@ export const getShoppingCartAxiosParam: () =>
     isExistBundling: 0,
     isGroup: 0
   };
+};
+
+export const changeShoppingCartById = async (
+  ids: string[],
+  value: any,
+  dispatch: Dispatch
+) => {
+  let cart = getShoppingCart();
+  let nextState = R.map((item: ILocalStorageCartDetail) => {
+    if (ids.includes(item.id)) {
+      item = Object.assign(item, value);
+      item.timestamp = lib.timestamp();
+    }
+    return item;
+  })(cart);
+
+  // let idx = R.findIndex(R.propEq('id', id))(cart);
+  // let item = R.nth(idx, cart) as ILocalStorageCartDetail;
+  // item = Object.assign(item, value);
+
+  // item.timestamp = lib.timestamp();
+  // let nextState = R.update(idx, item)(cart);
+  console.log(nextState, "nextState数据");
+  // 如果nextState的长度等于0则直接返回不做操作
+  if (nextState.length === 0) {
+    return;
+  }
+  updateCartData(nextState, dispatch);
+};
+
+export const updateCartData = async (
+  nextState: ILocalStorageCartDetail[],
+  dispatch: Dispatch
+) => {
+  // 存储当前结果至本地
+  window.localStorage.setItem(
+    LocalStorageKeys.shoppingCart,
+    JSON.stringify(nextState)
+  );
+  let data = await readShoppingCart();
+  refreshShoppingCart(data, dispatch);
 };
 
 export interface IBookingDetail {

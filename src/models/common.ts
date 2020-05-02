@@ -10,7 +10,7 @@ import {
   loadShoppingCart,
   IConfirmCart
 } from "@/utils/cartDb";
-import { loadMember } from "@/pages/login/db";
+import { loadMember, loginWx } from "@/pages/login/db";
 
 import { get as getGlobalData } from "@/utils/global_data";
 
@@ -85,6 +85,7 @@ export interface IOrderNum {
 export interface IGlobalModel {
   user: IGlobalUser; // 用户全局状态
   isLogin: boolean; // 是否登录
+  miniProgram: { isBinding: boolean, isConfirmed: boolean },// 小程序设定,isBinding：是否已经绑定微信；isConfirmed：不再询问是否绑定
   special: {
     batchId: string;
     imageUrl: string;
@@ -105,6 +106,7 @@ export interface IGlobalModel {
 const state = {
   user: Taro.getStorageSync(LocalStorageKeys.user) || {},
   isLogin: false,
+  miniProgram: Taro.getStorageSync(LocalStorageKeys.user),
   special: {
     batchId: "0",
     imageUrl: "",
@@ -278,6 +280,7 @@ export default {
           loadShoppingCart(dispatch, true);
         });
       }
+      loginWx(dispatch, true);
     }
   }
 };
