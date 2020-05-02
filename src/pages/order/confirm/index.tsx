@@ -126,6 +126,7 @@ const OrderConfirm = ({ currentAddress }) => {
   useEffect(() => {
     setLoading(true);
     let params = getShoppingCartAxiosParam();
+    console.log("params", params);
     // setInvalid(!params);
     if (!params) {
       return;
