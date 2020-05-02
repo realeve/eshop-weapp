@@ -1,10 +1,20 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
-import * as db from "../db";
+import Taro from "@tarojs/taro";
+import * as db from "../../db";
 import { CButton } from "@/components/";
 
 export default ({ orderId, onRefresh }) => {
   const receive = () => {
-    console.log("确认收货");
+    Taro.showModal({
+      title: "提示",
+      content: "确认收货?",
+      success: ({ confirm }) => {
+        if (!confirm) {
+          return;
+        }
+
+        db.receiveOrder(orderId, onRefresh);
+      }
+    });
   };
   return (
     <CButton
