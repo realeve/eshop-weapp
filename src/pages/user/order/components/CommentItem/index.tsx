@@ -1,6 +1,6 @@
 import Taro, { useEffect } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-import { AtInput, AtRate } from "taro-ui";
+import { AtInput, AtRate, AtTextarea } from "taro-ui";
 import useSetState from "@/components/hooks/useSetState";
 import { CImageUpload } from "@/components";
 import "./index.scss";
@@ -32,7 +32,7 @@ export default ({ goods, onChange }) => {
   }, [state]);
 
   return (
-    <View>
+    <View className="comment">
       <View className="at-input">
         <View className="at-input__container vcenter">
           <View className="vcenter">
@@ -49,16 +49,16 @@ export default ({ goods, onChange }) => {
           </View>
         </View>
       </View>
-      <AtInput
-        name="remark"
-        title=""
-        type="text"
-        placeholder="请您评价商品"
-        value={state.comment}
-        onChange={comment => setState({ comment })}
-        clear
-        autoFocus
-      />
+      <View>
+        <AtTextarea
+          placeholder="请您评价商品"
+          value={state.comment}
+          onChange={comment => setState({ comment: comment.detail.value })}
+          autoFocus
+          maxLength={500}
+          height={100}
+        />
+      </View>
       <View className="at-input">
         <View className="at-input__container">
           <View className="at-input__title" style={{ marginBottom: "10px" }}>

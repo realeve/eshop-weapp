@@ -1,9 +1,11 @@
+.comment {
+  margin: 0 32px 20px 32px;
+}
 .vcenter {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 .at-input {
-  margin-left: 32px;
   padding: 24px 0;
 }
