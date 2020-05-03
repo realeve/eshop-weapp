@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
@@ -33,6 +33,15 @@ const LoginPhone = ({ callback, dispatch }) => {
     password: ""
   });
   const [valid, setValid] = useState(false);
+  useEffect(() => {
+    setValid(
+      account &&
+        account.username &&
+        account.username.length > 1 &&
+        account.password &&
+        account.password.length >= 8
+    );
+  }, [account]);
 
   const onSubmit = async () => {
     Taro.showLoading();

@@ -340,7 +340,11 @@ export const loadMember = async (callback: Dispatch, setting = { withPrefix: fal
 };
 
 export const storePhone = (phone) => {
-  if (!phone.match(/^1[0-9]{10}$/)) {
+  if (phone && !phone.match(/^1[0-9]{10}$/)) {
+    return;
+  }
+  if (!phone) {
+    Taro.removeStorage({ key: LocalStorageKeys.phone });
     return;
   }
   Taro.setStorage({
