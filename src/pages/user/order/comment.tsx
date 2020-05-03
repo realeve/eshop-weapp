@@ -1,16 +1,18 @@
 import Taro, { useRouter, useEffect, useState } from "@tarojs/taro";
 import { CButton } from "@/components/";
 import { View } from "@tarojs/components";
-import { AtInput } from "taro-ui";
+import { AtInput, AtRate } from "taro-ui";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
 import { ORDER, ORDER_TYPE } from "@/utils/api";
 import Skeleton from "taro-skeleton";
-import { CPrice, CImageUpload } from "@/components";
 import { axios } from "@/utils/axios";
 import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
 import { IGoodsInfo, IDBGoodsInfo, IAppendComment } from "./interface";
+import * as R from "ramda";
+
+import CommentItem from "./components/CommentItem";
 
 export interface IUploadImgInfo {
   name: string;
@@ -88,7 +90,8 @@ const handleComment: (e: IDBGoodsInfo) => IGoodsInfo = e => ({
     id: item.ordersGoodsId, // 后端需该字段，不是goodsId
     name: item.goodsName,
     type: item.goodsFullSpecs,
-    img: item.imageSrc
+    img: item.imageSrc,
+    goodsPayAmount: item.goodsPayAmount
   }))
 });
 
@@ -109,11 +112,22 @@ const appendComent: (e: IAppendComment) => IGoodsInfo = e => ({
   }))
 });
 
-interface IState {
-  refundAmount: number;
-  picJson?: string;
-  buyerMessage: string;
-}
+let goodsItem: {
+  id: number;
+  name: string;
+  type: string;
+  img: string;
+  goodsPayAmount: number;
+}[] = [
+  {
+    id: 208833,
+    name: "我的运费0.01",
+    type: "",
+    img:
+      "https://statictest.ccgold.cn/image/a3/60/a360786e9984ce666bb168f4c16277cc.jpg",
+    goodsPayAmount: 0.2
+  }
+];
 
 const CommentPage = () => {
   const {
@@ -135,17 +149,21 @@ const CommentPage = () => {
   });
 
   const [comment, setComment] = useState<IGoodsComment[]>([]);
+
   useEffect(() => {
-    if (data == null) {
+    if (!data) {
       return;
     }
+
     setComment(
       data.goods.map(({ id }: { id: number }) => ({
         id,
         comment: "",
-        rate: 0
+        rate: 0,
+        img: ""
       }))
     );
+    console.log(data);
   }, [data]);
 
   const [rate, setRate] = useSetState({
@@ -153,22 +171,6 @@ const CommentPage = () => {
     service: 0,
     description: 0
   });
-
-  const [state, setState] = useSetState<IState>({
-    buyerMessage: "",
-    refundAmount: 0,
-    picJson: ""
-  });
-
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    setState({
-      refundAmount: data.goodsPayAmount
-    });
-  }, [data]);
 
   const [commentLoading, setCommentLoading] = useState(false);
 
@@ -205,44 +207,20 @@ const CommentPage = () => {
   return (
     <Skeleton loading={loading} animate row={3}>
       <View>
-        <View className="at-input">
-          <View className="at-input__container">
-            <View className="at-input__title">退款金额</View>
-            <View className="at-input__input">
-              <CPrice retail={state.refundAmount} />
-            </View>
-          </View>
-        </View>
-        <AtInput
-          name="remark"
-          title="退款说明(必填)"
-          type="text"
-          placeholder="请输入退款说明"
-          value={state.buyerMessage}
-          onChange={buyerMessage => setState({ buyerMessage })}
-          clear
-          autoFocus
-        />
-        <View className="at-input">
-          <View className="at-input__container">
-            <View className="at-input__title">相关图片</View>
-            <View className="at-input__input">
-              <CImageUpload
-                onUpload={picJson =>
-                  setState({
-                    picJson: picJson.map(({ name }) => name).join(",")
-                  })
-                }
-              />
-            </View>
-          </View>
-        </View>
-
+        {data &&
+          data.goods.map((item, idx) => (
+            <CommentItem
+              goods={item}
+              key={item.id}
+              onChange={e => {
+                console.log(e, idx);
+              }}
+            />
+          ))}
         <View style={{ margin: "16px" }}>
           <CButton
             theme="yellow"
             size="small"
-            disabled={state.buyerMessage.trim().length === 0}
             round={false}
             onClick={doComment}
           >
