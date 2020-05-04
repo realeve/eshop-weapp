@@ -63,7 +63,7 @@ const Order = () => {
       setState({
         hasMore,
         list: [...state.list, ...list],
-        isLoaded: page === 1
+        isLoaded: true //page === 1
       });
     },
     valid: () => isLogin

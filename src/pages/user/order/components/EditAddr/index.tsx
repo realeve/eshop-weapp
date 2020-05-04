@@ -1,5 +1,4 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import * as db from "../db";
 import { CButton } from "@/components/";
 
 export default ({ orderId, onRefresh }) => {
