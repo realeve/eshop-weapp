@@ -92,7 +92,7 @@ const Order = () => {
     console.log("刷新数据");
   };
 
-  // console.log(state);
+  console.log(state);
 
   return (
     <View className="user_order">
@@ -195,8 +195,17 @@ const Order = () => {
                 )}
 
                 {/* 评价 */}
-                {[EOrderStatus.complete].includes(order.status) && (
-                  <Comment orderId={order.orderId} />
+                {[EOrderStatus.complete, EOrderStatus.commented].includes(
+                  order.status
+                ) && (
+                  <Comment
+                    orderId={order.orderId}
+                    type={
+                      EOrderStatus.commented == order.status
+                        ? "append"
+                        : "normal"
+                    }
+                  />
                 )}
 
                 {/* 已完成、已评价、已追评、已关闭 */}

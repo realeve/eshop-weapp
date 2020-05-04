@@ -1,0 +1,14 @@
+@import "~taro-ui/dist/style/components/input.scss";
+
+.shop {
+  background-color: #fff;
+  margin-bottom: 20px;
+  .head {
+    padding: 15px 32px;
+    .logo {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+}

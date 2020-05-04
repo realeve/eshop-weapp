@@ -1,7 +1,6 @@
 import Taro, { useRouter, useEffect, useState } from "@tarojs/taro";
 import { CButton } from "@/components/";
 import { View } from "@tarojs/components";
-import { AtInput, AtRate } from "taro-ui";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
 import { ORDER, ORDER_TYPE } from "@/utils/api";
@@ -11,7 +10,9 @@ import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
 import { IGoodsInfo, IDBGoodsInfo, IAppendComment } from "./interface";
 import * as R from "ramda";
+import "./comment.scss";
 
+import CommentShop from "./components/CommentItem/shop";
 import CommentItem from "./components/CommentItem";
 
 export interface IUploadImgInfo {
@@ -112,22 +113,13 @@ const appendComent: (e: IAppendComment) => IGoodsInfo = e => ({
   }))
 });
 
-let goodsItem: {
+interface IGoodsItem {
   id: number;
   name: string;
   type: string;
   img: string;
   goodsPayAmount: number;
-}[] = [
-  {
-    id: 208833,
-    name: "我的运费0.01",
-    type: "",
-    img:
-      "https://statictest.ccgold.cn/image/a3/60/a360786e9984ce666bb168f4c16277cc.jpg",
-    goodsPayAmount: 0.2
-  }
-];
+}
 
 const CommentPage = () => {
   const {
@@ -175,10 +167,15 @@ const CommentPage = () => {
   const [commentLoading, setCommentLoading] = useState(false);
 
   const doComment = () => {
-    if (ordersId) {
+    if (!ordersId) {
       return;
     }
+
     let commentParam = getCommentAxiosParam(comment, rate, ordersType);
+    commentParam = {
+      ordersId,
+      ...commentParam
+    };
 
     let appendParam = {};
     if (append) {
@@ -196,8 +193,9 @@ const CommentPage = () => {
       data: append ? appendParam : commentParam
     })
       .then(_ => {
-        success("评价成功");
-        Taro.navigateBack();
+        success("评价成功").then(() => {
+          Taro.navigateBack();
+        });
       })
       .finally(() => {
         setCommentLoading(false);
@@ -206,17 +204,22 @@ const CommentPage = () => {
 
   return (
     <Skeleton loading={loading} animate row={3}>
-      <View>
+      <View className="comment_page">
         {data &&
-          data.goods.map((item, idx) => (
+          data.goods.map((item: IGoodsItem, idx) => (
             <CommentItem
               goods={item}
               key={item.id}
               onChange={e => {
-                console.log(e, idx);
+                let nextState = R.clone(comment);
+                nextState[idx] = e;
+                setComment(nextState);
               }}
             />
           ))}
+
+        <CommentShop rate={rate} setRate={setRate} />
+
         <View style={{ margin: "16px" }}>
           <CButton
             theme="yellow"
