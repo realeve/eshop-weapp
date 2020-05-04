@@ -13,7 +13,7 @@ export default ({ orderId, type = "normal" }) => {
         jump(`/pages/user/order/comment?id=${orderId}&type=${type}`);
       }}
     >
-      评价
+      {type == "normal" ? "评价" : "追加评论"}
     </CButton>
   );
 };

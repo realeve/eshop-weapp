@@ -194,10 +194,8 @@ const Order = () => {
                   <Receive orderId={order.orderId} onRefresh={onRefresh} />
                 )}
 
-                {/* 评价 */}
-                {[EOrderStatus.complete, EOrderStatus.commented].includes(
-                  order.status
-                ) && (
+                {/* 评价, EOrderStatus.commented */}
+                {[EOrderStatus.complete].includes(order.status) && (
                   <Comment
                     orderId={order.orderId}
                     type={

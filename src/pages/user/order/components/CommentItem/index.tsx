@@ -1,5 +1,5 @@
 import Taro, { useEffect } from "@tarojs/taro";
-import { View, Image } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 import { AtRate, AtTextarea } from "taro-ui";
 import useSetState from "@/components/hooks/useSetState";
 import { CImageUpload } from "@/components";
@@ -34,20 +34,67 @@ export default ({ goods, onChange }) => {
   return (
     <View className="comment">
       <View className="at-input">
-        <View className="at-input__container vcenter">
-          <View className="vcenter">
-            <Image src={goods.img} style={{ width: "50px", height: "50px" }} />
-            <View className="at-input__title">商品评分：</View>
+        {!goods.comment && (
+          <View className="at-input__container vcenter">
+            <View className="vcenter">
+              <Image
+                src={goods.img}
+                style={{ width: "50px", height: "50px" }}
+              />
+              <View className="at-input__title">商品评分：</View>
+            </View>
+            <View className="at-input__input">
+              <AtRate
+                value={state.rate}
+                onChange={rate => {
+                  setState({ rate });
+                }}
+              />
+            </View>
           </View>
-          <View className="at-input__input">
-            <AtRate
-              value={state.rate}
-              onChange={rate => {
-                setState({ rate });
-              }}
-            />
+        )}
+        {goods.comment && (
+          <View>
+            <View className="at-input__container vcenter">
+              <View className="vcenter">
+                <Image
+                  src={goods.img}
+                  style={{ width: "50px", height: "50px" }}
+                />
+              </View>
+              <View className="vcenter">
+                <View>{goods.name}</View>
+                <View>{goods.type}</View>
+              </View>
+            </View>
+            <View style={{ margin: "10px 0" }}>
+              <View
+                className="at-icon at-icon-message"
+                style={{ marginRight: "8px" }}
+              />
+              已发表评论
+            </View>
+            <View className="vcenter">
+              <View>{goods.comment.content}</View>
+              <View>
+                {goods.comment.img.map(img => (
+                  <Image
+                    src={img}
+                    key={img}
+                    style={{ width: "150px", height: "150px" }}
+                  />
+                ))}
+              </View>
+            </View>
+            <View className="append">
+              <View
+                className="at-icon at-icon-message"
+                style={{ marginRight: "8px" }}
+              />
+              追加评论
+            </View>
           </View>
-        </View>
+        )}
       </View>
       <View style={{ padding: "0 16px" }}>
         <AtTextarea
@@ -68,7 +115,7 @@ export default ({ goods, onChange }) => {
             <CImageUpload
               onUpload={imgs =>
                 setState({
-                  img: imgs.map(({ name }) => name).join(",")
+                  img: imgs.map(({ name }) => name)
                 })
               }
             />

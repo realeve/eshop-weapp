@@ -33,7 +33,7 @@ const MyService = () => {
     {
       title: "功能调试_商品评论",
       img: order,
-      url: "/pages/user/order/comment?id=207732"
+      url: "/pages/user/order/comment?id=207732&type=append"
     }
   ];
   return (

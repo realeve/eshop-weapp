@@ -1,4 +1,5 @@
 @import "~taro-ui/dist/style/components/input.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 .comment {
   margin-bottom: 20px;
   background-color: #fff;
@@ -7,4 +8,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+.append {
+  margin-top: 20px;
 }

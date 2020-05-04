@@ -67,13 +67,12 @@ const getCommentAxiosParam: (
     imageList: []
   };
 
+  // 每张图片之间用下划线分隔，商品之间的图片用逗号分隔，
   comment.forEach(item => {
     goodsParam.contentList.push(item.comment);
     goodsParam.ordersGoodsIdList.push(item.id);
     goodsParam.scoreList.push(item.rate);
-    goodsParam.imageList.push(
-      item.img ? R.pluck("name")(item.img).join("_") : ""
-    );
+    goodsParam.imageList.push(item.img ? item.img.join("_") : "");
   });
 
   return {
@@ -187,6 +186,8 @@ const CommentPage = () => {
       };
     }
 
+    // console.log(commentParam, appendParam);
+
     setCommentLoading(true);
     axios({
       ...ORDER[append ? "appendComment" : "addComment"],
@@ -218,7 +219,7 @@ const CommentPage = () => {
             />
           ))}
 
-        <CommentShop rate={rate} setRate={setRate} />
+        {!append && <CommentShop rate={rate} setRate={setRate} />}
 
         <View style={{ margin: "16px" }}>
           <CButton
