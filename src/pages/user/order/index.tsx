@@ -186,7 +186,7 @@ const Order = () => {
 
                 {/* 去付款 */}
                 {[EOrderStatus.needPay].includes(order.status) && (
-                  <Pay orderId={order.orderId} onRefresh={onRefresh} />
+                  <Pay payId={order.payId} onRefresh={onRefresh} />
                 )}
 
                 {/* 确认收货 */}
