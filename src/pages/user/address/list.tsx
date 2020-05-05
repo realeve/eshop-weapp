@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { useRouter } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
@@ -11,19 +11,45 @@ import AddressItem from "./AddressItem";
 import {
   IModPanelItem,
   handleAddressList as callback,
-  editAddress,
+  editAddress
 } from "./lib";
-
+import { updateSubscribeAddress } from "@/pages/special/db";
 import { connect } from "@tarojs/redux";
 
 const Address = ({ dispatch }) => {
   const { data } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string,
+      url: API.MEMBER_ADDRESS_LIST as string
     },
-    callback,
+    callback
   });
+
+  const { params } = useRouter();
+
+  const onClick = item => {
+    if (params.orderid) {
+      let param = { orderId: params.orderid, addressId: item.address_id };
+      updateSubscribeAddress(param).then(res => {
+        Taro.navigateBack();
+      });
+      return;
+    }
+    editAddress({
+      ...item,
+      isDefault: true
+    }).then(() => {
+      // 返回确认页
+      dispatch({
+        type: "order/setStore",
+        currentAddress: {
+          ...item,
+          isDefault: true
+        }
+      });
+      Taro.navigateBack();
+    });
+  };
 
   return (
     <View className="address_list">
@@ -35,22 +61,7 @@ const Address = ({ dispatch }) => {
               <AddressItem
                 type="choose"
                 data={item}
-                callback={() => {
-                  editAddress({
-                    ...item,
-                    isDefault: true,
-                  }).then(() => {
-                    // 返回确认页
-                    dispatch({
-                      type: "order/setStore",
-                      currentAddress: {
-                        ...item,
-                        isDefault: true,
-                      },
-                    });
-                    Taro.navigateBack();
-                  });
-                }}
+                callback={() => onClick(item)}
               />
             </View>
           ))}
@@ -72,7 +83,7 @@ const Address = ({ dispatch }) => {
 };
 
 Address.config = {
-  navigationBarTitleText: "选择地址",
+  navigationBarTitleText: "选择地址"
 };
 
 export default connect(() => ({}))(Address as any);
