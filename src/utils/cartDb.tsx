@@ -497,6 +497,18 @@ export const addConfirmCart = (dispatch: Dispatch, confirmCart) => {
 export const updateShoppingCart = (nextState: any[]) =>
   Taro.setStorageSync(LocalStorageKeys.confirm, JSON.stringify(nextState));
 
+export const removeShoppingCartByIds = async (
+  id: string[],
+  dispatch: Dispatch
+) => {
+  // 读取历史数据
+  let cart = getShoppingCart();
+  let nextState = R.reject<ILocalStorageCartDetail>(item =>
+    id.includes(item.id)
+  )(cart);
+  updateCartData(nextState, dispatch);
+};
+
 // 立即购买
 export const getConfirmCart = () => {
   let str = Taro.getStorageSync(LocalStorageKeys.confirm) || "[]";
@@ -569,10 +581,7 @@ export const updateCartData = async (
   dispatch: Dispatch
 ) => {
   // 存储当前结果至本地
-  window.localStorage.setItem(
-    LocalStorageKeys.shoppingCart,
-    JSON.stringify(nextState)
-  );
+  Taro.setStorageSync(LocalStorageKeys.shoppingCart, JSON.stringify(nextState));
   let data = await readShoppingCart();
   refreshShoppingCart(data, dispatch);
 };

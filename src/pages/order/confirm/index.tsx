@@ -126,6 +126,7 @@ const OrderConfirm = ({ currentAddress }) => {
   useEffect(() => {
     setLoading(true);
     let params = getShoppingCartAxiosParam();
+    console.log("params", params);
     // setInvalid(!params);
     if (!params) {
       return;
@@ -222,14 +223,8 @@ const OrderConfirm = ({ currentAddress }) => {
 
         // 跳转到支付页
         // success(`接下来处理这个支付id:${payId}`);
-
-        getMpPrepayId({ payId, predepositPay: 0 }).then(res => {
-          console.log("支付第四步", res);
-          pay(res, removeConfirmCart);
-
-          // 清除localstorage购物车信息
-          // removeConfirmCart();
-        });
+        console.log("支付第四步", payId);
+        pay(payId, removeConfirmCart);
       })
       .catch(err => {
         fail(`订单创建失败：${err.message}`);

@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import "./index.scss";
 import { connect } from "@tarojs/redux";
@@ -34,6 +34,16 @@ const LoginPassword = ({ callback, dispatch }) => {
   const [valid, setValid] = useState(false);
   const [showVerifycode, setShowVerifycode] = useState(false);
   const [tryTimes, setTryTimes] = useState(0);
+
+  useEffect(() => {
+    setValid(
+      account &&
+        account.username &&
+        account.username.length > 1 &&
+        account.password &&
+        account.password.length >= 8
+    );
+  }, [account]);
 
   const closeCaptcha = () => setShowVerifycode(!showVerifycode);
 
@@ -102,7 +112,7 @@ const LoginPassword = ({ callback, dispatch }) => {
           placeholder="请输入8~20位密码"
           value={account.password}
           onChange={password => setAccount({ password })}
-          onConfirm={onSubmit}
+          // onConfirm={onSubmit}
         ></AtInput>
       </View>
       <View className="action">

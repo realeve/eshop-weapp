@@ -57,7 +57,7 @@ interface IWeixinPay {
   };
 }
 
-export const pay: (payId: string, callback: () => void) => void = (
+export const pay: (payId: string, callback: () => void) => void = async (
   payId,
   callback
 ) => {
@@ -67,11 +67,17 @@ export const pay: (payId: string, callback: () => void) => void = (
     payPwd: ""
   };
   // 支付参数
-  const payParam = axios<IWeixinPay>({
+  const prePay = await axios<IWeixinPay>({
     url: url.pay,
     method: "POST",
     data
   });
+
+  let { payParam } = prePay || {};
+  if (!payParam) {
+    Taro.showModal({ title: "提示", content: "服务错误，支付失败。" });
+    return;
+  }
 
   // https://nervjs.github.io/taro/docs/apis/open-api/payment/requestPayment.html
   // 发起支付调用
@@ -84,7 +90,8 @@ export const pay: (payId: string, callback: () => void) => void = (
     fail: function(res) {
       Taro.showModal({
         title: "提示",
-        content: "支付失败"
+        content: "支付失败",
+        showCancel: false
       });
     },
     complete: function(res) {
@@ -96,7 +103,8 @@ export const pay: (payId: string, callback: () => void) => void = (
 
       Taro.showModal({
         title: "提示",
-        content: "支付成功"
+        content: "支付成功",
+        showCancel: false
       });
 
       setTimeout(function() {

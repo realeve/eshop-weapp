@@ -10,6 +10,7 @@ import CartGroup from "./components/CCartGroup";
 import * as api from "@/utils/cartDb";
 import { AtModal } from "taro-ui";
 import * as R from "ramda";
+import * as lib from "@/utils/lib";
 
 interface IProps extends ICartModel {
   dispatch: Dispatch;
@@ -166,6 +167,33 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     setIsOpened(false);
   };
 
+  const onSubmit = () => {
+    if (!isLogin || selected.num <= 0) {
+      return;
+    }
+    let data = (
+      R.flatten(shoppingCart.data.map(({ detail }) => detail)) || []
+    ).filter(g => selected.carts.includes(g.cartId));
+
+    // 生成订单后跳转
+    let cartData = R.flatten(data).map(item => ({
+      ...item,
+      type: "confirm" // 订单确认
+    }));
+    api.addConfirmCart(dispatch, cartData);
+
+    let goodsIds = cartData.map(item => item.cartId);
+    api.cartDel(goodsIds, dispatch).then(() => {
+      api.removeShoppingCartByIds(
+        cartData.map(item => item.id),
+        dispatch
+      );
+    });
+
+    // window.localStorage.setItem(LocalStorageKeys.confirm, JSON.stringify(cartData));
+    lib.jump("/pages/order/confirm/index");
+  };
+
   return (
     <View className="cart-page">
       {isEmpty ? (
@@ -198,8 +226,9 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
             <CButton
               theme="gardient"
               round={false}
-              disabled={selected.price === 0}
+              disabled={!isLogin && selected.num === 0}
               style={{ height: "35px", lineHeight: "35px", fontSize: "15px" }}
+              onClick={onSubmit}
             >
               {selected.num > 0 ? `结算(${selected.num})` : "未选择结算商品"}
             </CButton>

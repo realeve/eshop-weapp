@@ -66,7 +66,7 @@ class App extends Component {
       "pages/special/detail/index", // 特品详情
       "pages/special/result/index", // 特品结果
       "pages/special/rule/index", // 特品规则
-      "pages/detail/index"
+      "pages/detail/index" // 商品详情
     ],
     window: {
       backgroundTextStyle: "light",
