@@ -7,8 +7,14 @@ import useFetch from "@/components/hooks/useFetch";
 import useLogin from "@/components/hooks/useLogin";
 import HomeIcon from "@/pages/order/confirm/shop.svg";
 import classnames from "classname";
+import BtnCancle from "./components/cancle";
+import BtnDetail from "./components/detail";
 
-import { IAfterServicesListDB, IServiceItem } from "./interface";
+import {
+  IAfterServicesListDB,
+  IServiceItem,
+  getOperationStatus
+} from "./interface";
 import { SERVICE } from "@/utils/api";
 
 const handleRefundList: (data: IAfterServicesListDB[]) => IServiceItem[] = (
@@ -99,14 +105,20 @@ const Order = () => {
         className="order_detail"
       >
         {state.list.map(order => {
+          let operationStatus = getOperationStatus(
+            order.serviceState,
+            order.goodsState
+          );
+
           return (
             <View className="at-list" key={order.payId}>
               <View className="header">
-                <View className="shop">
-                  <Image src={HomeIcon} className="icon" />
-                  <Text className="title">{order.shop}</Text>
-                </View>
-                <View className="status">{order.statusName}</View>
+                <View>退款编号：{order.serviceSn}</View>
+                <View className="status">{order.serviceStateName}</View>
+              </View>
+              <View className="shop">
+                <Image src={HomeIcon} className="icon" />
+                <Text className="title">{order.shop}</Text>
               </View>
 
               {order.goods.map((goodsItem, idx) => (
@@ -145,7 +157,14 @@ const Order = () => {
                 <Text>共{order.goods.length}件商品</Text>
               </View>
 
-              <View className="action">查看详情</View>
+              <View className="action">
+                {"cancel" === operationStatus && (
+                  <BtnCancle data={order} refresh={onRefresh} />
+                )}
+                {["cancel", "detail"].includes(operationStatus) && (
+                  <BtnDetail serviceId={order.serviceId} />
+                )}
+              </View>
             </View>
           );
         })}

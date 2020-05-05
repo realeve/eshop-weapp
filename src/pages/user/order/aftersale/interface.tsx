@@ -337,22 +337,32 @@ export const getReturnStep: (
   return { step, desc, status };
 };
 
-export const cancleRefundid = (refundId: number, refundType: number) => {
+export const cancleRefundid = (
+  refundId: number,
+  refundType: number,
+  refresh: () => void
+) => {
   axios({
     ...SERVICE[refundType === 1 ? "cancelRefund" : "cancelReturn"],
     data: {
       refundId
     }
   })
-    .then(() => {
-      success("取消成功");
-    })
+    .then(() =>
+      success("取消成功").then(() => {
+        refresh && refresh();
+      })
+    )
     .catch(e => {
       fail(e.message);
     });
 };
 
-export const cancelRefund = (refundId: number, refundType: number) =>
+export const cancelRefund = (
+  refundId: number,
+  refundType: number,
+  refresh: () => void
+) =>
   Taro.showModal({
     content: `是否取消${refundTypeList[refundType]}申请?`,
     title: "取消申请?",
@@ -361,7 +371,7 @@ export const cancelRefund = (refundId: number, refundType: number) =>
       if (!confirm) {
         return;
       }
-      cancleRefundid(refundId, refundType);
+      cancleRefundid(refundId, refundType, refresh);
     }
   });
 

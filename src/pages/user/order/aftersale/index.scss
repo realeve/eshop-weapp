@@ -23,25 +23,25 @@ $shopHeight: 45px;
 
     /* prettier-ignore */
     border-bottom: 1PX solid #d6e4ef;
-
-    .shop {
-      height: $shopHeight;
-
-      .icon {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
-      }
-
-      .title {
-        font-size: $fontSizeNormal;
-        color: $subTitle;
-      }
-    }
+    font-size: $fontSizeNormal;
 
     .status {
-      font-size: $fontSizeNormal;
       color: $yellow;
+    }
+  }
+  .shop {
+    padding: 18px 24px;
+    height: $shopHeight;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    .title {
+      font-size: $fontSizeNormal;
+      color: $subTitle;
     }
   }
 
