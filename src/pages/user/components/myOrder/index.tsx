@@ -52,7 +52,7 @@ export const linkList = [
   {
     name: "退款/售后",
     img: refund,
-    link: "/pages/user/order/aftersale"
+    link: "/pages/user/order/aftersale/index"
   }
 ];
 

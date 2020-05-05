@@ -57,7 +57,7 @@ class App extends Component {
       "pages/user/order/refund", // 退款申请
       "pages/user/order/comment", // 发起商品评价
 
-      "pages/user/order/aftersale", // 售后服务
+      "pages/user/order/aftersale/index", // 售后服务
 
       "pages/find/index", // 发现
       "pages/login/index", // 登录

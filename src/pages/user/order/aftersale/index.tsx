@@ -1,14 +1,43 @@
 import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import "./aftersale.scss";
-import * as db from "./db";
+import "./index.scss";
 import ListView from "taro-listview";
 import useSetState from "@/components/hooks/useSetState";
 import useFetch from "@/components/hooks/useFetch";
 import useLogin from "@/components/hooks/useLogin";
 import HomeIcon from "@/pages/order/confirm/shop.svg";
 import classnames from "classname";
-import { ORDER } from "@/utils/api";
+
+import { IAfterServicesListDB, IServiceItem } from "./interface";
+import { SERVICE } from "@/utils/api";
+
+const handleRefundList: (data: IAfterServicesListDB[]) => IServiceItem[] = (
+  data: IAfterServicesListDB[]
+) =>
+  data.map(item => ({
+    shop: item.storeName,
+    shopId: item.storeId,
+    ordersId: item.ordersId,
+    orderId: item.ordersSn,
+    serviceId: item.refundId, //服务编号
+    serviceSn: item.refundSn,
+    serviceState: item.sellerState, //服务状态
+    serviceStateName: item.sellerStateText,
+
+    refundId: item.refundId, // 退款/退货id，用于取消申请
+    refundType: item.refundType, //退款退货类型
+    applyTime: item.addTime, //申请时间
+    sellerTime: item.sellerTime, // 商家处理时间
+
+    goodsState: item.goodsState, //商品发货状态
+    goods: item.ordersGoodsVoList.map(g => ({
+      goodsId: g.goodsId,
+      title: g.goodsName,
+      url: g.imageSrc,
+      price: g.goodsPrice,
+      num: g.buyNum
+    }))
+  }));
 
 const Order = () => {
   let isLogin = useLogin();
@@ -33,21 +62,18 @@ const Order = () => {
 
   const { loading, reFetch } = useFetch({
     param: {
-      ...ORDER.list,
+      ...SERVICE.refundList,
       params: {
-        ordersState: ["all", "new", "pay", "send", "noeval", "cancel"][current], //全部订单
-        ordersType: db.EOrderTypes.real, // 实物订单
-        keyword: "", // 搜索关键词 订单号或商品
         page
       }
     },
     callback: (e: {
       pageEntity;
-      ordersPayVoList: db.IOrderItem[];
+      refundItemVoList: IAfterServicesListDB[];
       [key: string]: any;
     }) => {
       let { hasMore } = e.pageEntity;
-      let list = db.convertOrderData(e.ordersPayVoList);
+      let list = handleRefundList(e.refundItemVoList);
       setState({
         hasMore,
         list: [...state.list, ...list],
