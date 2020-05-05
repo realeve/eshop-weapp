@@ -161,7 +161,7 @@ const AfterSale = () => {
                 {"cancel" === operationStatus && (
                   <BtnCancle data={order} refresh={onRefresh} />
                 )}
-                {["cancel", "detail"].includes(operationStatus) && (
+                {["cancel", "detail", "wait"].includes(operationStatus) && (
                   <BtnDetail serviceId={order.serviceId} />
                 )}
               </View>

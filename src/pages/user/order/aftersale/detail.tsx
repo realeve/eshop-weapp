@@ -1,13 +1,29 @@
-import Taro, { useRouter, useState } from "@tarojs/taro";
+import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import "./index.scss";
-import useSetState from "@/components/hooks/useSetState";
+import "./detail.scss";
 import useFetch from "@/components/hooks/useFetch";
 import useLogin from "@/components/hooks/useLogin";
-import classnames from "classname";
-
-import { IAfterServicesListDB, getOperationStatus } from "./interface";
+import * as R from "ramda";
+import { IRefundDetailDB } from "./interface";
 import { SERVICE } from "@/utils/api";
+import {
+  IPropGoodItem,
+  getReturnStep,
+  IReturnStep
+} from "./components/goodsInfo";
+import { prefix } from "@/components/CEmpty";
+
+import Skeleton from "taro-skeleton";
+
+const refundDetail = [
+  { name: "商家", value: "shop_name" },
+  { name: "订单编号", value: "orderSn" },
+  { name: "退款编号", value: "refundSn" },
+  { name: "退款金额", value: "refundAmount" },
+  { name: "退款原因", value: "reimburse_reason" },
+  { name: "退款类型", value: "reimburse_type" },
+  { name: "退款说明", value: "reimburse_explain" }
+];
 
 /**
  * 处理退款、退货接口数据；
@@ -49,35 +65,57 @@ const Detail = () => {
 
   let isLogin = useLogin();
 
-  const [page, setPage] = useState(1);
-
-  const [state, setState] = useSetState({
-    isLoaded: true,
-    hasMore: false,
-    list: []
-  });
-
-  const { loading, reFetch } = useFetch({
+  const { loading, data, reFetch } = useFetch({
     param: {
-      ...SERVICE.refundList,
-      params: {
-        page
+      ...SERVICE.refunDetail,
+      data: {
+        refundId: router.params.sid
       }
     },
-    callback: (e: {
-      pageEntity;
-      refundItemVoList: IAfterServicesListDB[];
-      [key: string]: any;
-    }) => {},
-    valid: () => isLogin && router.params.sid
+    callback: handleRefundItem,
+
+    valid: () => isLogin && !R.isNil(router.params.sid)
   });
 
-  const onRefresh = () => {
-    reFetch();
-    console.log("刷新数据");
-  };
+  const [state, setState] = useState<IReturnStep>({
+    desc: [],
+    step: 0,
+    status: "processing"
+  });
 
-  return <View className="user_order">d</View>;
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    let nextState = getReturnStep(
+      data.returnType,
+      data.sellerState,
+      data.state
+    );
+    setState(nextState);
+  }, [data]);
+
+  return (
+    <View className="detail">
+      <View className="status">
+        <Image className="img" src={prefix + "refund.svg"} />
+        <Skeleton loading={loading} row={1}>
+          <View className="name">{state.desc[state.step]}</View>
+        </Skeleton>
+      </View>
+      <Skeleton loading={loading} row={refundDetail.length}>
+        <View className="goods">
+          {refundDetail.map(item => (
+            <View className="item" key={item.value}>
+              <View className="title">{item.name}：</View>
+              <Text>{data[item.value]}</Text>
+            </View>
+          ))}
+        </View>
+      </Skeleton>
+    </View>
+  );
 };
 
 Detail.config = {
