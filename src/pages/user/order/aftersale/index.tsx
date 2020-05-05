@@ -46,7 +46,7 @@ const handleRefundList: (data: IAfterServicesListDB[]) => IServiceItem[] = (
     }))
   }));
 
-const Order = () => {
+const AfterSale = () => {
   let isLogin = useLogin();
 
   const [page, setPage] = useState(1);
@@ -173,8 +173,8 @@ const Order = () => {
   );
 };
 
-Order.config = {
+AfterSale.config = {
   navigationBarTitleText: "退款/售后"
 };
 
-export default Order;
+export default AfterSale;
