@@ -1,5 +1,7 @@
 @import "@/styles/theme.scss";
 
+$imgSize: 48px;
+$imgPadding: 12px;
 .detail {
   min-height: 100vh;
   width: 100%;
@@ -31,6 +33,48 @@
       .title {
         width: 150px;
         text-align: right;
+      }
+    }
+  }
+
+  .at-list {
+    margin-bottom: 20px;
+    padding: 20px 32px;
+    background: $white;
+
+    .noBorder {
+      &::after {
+        border-bottom: none;
+      }
+    }
+
+    &__item {
+      height: 100 + $imgSize;
+
+      @extend .alignColumn;
+
+      &--thumb {
+        .item-thumb {
+          margin-right: $imgPadding;
+          width: 2 * $imgSize;
+          height: 2 * $imgSize;
+        }
+      }
+
+      &-content {
+        margin-right: 0;
+
+        .item-content__info {
+          &-subtitle {
+            margin-top: 10px;
+            color: $subTitle;
+            font-size: $heading-4-size;
+          }
+
+          &-title {
+            font-size: $heading-4-size;
+          }
+        }
       }
     }
   }

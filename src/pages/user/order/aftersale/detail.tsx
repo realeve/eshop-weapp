@@ -12,7 +12,7 @@ import {
   IReturnStep
 } from "./components/goodsInfo";
 import { prefix } from "@/components/CEmpty";
-
+import classnames from "classname";
 import Skeleton from "taro-skeleton";
 
 const refundDetail = [
@@ -65,7 +65,7 @@ const Detail = () => {
 
   let isLogin = useLogin();
 
-  const { loading, data, reFetch } = useFetch({
+  const { loading, data } = useFetch({
     param: {
       ...SERVICE.refunDetail,
       data: {
@@ -104,6 +104,42 @@ const Detail = () => {
           <View className="name">{state.desc[state.step]}</View>
         </Skeleton>
       </View>
+      <Skeleton loading={loading} row={2} avatar>
+        <View className="at-list">
+          {data &&
+            data.ordersGoodsVoList.map((goodsItem, idx) => (
+              <View
+                className={classnames("at-list__item at-list__item--thumb", {
+                  noBorder: idx === data.ordersGoodsVoList.length - 1
+                })}
+                key={goodsItem.commonId}
+              >
+                <View className="at-list__item-container">
+                  <View className="at-list__item-thumb">
+                    <Image
+                      mode="scaleToFill"
+                      className="item-thumb"
+                      src={goodsItem.imageSrc}
+                    />
+                  </View>
+
+                  <View className="at-list__item-content item-content">
+                    <View className="item-content__info">
+                      <View className="item-content__info-title spaceBetween">
+                        <Text>{goodsItem.goodsName}</Text>
+                        <Text>￥{goodsItem.goodsPayAmount.toFixed(2)}</Text>
+                      </View>
+                      <View className="item-content__info-subtitle spaceBetween">
+                        <Text>{goodsItem.goodsFullSpecs}</Text>
+                        <Text>× {goodsItem.buyNum}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+        </View>
+      </Skeleton>
       <Skeleton loading={loading} row={refundDetail.length}>
         <View className="goods">
           {refundDetail.map(item => (

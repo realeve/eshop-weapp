@@ -24,13 +24,16 @@ export default ({ goods, onChange }) => {
     rate: 0,
     comment: "",
     img: "",
-    id: goods.id
+    id: (goods && goods.id) || null
   });
 
   useEffect(() => {
     onChange(state);
   }, [state]);
 
+  if (!goods) {
+    return null;
+  }
   return (
     <View className="comment">
       <View className="at-input">
