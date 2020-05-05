@@ -1,4 +1,4 @@
-import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import "./index.scss";
 import ListView from "taro-listview";
@@ -35,22 +35,13 @@ const handleRefundList: (data: IAfterServicesListDB[]) => IServiceItem[] = (
       title: g.goodsName,
       url: g.imageSrc,
       price: g.goodsPrice,
-      num: g.buyNum
+      num: g.buyNum,
+      type: g.goodsFullSpecs
     }))
   }));
 
 const Order = () => {
   let isLogin = useLogin();
-  const router = useRouter();
-
-  const [current, setCurrent] = useState(router.params.state || 0);
-
-  useEffect(() => {
-    if ("undefined" == typeof router.params.state) {
-      return;
-    }
-    setCurrent(+router.params.state);
-  }, [router.params]);
 
   const [page, setPage] = useState(1);
 
@@ -142,7 +133,7 @@ const Order = () => {
                         </View>
                         <View className="item-content__info-subtitle spaceBetween">
                           <Text>{goodsItem.type}</Text>
-                          <Text>× {goodsItem.count}</Text>
+                          <Text>× {goodsItem.num}</Text>
                         </View>
                       </View>
                     </View>
@@ -151,13 +142,7 @@ const Order = () => {
               ))}
 
               <View className="footer">
-                <Text>
-                  运费：{"￥" + order.express || "包邮"}，共{order.goods.length}
-                  件商品
-                </Text>
-                <Text className="payAmount">
-                  实付：￥{order.payAmount.toFixed(2)}
-                </Text>
+                <Text>共{order.goods.length}件商品</Text>
               </View>
 
               <View className="action">查看详情</View>
