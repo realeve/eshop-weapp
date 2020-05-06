@@ -1,0 +1,28 @@
+@import "@/styles/theme.scss";
+
+.wrap {
+  position: relative;
+  cursor: pointer;
+
+  .img {
+    width: 100%;
+    background: $white;
+  }
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity linear 0.3s;
+  }
+
+  &:hover {
+    .mask {
+      opacity: 1;
+    }
+  }
+}
