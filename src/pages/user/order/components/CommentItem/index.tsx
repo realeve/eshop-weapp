@@ -24,7 +24,7 @@ export default ({ goods, onChange }) => {
     rate: 0,
     comment: "",
     img: "",
-    id: goods.id
+    id: (goods || {}).id
   });
 
   useEffect(() => {

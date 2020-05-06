@@ -172,7 +172,8 @@ export const SERVICE: {
 } = convertApiConfig(serviceList);
 
 export const SPECIAL_GOODS = {
-  list: "/specialtyProduct/selectPersonalSubscribe"
+  list: "/specialtyProduct/selectPersonalSubscribe",
+  history: { method: "post", url: "/specialtyProduct/query/list" }
 };
 
 /**

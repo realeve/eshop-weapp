@@ -61,6 +61,7 @@ class App extends Component {
       "pages/login/index", // 登录
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
+      // "pages/special/history/index", // 特品历史
       "pages/special/result/index", // 特品结果
       "pages/special/rule/index", // 特品规则
       "pages/detail/index" // 商品详情
@@ -87,7 +88,7 @@ class App extends Component {
           selectedIconPath: "./images/tab/cate-active.png"
         },
         {
-          pagePath: "pages/find/index",
+          pagePath: "pages/special/detail/index",
           text: "发现",
           iconPath: "./images/tab/logo.png",
           selectedIconPath: "./images/tab/logo.png"
