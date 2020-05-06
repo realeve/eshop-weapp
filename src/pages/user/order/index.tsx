@@ -186,7 +186,11 @@ const Order = () => {
 
                 {/* 去付款 */}
                 {[EOrderStatus.needPay].includes(order.status) && (
-                  <Pay payId={order.payId} onRefresh={onRefresh} />
+                  <Pay
+                    payId={order.payId}
+                    onRefresh={onRefresh}
+                    autoCancelTime={order.autoCancelTime}
+                  />
                 )}
 
                 {/* 确认收货 */}

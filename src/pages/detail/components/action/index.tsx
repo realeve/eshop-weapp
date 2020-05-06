@@ -59,7 +59,8 @@ const DetailAction = ({
     }
 
     let detail: IDetailState = {
-      curGoodsId: data.goodsId || data.id,
+      curGoodsId:
+        data.goodsId || (data.goodsList || [{ goodsId: 0 }])[0].goodsId,
       stockNum: goodsnum,
       number: data.storage,
       limitAmount: data.limitAmount,

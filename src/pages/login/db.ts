@@ -19,7 +19,7 @@ import { loadShoppingCart } from '@/utils/cartDb'
  */
 export enum CLIENT_TYPE {
   WEB = "web", //'windows',
-  WAP = "wap",
+  WAP = "miniprogram",
   IOS = "ios",
   ANDROID = "android",
   WECHAT = "wechat",
