@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import ListView from "taro-listview";
 import { SPECIAL_GOODS } from "@/utils/api";
 import useFetch from "@/components/hooks/useFetch";
@@ -90,8 +90,8 @@ const History = () => {
         onPullDownRefresh={fn => onRefresh(fn)}
       >
         {state.list.map((data: IOrderItem) => (
-          <div className="detail" key={data.activityId}>
-            <div
+          <View className="detail" key={data.activityId}>
+            <View
               className="goods"
               onClick={() => {
                 lib.jump(`/special/page/${data.activityId}`);
@@ -104,60 +104,60 @@ const History = () => {
                 }}
                 style={{ margin: "10px 0", background: "#fff" }}
               />
-              {/* <div className="mask}></div>
+              {/* <View className="mask}></View>
                   <img src={goodsItem.imageSrc} alt="" /> */}
-            </div>
-            <div className="goodsInfo" key={data.goodsItem.goodsId}>
-              <div className="goodsMain">
-                <div className="goodsTitle">
+            </View>
+            <View className="goodsInfo" key={data.goodsItem.goodsId}>
+              <View className="goodsMain">
+                <View className="goodsTitle">
                   {data.promo}
                   {data.goodsName}
-                </div>
-                <div className="thumbnail">
+                </View>
+                <View className="thumbnail">
                   <p>{data.jingle}</p>
-                </div>
-                <div className="title">
-                  <div className="info">
-                    <div className="name">预约价</div>
-                    <div className="value">
+                </View>
+                <View className="title">
+                  <View className="info">
+                    <View className="name">预约价</View>
+                    <View className="value">
                       <CPrice retail={data.goodsPrice} className="price" />
-                    </div>
-                  </div>
-                  <div className="info">
-                    <div className="name">预约数量</div>
-                    <div className="value">{data.issueQuantity}</div>
-                  </div>
-                  <div className="info">
-                    <div className="name">预约开始时间</div>
-                    <div className="value">{data.beginTime}</div>
-                  </div>
-                  <div className="info">
-                    <div className="name">预约结束时间</div>
-                    <div className="value">{data.endTime}</div>
-                  </div>
-                  <div className="info">
-                    <div className="name">抽签时间</div>
-                    <div className="value">{data.drawTime}</div>
-                  </div>
-                  {/* <div className="status}>
+                    </View>
+                  </View>
+                  <View className="info">
+                    <View className="name">预约数量</View>
+                    <View className="value">{data.issueQuantity}</View>
+                  </View>
+                  <View className="info">
+                    <View className="name">预约开始时间</View>
+                    <View className="value">{data.beginTime}</View>
+                  </View>
+                  <View className="info">
+                    <View className="name">预约结束时间</View>
+                    <View className="value">{data.endTime}</View>
+                  </View>
+                  <View className="info">
+                    <View className="name">抽签时间</View>
+                    <View className="value">{data.drawTime}</View>
+                  </View>
+                  {/* <View className="status}>
                         <a className="desc}>{data.statusName}</a>
                         <CountTime time={remainTime} />
-                      </div> */}
-                </div>
-              </div>
-              <div className="type">
+                      </View> */}
+                </View>
+              </View>
+              <View className="type">
                 {data.showCountDown && (
                   <View>
                     {/* <AtIcon className="icon" value="clock" />
                     <span className="limitTitle">还有</span> */}
-                    <div className="countime">
+                    <View className="countime">
                       <CountTime time={data.remainTime} />
                       {/* <CardCountdown time={data.remainTime} type={"small"} /> */}
-                    </div>
-                    <span className="limitTitle">{data.operation}</span>
+                    </View>
+                    <Text className="limitTitle">{data.operation}</Text>
                   </View>
                 )}
-                <div className="button">
+                <View className="button">
                   <CButton
                     wide
                     theme="yellowGardiant"
@@ -173,10 +173,10 @@ const History = () => {
                   >
                     {data.buttonTitle}
                   </CButton>
-                </div>
-              </div>
-            </div>
-          </div>
+                </View>
+              </View>
+            </View>
+          </View>
         ))}
       </ListView>
     </View>
