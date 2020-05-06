@@ -1,0 +1,127 @@
+@import "@/styles/theme.scss";
+
+$imgSize: 48px;
+$imgPadding: 12px;
+$shopHeight: 45px;
+
+.user_order {
+  width: 100%;
+  height: 100%;
+  background-color: $bg;
+  @extend .alignColumn;
+
+  .order_detail {
+    flex: 1;
+    position: fixed;
+    height: 100%;
+    background: #f8f8f8;
+  }
+
+  .header {
+    @extend .spaceBetween;
+    padding: 18px 24px;
+
+    /* prettier-ignore */
+    border-bottom: 1PX solid #d6e4ef;
+    font-size: $fontSizeNormal;
+
+    .status {
+      color: $yellow;
+    }
+  }
+  .shop {
+    padding: 18px 24px;
+    height: $shopHeight;
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    .title {
+      font-size: $fontSizeNormal;
+      color: $subTitle;
+    }
+  }
+
+  .action {
+    @extend .alignRow;
+    justify-content: flex-end;
+    padding: 12px 24px 18px;
+    font-size: $fontSizeNormal;
+  }
+
+  .closeTime {
+    @extend .action;
+    padding: 12px 24px;
+    color: $yellow;
+  }
+
+  .footer {
+    @extend .action;
+    color: $subTitle;
+    position: relative;
+
+    .payAmount {
+      margin-left: 25px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      -webkit-transform-origin: center;
+      transform-origin: center;
+      box-sizing: border-box;
+      pointer-events: none;
+      top: auto;
+      left: 24rpx;
+      right: 0;
+      bottom: 0;
+      transform: scaleY(0.5);
+
+      /* prettier-ignore */
+      border-bottom: 1PX solid #d6e4ef;
+    }
+  }
+
+  .at-list {
+    margin-top: 12px;
+
+    .noBorder {
+      &::after {
+        border-bottom: none;
+      }
+    }
+
+    &__item {
+      height: 100 + $imgSize;
+
+      @extend .alignColumn;
+
+      &--thumb {
+        .item-thumb {
+          margin-right: $imgPadding;
+          width: 2 * $imgSize;
+          height: 2 * $imgSize;
+        }
+      }
+
+      &-content {
+        margin-right: 0;
+
+        .item-content__info {
+          &-subtitle {
+            margin-top: 10px;
+            color: $subTitle;
+            font-size: $heading-4-size;
+          }
+
+          &-title {
+            font-size: $heading-4-size;
+          }
+        }
+      }
+    }
+  }
+}

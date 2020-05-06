@@ -78,7 +78,7 @@ export default ({ onUpload, count = 3 }) => {
   };
   return (
     <View className="upload">
-      {files.length < count && (
+      {files.length == 0 && (
         <View className="item" onClick={upload}>
           <AtIcon value="add" size="30" color="#aaa" />
         </View>

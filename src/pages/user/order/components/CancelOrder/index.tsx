@@ -13,7 +13,7 @@ export default ({ orderId, onRefresh }) => {
           return;
         }
 
-        console.log(orderId);
+        // console.log(orderId);
 
         db.cancelOrder(orderId, onRefresh);
       }

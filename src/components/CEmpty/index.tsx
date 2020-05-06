@@ -105,7 +105,7 @@ const empConfig: {
   }
 };
 
-const prefix = "https://www.cbpc.ltd/ccgold/static/img/empty/";
+export const prefix = "https://www.cbpc.ltd/ccgold/static/img/empty/";
 
 export interface IPropEmptyItem {
   type: TEmptyType;

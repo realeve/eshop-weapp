@@ -1,11 +1,14 @@
+@import "~taro-ui/dist/style/components/input.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 .comment {
-  margin: 0 32px 20px 32px;
+  margin-bottom: 20px;
+  background-color: #fff;
 }
 .vcenter {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.at-input {
-  padding: 24px 0;
+.append {
+  margin-top: 20px;
 }

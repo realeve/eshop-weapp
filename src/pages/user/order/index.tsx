@@ -63,7 +63,7 @@ const Order = () => {
       setState({
         hasMore,
         list: [...state.list, ...list],
-        isLoaded: page === 1
+        isLoaded: true //page === 1
       });
     },
     valid: () => isLogin
@@ -186,7 +186,7 @@ const Order = () => {
 
                 {/* 去付款 */}
                 {[EOrderStatus.needPay].includes(order.status) && (
-                  <Pay orderId={order.orderId} onRefresh={onRefresh} />
+                  <Pay payId={order.payId} onRefresh={onRefresh} />
                 )}
 
                 {/* 确认收货 */}
@@ -194,9 +194,16 @@ const Order = () => {
                   <Receive orderId={order.orderId} onRefresh={onRefresh} />
                 )}
 
-                {/* 评价 */}
+                {/* 评价, EOrderStatus.commented */}
                 {[EOrderStatus.complete].includes(order.status) && (
-                  <Comment orderId={order.orderId} />
+                  <Comment
+                    orderId={order.orderId}
+                    type={
+                      EOrderStatus.commented == order.status
+                        ? "append"
+                        : "normal"
+                    }
+                  />
                 )}
 
                 {/* 已完成、已评价、已追评、已关闭 */}

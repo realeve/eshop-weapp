@@ -377,11 +377,7 @@ export const updateSubscribeAddress = async (data: any) =>
   await axios({
     ...(API.UPDATE_SPECIAL_ADDRESS as {}),
     data
-  })
-    .then(res => {
-      res;
-    })
-    .catch(error => error);
+  }).catch(error => error);
 
 export interface ICompute {
   activityId: number;

@@ -1,10 +1,17 @@
-import Taro, { useState, useEffect } from "@tarojs/taro";
-import * as db from "../db";
+import Taro from "@tarojs/taro";
 import { CButton } from "@/components/";
-
-export default ({ orderId, onRefresh }) => {
+import { jump } from "@/utils/lib";
+export default ({ orderId }) => {
   return (
-    <CButton theme="yellow" size="small" round={false} style="margin-left:12px">
+    <CButton
+      theme="yellow"
+      size="small"
+      round={false}
+      onClick={() => {
+        jump(`/pages/user/address/list?orderid=${orderId}`);
+      }}
+      style="margin-left:12px"
+    >
       修改地址
     </CButton>
   );

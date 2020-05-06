@@ -170,7 +170,7 @@ const OrderConfirm = ({ currentAddress }) => {
 
     if (isSpecial) {
       // 跳转到支付订单页
-      success(`/order/topay/{payId}`);
+      // success(`/order/topay/${payId}`);
       return;
     }
     let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
