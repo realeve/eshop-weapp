@@ -1,19 +1,22 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, Text, Picker } from "@tarojs/components";
-import dataCity from "./dataCity";
 import useSetState from "@/components/hooks/useSetState";
+import useFetch from "../hooks/useFetch";
 import "./index.scss";
+import { cityUrl } from "@/utils/setting";
+import * as R from "ramda";
 
-// TODO - https://www.ccgold.cn/public/json/areaAll.json
-// 待对接地址列表
+const PagePicker = props => {
+  const { data, loading } = useFetch({
+    param: { url: cityUrl },
+    callback: e => e.datas.areaList
+  });
 
-const PagePicker = (props) => {
-  let [idxProv, setIdxProv] = useState("340000");
-  let [idxCity, setIdxCity] = useState("340100");
+  let [idxProv, setIdxProv] = useState(0);
 
   const [state, setState] = useSetState({
     selector: [[], [], []],
-    selectorChecked: props.value,
+    selectorChecked: props.value
   });
 
   useEffect(() => {
@@ -21,86 +24,64 @@ const PagePicker = (props) => {
   }, [props.value]);
 
   useEffect(() => {
-    let _city = Object.values(dataCity[340000]),
-      _prov = dataCity[86].map((item) => item.address),
-      _area = Object.values(dataCity[340100]);
+    if (!data) {
+      return;
+    }
+    let _city = data[0].sub.map(item => item.areaName),
+      _prov = data.map(item => item.areaName),
+      _area = data[0].sub[0].sub.map(item => item.areaName);
 
     setState({
-      selector: [_prov, _city, _area],
+      selector: [_prov, _city, _area]
     });
-  }, []);
+  }, [data]);
 
-  const onChange = (e) => {
+  const onChange = e => {
     let division = props.Division || " ";
-    setState(
-      {
-        selectorChecked:
-          state.selector[0][e.detail.value[0]] +
-          division +
-          state.selector[1][e.detail.value[1]] +
-          division +
-          state.selector[2][e.detail.value[2]],
-      },
-      () => {
-        props.onChange && props.onChange(state.selectorChecked);
-      }
-    );
+
+    let [prov, city, area = 0] = e.detail.value;
+
+    let curAddress =
+      data[prov].areaName +
+      division +
+      data[prov].sub[city].areaName +
+      division +
+      data[prov].sub[city].sub[area].areaName;
+
+    setState({
+      selectorChecked: curAddress
+    });
+    props.onChange && props.onChange(curAddress);
   };
 
-  const onColumnChange = (e) => {
+  const onColumnChange = e => {
     let indexVal = e && e.detail;
     if (!indexVal) {
       return;
     }
-    // console.log(indexVal);
-
-    // 如果为第一个把后面两个改变,最后一个选第二个的第一个，第一个继承之前的
-    // 如果为第二个则把最后一个改变，第一个第二继承之前的
-    // 如果为第三个则不作任何改变
+    let prevState = R.clone(state.selector);
 
     let _city = [];
     let _area = [];
 
+    let idx = indexVal.value;
     if (indexVal.column == 0) {
-      let code = dataCity[86][indexVal.value].code;
+      let provData = data[idx];
+      setIdxProv(idx);
+      _city = provData.sub.map(item => item.areaName);
+      _area = provData.sub[0].sub.map(item => item.areaName);
 
-      setIdxProv(code);
-      // console.log(code);
-
-      let one = 0;
-      let codes = "";
-
-      Object.keys(dataCity[code]).forEach((item: string) => {
-        if (one == 0) {
-          codes = item;
-          setIdxCity(item);
-          one++;
-        }
-        _city.push(dataCity[code][item]);
-      });
-
-      Object.keys(dataCity[codes]).forEach((item: string) => {
-        _area.push(dataCity[codes][item]);
-      });
-
-      setState((old) => {
-        return {
-          selector: [old.selector[0], _city, _area],
-        };
+      setState({
+        selector: [prevState[0], _city, _area]
       });
     } else if (indexVal.column == 1) {
-      Object.keys(dataCity[idxProv]).forEach((item) => {
-        _city.push(item);
-        setIdxCity(_city[indexVal.value]);
-      });
-      Object.keys(dataCity[idxCity]).forEach((item) => {
-        _area.push(dataCity[idxCity][item]);
-      });
+      let provData = data[idxProv];
+      _city = provData.sub.map(item => item.areaName);
 
-      setState((old) => {
-        return {
-          selector: [old.selector[0], old.selector[1], _area],
-        };
+      _area = provData.sub[idx].sub.map(item => item.areaName);
+
+      setState({
+        selector: [prevState[0], prevState[1], _area]
       });
     }
   };

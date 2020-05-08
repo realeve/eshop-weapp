@@ -62,14 +62,14 @@ export enum CLIENT_TYPE {
   wap = "miniprogram",
   wechat = "miniprogram",
   web = "miniprogram", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
-  mp = 'miniprogram',//微信小程序
+  mp = "miniprogram" //微信小程序
 }
 
 export enum PAYMENT {
   alipay = "alipay",
   wechat = "wxpay",
   unionpay = "unionpay",
-  mp = "miniprogram",// 微信小程序
+  mp = "miniprogram" // 微信小程序
 }
 
 export { domain, host };
@@ -101,3 +101,7 @@ export const copyright = {
 };
 
 export const help = "https://www.cbpc.ltd/ccgold/static/help.json";
+
+export const cityUrl = DEV
+  ? "https://statictest.ccgold.cn/public/json/areaAll.json"
+  : "https://www.ccgold.cn/public/json/areaAll.json";
