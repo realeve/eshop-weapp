@@ -1,0 +1,84 @@
+@import "@/styles/theme.scss";
+.item {
+  display: flex;
+  @extend .alignColumn;
+  background: $white;
+
+  padding: 20px 15px;
+  margin-bottom: 20px;
+  width: 100%;
+
+  .detail {
+    display: flex;
+    @extend .alignRow;
+
+    .goods {
+      width: 215px;
+      height: 200px;
+      margin-right: 15px;
+      .img {
+        width: 200px;
+        height: 200px;
+      }
+      // &:hover {
+      //     transform: scale(1.1);
+      // }
+
+      // transition: 0.5s transform;
+      // position: relative;
+    }
+
+    .goodsInfo {
+      @extend .alignColumn;
+      flex: 1;
+
+      .goodsMain {
+        text-align: left;
+
+        .goodsTitle {
+          height: 30px;
+          line-height: 38px;
+          color: rgba(44, 46, 54, 1);
+          font-size: $heading-3-size;
+          font-weight: 900;
+        }
+
+        .title {
+          margin-top: 20px;
+          .info {
+            height: auto;
+            @extend .alignRow;
+            // align-items: flex-end;
+
+            .name {
+              width: 120px;
+              color: $mainTitle;
+            }
+
+            .value {
+              margin-left: 15px;
+              color: $subTitle;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .type {
+    width: 100%;
+    display: flex;
+    @extend .alignRow;
+    justify-content: space-between;
+    padding: 0px 15px;
+    .time {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+
+  .description {
+    padding: 10px 15px;
+    color: $subTitle;
+  }
+}
