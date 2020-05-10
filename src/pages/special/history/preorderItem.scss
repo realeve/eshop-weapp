@@ -6,7 +6,6 @@
 
   padding: 20px 15px;
   margin-bottom: 20px;
-  width: 100%;
 
   .detail {
     display: flex;
@@ -20,12 +19,6 @@
         width: 200px;
         height: 200px;
       }
-      // &:hover {
-      //     transform: scale(1.1);
-      // }
-
-      // transition: 0.5s transform;
-      // position: relative;
     }
 
     .goodsInfo {
@@ -48,7 +41,6 @@
           .info {
             height: auto;
             @extend .alignRow;
-            // align-items: flex-end;
 
             .name {
               width: 120px;
@@ -66,19 +58,18 @@
   }
 
   .type {
-    width: 100%;
     display: flex;
     @extend .alignRow;
     justify-content: space-between;
-    padding: 0px 15px;
+    margin-top: 10px;
     .time {
       flex: 1;
-      min-width: 120px;
+      //   min-width: 120px;
     }
   }
 
   .description {
-    padding: 10px 15px;
+    padding: 10px 0;
     color: $subTitle;
   }
 }
