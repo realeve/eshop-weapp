@@ -17,7 +17,7 @@ const Login = () => {
     <View className="login-page">
       <View className="logo">
         <Image
-          src={"https://www.cbpc.ltd/ccgold/static/headerLogo.png"}
+          src={"https://static.ccgold.cn/img/mp/headerLogo.png"}
           className="img"
         />
       </View>

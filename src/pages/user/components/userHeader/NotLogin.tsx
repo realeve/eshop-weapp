@@ -18,7 +18,7 @@ const NotLogin = () => (
       <AtAvatar
         circle
         size="large"
-        image="https://www.cbpc.ltd/ccgold/static/headerLogo.png"
+        image="https://static.ccgold.cn/img/mp/headerLogo.png"
       />
     </View>
     <View className="detail">

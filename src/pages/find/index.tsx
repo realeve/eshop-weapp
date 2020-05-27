@@ -10,7 +10,7 @@ const Find = () => {
   return (
     <View className="find-page">
       <Image
-        src="https://www.cbpc.ltd/ccgold/static/find.jpg"
+        src="https://static.ccgold.cn/img/mp/find.jpg"
         mode="widthFix"
         className="img"
       />

@@ -100,8 +100,8 @@ export const copyright = {
   tel: "400 8122 200"
 };
 
-export const help = "https://www.cbpc.ltd/ccgold/static/help.json";
+export const help = "https://static.ccgold.cn/img/mp/help.json";
 
 export const cityUrl = DEV
   ? "https://statictest.ccgold.cn/public/json/areaAll.json"
-  : "https://www.ccgold.cn/public/json/areaAll.json";
+  : "https://static.ccgold.cn/public/json/areaAll.json";
