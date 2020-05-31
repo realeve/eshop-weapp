@@ -8,6 +8,9 @@ import { AtDivider } from "taro-ui";
 import "./preorderItem.scss";
 
 export default ({ data }) => {
+  if (!data) {
+    return null;
+  }
   const url = `/pages/special/index?id=${data.activityId}`;
 
   return (

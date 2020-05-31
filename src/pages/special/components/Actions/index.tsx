@@ -20,6 +20,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           needAgree
           onChange={setAgree}
           html={
+            data &&
             data.activityId &&
             `${OSS_URL}/rules/escapeClause_${data.activityId}.html`
           }
