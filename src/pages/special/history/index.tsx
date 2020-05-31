@@ -95,6 +95,6 @@ const History = () => {
 };
 
 History.config = {
-  navigationBarTitleText: "历史预约活动"
+  navigationBarTitleText: "抽签购"
 };
 export default History;

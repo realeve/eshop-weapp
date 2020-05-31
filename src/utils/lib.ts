@@ -316,8 +316,11 @@ export const canSelloutNow: (param?: {
 };
 
 // 判断是否登录，用于购物车条件请求
-export const isLogin: () => boolean = () =>
-  typeof Taro.getStorageSync(LocalStorageKeys.user) !== "string";
+export const isLogin: () => boolean = () => {
+  let u = Taro.getStorageSync(LocalStorageKeys.user);
+  // console.info(u, typeof u);
+  return u && typeof u === "object";
+}
 
 export const hidePhone = (phone: string) =>
   phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
