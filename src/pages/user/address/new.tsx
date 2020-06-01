@@ -14,21 +14,21 @@ import success from "@/components/Toast/success";
 
 import { axios, AxiosError } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
-import { reg } from "@/utils/lib";
+import { reg, randomStr } from "@/utils/lib";
+import { connect } from "@tarojs/redux";
 
 interface IAxiosResponse {
   success?: string;
   message?: string;
+  datas?: {
+    success?: string;
+  };
 }
-
-const handleResponse = (res: IAxiosResponse) => res.message;
 
 const handleError = (res: AxiosError) => Promise.reject(res.message);
 
 const http = (param: AxiosRequestConfig) =>
-  axios<IAxiosResponse>(param)
-    .then(handleResponse)
-    .catch(handleError);
+  axios<IAxiosResponse>(param).catch(handleError);
 
 export const address_edit = (item: {}) =>
   http({
@@ -78,16 +78,30 @@ export let verifyAddress = stateExtra => {
   return true;
 };
 
+let getDetail = (name, list) => {
+  let prov = list.find(item => item.areaName == name);
+  return { id: prov ? prov.areaId : "", data: prov };
+};
 const getProvIdByAddress = (address, provlist) => {
   let data = R.clone(address);
 
   let [province, city, area] = data.address.split(" ");
-  console.log(provlist);
+
+  let prov = getDetail(province, provlist);
+  data.provId = prov.data ? prov.id : "";
+  if (prov.data) {
+    let areaData = getDetail(city, prov.data.sub);
+    data.cityId = areaData.data ? areaData.id : "";
+    if (areaData.data) {
+      areaData = getDetail(area, areaData.data.sub);
+      data.areaId = areaData.data ? areaData.id : "";
+    }
+  }
 
   // 处理 provId  cityId  areaId
 
   return {
-    ...address,
+    ...data,
     province,
     city,
     area
@@ -142,7 +156,7 @@ let DataChange = (
   return newdata;
 };
 
-const AddAddress = () => {
+const AddAddress = ({ dispatch }) => {
   const [account, setAccount] = useSetState({
     username: "",
     phone: "",
@@ -153,13 +167,22 @@ const AddAddress = () => {
 
   const [provlist, setProvlist] = useState(null);
 
+  const refresh = () => {
+    dispatch({
+      type: "order/setStore",
+      payload: { addressListHash: randomStr() }
+    });
+  };
+
   // 新增地址
   const insertAddress = async ({ defaultSite, ...props }) => {
     address_add(DataChange(props, defaultSite, provlist))
       .then(res => {
         if (res.addressId) {
-          success("新增地址信息成功");
-          Taro.navigateBack();
+          success("新增地址信息成功").then(() => {
+            refresh();
+            Taro.navigateBack();
+          });
         } else {
           fail("新增地址错误?" + res.message);
         }
@@ -174,8 +197,10 @@ const AddAddress = () => {
     address_edit(DataChange(props, props.defaultSite, provlist))
       .then(res => {
         if (res.success) {
-          success("编辑地址信息成功!");
-          Taro.navigateBack();
+          success("编辑地址信息成功!").then(() => {
+            refresh();
+            Taro.navigateBack();
+          });
         } else {
           fail("编辑地址错误?" + res.message);
         }
@@ -203,6 +228,7 @@ const AddAddress = () => {
 
   const [mode, setMode] = useState("add");
   const router = useRouter();
+
   useEffect(() => {
     let nextMode =
       typeof (router.params && router.params.address_id) != "undefined"
@@ -225,10 +251,10 @@ const AddAddress = () => {
       }
     },
     valid: () => {
-      let status = "undefined" !== (router.params && router.params.address_id);
-      if (status) {
-        setMode("update");
-      }
+      let status =
+        "undefined" != typeof (router.params && router.params.address_id);
+
+      setMode(status ? "edit" : "add");
       return status;
     },
     callback: e => {
@@ -305,4 +331,4 @@ AddAddress.config = {
   navigationBarTitleText: "新增地址"
 };
 
-export default AddAddress;
+export default connect(() => ({}))(AddAddress as any);

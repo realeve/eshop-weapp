@@ -16,14 +16,19 @@ import {
 import { updateSubscribeAddress } from "@/pages/special/db";
 import { connect } from "@tarojs/redux";
 
-const Address = ({ dispatch }) => {
-  const { data } = useFetch<IModPanelItem[]>({
+const Address = ({ dispatch, addressListHash }) => {
+  const { data, refetch } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
     },
     callback
   });
+
+  console.log(addressListHash, "addressListHash");
+  useFetch(() => {
+    refetch();
+  }, [addressListHash]);
 
   const { params } = useRouter();
 
@@ -75,7 +80,7 @@ const Address = ({ dispatch }) => {
             lib.jump("/pages/user/address/new");
           }}
         >
-          添加新地址
+          添加新地址{addressListHash}
         </CButton>
       </View>
     </View>
@@ -86,4 +91,4 @@ Address.config = {
   navigationBarTitleText: "选择地址"
 };
 
-export default connect(() => ({}))(Address as any);
+export default connect(({ order }) => order)(Address as any);

@@ -27,7 +27,6 @@ const Index = ({
             callback && callback();
             return;
           }
-          console.log("type", type);
           let url =
             type === "edit"
               ? `/pages/user/address/new?address_id=${item.address_id}`

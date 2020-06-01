@@ -1,4 +1,4 @@
-import { setStore } from "@/utils/lib";
+import { setStore, randomStr } from "@/utils/lib";
 import { IModPanelItem } from "../user/address";
 
 export interface IOrderModel {
@@ -8,12 +8,13 @@ export interface IOrderModel {
 
 const state: IOrderModel = {
   currentAddress: {},
+  addressListHash: randomStr()
 };
 
 export default {
   namespace: "order",
   state,
   reducers: {
-    setStore,
-  },
+    setStore
+  }
 };

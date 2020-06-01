@@ -12,7 +12,7 @@ const getInitArea = data => {
   return [_prov, _city, _area];
 };
 
-const PagePicker = ({ onLoad, ...props }) => {
+const PagePicker = props => {
   const [state, setState] = useState([[], [], []]);
 
   const { data, loading } = useFetch({
@@ -22,7 +22,7 @@ const PagePicker = ({ onLoad, ...props }) => {
       let selector = getInitArea(dist);
       setState(selector);
 
-      onLoad && onLoad(selector);
+      props.onLoad && props.onLoad(dist);
 
       return dist;
     }
