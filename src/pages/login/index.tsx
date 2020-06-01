@@ -3,7 +3,7 @@ import { View, Image } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
 import { AtTabs, AtTabsPane } from "taro-ui";
-import CTabs from "@/pages/detail/components/detail/tabs";
+// import CTabs from "@/pages/detail/components/detail/tabs";
 import LoginPhone from "./components/LoginPhone";
 import LoginPassword from "./components/LoginPassword";
 // interface IProps {

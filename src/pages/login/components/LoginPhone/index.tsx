@@ -39,7 +39,7 @@ const LoginPhone = ({ callback, dispatch }) => {
         account.username &&
         account.username.length > 1 &&
         account.password &&
-        account.password.length >= 8
+        account.password.length >= 6
     );
   }, [account]);
 
