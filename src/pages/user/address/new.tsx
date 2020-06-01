@@ -14,7 +14,7 @@ import success from "@/components/Toast/success";
 
 import { axios, AxiosError } from "@/utils/axios";
 import { AxiosRequestConfig } from "axios";
-import { reg, randomStr } from "@/utils/lib";
+import { reg, randomStr, jump } from "@/utils/lib";
 import { connect } from "@tarojs/redux";
 
 interface IAxiosResponse {
@@ -56,7 +56,7 @@ export const address_add = (item: {}) =>
 //验证地址修改信息
 export let verifyAddress = stateExtra => {
   const { username, phone, province, city, area, address } = stateExtra;
-  console.log(stateExtra);
+  // console.log(stateExtra);
   if (!username) {
     fail("请填写你的真实姓名，方便收货");
     return false;
@@ -172,6 +172,8 @@ const AddAddress = ({ dispatch }) => {
       type: "order/setStore",
       payload: { addressListHash: randomStr() }
     });
+    // Taro.navigateBack();
+    jump("/pages/user/index");
   };
 
   // 新增地址
@@ -181,7 +183,6 @@ const AddAddress = ({ dispatch }) => {
         if (res.addressId) {
           success("新增地址信息成功").then(() => {
             refresh();
-            Taro.navigateBack();
           });
         } else {
           fail("新增地址错误?" + res.message);
@@ -199,7 +200,6 @@ const AddAddress = ({ dispatch }) => {
         if (res.success) {
           success("编辑地址信息成功!").then(() => {
             refresh();
-            Taro.navigateBack();
           });
         } else {
           fail("编辑地址错误?" + res.message);
