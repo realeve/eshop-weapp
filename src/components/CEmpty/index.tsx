@@ -17,7 +17,8 @@ type TEmptyType =
   | "goodsComment"
   | "counsel"
   | "special"
-  | "guessYouLike";
+  | "guessYouLike"
+  | "login";
 
 const empConfig: {
   [key: string]: {
@@ -28,6 +29,13 @@ const empConfig: {
     href?: string;
   };
 } = {
+  login: {
+    img: "goods.svg",
+    description: "请先登录",
+    href: "/pages/login/index",
+    subtitle: "",
+    btnText: "登录"
+  },
   refund: {
     img: "refund.svg",
     description: "暂无退货退款信息",

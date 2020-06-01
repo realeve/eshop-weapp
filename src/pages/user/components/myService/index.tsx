@@ -29,12 +29,12 @@ const MyService = () => {
       title: "我的预约",
       img: order,
       url: "/pages/user/lottery/index"
-    },
-    {
-      title: "功能调试_退款详情",
-      img: order,
-      url: "/pages/user/order/aftersale/detail?sid=25"
     }
+    // {
+    //   title: "功能调试_退款详情",
+    //   img: order,
+    //   url: "/pages/user/order/aftersale/detail?sid=25"
+    // }
   ];
   return (
     <View className="usercenterMyService">

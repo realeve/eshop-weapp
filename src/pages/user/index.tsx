@@ -7,6 +7,7 @@ import { jump } from "@/utils/lib";
 import { logout as _logout } from "@/pages/login/db";
 import { IGlobalModel } from "@/models/common";
 import { connect } from "@tarojs/redux";
+import CEmpty from "@/components/CEmpty";
 
 const User = ({ isLogin, dispatch }) => {
   const logout = () => {
@@ -29,13 +30,9 @@ const User = ({ isLogin, dispatch }) => {
   return (
     <View className="user-page">
       <UserHeader />
-      <MyOrder />
-      <MyService />
-      {isLogin && (
-        <AtButton type="secondary" onClick={logout}>
-          退出登录
-        </AtButton>
-      )}
+      {!isLogin && <CEmpty type="login" />}
+      {isLogin && <MyOrder />}
+      {isLogin && <MyService />}
     </View>
   );
 };
