@@ -8,7 +8,7 @@ import "./AddressItem.scss";
 const Index = ({
   data: item,
   type = "edit",
-  callback,
+  callback
 }: {
   data: IModPanelItem;
   type: "edit" | "view" | "choose";
@@ -57,7 +57,7 @@ const Index = ({
               "at-icon",
               { "at-icon-chevron-right": type === "view" },
               {
-                "at-icon-edit": ["edit", "choose"].includes(type),
+                "at-icon-edit": ["edit", "choose"].includes(type)
               }
             )}
           />

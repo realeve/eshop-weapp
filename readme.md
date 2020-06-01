@@ -163,3 +163,9 @@ export default ()=>{
 合理的大小+webp: 287kb
 
 结论，优化后 287kb/2.3M = 1/8.2 约 八分之一
+
+---
+
+# mock
+
+http://47.110.150.104:3000/project/30/interface/api/516

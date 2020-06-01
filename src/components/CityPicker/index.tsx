@@ -21,6 +21,9 @@ const PagePicker = props => {
       let dist = e.datas.areaList;
       let selector = getInitArea(dist);
       setState(selector);
+
+      props.onLoad && props.onLoad(dist);
+
       return dist;
     }
   });
