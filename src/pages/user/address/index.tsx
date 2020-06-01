@@ -11,20 +11,31 @@ import * as lib from "@/utils/lib";
 import AddressItem from "./AddressItem";
 import { handleAddressList, IModPanelItem } from "./lib";
 
+import { axios } from "@/utils/axios";
+import fail from "@/components/Toast/fail";
+import success from "@/components/Toast/success";
+
+const address_delete = (addressId: number) =>
+  axios({
+    method: "post",
+    url: API.MODIFY_MEMBER_ADDRESS_DELETE as string,
+    data: { addressId }
+  });
+
 const Address = () => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
-      url: API.MEMBER_ADDRESS_LIST as string,
+      url: API.MEMBER_ADDRESS_LIST as string
     },
-    callback: handleAddressList,
+    callback: handleAddressList
   });
 
   const [show, setShow] = useState(false);
   const [curIdx, setCurIdx] = useState(0);
   // console.log(data);
 
-  const handleSingle = (idx) => {
+  const handleSingle = idx => {
     let res = R.clone(data);
     res = res.map((item, index) => {
       item.isOpened = idx === index;
@@ -34,7 +45,7 @@ const Address = () => {
     setCurIdx(idx);
   };
 
-  const closeItem = (idx) => {
+  const closeItem = idx => {
     let res = R.clone(data);
     res[idx].isOpened = false;
     setData(res);
@@ -54,20 +65,21 @@ const Address = () => {
                 {
                   text: "取消",
                   style: {
-                    backgroundColor: "#6190E8",
-                  },
+                    backgroundColor: "#6190E8"
+                  }
                 },
                 {
                   text: "删除",
                   style: {
-                    backgroundColor: "#FF4949",
-                  },
-                },
+                    backgroundColor: "#FF4949"
+                  }
+                }
               ]}
-              onClick={(e) => {
+              onClick={e => {
                 switch (e.text) {
                   case "删除":
                     // console.log("delete it");
+                    setCurIdx(item.address_id);
                     setShow(true);
                     break;
                   default:
@@ -95,11 +107,16 @@ const Address = () => {
         onCancel={() => {
           setShow(false);
         }}
-        onConfirm={() => {
-          console.log("执行删除操作");
-          // 然后刷新列表
-          onRefresh();
-          setShow(false);
+        onConfirm={async () => {
+          let res = await address_delete(curIdx);
+          // DONE 删除地址
+          if (res.success) {
+            success("删除地址成功!");
+            onRefresh();
+            setShow(false);
+          } else {
+            fail("删除地址失败?" + res.message);
+          }
         }}
         content="确认删除此收货地址吗?"
       />
@@ -118,7 +135,7 @@ const Address = () => {
 };
 
 Address.config = {
-  navigationBarTitleText: "我的地址",
+  navigationBarTitleText: "我的地址"
 };
 
 export default Address;
