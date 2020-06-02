@@ -16,7 +16,9 @@ import {
 import { updateSubscribeAddress } from "@/pages/special/db";
 import { connect } from "@tarojs/redux";
 
-const Address = ({ dispatch, addressListHash }) => {
+const Address = props => {
+  let { dispatch, addressListHash } = props;
+
   const { data, refetch } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
@@ -25,7 +27,6 @@ const Address = ({ dispatch, addressListHash }) => {
     callback
   });
 
-  console.log(addressListHash, "addressListHash");
   useFetch(() => {
     refetch();
   }, [addressListHash]);
@@ -80,7 +81,7 @@ const Address = ({ dispatch, addressListHash }) => {
             lib.jump("/pages/user/address/new");
           }}
         >
-          添加新地址{addressListHash}
+          添加新地址
         </CButton>
       </View>
     </View>

@@ -172,8 +172,7 @@ const AddAddress = ({ dispatch }) => {
       type: "order/setStore",
       payload: { addressListHash: randomStr() }
     });
-    // Taro.navigateBack();
-    jump("/pages/user/index");
+    Taro.navigateBack();
   };
 
   // 新增地址

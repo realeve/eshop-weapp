@@ -2,6 +2,7 @@ import { setStore, randomStr } from "@/utils/lib";
 import { IModPanelItem } from "../user/address";
 
 export interface IOrderModel {
+  addressListHash: string;
   currentAddress: IModPanelItem | {};
   [key: string]: any;
 }
