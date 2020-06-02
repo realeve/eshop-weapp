@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import "./index.scss";
 import EmptyAddress from "./empty";
@@ -15,6 +15,8 @@ import { axios } from "@/utils/axios";
 import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
 
+import { connect } from "@tarojs/redux";
+
 const address_delete = (addressId: number) =>
   axios({
     method: "post",
@@ -22,7 +24,7 @@ const address_delete = (addressId: number) =>
     data: { addressId }
   });
 
-const Address = () => {
+const Address = ({ addressListHash }) => {
   const { data, reFetch: onRefresh, setData } = useFetch<IModPanelItem[]>({
     param: {
       method: "post",
@@ -30,6 +32,10 @@ const Address = () => {
     },
     callback: handleAddressList
   });
+
+  useEffect(() => {
+    onRefresh();
+  }, [addressListHash]);
 
   const [show, setShow] = useState(false);
   const [curIdx, setCurIdx] = useState(0);
@@ -138,4 +144,4 @@ Address.config = {
   navigationBarTitleText: "我的地址"
 };
 
-export default Address;
+export default connect(({ order }) => order)(Address as any);
