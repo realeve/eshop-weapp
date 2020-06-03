@@ -58,12 +58,12 @@ export default ({ data }) => {
         </View>
       </View>
 
-      {data.jingle.length > 0 && (
+      {/* {data.jingle.length > 0 && (
         <View>
           <AtDivider content="商品卖点" height="80" />
           <View className="description">{data.jingle}</View>
         </View>
-      )}
+      )} */}
 
       <View className="type">
         <View className="time">

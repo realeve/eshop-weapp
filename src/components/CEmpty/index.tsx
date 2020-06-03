@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro, { render } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import * as lib from "@/utils/lib";
 import { CButton } from "@/components";
@@ -17,7 +17,8 @@ type TEmptyType =
   | "goodsComment"
   | "counsel"
   | "special"
-  | "guessYouLike";
+  | "guessYouLike"
+  | "login";
 
 const empConfig: {
   [key: string]: {
@@ -28,6 +29,13 @@ const empConfig: {
     href?: string;
   };
 } = {
+  login: {
+    img: "goods.svg",
+    description: "请先登录",
+    href: "/pages/login/index",
+    subtitle: "",
+    btnText: "登录"
+  },
   refund: {
     img: "refund.svg",
     description: "暂无退货退款信息",
@@ -111,27 +119,38 @@ export interface IPropEmptyItem {
   type: TEmptyType;
   [key: string]: any;
 }
-export default ({ type = "goods" }: IPropEmptyItem) => {
-  let { btnText, description, href, img, subtitle } = empConfig[type];
-  return (
-    <View className="page-empty">
-      <View className="imgWrapper">
-        <Image mode="aspectFit" className="img" src={prefix + img} />
-      </View>
-      <View className="title">{description}~</View>
-      {subtitle && <View className="sub_title">{subtitle}~</View>}
-      {btnText && (
-        <CButton
-          onClick={() => {
-            lib.jump(href);
-          }}
-          theme="gardient"
-          style="margin-top:40px;width:80vw;"
-          size="large"
-        >
-          {btnText}
-        </CButton>
-      )}
-    </View>
-  );
-};
+export default class CEmpty extends Taro.Component {
+  static options = {
+    addGlobalClass: true
+  };
+  render() {
+    if (!this.props.type) {
+      return;
+    }
+    let { btnText, description, href, img, subtitle } =
+      empConfig[this.props.type] || {};
+    return (
+      btnText && (
+        <View className="page-empty">
+          <View className="imgWrapper">
+            <Image mode="aspectFit" className="img" src={prefix + img} />
+          </View>
+          <View className="title">{description}~</View>
+          {subtitle && <View className="sub_title">{subtitle}~</View>}
+          {btnText && (
+            <CButton
+              onClick={() => {
+                lib.jump(href);
+              }}
+              theme="gardient"
+              style="margin-top:40px;width:80vw;"
+              size="large"
+            >
+              {btnText}
+            </CButton>
+          )}
+        </View>
+      )
+    );
+  }
+}
