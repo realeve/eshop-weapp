@@ -11,6 +11,11 @@ import { jump } from "@/utils/lib";
 const MyService = () => {
   const list = [
     {
+      title: "功能调试_im",
+      img: order,
+      url: "/pages/user/im/index"
+    },
+    {
       title: "我的收货地址",
       img: address,
       url: "/pages/user/address/index"
@@ -30,11 +35,6 @@ const MyService = () => {
       img: order,
       url: "/pages/user/lottery/index"
     }
-    // {
-    //   title: "功能调试_退款详情",
-    //   img: order,
-    //   url: "/pages/user/order/aftersale/detail?sid=25"
-    // }
   ];
   return (
     <View className="usercenterMyService">
