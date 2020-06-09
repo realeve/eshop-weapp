@@ -13,7 +13,7 @@ const MyService = () => {
     {
       title: "功能调试_im",
       img: order,
-      url: "/pages/user/im/index"
+      url: "/pages/user/im/index?sid=3"
     },
     {
       title: "我的收货地址",

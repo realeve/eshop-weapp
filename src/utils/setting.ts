@@ -57,6 +57,7 @@ export const OSS_URL = SETTING.oss;
 
 export const IM = SETTING.IM;
 export const INVOICE = SETTING.invoice;
+export const IMWS = SETTING.IMWS;
 
 export enum CLIENT_TYPE {
   andriod = "android",

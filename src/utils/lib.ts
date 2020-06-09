@@ -16,27 +16,27 @@ export const tabConfig: {
   pagePath: string;
   text: string;
 }[] = [
-  {
-    pagePath: "/pages/index/index",
-    text: "首页"
-  },
-  {
-    pagePath: "/pages/cate/index",
-    text: "分类"
-  },
-  {
-    pagePath: "/pages/find/index",
-    text: "发现"
-  },
-  {
-    pagePath: "/pages/cart/index",
-    text: "购物车"
-  },
-  {
-    pagePath: "/pages/user/index",
-    text: "我的"
-  }
-];
+    {
+      pagePath: "/pages/index/index",
+      text: "首页"
+    },
+    {
+      pagePath: "/pages/cate/index",
+      text: "分类"
+    },
+    {
+      pagePath: "/pages/find/index",
+      text: "发现"
+    },
+    {
+      pagePath: "/pages/cart/index",
+      text: "购物车"
+    },
+    {
+      pagePath: "/pages/user/index",
+      text: "我的"
+    }
+  ];
 
 // 数据去重
 export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
@@ -423,3 +423,8 @@ export const randomStr = () =>
   Math.random()
     .toString(36)
     .substring(2);
+
+export const getMemberInfo = () => {
+  let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
+  return JSON.parse(localStore);
+}
