@@ -379,3 +379,5 @@ export const randomStr = () =>
   Math.random()
     .toString(36)
     .substring(2);
+
+export const isWeapp = Taro.getEnv() === "WEAPP";

@@ -20,7 +20,7 @@ import {
   loadMember
 } from "../../db";
 
-import { jump } from "@/utils/lib";
+import { jump, isWeapp } from "@/utils/lib";
 
 import { IGlobalModel } from "@/models/common";
 
@@ -78,9 +78,11 @@ const LoginPhone = ({ callback, dispatch }) => {
             登录
           </CButton>
         </View>
-        <View style={{ margin: "10px 0" }}>
-          <CButton onClick={onWeixinLogin}>微信快捷登录</CButton>
-        </View>
+        {isWeapp && (
+          <View style={{ margin: "10px 0" }}>
+            <CButton onClick={onWeixinLogin}>微信快捷登录</CButton>
+          </View>
+        )}
       </View>
     </View>
   );
