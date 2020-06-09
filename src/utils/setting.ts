@@ -24,7 +24,8 @@ const SETTING: { [key: string]: string } = {
   base: "/",
   publicPath: "/",
   IM: "https://imtest.ccgold.cn/member",
-  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
+  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
+  IMWS: "ws://imtest.ccgold.cn/im"
 };
 
 /**
@@ -36,7 +37,8 @@ const SETTING: { [key: string]: string } = {
 //   base: "/",
 //   publicPath: "/",
 //   IM: "https://im.ccgold.cn/member",
-//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do"
+//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
+//  IMWS:"ws://im.ccgold.cn/im"
 // };
 
 // https://www.ccgold.cn/index.html

@@ -1,0 +1,35 @@
+@import "@/styles/theme.scss";
+
+.im {
+  height: 100vh;
+  display: block;
+
+  .datas {
+    display: block;
+    height: 100vh;
+  }
+
+  .input {
+    display: grid;
+    grid-template-columns: 9fr 1fr;
+    position: fixed;
+    bottom: 0.5em;
+    width: 100%;
+    padding: 10px;
+    // justify-content: space-between;
+
+    .at-textarea {
+
+      &__textarea {
+        margin-right: 10px;
+        max-height: 4em;
+        line-height: 32rpx;
+        // height: 1em;
+      }
+
+    }
+
+    .add {}
+  }
+
+}
