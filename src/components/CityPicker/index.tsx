@@ -82,7 +82,7 @@ const PagePicker = props => {
         onColumnChange={onColumnChange}
         onChange={onChange}
       >
-        <View className="wrap">
+        <View className="wrap at-input">
           <View className="title">{props.title || "地址"}</View>
           <Text>{props.value}</Text>
         </View>

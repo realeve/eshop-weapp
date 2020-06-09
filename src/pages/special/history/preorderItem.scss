@@ -38,6 +38,7 @@
 
         .title {
           margin-top: 20px;
+          font-size: $heading-4-size;
           .info {
             height: auto;
             @extend .alignRow;
@@ -70,6 +71,7 @@
     .time {
       flex: 1;
       //   min-width: 120px;
+      font-size: $heading-4-size;
     }
   }
 }

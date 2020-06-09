@@ -4,4 +4,5 @@
 .count_time {
   @extend .alignRow;
   line-height: 1;
+  font-size: $heading-4-size;
 }
