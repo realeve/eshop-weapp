@@ -1,4 +1,4 @@
-export let DEV: boolean =
+export let DEV =
   process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
 
 /**
@@ -18,7 +18,7 @@ export let DEV: boolean =
  * 测评环境
  * {"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiZWZiMjI5ZjI1MzE0MDY4YjhhMjI5N2QyOWJhOGE3MiIsInN1YiI6IndhcCIsImlhdCI6MTU3MDI0NTIwOCwiZXhwIjoxNTcwODUwMDA4LCJwYXJhbXMiOnsidWlkIjoxNiwidW5hbWUiOiJ1XzAwMTUxNTY4OTQyNyIsImZwIjoiNjkzNTUyMGFmNDJmNjU4NjIzYjQyYTc4NmRjMTJiOWMiLCJycCI6MX19.EO74AForPC8nazdLVDzq4PFCnbo8D9GF2BVKxpGjEdQ","avatar":"https://statictest.ccgold.cn/image/18/ad/18ad32b1ddaa26601ba789f28b1317cd.jpg","uid":16,"account":"微信","memberName":"u_001515689427","trueName":"*宾","phone":"18628123455","sex":"保密","birthday":null,"authState":30,"isRealNamePassed":true,"authMessage":"已通过"}
  */
-const SETTING: { [key: string]: string } = {
+const SETTING = {
   host: "https://apitest.ccgold.cn/api",
   oss: "https://statictest.ccgold.cn/",
   base: "/",
@@ -50,7 +50,7 @@ export const GLOBAL_SELLER = 1;
 export const UPLOAD_URL = SETTING.host + "/member/image/upload";
 
 // 后台api部署域名
-const host: string = SETTING.host;
+const host = SETTING.host;
 const domain = host;
 
 export const OSS_URL = SETTING.oss;
@@ -58,21 +58,21 @@ export const OSS_URL = SETTING.oss;
 export const IM = SETTING.IM;
 export const INVOICE = SETTING.invoice;
 
-export enum CLIENT_TYPE {
-  andriod = "android",
-  ios = "ios",
-  wap = "miniprogram",
-  wechat = "miniprogram",
-  web = "miniprogram", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
-  mp = "miniprogram" //微信小程序
-}
+export const CLIENT_TYPE = {
+  andriod: "android",
+  ios: "ios",
+  wap: "miniprogram",
+  wechat: "miniprogram",
+  web: "miniprogram", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
+  mp: "miniprogram" //微信小程序
+};
 
-export enum PAYMENT {
-  alipay = "alipay",
-  wechat = "wxpay",
-  unionpay = "unionpay",
-  mp = "miniprogram" // 微信小程序
-}
+export const PAYMENT = {
+  alipay: "alipay",
+  wechat: "wxpay",
+  unionpay: "unionpay",
+  mp: "miniprogram" // 微信小程序
+};
 
 export { domain, host };
 export { API } from "./api";

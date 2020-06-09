@@ -1,8 +1,11 @@
 import Taro from "@tarojs/taro";
 
 export const supportWebp = () => {
-  const res = Taro.getSystemInfoSync();
-  return res.system.includes("Android");
+  if (Taro.getEnv() === "WEAPP") {
+    const res = Taro.getSystemInfoSync();
+    return res.system.includes("Android");
+  }
+  return navigator.userAgent.includes("Android");
 };
 
 const globalData = { webp: supportWebp() };

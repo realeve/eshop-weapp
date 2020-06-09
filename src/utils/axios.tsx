@@ -1,4 +1,4 @@
-import { axios as http, AxiosRequestConfig, AxiosResponse } from "taro-axios";
+import { axios as http } from "taro-axios";
 import qs from "qs";
 import { host } from "./setting";
 import * as R from "ramda";
@@ -9,19 +9,19 @@ import {
   get as getGlobalData
 } from "@/utils/global_data";
 import { jump, clearUser } from "@/utils/lib";
-import { API } from '@/utils/api';
+import { API } from "@/utils/api";
 
-export interface GlobalAxios {
-  host: string;
-  token: string;
-  fp: string;
-}
+// export interface GlobalAxios {
+//   host: string;
+//   token: string;
+//   fp: string;
+// }
 
-declare global {
-  interface Window {
-    g_axios: GlobalAxios;
-  }
-}
+// declare global {
+//   interface Window {
+//     g_axios: GlobalAxios;
+//   }
+// }
 
 /**
  * 接口返回代码表
@@ -34,12 +34,12 @@ declare global {
  * @alias noauth
  * @alias unopened
  */
-export enum RESPONSE_CODES {
-  success = 200,
-  fail = 400,
-  noauth = 401,
-  unopened = 402
-}
+export const RESPONSE_CODES = {
+  success: 200,
+  fail: 400,
+  noauth: 401,
+  unopened: 402
+};
 
 export const OK_CODE = [RESPONSE_CODES.success];
 export const ERROR_CODE = [
@@ -48,9 +48,7 @@ export const ERROR_CODE = [
   RESPONSE_CODES.unopened
 ];
 
-export const codeMessage: {
-  [key: number]: string;
-} = {
+export const codeMessage = {
   200: "服务器成功返回请求的数据。",
   201: "新建或修改数据成功。",
   202: "一个请求已经进入后台排队（异步任务）。",
@@ -69,59 +67,30 @@ export const codeMessage: {
 };
 
 // 导出数据，随机时长
-export type MockFn = <T>(path: T, time?: number) => Promise<T>;
-export const mock: MockFn = (data, time = Math.random() * 1000) =>
+export const mock = (data, time = Math.random() * 1000) =>
   new Promise(resolve => {
     setTimeout(() => {
       resolve(data);
     }, time);
   });
 
-type VariableType =
-  | "object"
-  | "number"
-  | "boolean"
-  | "string"
-  | "null"
-  | "array"
-  | "regexp"
-  | "function"
-  | "undefined"
-  | string;
-export const getType: (data: any) => VariableType = data =>
-  R.type(data).toLowerCase();
+export const getType = data => R.type(data).toLowerCase();
 
-export const loadUserInfo = (user: null | string) => {
+export const loadUserInfo = user => {
   if (user == null) {
     return {};
   }
 
-  let setting: {
-    token: string;
-    [key: string]: any;
-  } = JSON.parse(user);
+  let setting = JSON.parse(user);
   setGlobalData("token", setting.token);
   return { token: setting.token };
 };
 
-const saveToken = (token: string) => {
+const saveToken = token => {
   Taro.setStorageSync(LocalStorageKeys.token, token);
 };
 
-export interface AxiosError {
-  message: string;
-  description: string;
-  url: string;
-  params: any;
-  status?: number;
-}
-export const handleError = (error: {
-  self: boolean;
-  config: any;
-  response: any;
-  request?: any;
-  message?: any;
-}) => {
+export const handleError = error => {
   // console.log(error);
   let config = error.config || {};
   let str = config.params || config.data || {};
@@ -182,27 +151,27 @@ export const handleError = (error: {
   });
 };
 
-export const handleData: <T extends { token?: string; error?: {} }>(
-  res: AxiosResponse<{
-    code: number;
-    msg: string;
-    datas: T;
-  }>
-) => Promise<T> = async ({ config, request, data, headers }) => {
+export const handleData = async ({ config, request, data, headers }) => {
   if (config.url.includes(".json")) {
     return data;
   }
 
   let { code, msg, datas } = data;
   // TODO:微信自动登录失败也会返回noauth，此处需要调整
-  if (code === RESPONSE_CODES.noauth && !(config.url.includes(API.LOGIN_MINI_PROGRAM.url) || config.url.includes(API.MINI_PROGRAM_BINDING.url))) {
+  if (
+    code === RESPONSE_CODES.noauth &&
+    !(
+      config.url.includes(API.LOGIN_MINI_PROGRAM.url) ||
+      config.url.includes(API.MINI_PROGRAM_BINDING.url)
+    )
+  ) {
     clearUser();
 
     Taro.showToast({
-      title: '登录已失效', //"验证码无效",
+      title: "登录已失效", //"验证码无效",
       icon: "loading",
       duration: 3000
-    })
+    });
   }
 
   if ((datas || {}).error) {
@@ -262,7 +231,7 @@ export const handleData: <T extends { token?: string; error?: {} }>(
   return datas || { code };
 };
 
-export const handleUrl = (option: AxiosRequestConfig) => {
+export const handleUrl = option => {
   if (option.url && option.url[0] === ".") {
     option.url = host + "/" + option.url.slice(1);
   }
@@ -271,7 +240,7 @@ export const handleUrl = (option: AxiosRequestConfig) => {
 
 // const getFp = (): string =>
 //   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
-const getFp = (): string => "weapp";
+const getFp = () => "weapp";
 
 export const getToken = () => {
   let token = getGlobalData("token");
@@ -284,11 +253,7 @@ export const getToken = () => {
 };
 
 // 自动处理token更新，data 序列化等
-export let axios: <T extends {}>(
-  config: AxiosRequestConfig
-) => Promise<
-  T | { token?: string | undefined; error?: {} | undefined }
-> = _option => {
+export let axios = _option => {
   let g_axios = getGlobalData("g_axios") || {};
   if (!g_axios.token || g_axios.token.length == 0) {
     let g_fp = getGlobalData("fp");
@@ -340,7 +305,7 @@ export let axios: <T extends {}>(
       baseURL: host,
       timeout: 30 * 1000,
       transformRequest: [
-        function (data) {
+        function(data) {
           let dataType = getType(data);
           switch (dataType) {
             case "object":
