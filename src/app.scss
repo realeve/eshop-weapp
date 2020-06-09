@@ -3,7 +3,8 @@
 
 .taro-tabbar {
   &__tabbar {
-    box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
+    /* prettier-ignore */
+    box-shadow: 1PX -4PX 5PX 0px rgba(0, 0, 0, 0.2);
     margin-top: 25px;
     .weui-tabbar__item {
       &:nth-child(3) {

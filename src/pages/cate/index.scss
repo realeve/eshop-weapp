@@ -11,7 +11,8 @@
   }
   &__menu {
     width: 162px;
-    @include border(right, 1px, solid, rgba(0, 0, 0, 0.15));
+    /* prettier-ignore */
+    @include border(right, 1PX, solid, rgba(0, 0, 0, 0.15));
     background-color: $bg;
   }
 

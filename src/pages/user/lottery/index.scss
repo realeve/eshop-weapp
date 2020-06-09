@@ -34,7 +34,8 @@ $shopHeight: 45px;
     @extend .alignRow;
     margin: 20px 0;
     padding-bottom: 20px;
-    border-bottom: 1px solid $splitLine;
+    /* prettier-ignore */
+    border-bottom: 1PX solid $splitLine;
     .img {
       width: 160px;
       height: 160px;

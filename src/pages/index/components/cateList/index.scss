@@ -19,7 +19,8 @@
           left: 0;
           content: "";
           height: 50%;
-          width: 1px;
+          /* prettier-ignore */
+          width: 1PX;
           background-color: $lightYellow;
           transform: rotate(30deg);
         }
@@ -28,7 +29,8 @@
           right: 0;
           content: "";
           height: 50%;
-          width: 1px;
+          /* prettier-ignore */
+          width: 1PX;
           background-color: $lightYellow;
           transform: rotate(30deg);
         }

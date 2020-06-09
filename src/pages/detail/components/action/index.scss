@@ -5,7 +5,8 @@
   z-index: 100;
   height: 100px;
   width: 100%;
-  border-top: 1px solid $borderColorGrey;
+  /* prettier-ignore */
+  border-top: 1PX solid $borderColorGrey;
   position: fixed;
   bottom: 0;
   left: 0;

@@ -11,7 +11,8 @@ $item-size: 144px;
   padding-bottom: 8px;
   /* TODO RN 端对 border 的编译存在问题，暂时用如下写法 */
   border: 0 solid $borderColorGrey;
-  border-bottom-width: 1px;
+  /* prettier-ignore */
+  border-bottom-width: 1PX;
   &-txt {
     color: $mainTitle;
     font-size: $font-size-base;
