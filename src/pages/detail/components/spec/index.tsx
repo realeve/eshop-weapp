@@ -64,7 +64,7 @@ const DetailCard = ({
             {data.services &&
               data.services.map(service => (
                 <View key={service.title} className="servicesItem">
-                  • {service.title}
+                  •{service.title}
                 </View>
               ))}
           </View>
@@ -87,6 +87,7 @@ const DetailCard = ({
         onClose={() => setShowService(false)}
       >
         <View className="specServices_title">服务说明</View>
+
         {data.services &&
           data.services.map(service => (
             <View key={service.title} className="specServices_item">
