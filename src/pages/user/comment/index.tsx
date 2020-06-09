@@ -244,7 +244,7 @@ const Comment = () => {
               </View>
               <View className="goods">
                 <Image src={item.goodsImg} className="img" />
-                <View>{item.goodsName}</View>
+                <View style={{ fontSize: "14px" }}>{item.goodsName}</View>
               </View>
             </View>
           );
