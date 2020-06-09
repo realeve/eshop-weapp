@@ -34,7 +34,8 @@ const BannerImg = ({ special }: IProps) => {
             "statictest"
           )}
           className="bannerImg"
-          style="height:480px;"
+          // style="height:480px;"
+          style={{ height: "480px" }}
           mode="scaleToFill"
           onClick={() => {
             jump({

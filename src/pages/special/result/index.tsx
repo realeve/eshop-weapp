@@ -163,14 +163,17 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
           <View className="result__content">
             <View className="list-item">
               <CDot />
-              <Text style="margin-left:10px;font-size:14px;">
+              <Text
+                //  style="margin-left:10px;font-size:14px;"
+                style={{ marginLeft: "10px", fontSize: "14px" }}
+              >
                 本次活动共有{specialResult.data.curPeople}人预约，共抽取中签号
                 {specialResult.data.lucky}个
               </Text>
             </View>
             <View className="list-item">
               <CDot />
-              <Text style="margin-left:10px;font-size:14px;">
+              <Text style={{ marginLeft: "10px", fontSize: "14px" }}>
                 如有疑问，请联系在线客服或者致电{specialResult.data.phone}
               </Text>
             </View>
@@ -186,7 +189,8 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
             >
               <View
                 className="at-icon at-icon-tag"
-                style="color:#b98a4e;padding-right:5px;"
+                // style="color:#b98a4e;padding-right:5px;"
+                style={{ color: "#b98a4e", paddingRight: "5px" }}
               />
               抽签规则
             </View>

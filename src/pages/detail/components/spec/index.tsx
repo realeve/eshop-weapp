@@ -113,7 +113,11 @@ const DetailCard = ({
         <View className="specPanel_title">
           <Image className="img" src={data.img} />
           <View className="detail">
-            <CPrice retail={data.price} retailStyle="font-size:20px;" />
+            <CPrice
+              retail={data.price}
+              // retailStyle="font-size:20px;"
+              retailStyle={{ fontSize: "20px" }}
+            />
             <Text className="storage">库存 {data.number}件</Text>
             <Text className="goodsname">{data.title}</Text>
           </View>

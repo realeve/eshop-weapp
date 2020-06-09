@@ -34,7 +34,8 @@ const ResPage = ({
         <RichText
           space="ensp"
           nodes={html || ""}
-          style="line-height:2em;margin:0;padding:0;"
+          // style="line-height:2em;margin:0;padding:0;"
+          style={{ lineHeight: "2em", margin: 0, padding: 0 }}
         />
       )}
       <View className="response__actions">
@@ -44,13 +45,15 @@ const ResPage = ({
           onClick={() => {
             setShowPanel(needAgree);
           }}
-          style="width:100px;"
+          // style="width:100px;"
+          style={{ width: "100px" }}
         >
           {needAgree ? "同意" : "关闭"}
         </CButton>
         {needAgree && (
           <CButton
-            style="width:100px;"
+            // style="width:100px;"
+            style={{ width: "100px" }}
             size="small"
             onClick={() => onCancel(false)}
           >

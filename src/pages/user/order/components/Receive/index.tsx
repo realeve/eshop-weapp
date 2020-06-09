@@ -21,7 +21,8 @@ export default ({ orderId, onRefresh }) => {
       theme="yellow"
       size="small"
       round={false}
-      style="margin-left:12px"
+      // style="margin-left:12px"
+      style={{ marginLeft: "12px" }}
       onClick={receive}
     >
       确认收货

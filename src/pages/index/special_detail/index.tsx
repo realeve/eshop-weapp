@@ -58,7 +58,11 @@ const Special = () => {
                   <Image mode="aspectFit" src={item.img} className="img" />
                   <View className="detail">
                     <View className="title">{item.title}</View>
-                    <View className="subTitle" style="justify-content:center;">
+                    <View
+                      className="subTitle"
+                      //  style="justify-content:center;"
+                      style={{ justifyContent: "center" }}
+                    >
                       <CPrice retail={item.price} />
                     </View>
                   </View>

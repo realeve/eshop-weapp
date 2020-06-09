@@ -249,7 +249,8 @@ const Index = ({ menuList }) => {
                       </View>
                       <View
                         className="store"
-                        style="justify-content:flex-start;"
+                        // style="justify-content:flex-start;"
+                        style={{ justifyContent: "flex-start" }}
                       >
                         <Image src={ImgStore} className="logo" />
                         {item.store}

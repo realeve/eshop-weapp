@@ -73,7 +73,7 @@ const MyOrder = ({ dispatch, isLogin }) => {
   });
 
   return (
-    <View className="CCard" style="margin-top:10px;">
+    <View className="CCard" style={{ marginTop: "10px" }}>
       <View className="head">
         <View className="title">我的订单</View>
         <View

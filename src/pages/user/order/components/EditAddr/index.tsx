@@ -10,7 +10,8 @@ export default ({ orderId }) => {
       onClick={() => {
         jump(`/pages/user/address/list?orderid=${orderId}`);
       }}
-      style="margin-left:12px"
+      // style="margin-left:12px"
+      style={{ marginLeft: "12px" }}
     >
       修改地址
     </CButton>

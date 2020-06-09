@@ -25,7 +25,11 @@ export default ({
       autoplay
       indicatorDots
       indicatorActiveColor="#b98a4e"
-      style={`margin-bottom:8px;height:${Number(ratio) * windowWidth}px`}
+      // style={`margin-bottom:8px;height:${Number(ratio) * windowWidth}px`}
+      style={{
+        marginBottom: "8px",
+        height: `${Number(ratio) * windowWidth}px`
+      }}
     >
       {data.map((item: ICarouselItem) => (
         <SwiperItem

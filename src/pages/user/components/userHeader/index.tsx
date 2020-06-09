@@ -38,7 +38,8 @@ const UserHeader = ({ user, loading, isLogin, dispatch }) => {
         {isLogin && (
           <Image
             src="https://static.ccgold.cn/img/mp/logout.svg"
-            style="width:30px;cursor:pointer"
+            // style="width:30px;cursor:pointer"
+            style={{ width: "30px", cursor: "pointer" }}
             onClick={() => setIsOpened(!isOpened)}
           />
         )}

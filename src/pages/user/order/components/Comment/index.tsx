@@ -8,7 +8,8 @@ export default ({ orderId, type = "normal" }) => {
       theme="yellow"
       size="small"
       round={false}
-      style="margin-left:12px"
+      // style="margin-left:12px"
+      style={{ marginLeft: "12px" }}
       onClick={() => {
         jump(`/pages/user/order/comment?id=${orderId}&type=${type}`);
       }}

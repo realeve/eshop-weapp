@@ -13,7 +13,12 @@ const DetailCard = ({ data = {} }) => {
       : data.shopAddress;
   return (
     <DCard>
-      <CPrice retail={data.price} retailStyle="font-size:20px;" />
+      <CPrice
+        retail={data.price}
+        // retailStyle="font-size:20px;"
+
+        retailStyle={{ fontSize: "20px" }}
+      />
       <Text className="detail_page_title">{data.title}</Text>
       <View className="detail_page_detail">
         <Text>运费:{data.expressPrice || "包邮"}</Text>
