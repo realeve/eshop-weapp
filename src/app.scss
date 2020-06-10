@@ -3,7 +3,8 @@
 
 .taro-tabbar {
   &__tabbar {
-    box-shadow: 1px -4px 5px 0px rgba(0, 0, 0, 0.2);
+    /* prettier-ignore */
+    box-shadow: 1PX -4PX 5PX 0px rgba(0, 0, 0, 0.2);
     margin-top: 25px;
     .weui-tabbar__item {
       &:nth-child(3) {
@@ -45,4 +46,12 @@
 .item-extra__icon-arrow {
   font-size: 36rpx !important;
   color: #888 !important;
+}
+
+.loading,
+.loaded {
+  font-size: $heading-4-size !important;
+}
+.swiper-container {
+  height: 100% !important;
 }

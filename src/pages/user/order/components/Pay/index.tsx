@@ -28,7 +28,8 @@ export default ({ payId, onRefresh, autoCancelTime }) => {
         pay(payId, onRefresh).finally(() => setLoading(false));
       }}
       round={false}
-      style="margin-left:12px"
+      // style="margin-left:12px"
+      style={{ marginLeft: "12px" }}
     >
       去付款
     </CButton>

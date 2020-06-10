@@ -17,7 +17,7 @@
     flex-direction: row;
 
     &_title {
-      margin-right: 30px;
+      margin-right: 20px;
       color: $subTitle;
     }
     .at-icon {
@@ -42,7 +42,8 @@
         flex: 1;
         // justify-content: space-between;
         &Item {
-          margin-right: 40px;
+          margin-right: 20px;
+          font-size: $heading-4-size;
         }
       }
     }

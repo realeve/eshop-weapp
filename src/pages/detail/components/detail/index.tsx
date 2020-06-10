@@ -43,7 +43,8 @@ const DetailContent = ({ goods_id: id }: { goods_id: string | number }) => {
               <RichText
                 space="ensp"
                 nodes={appAfterService}
-                style="line-height:1.5em;"
+                // style="line-height:1.5em;"
+                style={{ lineHeight: "1.5em" }}
               />
             </View>
           </AtTabsPane>

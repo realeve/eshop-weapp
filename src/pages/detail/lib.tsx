@@ -238,6 +238,8 @@ export interface IProductInfo {
   services?: {
     key: string;
     title: string;
+    icon: string;
+    subTitle: string;
   }[];
   tips?: string;
   goodsId?: number;
@@ -346,15 +348,22 @@ export const initData: (
       //TODO 修改了key title
       {
         key: "正",
-        title: "正品保障"
+        title: "正品保障",
+        icon: "zheng",
+        subTitle: "100%正品货源，杜绝假货，品质有保障。"
       },
       {
         key: "保",
-        title: "顺丰保价"
+        title: "顺丰保价",
+        icon: "bao",
+        subTitle: "由顺丰速运提供快递服务，全额保价，丢件赔付，让您购物无忧。"
       },
       {
         key: "退",
-        title: "不支持7天无理由退换货"
+        title: "不支持7天无理由退换货",
+        icon: "you",
+        subTitle:
+          "本平台商品一经售出非质量问题不接受退换货，若您认为商品存在质量问题，请凭具有国家级资质的检测机构出具有检测结果申请退换。"
       }
     ],
     tips: "本商品无质量问题不支持退换货",

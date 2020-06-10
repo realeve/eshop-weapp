@@ -39,40 +39,28 @@ export const tabConfig: {
   ];
 
 // 数据去重
-export let uniq: <T>(arr: Array<T>) => Array<T> = arr => R.uniq(arr);
+export let uniq = arr => R.uniq(arr);
 
-interface IPropVariableType {
-  (str: string | number): boolean;
-}
-
-export interface IProp {
-  [key: string]: string | number | any;
-}
-
-export const isDateTime: IPropVariableType = str =>
+export const isDateTime = str =>
   /^\d{4}(-|\/|)[0-1]\d(-|\/|)[0-3]\d$|^\d{4}(-|\/|)[0-1]\d(-|\/|)[0-3]\d [0-2][0-9]:[0-5][0-9](:[0-5][0-9])$|^[0-2][0-9]:[0-5][0-9](:[0-5][0-9])$/.test(
     String(str).trim()
   );
 
-export const isMonth: IPropVariableType = str =>
+export const isMonth = str =>
   /^[1-9]\d{3}(|\-|\/)[0-1]\d$/.test(String(str).trim());
 
 // 数字
-export const isNumOrFloat: IPropVariableType = str =>
+export const isNumOrFloat = str =>
   /^(-|\+|)\d+(\.)\d+$|^(-|\+|)\d+$/.test(String(str));
 
 // 整数
-export const isInt: IPropVariableType = str =>
-  /^(-|\+)?[1-9]\d*$/.test(String(str));
+export const isInt = str => /^(-|\+)?[1-9]\d*$/.test(String(str));
 
 // 浮点
-export const isFloat: IPropVariableType = str =>
+export const isFloat = str =>
   /^(-|\+|)\d+\.\d+$|^(-|\+|)\d+$/.test(String(str));
-export const hasDecimal: IPropVariableType = str =>
-  /^(-|\+|)\d+\.\d+$/.test(String(str));
-export const parseNumber: {
-  (str: number): number | string;
-} = str => {
+export const hasDecimal = str => /^(-|\+|)\d+\.\d+$/.test(String(str));
+export const parseNumber = str => {
   if (!hasDecimal(str)) {
     return str;
   }
@@ -86,19 +74,18 @@ export const ymd = () => moment().format("YYYYMMDD");
 export const ymdFormat = mill => moment(mill).format("YYYY-MM-DD");
 export const mdFormat = mill => moment(mill).format("MM-DD");
 export const ymdHmsFormat = mill => moment(mill).format("YYYY-MM-DD HH:mm:ss");
-export const formatDateName = (str: string) =>
-  moment(str).format("YYYY年MM月DD日");
-export const formatDateTime = (str: string) =>
+export const formatDateName = str => moment(str).format("YYYY年MM月DD日");
+export const formatDateTime = str =>
   moment(str).format("YYYY年MM月DD日hh时mm分ss秒");
 
-export let dataURItoBlob = (dataURI: string) => {
-  var byteString: string = atob(dataURI.split(",")[1]);
-  var mimeString: string = dataURI
+export let dataURItoBlob = dataURI => {
+  var byteString = atob(dataURI.split(",")[1]);
+  var mimeString = dataURI
     .split(",")[0]
     .split(":")[1]
     .split(";")[0];
-  var ab: ArrayBuffer = new ArrayBuffer(byteString.length);
-  var ia: Uint8Array = new Uint8Array(ab);
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
   for (var i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
@@ -114,36 +101,24 @@ export let dataURItoBlob = (dataURI: string) => {
  * 用法： axios({url,type:'POST',data}).then(res=>res.data);
  */
 // 将BASE64编码图像转为FormData供数据上传，用法见上方注释。
-export let dataURI2FormData: {
-  (dataURI: string): FormData;
-} = dataURI => {
-  var data: FormData = new FormData();
-  var blob: Blob = dataURItoBlob(dataURI);
+export let dataURI2FormData = dataURI => {
+  var data = new FormData();
+  var blob = dataURItoBlob(dataURI);
   data.append("file", blob);
   return data;
 };
-
-export const getBase64 = (file: Blob) =>
-  new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
-  });
 
 /**
  * 千分位格式化数字
  * @param {数字} num
  * @param {小数位数} decimalLength
  */
-export const thouandsNum: {
-  (num: number, len?: number): string;
-} = (num, decimalLength = 2) => {
+export const thouandsNum = (num, decimalLength = 2) => {
   if (String(num).length === 0) {
     return "";
   }
 
-  let numStr: string = Number(num).toLocaleString();
+  let numStr = Number(num).toLocaleString();
   if (numStr.includes(".")) {
     let [integer, decimal] = numStr.split(".");
     return integer + "." + decimal.padEnd(decimalLength, "0");
@@ -151,12 +126,8 @@ export const thouandsNum: {
   return numStr + "." + "".padEnd(decimalLength, "0");
 };
 
-interface Store {
-  payload: any;
-}
-
 // redux中 setStore部分，自动解析数据类型
-export const setStore = (state: any, store: Store) => {
+export const setStore = (state, store) => {
   let { payload } = store;
   if (typeof payload === "undefined") {
     payload = store;
@@ -174,7 +145,7 @@ export const setStore = (state: any, store: Store) => {
   return nextState;
 };
 
-export const setUserStore = (state: any, store: Store) => {
+export const setUserStore = (state, store) => {
   let { payload } = store;
   if (typeof payload === "undefined") {
     payload = store;
@@ -207,14 +178,13 @@ export const clearUser = () => {
 };
 
 // 判断字符串是不是中文
-export const isChineseWord: (str: string) => boolean = (str: string) =>
-  new RegExp(/[\u00A1-\uFFFF]/).test(str);
+export const isChineseWord = str => new RegExp(/[\u00A1-\uFFFF]/).test(str);
 
 /**
  * @param str {string} 输出字符串
  * @returns {string} 首字母大写
  */
-export const capitalizeFirstLetter: (str: string) => string = (str = "") =>
+export const capitalizeFirstLetter = (str = "") =>
   str[0].toUpperCase() + str.slice(1);
 
 export const reg = {
@@ -226,23 +196,20 @@ export const reg = {
 };
 
 // 等待指定时长
-export const sleep = (time: number) =>
-  new Promise(resolve => setTimeout(resolve, time));
+export const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
-export const getAddressList = async (areaid: string | number) =>
-  await axios({
+export const getAddressList = areaid =>
+  axios({
     method: "get",
     url: `${API.ADDRESS_LIST}/areaId=${areaid}`
   });
 
 const WEEKDAYS = ["周日", "周六", "周五", "周四", "周三", "周二", "周一"];
-export const getSaleTimeWeek: (param: { week: number }) => string = ({
-  week
-}) => {
+export const getSaleTimeWeek = ({ week }) => {
   if (week === 31) {
     return "工作日 (周一至周五)";
   }
-  let str: string[] = [];
+  let str = [];
   week
     .toString(2)
     .padStart(7, "0")
@@ -251,9 +218,7 @@ export const getSaleTimeWeek: (param: { week: number }) => string = ({
   return str.reverse().join("，");
 };
 
-export const getSaleTimeRange: (param: { range: string }) => string = ({
-  range
-}) =>
+export const getSaleTimeRange = ({ range }) =>
   range
     .split(",")
     .map(item =>
@@ -264,9 +229,7 @@ export const getSaleTimeRange: (param: { range: string }) => string = ({
     )
     .join(" , ");
 
-export const checkSaleTimeToday: (
-  week: number
-) => boolean | Promise<string> = week => {
+export const checkSaleTimeToday = week => {
   if (week > 127 || week < 0) {
     return Promise.reject("销售周期设置错误");
   }
@@ -280,10 +243,7 @@ export const checkSaleTimeToday: (
   );
 };
 
-export const canSelloutNow: (param?: {
-  week?: number;
-  dayTimeRange?: string;
-}) => boolean = param => {
+export const canSelloutNow = param => {
   if (!param) {
     return true;
   }
@@ -316,17 +276,17 @@ export const canSelloutNow: (param?: {
 };
 
 // 判断是否登录，用于购物车条件请求
-export const isLogin: () => boolean = () => {
+export const isLogin = () => {
   let u = Taro.getStorageSync(LocalStorageKeys.user);
   // console.info(u, typeof u);
   return u && typeof u === "object";
 };
 
-export const hidePhone = (phone: string) =>
+export const hidePhone = phone =>
   phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
 
 // 记录验证码发送状态
-export const setSNSendStatus = (status: boolean | string) => {
+export const setSNSendStatus = status => {
   if (status) {
     Taro.setStorage({ key: LocalStorageKeys.SNS, data: status });
     return;
@@ -334,17 +294,16 @@ export const setSNSendStatus = (status: boolean | string) => {
   Taro.removeStorage({ key: LocalStorageKeys.SNS });
 };
 
-export const loadSNSendStatus: () => null | string = () =>
-  Taro.getStorageSync(LocalStorageKeys.SNS);
+export const loadSNSendStatus = () => Taro.getStorageSync(LocalStorageKeys.SNS);
 
-export const setPhone = (data: string) => {
+export const setPhone = data => {
   Taro.setStorage({
     key: LocalStorageKeys.phone,
     data
   });
 };
 
-export const loadPhone: () => string = () =>
+export const loadPhone = () =>
   Taro.getStorageSync(LocalStorageKeys.phone) || "";
 
 const PAGE_WEBVIEW = "/pages/webview/webview";
@@ -428,3 +387,4 @@ export const getMemberInfo = () => {
   let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
   return JSON.parse(localStore);
 }
+export const isWeapp = Taro.getEnv() === "WEAPP";

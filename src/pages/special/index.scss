@@ -29,6 +29,7 @@ $actionHeight: 100px;
     height: unset;
     img {
       height: -webkit-fill-available;
+      height: 100%; // H5端
     }
   }
   .swiper_imgWeapp {

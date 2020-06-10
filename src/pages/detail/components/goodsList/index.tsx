@@ -27,7 +27,8 @@ export default ({ data = [], title }) => (
               <View className="home-pin__item-info">
                 <CPrice
                   retail={item.goodsPrice || item.appPrice0}
-                  retailStyle="font-size:16px;"
+                  // retailStyle="font-size:16px;"
+                  retailStyle={{ fontSize: "16px" }}
                 />
                 <Text className="goodsName">
                   {item.goodsName.length > 5

@@ -37,10 +37,12 @@ $cateHeight: 80px;
   top: 0;
   left: 0;
   background: $white;
+  width: 100%;
 
   display: flex;
   flex-direction: row;
-  @include border(bottom, 1px, solid, rgba(0, 0, 0, 0.1));
+  /* prettier-ignore */
+  @include border(bottom, 1PX, solid, rgba(0, 0, 0, 0.1));
   @include hairline(border-bottom-width);
 
   /**

@@ -143,7 +143,8 @@ export default class CEmpty extends Taro.Component {
                 lib.jump(href);
               }}
               theme="gardient"
-              style="margin-top:40px;width:80vw;"
+              // style="margin-top:40px;width:80vw;"
+              style={{ marginTop: "40px", width: "80vw" }}
               size="large"
             >
               {btnText}

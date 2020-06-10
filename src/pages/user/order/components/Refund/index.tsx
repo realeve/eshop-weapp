@@ -7,7 +7,8 @@ export default ({ orderId }) => (
     theme="yellow"
     size="small"
     round={false}
-    style="margin-left:12px"
+    // style="margin-left:12px"
+    style={{ marginLeft: "12px" }}
     onClick={() => {
       jump(`/pages/user/order/refund?id=${orderId}`);
     }}

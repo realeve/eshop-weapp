@@ -1,9 +1,4 @@
-import { SPECIAL_GOODS } from "./api";
-import { Method } from "axios";
-
-export const API: {
-  [key: string]: string | { method?: Method; url: string };
-} = {
+export const API = {
   CAPTCHA_BOX: "/captcha/make-box-captcha",
   SEND_SMSCODE: "/loginconnect/smscode/send-box",
   LOGIN_SMSCODE: "/loginconnect/mobile/login",
@@ -111,9 +106,7 @@ export const API: {
 };
 
 // 订单列表管理
-const orderList: {
-  [key: string]: string;
-} = {
+const orderList = {
   orderStatusNumber: "/member/index", // 订单不同状态下数量显示
   list: "/member/orders/list",
   buyAgain: "/member/orders/buy/again",
@@ -132,9 +125,7 @@ const orderList: {
 };
 
 let convertApiConfig = (data = orderList) => {
-  let res: {
-    [key: string]: { method?: Method; url: string };
-  } = {};
+  let res = {};
   Object.entries(data).map(([key, url]) => {
     res[key] = {
       url,
@@ -144,9 +135,7 @@ let convertApiConfig = (data = orderList) => {
   return res;
 };
 
-const serviceList: {
-  [key: string]: string;
-} = {
+const serviceList = {
   refundList: "/member/refund/list", // 退款列表
   refunDetail: "/member/refund/info", // 退款详情
   refundByOrder: "/member/refund/all", // 退款申请页面
@@ -164,12 +153,8 @@ const serviceList: {
   cancelReturn: "/member/return/cancel" // 退货申请取消
 };
 
-export const ORDER: {
-  [key: string]: { method?: Method; url: string };
-} = convertApiConfig();
-export const SERVICE: {
-  [key: string]: { method?: Method; url: string };
-} = convertApiConfig(serviceList);
+export const ORDER = convertApiConfig();
+export const SERVICE = convertApiConfig(serviceList);
 
 export const SPECIAL_GOODS = {
   list: "/specialtyProduct/selectPersonalSubscribe",
@@ -180,7 +165,7 @@ export const SPECIAL_GOODS = {
  * @field NORMAL 普通订单
  * @field VIRTUAL 虚拟订单
  */
-export enum ORDER_TYPE {
-  NORMAL,
-  VIRTUAL
-}
+export const ORDER_TYPE = {
+  NORMAL: 0,
+  VIRTUAL: 1
+};

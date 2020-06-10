@@ -94,7 +94,7 @@ const Address = ({ addressListHash }) => {
                 }
               }}
             >
-              <View className="at-list__item">
+              <View>
                 <AddressItem type="edit" data={item} />
               </View>
             </AtSwipeAction>

@@ -80,8 +80,10 @@
 
     .splitLine {
       margin: 15px 0;
-      border-bottom: 1px solid $splitLine;
-      min-height: 1px;
+      /* prettier-ignore */
+      border-bottom: 1PX solid $splitLine;
+      /* prettier-ignore */
+      min-height: 1PX;
     }
 
     .invoice {

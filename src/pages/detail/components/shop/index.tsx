@@ -14,7 +14,8 @@ const DetailShop = ({ data }: { data: IProductInfo }) => {
           mode="aspectFit"
           className="detail_page_shop_title_img"
           src={data.logo}
-          style={!err ? "margin-right:10px;" : ""}
+          // style={!err ? "margin-right:10px;" : ""}
+          style={{ marginRight: !err ? "10px" : "" }}
           onLoad={() => {
             setErr(false);
           }}

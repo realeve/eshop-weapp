@@ -1,2 +1,16 @@
 @import "./index.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
+.address_list {
+  .icon {
+    /* prettier-ignore */
+    width: 25PX;
+    /* prettier-ignore */
+    height: 25PX;
+    img {
+      /* prettier-ignore */
+      width: 25PX;
+      /* prettier-ignore */
+      height: 25PX;
+    }
+  }
+}

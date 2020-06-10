@@ -3,7 +3,6 @@ import { View, Text, Image } from "@tarojs/components";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 import CountTime from "@/pages/user/order/components/CountTime";
-import { AtDivider } from "taro-ui";
 
 import "./preorderItem.scss";
 
@@ -70,7 +69,7 @@ export default ({ data }) => {
           {data.showCountDown && (
             <View>
               <CountTime time={data.remainTime} />
-              <Text className="limitTitle">{data.operation}</Text>
+              <Text>{data.operation}</Text>
             </View>
           )}
         </View>

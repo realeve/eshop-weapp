@@ -2,8 +2,7 @@ import Taro from "@tarojs/taro";
 import { View, ScrollView } from "@tarojs/components";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { uuid, isTest } from "taro-ui/dist/weapp/common/utils";
-import AtComponent from "taro-ui/dist/weapp/common/component";
+import AtComponent, { uuid, isTest } from "./AtComponent";
 import "./tabs.scss";
 
 const ENV = Taro.getEnv();

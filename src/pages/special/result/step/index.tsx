@@ -22,7 +22,12 @@ export enum LotteryStatus {
 
 const SpecialStep = ({ current }: { current: LotteryStatus }) => {
   return (
-    <CStep items={stetList} current={current} style="margin:20px 0 30px 0" />
+    <CStep
+      items={stetList}
+      current={current}
+      //style="margin:20px 0 30px 0"
+      style={{ margin: "20px 0 30px 0" }}
+    />
   );
 };
 

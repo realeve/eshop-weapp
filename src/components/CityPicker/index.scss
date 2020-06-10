@@ -4,7 +4,8 @@
   padding: 24rpx 32rpx;
   color: #2c2e36;
   background-color: #fff;
-  margin-bottom: 1px;
+  /* prettier-ignore */
+  margin-bottom: 1PX;
   position: relative;
   font-size: $fontSizeBase;
   &:after {
@@ -19,7 +20,8 @@
     bottom: -50%;
     border: 0 solid #d6e4ef;
     transform: scale(0.5);
-    border-bottom-width: 1px;
+    /* prettier-ignore */
+    border-bottom-width: 1PX;
   }
   .wrap {
     display: flex;

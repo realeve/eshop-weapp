@@ -13,8 +13,8 @@
     font-size: $at-tabs-font-size;
     text-overflow: ellipsis;
     overflow: hidden;
-
-    border: 1px solid $mainTitle;
+    /* prettier-ignore */
+    border: 1PX solid $mainTitle;
     padding: 10px 12px;
 
     &:first-child {

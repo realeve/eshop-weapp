@@ -64,7 +64,7 @@ const DetailCard = ({
             {data.services &&
               data.services.map(service => (
                 <View key={service.title} className="servicesItem">
-                  • {service.title}
+                  •{service.title}
                 </View>
               ))}
           </View>
@@ -87,6 +87,7 @@ const DetailCard = ({
         onClose={() => setShowService(false)}
       >
         <View className="specServices_title">服务说明</View>
+
         {data.services &&
           data.services.map(service => (
             <View key={service.title} className="specServices_item">
@@ -113,7 +114,11 @@ const DetailCard = ({
         <View className="specPanel_title">
           <Image className="img" src={data.img} />
           <View className="detail">
-            <CPrice retail={data.price} retailStyle="font-size:20px;" />
+            <CPrice
+              retail={data.price}
+              // retailStyle="font-size:20px;"
+              retailStyle={{ fontSize: "20px" }}
+            />
             <Text className="storage">库存 {data.number}件</Text>
             <Text className="goodsname">{data.title}</Text>
           </View>

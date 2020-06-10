@@ -77,7 +77,8 @@ const DetailAction = ({
         <AtBadge value={shoppingCart.total.num} maxValue={99} className="icon">
           <View
             className="at-icon at-icon-shopping-cart"
-            style="font-size:24px;"
+            // style="font-size:24px;"
+            style={{ fontSize: "24px" }}
             onClick={() => {
               lib.jump({
                 url: "/pages/cart/index"
