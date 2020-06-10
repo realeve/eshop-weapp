@@ -7,7 +7,8 @@ import * as lib from "@/utils/lib";
 
 const Index = () => {
   let { data, loading } = useFetch({
-    param: { url }
+    param: { url },
+    callback: res => res.data || res
   });
 
   return (

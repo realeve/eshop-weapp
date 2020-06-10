@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import "./register.scss";
 import MobileWithCode from "./components/MobileWithCode";
 import useSetState from "@/components/hooks/useSetState";
@@ -58,19 +58,41 @@ const Register = () => {
         setValid={setValid}
       />
       <View className="action">
-        <AtCheckbox
-          options={[
-            {
-              value: "agree",
-              label: "同意用户协议"
-            }
-          ]}
-          selectedList={[isAgree]}
-          onChange={([, e]) => {
-            let status = e === "agree";
-            setIsAgree(status ? e : "");
-          }}
-        />
+        <View className="fields">
+          <AtCheckbox
+            options={[
+              {
+                value: "agree",
+                label: ""
+              }
+            ]}
+            selectedList={[isAgree]}
+            onChange={([, e]) => {
+              let status = e === "agree";
+              setIsAgree(status ? e : "");
+            }}
+          />
+          <View>
+            点击下一步即同意
+            <Text
+              className="link"
+              onClick={() => {
+                jump("/pages/help/view?page=login");
+              }}
+            >
+              《用户协议》
+            </Text>
+            和
+            <Text
+              className="link"
+              onClick={() => {
+                jump("/pages/help/view?page=privacy");
+              }}
+            >
+              《隐私政策》
+            </Text>
+          </View>
+        </View>
 
         <CButton
           style={{ marginTop: "10px", width: "100%" }}

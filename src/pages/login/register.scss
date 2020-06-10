@@ -24,6 +24,19 @@
     flex-direction: column;
     align-items: flex-start;
 
+    .fields {
+      /* prettier-ignore */
+      font-size: 13PX;
+      //   color: $yellow;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 30px;
+      .link {
+        color: $yellow;
+      }
+    }
+
     .at-checkbox {
       $iconSize: 30px;
       &:before,
@@ -41,9 +54,9 @@
 
       &__icon-cnt {
         margin-right: 0;
-        width: $iconSize;
-        height: $iconSize;
-        min-width: $iconSize;
+        // width: $iconSize;
+        // height: $iconSize;
+        // min-width: $iconSize;
         background-color: $yellow;
       }
 
