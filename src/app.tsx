@@ -62,6 +62,9 @@ class App extends Component {
 
       "pages/find/index", // 发现
       "pages/login/index", // 登录
+
+      "pages/login/register", // 注册
+
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
       "pages/special/history/index", // 特品历史

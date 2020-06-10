@@ -1,0 +1,57 @@
+@import "@/styles/theme.scss";
+
+.register-page {
+  height: 100vh;
+  margin: 0 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+
+  .title {
+    font-size: $heading-1-size;
+    text-align: left;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .action {
+    margin-top: 60px;
+    width: calc(100% - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .at-checkbox {
+      $iconSize: 30px;
+      &:before,
+      &:after {
+        content: unset;
+      }
+
+      &__option {
+        padding-left: 10px;
+
+        &-wrap {
+          padding-right: 5px;
+        }
+      }
+
+      &__icon-cnt {
+        margin-right: 0;
+        width: $iconSize;
+        height: $iconSize;
+        min-width: $iconSize;
+        background-color: $yellow;
+      }
+
+      &__title {
+        /* prettier-ignore */
+        font-size: 13PX;
+        color: $yellow;
+      }
+    }
+  }
+}
