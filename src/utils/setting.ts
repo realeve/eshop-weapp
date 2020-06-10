@@ -62,17 +62,17 @@ export const IMWS = SETTING.IMWS;
 export const CLIENT_TYPE = {
   andriod: "android",
   ios: "ios",
-  wap: "miniprogram",
-  wechat: "miniprogram",
-  web: "miniprogram", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
-  mp: "miniprogram" //微信小程序
+  wap: "wap",
+  wechat: "wap",
+  web: "wap", //"web" // 从web端复制过来的涉及到client_type的接口，全部调用 wechat
+  mp: "wap" //微信小程序
 };
 
 export const PAYMENT = {
   alipay: "alipay",
   wechat: "wxpay",
   unionpay: "unionpay",
-  mp: "miniprogram" // 微信小程序
+  mp: "wap" // 微信小程序
 };
 
 export { domain, host };

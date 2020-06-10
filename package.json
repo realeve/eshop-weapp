@@ -51,6 +51,7 @@
     "dayjs": "^1.8.16",
     "dva-core": "^2.0.0",
     "dva-loading": "^3.0.14",
+    "fingerprintjs2": "^2.1.0",
     "moment": "^2.24.0",
     "nerv-devtools": "^1.5.7",
     "nervjs": "^1.5.7",
