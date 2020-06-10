@@ -187,6 +187,10 @@ const Comment = () => {
   };
 
   const onScrollToLower = async fn => {
+    // 修复无限触发ScrollToLower
+    if (loading) {
+      return;
+    }
     setPage(page + 1);
     fn();
   };

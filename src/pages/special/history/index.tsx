@@ -62,6 +62,10 @@ const History = () => {
     }
   });
   const onScrollToLower = async fn => {
+    // 修复无限触发ScrollToLower
+    if (loading) {
+      return;
+    }
     console.info("scroll trigger", state);
     if (state.hasMore) {
       setPage(page + 1);
@@ -74,6 +78,7 @@ const History = () => {
     console.log("刷新数据");
     fn();
   };
+
   console.info("loading + loaded", loading, state.isLoaded, state.hasMore);
   return state && state.list && state.list.length > 0 ? (
     <View>
@@ -81,8 +86,8 @@ const History = () => {
         isLoaded={state.isLoaded}
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
-        onScrollToLower={fn => onScrollToLower(fn)}
-        onPullDownRefresh={fn => onRefresh(fn)}
+        onScrollToLower={onScrollToLower}
+        onPullDownRefresh={onRefresh}
       >
         {state.list.map((data: IOrderItem) => (
           <PreorderItem key={data.activityId} data={data} />
