@@ -3,9 +3,12 @@ import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
-import { set as setGlobalData, get as getGlobalData } from "@/utils/global_data";
-import { clearUser, isLogin } from "@/utils/lib";
-import { loadShoppingCart } from '@/utils/cartDb'
+import {
+  set as setGlobalData,
+  get as getGlobalData
+} from "@/utils/global_data";
+import { clearUser, isLogin, isWeapp } from "@/utils/lib";
+import { loadShoppingCart } from "@/utils/cartDb";
 
 /**
  * @exports
@@ -17,14 +20,14 @@ import { loadShoppingCart } from '@/utils/cartDb'
  * @alias WECHAT = 'wechat',
  * @alias MINIPROGRAM = 'miniprogram',
  */
-export enum CLIENT_TYPE {
-  WEB = "web", //'windows',
-  WAP = "miniprogram",
-  IOS = "ios",
-  ANDROID = "android",
-  WECHAT = "wechat",
-  MINIPROGRAM = "miniprogram"
-}
+export const CLIENT_TYPE = {
+  WEB: "web", //'windows',
+  WAP: isWeapp ? "miniprogram" : "web",
+  IOS: "ios",
+  ANDROID: "android",
+  WECHAT: isWeapp ? "wechat" : "web",
+  MINIPROGRAM: isWeapp ? "miniprogram" : "web"
+};
 
 /**
  * @exports
@@ -171,16 +174,22 @@ export const logout = async (dispatch: Dispatch): Promise<any> => {
   let mp_logout = await axios({ ...API.LOGOUT_MINI_PROGRAM }).catch(err => err);
 
   if ((mp_logout || {}).code == 200) {
-    storeMiniProgram({ isBinding: false, isConfirmed: false })
-    Taro.setStorage({ key: LocalStorageKeys.mp, data: { isBinding: false, isConfirmed: false } });
-    dispatch({ type: 'common/setStore', payload: { miniProgram: { isBinding: false, isConfirmed: false } } })
+    storeMiniProgram({ isBinding: false, isConfirmed: false });
+    Taro.setStorage({
+      key: LocalStorageKeys.mp,
+      data: { isBinding: false, isConfirmed: false }
+    });
+    dispatch({
+      type: "common/setStore",
+      payload: { miniProgram: { isBinding: false, isConfirmed: false } }
+    });
   }
   clearUser();
   return true;
   // return axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
   //   clearUser();
   // })
-}
+};
 
 /**
  * 使用手机号+密码登录
@@ -300,7 +309,7 @@ export const storeMember = (
   });
   callback &&
     callback({
-      type: inModle ? 'setStore' : 'common/setStore',
+      type: inModle ? "setStore" : "common/setStore",
       payload: {
         user,
         isLogin: true
@@ -308,7 +317,10 @@ export const storeMember = (
     });
 };
 
-export const loadMember = async (callback: Dispatch, setting = { withPrefix: false, mpCode: false }) => {
+export const loadMember = async (
+  callback: Dispatch,
+  setting = { withPrefix: false, mpCode: false }
+) => {
   let {
     memberInfo: member,
     memberRealNameAuth: auth
@@ -321,16 +333,25 @@ export const loadMember = async (callback: Dispatch, setting = { withPrefix: fal
   if (isBinding) {
     return { member, auth };
   }
+
   if (!mpCode) {
-    let wxLogin = await Taro.login({ success: (res) => res.code || false, fail: (err) => false });
+    let wxLogin = await Taro.login({
+      success: res => res.code || false,
+      fail: err => false
+    });
     mpCode = wxLogin ? wxLogin.code : false;
   }
   if (mpCode) {
-    let bindingResult = await binding(mpCode).then(res => res.code === 200).catch(err => false);
-    console.info('binding result', bindingResult);
+    let bindingResult = await binding(mpCode)
+      .then(res => res.code === 200)
+      .catch(err => false);
+    console.info("binding result", bindingResult);
     if (bindingResult) {
       storeMiniProgram({ isBinding: true, isConfirmed: false });
-      Taro.setStorage({ key: LocalStorageKeys.mp, data: { isBinding: true, isConfirmed: false } });
+      Taro.setStorage({
+        key: LocalStorageKeys.mp,
+        data: { isBinding: true, isConfirmed: false }
+      });
     }
   }
   return {
@@ -339,7 +360,7 @@ export const loadMember = async (callback: Dispatch, setting = { withPrefix: fal
   };
 };
 
-export const storePhone = (phone) => {
+export const storePhone = phone => {
   if (phone && !phone.match(/^1[0-9]{10}$/)) {
     return;
   }
@@ -351,14 +372,14 @@ export const storePhone = (phone) => {
     key: LocalStorageKeys.phone,
     data: phone
   });
-}
+};
 
-const storeMiniProgram = (mp) => {
+const storeMiniProgram = mp => {
   Taro.setStorage({
     key: LocalStorageKeys.mp,
     data: mp
   });
-}
+};
 
 const loadMiniProgram = () => {
   let mp = Taro.getStorageSync(LocalStorageKeys.mp);
@@ -369,52 +390,64 @@ const loadMiniProgram = () => {
   }
 
   return mp;
-}
+};
 
-const binding = (code) => axios({ ...API.MINI_PROGRAM_BINDING, data: { code } })
-const loginByCode = (code) => axios({ ...API.LOGIN_MINI_PROGRAM, data: { code } });
+const binding = code => axios({ ...API.MINI_PROGRAM_BINDING, data: { code } });
+const loginByCode = code =>
+  axios({ ...API.LOGIN_MINI_PROGRAM, data: { code } });
 
 export const loginWx = async (dispatch: Dispatch, withPrefix = false) => {
   let logon = isLogin();
   let isBinding = loadMiniProgram().isBinding;
-  console.log('logon,isBinding', logon, isBinding);
+  console.log("logon,isBinding", logon, isBinding);
   if (!logon && !isBinding) {
-    console.info('anonymous')
+    console.info("anonymous");
     return;
   }
   if (logon && isBinding) {
-    console.info('logon and binded')
+    console.info("logon and binded");
     return;
   }
-  let wxLogin = await Taro.login({ success: (res) => res.code || false, fail: (err) => false });
-  let mpCode = wxLogin ? wxLogin.code : false;
-  console.info('mpCode', mpCode)
-  if (!mpCode) {
-    Taro.showToast({ title: '微信登录失败', duration: 2000, icon: "loading" });
-    return;
+
+  if (isWeapp) {
+    let wxLogin = await Taro.login({
+      success: res => res.code || false,
+      fail: err => false
+    });
+    let mpCode = wxLogin ? wxLogin.code : false;
+    console.info("mpCode", mpCode);
+    if (!mpCode) {
+      Taro.showToast({
+        title: "微信登录失败",
+        duration: 2000,
+        icon: "loading"
+      });
+      return;
+    }
+  } else {
+    console.error("此处对接微信网页端登录\n微信小程序与网页端已做分离");
   }
+
   if (!logon) {
-    console.info('not logon');
+    console.info("not logon");
     let autoLogin = await loginByCode(mpCode).catch(err => false);
     if (!autoLogin) {
-      console.error('auto login failed');
+      console.error("auto login failed");
       return;
     }
     loadMember(dispatch, { withPrefix, mpCode });
   }
-
-
-}
+};
 
 export const checkWxSession = async (dispatch: Dispatch) => {
   Taro.checkSession({
-    success: function () {
+    success: function() {
       //session_key 未过期，并且在本生命周期一直有效
-      console.info('微信会话有效');
+      console.info("微信会话有效");
     },
-    fail: function () {
+    fail: function() {
       // session_key 已经失效，需要重新执行登录流程
-      loginWx(dispatch) //重新登录
+      loginWx(dispatch); //重新登录
     }
-  })
-}
+  });
+};

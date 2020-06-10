@@ -5,6 +5,21 @@
   position: relative;
   background: $white;
 }
+
+.iconItem {
+  background: rgba(44, 46, 54, 0.4);
+  /* prettier-ignore */
+  width:30PX;
+  /* prettier-ignore */
+  height:30PX;
+  border-radius: 50%;
+  @extend .center;
+  color: $white;
+  /* prettier-ignore */
+  font-size: 18PX;
+  margin-right: 30px;
+}
+
 .item-gallery {
   &__swiper {
     // NOTE RN 的 Swiper 需要有高度，否则会报错
@@ -36,6 +51,18 @@
       font-size: $font-size-sm;
     }
   }
+
+  &__back {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    z-index: 2;
+
+    &__item {
+      @extend .iconItem;
+    }
+  }
+
   &__action {
     position: absolute;
     right: 0;
@@ -46,17 +73,7 @@
     align-items: center;
 
     &__item {
-      background: rgba(44, 46, 54, 0.4);
-      /* prettier-ignore */
-      width:30PX;
-      /* prettier-ignore */
-      height:30PX;
-      border-radius: 50%;
-      @extend .center;
-      color: $white;
-      /* prettier-ignore */
-      font-size: 18PX;
-      margin-right: 30px;
+      @extend .iconItem;
     }
   }
 }
