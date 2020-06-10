@@ -20,12 +20,16 @@
   }
   .item {
     flex: 1;
+    display: flex;
+    align-items: center;
     &Active {
       color: $yellow;
     }
     .img {
-      width: 24px;
-      height: 24px;
+      /* prettier-ignore */
+      width: 14PX;
+      /* prettier-ignore */
+      height: 14PX;
       margin-left: 5px;
       transform: rotate(0deg);
       transition: transform 0.3s linear;
