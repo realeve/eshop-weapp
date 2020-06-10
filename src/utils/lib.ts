@@ -12,31 +12,28 @@ import {
   get as getGlobalData
 } from "@/utils/global_data";
 
-export const tabConfig: {
-  pagePath: string;
-  text: string;
-}[] = [
-    {
-      pagePath: "/pages/index/index",
-      text: "首页"
-    },
-    {
-      pagePath: "/pages/cate/index",
-      text: "分类"
-    },
-    {
-      pagePath: "/pages/find/index",
-      text: "发现"
-    },
-    {
-      pagePath: "/pages/cart/index",
-      text: "购物车"
-    },
-    {
-      pagePath: "/pages/user/index",
-      text: "我的"
-    }
-  ];
+export const tabConfig = [
+  {
+    pagePath: "/pages/index/index",
+    text: "首页"
+  },
+  {
+    pagePath: "/pages/cate/index",
+    text: "分类"
+  },
+  {
+    pagePath: "/pages/find/index",
+    text: "发现"
+  },
+  {
+    pagePath: "/pages/cart/index",
+    text: "购物车"
+  },
+  {
+    pagePath: "/pages/user/index",
+    text: "我的"
+  }
+];
 
 // 数据去重
 export let uniq = arr => R.uniq(arr);
