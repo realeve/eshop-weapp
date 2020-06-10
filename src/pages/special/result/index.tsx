@@ -178,15 +178,15 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
               </Text>
             </View>
           </View>
-          <View className="result__footer">
-            <View
-              className="result__footer__rules"
-              onClick={() => {
-                jump({
-                  url: "/pages/special/rule/index"
-                });
-              }}
-            >
+          <View
+            className="result__footer"
+            onClick={() => {
+              jump({
+                url: "/pages/special/rule/index"
+              });
+            }}
+          >
+            <View className="result__footer__rules">
               <View
                 className="at-icon at-icon-tag"
                 // style="color:#b98a4e;padding-right:5px;"
