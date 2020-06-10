@@ -2,7 +2,7 @@ import Taro, { useState } from "@tarojs/taro";
 import { View, Text, Swiper, SwiperItem, Image } from "@tarojs/components";
 import "./index.scss";
 import { ITypeImageItem } from "@/pages/detail/lib";
-import { jump } from "@/utils/lib";
+import { jump, isWeapp } from "@/utils/lib";
 
 export default function Gallery({
   data = [],
@@ -47,6 +47,21 @@ export default function Gallery({
           {`${current + 1}/${data.length}`}
         </Text>
       </View>
+      {!isWeapp && (
+        <View className="item-gallery__back">
+          <View
+            className="item-gallery__action__item"
+            onClick={() => {
+              Taro.navigateBack();
+            }}
+          >
+            <View
+              className="at-icon at-icon-chevron-left"
+              style={{ marginLeft: "-4px" }}
+            ></View>
+          </View>
+        </View>
+      )}
       <View className="item-gallery__action">
         <View
           className="item-gallery__action__item"

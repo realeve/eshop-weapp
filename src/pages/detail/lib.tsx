@@ -113,7 +113,8 @@ export const handleGoodsData = data => {
   let storeData = handleStoreData(data);
   let evaData = handleCommentData(data);
   let hotData = handleHotData(data);
-  console.log(hotData);
+
+  // console.log(hotData);
   let storeService = {
     workingTime: handleWorkingTime(data.storeInfo.storeWorkingtime),
     preSales: JSON.parse(data.storeInfo.storePresales || "[]"),

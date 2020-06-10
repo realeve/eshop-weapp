@@ -39,6 +39,13 @@ interface ICateGoodsItem {
   freight: number;
 }
 
+const getParams = router => {
+  return {
+    keyword: decodeURI(router.params.keyword || ""),
+    cat: router.params.cat || ""
+  };
+};
+
 const Index = ({ menuList }) => {
   let router = useRouter();
   // 页面未加载时仍会载入数据
@@ -49,9 +56,9 @@ const Index = ({ menuList }) => {
   const [state, setState] = useState<{
     keyword: string;
     cat: string;
-  }>(router.params || { keyword: "", cat: "" });
+  }>(getParams(router));
   useEffect(() => {
-    setState(router.params);
+    setState(getParams(router));
   }, [router.params]);
 
   // let { keyword, cat } = router.params || {};
@@ -190,7 +197,9 @@ const Index = ({ menuList }) => {
         ["cate-subSmall"]: !searchMode && tabs.length < 2
       })}
     >
-      {searchMode && <Search value={state.keyword || ""} fixed={true} />}
+      {searchMode && (
+        <Search value={state.keyword || ""} fixed={true} pos={3} />
+      )}
       {tabs.length > 1 && (
         <Tab list={tabs} current={current} onChange={handleMenu} />
       )}

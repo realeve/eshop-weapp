@@ -81,16 +81,17 @@ const Order = () => {
   };
 
   const onScrollToLower = async fn => {
+    // 修复无限触发ScrollToLower
+    if (loading) {
+      return;
+    }
     if (state.hasMore) {
       setPage(page + 1);
     }
     fn();
   };
 
-  const onRefresh = () => {
-    reFetch();
-    console.log("刷新数据");
-  };
+  const onRefresh = reFetch;
 
   // console.log(state);
 
