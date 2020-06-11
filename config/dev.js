@@ -18,6 +18,7 @@ module.exports = {
   h5: {
     esnextModules: ["taro-ui"],
     devServer: {
+      host: 'localhost',
       port: 8000
     }
   }

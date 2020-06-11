@@ -3,6 +3,7 @@ import moment from "dayjs";
 
 import { getType, axios } from "./axios";
 
+import Fingerprint2 from 'fingerprintjs2';
 import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
@@ -195,6 +196,18 @@ export const reg = {
 // 等待指定时长
 export const sleep = time => new Promise(resolve => setTimeout(resolve, time));
 
+/**
+ * @exports
+ * 计算终端指纹，返回指纹hash
+ */
+export const getUid = () =>
+  new Promise((resolve, reject) => {
+    Fingerprint2.get(function (val) {
+      let token = Fingerprint2.x64hash128(val.join(''), 31);
+      resolve(token);
+    });
+  });
+
 export const getAddressList = areaid =>
   axios({
     method: "get",
@@ -380,4 +393,8 @@ export const randomStr = () =>
     .toString(36)
     .substring(2);
 
+export const getMemberInfo = () => {
+  let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
+  return JSON.parse(localStore);
+}
 export const isWeapp = Taro.getEnv() === "WEAPP";

@@ -8,7 +8,7 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
-import { jump, clearUser } from "@/utils/lib";
+import { jump, clearUser, getUid } from "@/utils/lib";
 import { API } from "@/utils/api";
 
 // export interface GlobalAxios {
@@ -22,6 +22,15 @@ import { API } from "@/utils/api";
 //     g_axios: GlobalAxios;
 //   }
 // }
+
+export const initFingerPrint = () => {
+  // console.info("initFingerPrint");
+  getUid().then(str => {
+    // console.info("fp is ", str);
+    Taro.setStorage({ key: LocalStorageKeys.FingerPrint, data: str });
+    setGlobalData(LocalStorageKeys.FingerPrint, str);
+  });
+};
 
 /**
  * 接口返回代码表
@@ -238,9 +247,7 @@ export const handleUrl = option => {
   return option;
 };
 
-// const getFp = (): string =>
-//   Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
-const getFp = () => "weapp";
+const getFp = () => Taro.getStorageSync(LocalStorageKeys.FingerPrint) || "";
 
 export const getToken = () => {
   let token = getGlobalData("token");
@@ -268,6 +275,7 @@ export let axios = _option => {
       setGlobalData("token", token);
     }
 
+    console.info("fp is ", fp);
     g_axios = {
       host,
       token,

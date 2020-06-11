@@ -3,6 +3,7 @@ import Index from "./pages/index";
 import dva from "./utils/dva";
 import models from "./models";
 import { Provider } from "@tarojs/redux";
+import { initFingerPrint } from "@/utils/axios";
 import "./app.scss";
 import "./styles/custom-theme.scss";
 
@@ -123,7 +124,9 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    initFingerPrint();
+  }
 
   componentDidShow() {}
 
