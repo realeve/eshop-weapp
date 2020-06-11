@@ -121,7 +121,7 @@ const Register = () => {
           style={{ marginTop: "20px", width: "100%" }}
           theme="gardient"
           onClick={onSubmit}
-          disabled={!valid || !validPsw}
+          disabled={!valid || !validPsw || isAgree == ""}
         >
           下一步
         </CButton>

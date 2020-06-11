@@ -43,7 +43,7 @@ const MobileWithCode = ({
         <AtInput
           name="memberPwd"
           type="password"
-          placeholder="登录密码"
+          placeholder="登录密码,不少于8位"
           value={account.memberPwd}
           onChange={memberPwd => setAccount({ memberPwd })}
         />
