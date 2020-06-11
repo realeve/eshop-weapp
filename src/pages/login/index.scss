@@ -31,4 +31,9 @@
     font-size: $fontSizeNormal;
     text-align: center;
   }
+  .tips {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }

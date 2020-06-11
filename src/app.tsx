@@ -65,6 +65,7 @@ class App extends Component {
       "pages/login/index", // 登录
 
       "pages/login/register", // 注册
+      "pages/login/forget", // 忘记密码
 
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情

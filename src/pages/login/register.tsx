@@ -3,7 +3,7 @@ import { View, Text } from "@tarojs/components";
 import "./register.scss";
 import MobileWithCode from "./components/MobileWithCode";
 import useSetState from "@/components/hooks/useSetState";
-import { SMS_TYPE, registerMobile, CLIENT_TYPE } from "./db";
+import { SMS_TYPE, registerMobile, changePassword, CLIENT_TYPE } from "./db";
 import fail from "@/components/Toast/fail";
 import { CButton } from "@/components";
 
@@ -14,7 +14,9 @@ import Password from "./components/MobileWithCode/password";
 
 import success from "@/components/Toast/success";
 
-const Register = () => {
+const Register = ({ type = "register" }) => {
+  let msg = type == "register" ? "注册" : "修改密码";
+
   const [account, setAccount] = useSetState<{
     username: string;
     password: string;
@@ -43,7 +45,7 @@ const Register = () => {
 
   const onSubmit = async () => {
     Taro.showLoading({
-      title: "注册中"
+      title: msg + "中"
     });
 
     let params = {
@@ -53,7 +55,7 @@ const Register = () => {
       clientType: CLIENT_TYPE.WECHAT
     };
 
-    registerMobile(params)
+    (type == "register" ? registerMobile : changePassword)(params)
       .catch(a => {
         fail(a.message);
       })
@@ -61,7 +63,7 @@ const Register = () => {
         if (!res) {
           return;
         }
-        await success("注册成功");
+        await success(msg + "成功");
         jump("/pages/login/index");
       })
       .finally(() => {
@@ -71,7 +73,9 @@ const Register = () => {
 
   return (
     <View className="register-page">
-      <View className="title">帐号注册</View>
+      <View className="title">
+        {type == "register" ? "帐号注册" : "忘记密码"}
+      </View>
       <MobileWithCode
         onChange={setAccount}
         smsType={SMS_TYPE.REGISTER}
@@ -81,47 +85,51 @@ const Register = () => {
       <Password onChange={setPsw} setValid={setValidPsw} />
 
       <View className="action">
-        <View className="fields">
-          <AtCheckbox
-            options={[
-              {
-                value: "agree",
-                label: ""
-              }
-            ]}
-            selectedList={[isAgree]}
-            onChange={([, e]) => {
-              let status = e === "agree";
-              setIsAgree(status ? e : "");
-            }}
-          />
-          <View>
-            点击下一步即代表阅读并同意
-            <Text
-              className="link"
-              onClick={() => {
-                jump("/pages/help/view?page=login");
+        {type == "register" && (
+          <View className="fields">
+            <AtCheckbox
+              options={[
+                {
+                  value: "agree",
+                  label: ""
+                }
+              ]}
+              selectedList={[isAgree]}
+              onChange={([, e]) => {
+                let status = e === "agree";
+                setIsAgree(status ? e : "");
               }}
-            >
-              《用户协议》
-            </Text>
-            和
-            <Text
-              className="link"
-              onClick={() => {
-                jump("/pages/help/view?page=privacy");
-              }}
-            >
-              《隐私政策》
-            </Text>
+            />
+            <View>
+              点击下一步即代表阅读并同意
+              <Text
+                className="link"
+                onClick={() => {
+                  jump("/pages/help/view?page=login");
+                }}
+              >
+                《用户协议》
+              </Text>
+              和
+              <Text
+                className="link"
+                onClick={() => {
+                  jump("/pages/help/view?page=privacy");
+                }}
+              >
+                《隐私政策》
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
 
         <CButton
           style={{ marginTop: "20px", width: "100%" }}
           theme="gardient"
           onClick={onSubmit}
-          disabled={!valid || !validPsw || isAgree == ""}
+          disabled={
+            !valid || !validPsw || (isAgree != "agree" && type == "register")
+          }
         >
           下一步
         </CButton>

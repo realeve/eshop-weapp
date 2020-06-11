@@ -38,13 +38,23 @@ const Login = () => {
         </AtTabsPane>
       </AtTabs>
 
-      <View
-        className="register"
-        onClick={() => {
-          jump({ url: "/pages/login/register" });
-        }}
-      >
-        没有账号？现在注册
+      <View className="tips">
+        <View
+          className="register"
+          onClick={() => {
+            jump({ url: "/pages/login/register" });
+          }}
+        >
+          没有账号？现在注册
+        </View>
+        <View
+          className="register"
+          onClick={() => {
+            jump({ url: "/pages/login/forget" });
+          }}
+        >
+          忘记密码
+        </View>
       </View>
     </View>
   );

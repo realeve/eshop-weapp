@@ -217,6 +217,13 @@ export const registerMobile = (
     data
   });
 
+export const changePassword = (item: IRegisterMember) =>
+  axios({
+    method: "post",
+    url: API.FIND_PWD as string,
+    data: item
+  });
+
 export const logout = async (dispatch: Dispatch): Promise<any> => {
   let mp_logout = await axios({ ...API.LOGOUT_MINI_PROGRAM }).catch(err => err);
 
