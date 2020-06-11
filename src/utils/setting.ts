@@ -105,7 +105,7 @@ export const copyright = {
 
 export const help = DEV
   ? // 此处暂使用接口代理
-    "http://api.cbpc.ltd/328/4b984cbc42/1000.json" //"https://statictest.ccgold.cn/img/mp/help.json" //
+    "https://statictest.ccgold.cn/img/mp/help.json" //"http://api.cbpc.ltd/328/4b984cbc42/1000.json" //
   : "https://static.ccgold.cn/img/mp/help.json";
 
 export const cityUrl = DEV

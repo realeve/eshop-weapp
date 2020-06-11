@@ -3,12 +3,16 @@ import { View, Text } from "@tarojs/components";
 import "./register.scss";
 import MobileWithCode from "./components/MobileWithCode";
 import useSetState from "@/components/hooks/useSetState";
-import { SMS_TYPE, ILoginToken, loginSms, CLIENT_TYPE } from "./db";
+import { SMS_TYPE, registerMobile, CLIENT_TYPE } from "./db";
 import fail from "@/components/Toast/fail";
 import { CButton } from "@/components";
 
 import { jump } from "@/utils/lib";
 import { AtCheckbox } from "taro-ui";
+
+import Password from "./components/MobileWithCode/password";
+
+import success from "@/components/Toast/success";
 
 const Register = () => {
   const [account, setAccount] = useSetState<{
@@ -19,6 +23,7 @@ const Register = () => {
     password: ""
   });
   const [valid, setValid] = useState(false);
+  const [validPsw, setValidPsw] = useState(false);
   useEffect(() => {
     setValid(
       account &&
@@ -29,6 +34,11 @@ const Register = () => {
     );
   }, [account]);
 
+  const [psw, setPsw] = useSetState({
+    memberPwd: "",
+    memberPwdRepeat: ""
+  });
+
   const [isAgree, setIsAgree] = useState<string | null>(null);
 
   const onSubmit = async () => {
@@ -36,17 +46,25 @@ const Register = () => {
       title: "注册中"
     });
 
-    let loginToken: ILoginToken | void = await loginSms({
+    let params = {
       mobile: account.username,
       smsAuthCode: account.password,
+      ...psw,
       clientType: CLIENT_TYPE.WECHAT
-    }).catch(() => {
-      fail("验证码无效");
-    });
+    };
 
-    Taro.hideLoading();
-
-    jump({ url: "/pages/user/index" });
+    registerMobile(params)
+      .catch(() => {
+        fail("验证码无效");
+      })
+      .then(res => {
+        success("注册成功").then(res => {
+          jump("/pages/login/index");
+        });
+      })
+      .finally(() => {
+        Taro.hideLoading();
+      });
   };
 
   return (
@@ -57,6 +75,9 @@ const Register = () => {
         smsType={SMS_TYPE.REGISTER}
         setValid={setValid}
       />
+
+      <Password onChange={setPsw} setValid={setValidPsw} />
+
       <View className="action">
         <View className="fields">
           <AtCheckbox
@@ -73,7 +94,7 @@ const Register = () => {
             }}
           />
           <View>
-            点击下一步即同意
+            点击下一步即代表阅读并同意
             <Text
               className="link"
               onClick={() => {
@@ -98,9 +119,9 @@ const Register = () => {
           style={{ marginTop: "10px", width: "100%" }}
           theme="gardient"
           onClick={onSubmit}
-          disabled={!valid}
+          disabled={!valid || !validPsw}
         >
-          注册
+          下一步
         </CButton>
       </View>
     </View>

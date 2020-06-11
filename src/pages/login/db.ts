@@ -80,7 +80,7 @@ export interface ISendSmsParams {
  * @member err 如果短信未发送，err表示未发送原因
  */
 export interface ISendSms {
-  status?: boolean;
+  status?: boolean | number;
   err?: string;
   [key: string]: any;
 }
@@ -168,6 +168,53 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
       setGlobalData("token", res.token);
     }
     return res;
+  });
+
+/**
+ * 会员手机注册的输入条件
+ *
+ * @export
+ * @interface IRegisterMember
+ *
+ * @alias mobile 手机号码
+ * @alias smsAuthCode 短信验证码
+ * @alias memberPwd 密码
+ * @alias memberPwdRepeat 密码验证/重复
+ * @alias clientType  注册客户端类型
+ */
+export interface IRegisterMember {
+  mobile: string;
+  smsAuthCode: string;
+  memberPwd: string;
+  memberPwdRepeat: string;
+  clientType: string;
+  [key: string]: any;
+}
+
+/**
+ * 手机注册返回结果
+ *
+ * @export
+ * @interface IRegisterToken
+ *
+ * @alias memberName 会员名称
+ * @alias memberId 会员ID
+ * @alias token 令牌
+ */
+export interface IRegisterToken {
+  memberName: string;
+  memberId: string;
+  token: string;
+  error?: string;
+  [key: string]: any;
+}
+export const registerMobile = (
+  data: IRegisterMember
+): Promise<IRegisterToken> =>
+  axios({
+    method: "post",
+    url: API.REGISTER_MOBILE as string,
+    data
   });
 
 export const logout = async (dispatch: Dispatch): Promise<any> => {
