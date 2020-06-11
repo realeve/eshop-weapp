@@ -54,13 +54,15 @@ const Register = () => {
     };
 
     registerMobile(params)
-      .catch(() => {
-        fail("验证码无效");
+      .catch(a => {
+        fail(a.message);
       })
-      .then(res => {
-        success("注册成功").then(res => {
-          jump("/pages/login/index");
-        });
+      .then(async res => {
+        if (!res) {
+          return;
+        }
+        await success("注册成功");
+        jump("/pages/login/index");
       })
       .finally(() => {
         Taro.hideLoading();
@@ -116,7 +118,7 @@ const Register = () => {
         </View>
 
         <CButton
-          style={{ marginTop: "10px", width: "100%" }}
+          style={{ marginTop: "20px", width: "100%" }}
           theme="gardient"
           onClick={onSubmit}
           disabled={!valid || !validPsw}
