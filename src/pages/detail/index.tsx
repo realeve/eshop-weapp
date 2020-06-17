@@ -1,6 +1,5 @@
 import Taro, { useRouter, useState } from "@tarojs/taro";
 import { View } from "@tarojs/components";
-import { connect } from "@tarojs/redux";
 import "./index.scss";
 import { CMaginify } from "@/components";
 import useFetch from "@/components/hooks/useFetch";
@@ -22,6 +21,8 @@ import DGoodsList from "./components/goodsList";
 import DAction from "./components/action";
 import DGuessULike from "./components/guessulike";
 
+import * as wx from "@/utils/weixin";
+
 const Detail = () => {
   const {
     params: { id }
@@ -38,6 +39,7 @@ const Detail = () => {
       let dist = handleGoodsData(res);
       let imgList = R.head(Object.values(dist.imgs));
       setImgs(imgList);
+      wx.initShare(dist);
       return dist;
     },
     valid: () => id > "0"

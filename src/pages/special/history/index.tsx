@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import ListView from "taro-listview";
 import { SPECIAL_GOODS } from "@/utils/api";
@@ -7,6 +7,8 @@ import useSetState from "@/components/hooks/useSetState";
 import { CEmpty } from "@/components";
 import { historyHandler } from "./lib";
 import PreorderItem from "./preorderItem";
+
+import * as wx from "@/utils/weixin";
 
 interface IOrderItem {
   activityId: number; // 主KEY
@@ -72,6 +74,13 @@ const History = () => {
     }
     fn();
   };
+
+  useEffect(() => {
+    wx.initShare({
+      title: "中钞贵金属平台预约商品列表",
+      subTitle: "货币文化产品与服务电子商务平台"
+    });
+  }, []);
 
   const onRefresh = async fn => {
     reFetch();
