@@ -18,8 +18,12 @@ module.exports = {
   h5: {
     esnextModules: ["taro-ui"],
     devServer: {
-      host: 'localhost',
+      host: "localhost",
       port: 8000
+    },
+    router: {
+      // https://taro-docs.jd.com/taro/docs/config-detail#h5router
+      mode: "browser" // 或者是 'hash'
     }
   }
 };
