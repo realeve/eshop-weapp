@@ -9,6 +9,7 @@ import {
 } from "@/utils/global_data";
 import { clearUser, isLogin, isWeapp } from "@/utils/lib";
 import { loadShoppingCart } from "@/utils/cartDb";
+import * as wx from "@/utils/weixin";
 
 /**
  * @exports
@@ -337,7 +338,7 @@ export const getMember = () =>
     url: API.MEMBER_INFO as string
   });
 
-export const storeMember = (
+export const storeMember = async (
   member: IMemberInfo,
   auth: IMemberRealNameAuth,
   callback: Dispatch,
@@ -354,7 +355,8 @@ export const storeMember = (
     birthday: member.birthday,
     authState: auth ? auth.authState : 90,
     isRealNamePassed: auth && auth.authState === 30,
-    authMessage: auth ? auth.authStateText : ""
+    authMessage: auth ? auth.authStateText : "",
+    weixinIsBind: member.weixinIsBind
   };
 
   Taro.setStorage({
@@ -369,45 +371,56 @@ export const storeMember = (
         isLogin: true
       }
     });
+  // 场景1：手机号已登录但没有绑定，发起绑定的调用，调用完毕后会在接口中自动再重新载入一次loadMemberInfo，此处可能会存在循环调用，暂未处理。
+  if (!member.weixinIsBind) {
+    await wx.bindWXInfo(callback); // 绑定完之后会发起重新获取用户身份信息的调用，绑定成功后不执行该模块
+  }
 };
 
 export const loadMember = async (
   callback: Dispatch,
-  setting = { withPrefix: false, mpCode: false }
+  setting: {
+    withPrefix: boolean;
+    mpCode: boolean | string;
+  } = { withPrefix: false, mpCode: false }
 ) => {
   let {
     memberInfo: member,
     memberRealNameAuth: auth
   }: IMember = await getMember();
   let { withPrefix, mpCode } = setting;
-  storeMember(member, auth, callback, withPrefix);
+  await storeMember(member, auth, callback, withPrefix);
   loadShoppingCart(callback, withPrefix);
 
-  let isBinding = loadMiniProgram().isBinding;
-  if (isBinding) {
-    return { member, auth };
-  }
+  // 小程序处理流程
+  if (isWeapp) {
+    let isBinding = loadMiniProgram().isBinding;
+    if (isBinding) {
+      return { member, auth };
+    }
 
-  if (!mpCode) {
-    let wxLogin = await Taro.login({
-      success: res => res.code || false,
-      fail: err => false
-    });
-    mpCode = wxLogin ? wxLogin.code : false;
-  }
-  if (mpCode) {
-    let bindingResult = await binding(mpCode)
-      .then(res => res.code === 200)
-      .catch(err => false);
-    console.info("binding result", bindingResult);
-    if (bindingResult) {
-      storeMiniProgram({ isBinding: true, isConfirmed: false });
-      Taro.setStorage({
-        key: LocalStorageKeys.mp,
-        data: { isBinding: true, isConfirmed: false }
+    if (!mpCode) {
+      let wxLogin = await Taro.login({
+        success: res => res.code || false,
+        fail: err => false
       });
+      mpCode = wxLogin ? wxLogin.code : false;
+    }
+    if (mpCode) {
+      let bindingResult = await binding(mpCode)
+        .then(res => res.code === 200)
+        .catch(err => false);
+      console.info("binding result", bindingResult);
+      if (bindingResult) {
+        storeMiniProgram({ isBinding: true, isConfirmed: false });
+        Taro.setStorage({
+          key: LocalStorageKeys.mp,
+          data: { isBinding: true, isConfirmed: false }
+        });
+      }
     }
   }
+
   return {
     member,
     auth
@@ -442,7 +455,6 @@ const loadMiniProgram = () => {
     storeMiniProgram({ isBinding: false, isConfirmed: false });
     // dispatch({type:})
   }
-
   return mp;
 };
 
