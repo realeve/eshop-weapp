@@ -12,7 +12,7 @@ import { Dispatch } from "redux";
 const wx = require("weixin-js-sdk");
 
 // 公众号配置
-const apiId = "wx7a6971dd5ee1ebce";
+export const apiId = "wx7a6971dd5ee1ebce";
 
 export const isWXBrowser = navigator.userAgent
   .toLocaleLowerCase()

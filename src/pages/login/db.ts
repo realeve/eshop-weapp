@@ -495,9 +495,10 @@ export const loginWx = async (dispatch: Dispatch, withPrefix = false) => {
       });
       return;
     }
-  } else {
-    console.error("此处对接微信网页端登录\n微信小程序与网页端已做分离");
   }
+  // else {
+  //   console.error("此处对接微信网页端登录\n微信小程序与网页端已做分离");
+  // }
 
   if (!logon) {
     console.info("not logon");
