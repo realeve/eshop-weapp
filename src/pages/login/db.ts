@@ -226,18 +226,23 @@ export const changePassword = (item: IRegisterMember) =>
   });
 
 export const logout = async (dispatch: Dispatch): Promise<any> => {
-  let mp_logout = await axios({ ...API.LOGOUT_MINI_PROGRAM }).catch(err => err);
+  // 微信小程序才发起解绑操作。
+  if (isWeapp) {
+    let mp_logout = await axios({ ...API.LOGOUT_MINI_PROGRAM }).catch(
+      err => err
+    );
 
-  if ((mp_logout || {}).code == 200) {
-    storeMiniProgram({ isBinding: false, isConfirmed: false });
-    Taro.setStorage({
-      key: LocalStorageKeys.mp,
-      data: { isBinding: false, isConfirmed: false }
-    });
-    dispatch({
-      type: "common/setStore",
-      payload: { miniProgram: { isBinding: false, isConfirmed: false } }
-    });
+    if ((mp_logout || {}).code == 200) {
+      storeMiniProgram({ isBinding: false, isConfirmed: false });
+      Taro.setStorage({
+        key: LocalStorageKeys.mp,
+        data: { isBinding: false, isConfirmed: false }
+      });
+      dispatch({
+        type: "common/setStore",
+        payload: { miniProgram: { isBinding: false, isConfirmed: false } }
+      });
+    }
   }
   clearUser();
   return true;

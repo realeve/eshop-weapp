@@ -6,6 +6,8 @@ import { Provider } from "@tarojs/redux";
 import { initFingerPrint } from "@/utils/axios";
 import "./app.scss";
 import "./styles/custom-theme.scss";
+import VConsole from "vconsole";
+var vConsole = new VConsole();
 
 // 用import的方式会报错
 // import { tabConfig } from "./utils/lib";

@@ -69,10 +69,11 @@ export const bindWXInfo: (
       // 如果登录有结果，拿token换身份信息
       setGlobalData("token", res.token);
       // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-      await loadMember(dispatch);
-      setTimeout(() => {
-        jump({ url: "/pages/user/index" });
-      }, 100);
+      await loadMember(dispatch).then(res => {
+        setTimeout(() => {
+          jump({ url: "/pages/user/index" });
+        }, 100);
+      });
     })
     .catch(e => {
       // 新用户无法获取token,跳转到登录页

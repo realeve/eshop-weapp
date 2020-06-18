@@ -44,6 +44,7 @@ $shopHeight: 45px;
     .title {
       @extend .alignColumn;
       justify-content: space-between;
+      font-size: $fontSizeNormal;
       .main {
         color: $mainTitle;
       }

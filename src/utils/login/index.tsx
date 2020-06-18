@@ -1,7 +1,7 @@
 import Taro from "@tarojs/taro";
 import { axios } from "@/utils/axios";
 import url from "./url";
-import { jump } from "@/utils/lib";
+import { jump, isWeapp } from "@/utils/lib";
 import { ILoginToken, loadMember } from "@/pages/login/db";
 
 import { LocalStorageKeys } from "@/utils/setting";
@@ -68,7 +68,7 @@ export const pay: (payId: string, callback: () => void) => void = async (
   };
   // 支付参数
   const prePay = await axios<IWeixinPay>({
-    url: url.pay,
+    url: isWeapp ? url.pay : url.mpPay,
     method: "POST",
     data
   });

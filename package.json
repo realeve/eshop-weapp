@@ -63,6 +63,7 @@
     "taro-listview": "^1.1.16",
     "taro-skeleton": "^1.0.10",
     "taro-ui": "^2.3.4",
+    "vconsole": "^3.3.4",
     "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
@@ -88,6 +89,7 @@
     "stylelint": "9.3.0",
     "stylelint-config-taro-rn": "2.2.7",
     "stylelint-taro-rn": "2.2.7",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.5",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }
