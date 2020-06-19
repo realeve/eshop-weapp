@@ -42,7 +42,6 @@ const History = () => {
   const [page, setPage] = useState(1);
 
   const [state, setState] = useSetState({
-    isLoaded: true,
     hasMore: false,
     list: []
   });
@@ -58,20 +57,17 @@ const History = () => {
       let { hasMore } = res.pageResult;
       setState({
         hasMore,
-        list: [...state.list, ...historyHandler(res)],
-        isLoaded: true //page === 1
+        list: [...state.list, ...historyHandler(res)]
       });
     }
   });
   const onScrollToLower = async fn => {
     // 修复无限触发ScrollToLower
-    if (loading) {
+    if (loading || !state.hasMore) {
       return;
     }
-    console.info("scroll trigger", state);
-    if (state.hasMore) {
-      setPage(page + 1);
-    }
+    // console.info("scroll trigger");
+    setPage(page + 1);
     fn();
   };
 
@@ -82,21 +78,16 @@ const History = () => {
     });
   }, []);
 
-  const onRefresh = async fn => {
-    reFetch();
-    console.log("刷新数据");
-    fn();
-  };
-
-  console.info("loading + loaded", loading, state.isLoaded, state.hasMore);
+  // console.info("loading + loaded", loading, state.isLoaded, state.hasMore);
   return state && state.list && state.list.length > 0 ? (
     <View>
       <ListView
-        isLoaded={state.isLoaded}
+        lazy=".lazy-view"
+        isLoaded={!loading}
         hasMore={state.hasMore}
-        style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
+        style={{ height: "calc(100% - 40px)", flex: 1, background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onRefresh}
+        onPullDownRefresh={onScrollToLower}
       >
         {state.list.map((data: IOrderItem) => (
           <PreorderItem key={data.activityId} data={data} />

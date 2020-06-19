@@ -1,3 +1,4 @@
+// import Taro from "@tarojs/taro";
 import { axios } from "./axios";
 import qs from "qs";
 import { isWeapp } from "./lib";
@@ -60,22 +61,32 @@ export const bindWXInfo: (
     url: API.LOGIN_WX_H5 as string,
     data: { code }
   })
-    .then(async res => {
+    .then(res => {
       // 新用户无法获取token,跳转到登录页
-      if (res.token.length === 0) {
+      if (res.token === "") {
         jump({ url: "/pages/login/index" });
+        return;
       }
 
       // 如果登录有结果，拿token换身份信息
       setGlobalData("token", res.token);
       // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-      await loadMember(dispatch).then(res => {
-        setTimeout(() => {
-          jump({ url: "/pages/user/index" });
-        }, 100);
+      // dispatch &&
+      loadMember(dispatch).then(() => {
+        jump({ url: "/pages/user/index" });
       });
     })
     .catch(e => {
+      // console.log(e);
+      // Taro.showToast({
+      //   title: "token抛错", //"验证码无效",
+      //   icon: "loading",
+      //   duration: 3000
+      // }).then(() => {
+      //   setTimeout(() => {
+      //   }, 5000);
+      // });
+
       // 新用户无法获取token,跳转到登录页
       jump({ url: "/pages/login/index" });
     });

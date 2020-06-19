@@ -14,6 +14,12 @@ const User = ({ isLogin, dispatch }) => {
     if (!isLogin) {
       wx.bindWXInfo(dispatch);
     }
+
+    // 微信分享
+    wx.initShare({
+      title: "中钞贵金属平台-个人中心",
+      subTitle: "货币文化产品与服务电子商务平台"
+    });
   }, []);
 
   return (

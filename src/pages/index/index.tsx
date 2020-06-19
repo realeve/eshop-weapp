@@ -29,6 +29,7 @@ const Index = ({
   newProduct,
   specialList,
   normalList,
+  isLogin,
   dispatch
 }: IGlobalModel) => {
   let [pos, setPos] = useState(0);
@@ -38,6 +39,11 @@ const Index = ({
   };
 
   useEffect(() => {
+    // 场景2/场景3：未登录用户自动登录
+    if (!isLogin) {
+      wx.bindWXInfo(dispatch);
+    }
+
     // 微信分享
     wx.initShare({
       title: "中钞贵金属平台",
