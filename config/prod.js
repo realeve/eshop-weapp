@@ -21,6 +21,16 @@ module.exports = {
       filename: "js/[name].[hash:8].js",
       chunkFilename: "js/[name].[chunkhash:8].js"
     },
+    postcss: {
+      // css modules 功能开关与相关配置
+      cssModules: {
+        enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: "module",
+          generateScopedName: "[name]__[local]___[hash:base64:5]"
+        }
+      }
+    },
     router: {
       // https://taro-docs.jd.com/taro/docs/config-detail#h5router
       mode: "browser" // 或者是 'hash'

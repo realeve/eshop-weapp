@@ -86,7 +86,9 @@ export const pay: (payId: string, callback: () => void) => void = async (
     if (
       !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
     ) {
-      fail("支付失败");
+      fail("支付失败").then(() => {
+        jump("/pages/user/order/index?state=2");
+      });
       return;
     }
 

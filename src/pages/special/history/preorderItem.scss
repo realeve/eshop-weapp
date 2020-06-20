@@ -33,7 +33,11 @@
           line-height: 38px;
           color: rgba(44, 46, 54, 1);
           font-size: $heading-3-size;
-          font-weight: 900;
+          font-weight: 600;
+          width: calc(100vw - 260px);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .title {
