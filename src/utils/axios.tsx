@@ -179,6 +179,11 @@ export const handleData = async ({ config, request, data, headers }) => {
     fail("登录已失效").then(() => {
       if (window.location.pathname !== "/pages/user/index") {
         jump({ url: "/pages/user/index" });
+      } else {
+        // 如果绑定过则刷新页面
+        if ("1" == Taro.getStorageSync(LocalStorageKeys.is_bind_wx)) {
+          window.location.reload();
+        }
       }
     });
     return Promise.reject({
