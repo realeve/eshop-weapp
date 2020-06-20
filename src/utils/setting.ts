@@ -31,14 +31,14 @@ const SETTING = {
 /**
  * 生产环境
  */
-// const SETTING: { [key: string]: string } = {
+// const SETTING = {
 //   host: "https://api.ccgold.cn/api",
 //   oss: "https://static.ccgold.cn",
 //   base: "/",
 //   publicPath: "/",
 //   IM: "https://im.ccgold.cn/member",
 //   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
-//  IMWS:"ws://im.ccgold.cn/im"
+//   IMWS: "ws://im.ccgold.cn/im"
 // };
 
 // https://www.ccgold.cn/index.html
@@ -103,8 +103,7 @@ export const copyright = {
   tel: "400 8122 200"
 };
 
-export const help = "https://static.ccgold.cn/img/mp/help.json";
-
+export const help = DEV ? "https://statictest.ccgold.cn/img/mp/help.json" : "https://static.ccgold.cn/img/mp/help.json";
 export const cityUrl = DEV
   ? "https://statictest.ccgold.cn/public/json/areaAll.json"
   : "https://static.ccgold.cn/public/json/areaAll.json";
