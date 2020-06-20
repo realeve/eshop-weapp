@@ -31,6 +31,10 @@ module.exports = {
         }
       }
     },
+    miniCssExtractPluginOption: {
+      filename: "css/[name].[hash:8].css",
+      chunkFilename: "css/[id].[chunkhash:8].css"
+    },
     router: {
       // https://taro-docs.jd.com/taro/docs/config-detail#h5router
       mode: "browser" // 或者是 'hash'
