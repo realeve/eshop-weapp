@@ -27,8 +27,13 @@
   }
 
   .register {
-    color: $mainTitle;
+    color: $yellow;
     font-size: $fontSizeNormal;
     text-align: center;
+  }
+  .tips {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }

@@ -6,6 +6,8 @@ import { Provider } from "@tarojs/redux";
 import { initFingerPrint } from "@/utils/axios";
 import "./app.scss";
 import "./styles/custom-theme.scss";
+import VConsole from "vconsole";
+var vConsole = new VConsole();
 
 // 用import的方式会报错
 // import { tabConfig } from "./utils/lib";
@@ -63,6 +65,10 @@ class App extends Component {
 
       "pages/find/index", // 发现
       "pages/login/index", // 登录
+
+      "pages/login/register", // 注册
+      "pages/login/forget", // 忘记密码
+
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
       "pages/special/history/index", // 特品历史

@@ -12,5 +12,6 @@ export default {
    * https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=7_3&index=1
    *
    */
-  pay: "/member/buy/pay/wxmini/wxpay"
+  pay: "/member/buy/pay/wxmini/wxpay",
+  mpPay: "/member/buy/pay/mp/wxpay"
 };

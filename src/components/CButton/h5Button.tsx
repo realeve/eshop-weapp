@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import "./wButton.scss";
+import "./h5Button.scss";
 import classnames from "classnames";
 import { AtButton } from "taro-ui";
 import { View } from "@tarojs/components";

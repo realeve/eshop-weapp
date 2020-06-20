@@ -103,7 +103,11 @@ export const copyright = {
   tel: "400 8122 200"
 };
 
-export const help = DEV ? "https://statictest.ccgold.cn/img/mp/help.json" : "https://static.ccgold.cn/img/mp/help.json";
+export const help = DEV
+  ? // 此处暂使用接口代理
+  "https://statictest.ccgold.cn/img/mp/help.json" //"http://api.cbpc.ltd/328/4b984cbc42/1000.json" //
+  : "https://static.ccgold.cn/img/mp/help.json";
+
 export const cityUrl = DEV
   ? "https://statictest.ccgold.cn/public/json/areaAll.json"
   : "https://static.ccgold.cn/public/json/areaAll.json";

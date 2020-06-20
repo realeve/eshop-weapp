@@ -9,6 +9,7 @@ import useSetState from "@/components/hooks/useSetState";
 import Search from "@/pages/index/components/search/";
 
 import "./index.scss";
+import * as wx from "@/utils/weixin";
 
 import Menu from "./menu";
 import List from "./list";
@@ -51,6 +52,12 @@ const Index = ({ menuList, curCateId = 0 }: IProps) => {
       current,
       list: list.cates
     });
+
+    list &&
+      wx.initShare({
+        title: "中钞贵金属平台——" + list.name,
+        subTitle: "货币文化产品与服务电子商务平台"
+      });
   };
 
   useEffect(() => {

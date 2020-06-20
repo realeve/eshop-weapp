@@ -14,7 +14,8 @@ const Index = () => {
   const route = useRouter();
 
   let { data, loading } = useFetch({
-    param: { url }
+    param: { url },
+    callback: res => res.data || res
   });
   let [html, setHtml] = useState<null | string>(null);
   useEffect(() => {

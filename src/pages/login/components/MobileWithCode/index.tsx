@@ -113,6 +113,9 @@ const MobileWithCode = ({
           setTryTimes(tryTimes + 1);
           return;
         }
+        if (sendCode.status == 400) {
+          return;
+        }
 
         closeCaptcha();
         fail("短信已发送，请在10分钟内完成验证。");
@@ -126,6 +129,10 @@ const MobileWithCode = ({
       .catch(err => {
         setTryTimes(tryTimes + 1);
         setLoading(false);
+        if (err.message) {
+          fail(err.message);
+          closeCaptcha();
+        }
       });
   };
 

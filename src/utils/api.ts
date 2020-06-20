@@ -3,6 +3,9 @@ export const API = {
   SEND_SMSCODE: "/loginconnect/smscode/send-box",
   LOGIN_SMSCODE: "/loginconnect/mobile/login",
   REGISTER_MOBILE: "/loginconnect/mobile/register",
+
+  LOGIN_WX_H5: "/wx/mp/authorize",
+
   MEMBER_INFO: "/member/detail",
   LOGOUT: "/logout",
   REALNAME_AUTH: "/realName/authentication",

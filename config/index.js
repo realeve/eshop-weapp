@@ -115,6 +115,10 @@ const config = {
     },
     sassLoaderOption: {
       importer: sassImporter
+    },
+    router: {
+      // https://taro-docs.jd.com/taro/docs/config-detail#h5router
+      mode: "browser" // 或者是 'hash'
     }
   }
 };

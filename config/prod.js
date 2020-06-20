@@ -16,7 +16,16 @@ module.exports = {
   defineConstants: {},
   mini: {},
   h5: {
-    esnextModules: ["taro-ui"]
+    esnextModules: ["taro-ui"],
+    router: {
+      // https://taro-docs.jd.com/taro/docs/config-detail#h5router
+      mode: "browser" // 或者是 'hash'
+    },
+    webpackChain(chain) {
+      chain
+        .plugin("analyzer")
+        .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin, []);
+    }
     /**
      * 如果h5端编译后体积过大，可以使用webpack-bundle-analyzer插件对打包体积进行分析。
      * 参考代码如下：

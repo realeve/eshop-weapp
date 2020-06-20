@@ -13,6 +13,7 @@ import {
 import { loadMember, loginWx } from "@/pages/login/db";
 
 import { get as getGlobalData } from "@/utils/global_data";
+import * as wx from "@/utils/weixin";
 
 import { OSS_URL } from "@/utils/setting";
 import * as R from "ramda";
@@ -85,7 +86,7 @@ export interface IOrderNum {
 export interface IGlobalModel {
   user: IGlobalUser; // 用户全局状态
   isLogin: boolean; // 是否登录
-  miniProgram: { isBinding: boolean, isConfirmed: boolean },// 小程序设定,isBinding：是否已经绑定微信；isConfirmed：不再询问是否绑定
+  miniProgram: { isBinding: boolean; isConfirmed: boolean }; // 小程序设定,isBinding：是否已经绑定微信；isConfirmed：不再询问是否绑定
   special: {
     batchId: string;
     imageUrl: string;
@@ -145,6 +146,10 @@ export const loadUserInfo = async (dispatch: Dispatch) => {
   Reflect.deleteProperty(user, "token");
   if (user.memberName.length === 0) {
     user = await loadMember(dispatch).catch(() => ({}));
+  } else {
+    if (!user.weixinIsBind) {
+      await wx.bindWXInfo(dispatch); // 绑定完之后会发起重新获取用户身份信息的调用，绑定成功后不执行该模块
+    }
   }
 
   dispatch({

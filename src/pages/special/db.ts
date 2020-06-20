@@ -1,9 +1,11 @@
+import { initShare } from "./../../utils/weixin";
 import * as R from "ramda";
 import { Dispatch } from "redux";
 import { axios } from "@/utils/axios";
 import { API } from "@/utils/setting";
 import * as lib from "@/utils/lib";
 import { getWebp } from "@/services/common";
+import * as wx from "@/utils/weixin";
 
 export const DENY_CODE: {
   [key: number]: string;
@@ -272,6 +274,13 @@ export const handleSubscribe: (
     payload: {
       special
     }
+  });
+
+  // 微信分享
+  wx.initShare({
+    title: special.goodsName,
+    subTitle: special.goodsName + "正在火热预约中，点击查看详情",
+    img: special.mainImage1
   });
   return { ...special, imgList, thumbList };
 };

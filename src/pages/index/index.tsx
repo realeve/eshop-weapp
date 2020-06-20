@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro"; //  usePageScroll,
+import Taro, { useState, useEffect } from "@tarojs/taro"; //  usePageScroll,
 import { View, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import { IGlobalModel } from "@/models/common";
@@ -11,6 +11,8 @@ import {
   Carousel
 } from "./components/";
 import { getWindowHeight } from "@/utils/style";
+
+import * as wx from "@/utils/weixin";
 
 import "./index.scss";
 
@@ -27,6 +29,7 @@ const Index = ({
   newProduct,
   specialList,
   normalList,
+  isLogin,
   dispatch
 }: IGlobalModel) => {
   let [pos, setPos] = useState(0);
@@ -34,6 +37,19 @@ const Index = ({
   const onScroll = event => {
     setPos(handlePos(event.detail));
   };
+
+  useEffect(() => {
+    // 场景2/场景3：未登录用户自动登录
+    if (!isLogin) {
+      wx.bindWXInfo(dispatch);
+    }
+
+    // 微信分享
+    wx.initShare({
+      title: "中钞贵金属平台",
+      subTitle: "货币文化产品与服务电子商务平台"
+    });
+  }, []);
 
   return (
     <View className="index-page">

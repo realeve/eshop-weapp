@@ -10,6 +10,7 @@ import {
 } from "@/utils/global_data";
 import { jump, clearUser, getUid } from "@/utils/lib";
 import { API } from "@/utils/api";
+import fail from "@/components/Toast/fail";
 
 // export interface GlobalAxios {
 //   host: string;
@@ -175,11 +176,8 @@ export const handleData = async ({ config, request, data, headers }) => {
     )
   ) {
     clearUser();
-
-    Taro.showToast({
-      title: "登录已失效", //"验证码无效",
-      icon: "loading",
-      duration: 3000
+    fail("登录已失效").then(() => {
+      jump({ url: "/pages/user/index" });
     });
   }
 
@@ -233,8 +231,9 @@ export const handleData = async ({ config, request, data, headers }) => {
     saveToken(datas.token);
 
     // loadMember()
+
     // 移除token
-    Reflect.deleteProperty(datas, "token");
+    // Reflect.deleteProperty(datas, "token");
   }
 
   return datas || { code };

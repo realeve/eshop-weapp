@@ -3,7 +3,6 @@
 
 .response {
   &Notice {
-
     .layout {
       &-header__title {
         text-align: center;
@@ -21,7 +20,6 @@
 
   &__title {
     .at-checkbox {
-
       &:before,
       &:after {
         content: unset;
@@ -40,6 +38,7 @@
         width: $iconSize;
         height: $iconSize;
         min-width: $iconSize;
+        background-color: $yellow;
       }
 
       &__title {
