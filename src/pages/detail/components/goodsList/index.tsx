@@ -5,6 +5,7 @@ import { CPrice } from "@/components";
 import * as R from "ramda";
 import DCard from "../card";
 import { getWebpSuffix } from "@/services/common";
+import { jump } from "@/utils/lib";
 
 export default ({ data = [], title }) => (
   <DCard className="home-pin__wrap">
@@ -18,7 +19,13 @@ export default ({ data = [], title }) => (
       {R.splitEvery(3, data).map((group, index) => (
         <SwiperItem key={index + ""} className="home-pin__swiper-item">
           {group.map(item => (
-            <View key={item.commonId} className="home-pin__item">
+            <View
+              key={item.commonId}
+              className="home-pin__item"
+              onClick={() => {
+                jump({ url: "/pages/detail/index?id=" + item.commonId });
+              }}
+            >
               <Image
                 mode="aspectFit"
                 className="home-pin__item-img"
