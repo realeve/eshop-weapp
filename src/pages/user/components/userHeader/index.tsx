@@ -34,7 +34,7 @@ const UserHeader = ({ user, loading, isLogin, dispatch }) => {
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
         {!user.uid || !isLogin ? <NotLogin /> : <IsLogin data={user} />}
-        <View className="at-icon at-icon-settings setting" />
+        {/* <View className="at-icon at-icon-settings setting" /> */}
         {isLogin && (
           <Image
             src="https://static.ccgold.cn/img/mp/logout.svg"
