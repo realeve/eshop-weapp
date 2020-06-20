@@ -392,7 +392,13 @@ export const loadMember = async (
   let {
     memberInfo: member,
     memberRealNameAuth: auth
-  }: IMember = await getMember();
+  }: IMember = await getMember().catch(e => {
+    wx.bindWXInfo(callback);
+    return {};
+  });
+  if (!member) {
+    return;
+  }
   let { withPrefix, mpCode } = setting;
   await storeMember(member, auth, callback, withPrefix);
   loadShoppingCart(callback, withPrefix);

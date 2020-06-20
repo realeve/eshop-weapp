@@ -177,7 +177,20 @@ export const handleData = async ({ config, request, data, headers }) => {
   ) {
     clearUser();
     fail("登录已失效").then(() => {
-      jump({ url: "/pages/user/index" });
+      if (window.location.pathname !== "/pages/user/index") {
+        jump({ url: "/pages/user/index" });
+      }
+    });
+    return Promise.reject({
+      slef: true,
+      config,
+      response: {
+        status: code,
+        statusText: msg,
+        data: {}
+      },
+      request,
+      message: msg
     });
   }
 

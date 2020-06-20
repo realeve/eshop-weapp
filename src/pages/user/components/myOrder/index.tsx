@@ -56,9 +56,16 @@ export const linkList = [
   }
 ];
 
-const MyOrder = ({ dispatch, isLogin }) => {
+// orderTrigger
+// 返回个人中心页面时，订单数据不刷新，设置trigger用于在取消/支付后刷新数据
+const MyOrder = ({ dispatch, isLogin, orderTrigger }) => {
   const { data: orderNumber, loading } = useFetch({
-    param: ORDER.orderStatusNumber,
+    param: {
+      ...ORDER.orderStatusNumber,
+      data: {
+        t: orderTrigger
+      }
+    },
     callback: e => {
       let orderNum = handleOrderNum(e);
       dispatch({
@@ -104,6 +111,9 @@ const MyOrder = ({ dispatch, isLogin }) => {
   );
 };
 
-export default connect(({ common: { isLogin } }: IGlobalModel) => ({
-  isLogin
-}))(MyOrder as any);
+export default connect(
+  ({ common: { isLogin, orderTrigger } }: IGlobalModel) => ({
+    isLogin,
+    orderTrigger
+  })
+)(MyOrder as any);
