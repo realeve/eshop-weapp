@@ -17,6 +17,10 @@ module.exports = {
   mini: {},
   h5: {
     esnextModules: ["taro-ui"],
+    output: {
+      filename: "js/[name].[hash:8].js",
+      chunkFilename: "js/[name].[chunkhash:8].js"
+    },
     router: {
       // https://taro-docs.jd.com/taro/docs/config-detail#h5router
       mode: "browser" // 或者是 'hash'
