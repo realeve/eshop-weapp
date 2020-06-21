@@ -23,11 +23,11 @@ import * as wx from "@/utils/weixin";
  */
 export const CLIENT_TYPE = {
   WEB: "web", //'windows',
-  WAP: isWeapp ? "miniprogram" : "web",
+  WAP: isWeapp ? "miniprogram" : "wap",
   IOS: "ios",
   ANDROID: "android",
-  WECHAT: isWeapp ? "wechat" : "web",
-  MINIPROGRAM: isWeapp ? "miniprogram" : "web"
+  WECHAT: isWeapp ? "wechat" : "wap",
+  MINIPROGRAM: isWeapp ? "miniprogram" : "wap"
 };
 
 /**
@@ -513,11 +513,11 @@ export const loginWx = async (dispatch: Dispatch, withPrefix = false) => {
 
 export const checkWxSession = async (dispatch: Dispatch) => {
   Taro.checkSession({
-    success: function() {
+    success: function () {
       //session_key 未过期，并且在本生命周期一直有效
       console.info("微信会话有效");
     },
-    fail: function() {
+    fail: function () {
       // session_key 已经失效，需要重新执行登录流程
       loginWx(dispatch); //重新登录
     }
