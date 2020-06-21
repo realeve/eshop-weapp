@@ -1,4 +1,4 @@
-import { initShare } from "./../../utils/weixin";
+// import { initShare } from "./../../utils/weixin";
 import * as R from "ramda";
 import { Dispatch } from "redux";
 import { axios } from "@/utils/axios";

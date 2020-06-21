@@ -8,9 +8,12 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
-import { jump, clearUser, getUid } from "@/utils/lib";
+import { jump, clearToken, getUid, isWeapp } from "@/utils/lib";
 import { API } from "@/utils/api";
 import fail from "@/components/Toast/fail";
+
+// 公众号配置
+export const apiId = "wx7a6971dd5ee1ebce";
 
 // export interface GlobalAxios {
 //   host: string;
@@ -175,15 +178,28 @@ export const handleData = async ({ config, request, data, headers }) => {
       config.url.includes(API.MINI_PROGRAM_BINDING.url)
     )
   ) {
-    clearUser();
+    // 只清token，不清登录身份信息（需要走微信身份接口获取）
+    clearToken();
     fail("登录已失效").then(() => {
-      if (window.location.pathname !== "/pages/user/index") {
+      if (isWeapp) {
         jump({ url: "/pages/user/index" });
       } else {
-        // 如果绑定过则刷新页面
-        if ("1" == Taro.getStorageSync(LocalStorageKeys.is_bind_wx)) {
-          window.location.reload();
-        }
+        // 续token信息
+        //本地获取token
+        // const url: string = window.location.href.split("#")[0];
+
+        // 跳转到主页
+        const redirectUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${apiId}&redirect_uri=${window.location.origin}/pages/index/index&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+        jump(redirectUrl);
+
+        // if (window.location.pathname !== "/pages/user/index") {
+        //   jump({ url: "/pages/user/index" });
+        // } else {
+        //   // 如果绑定过则刷新页面
+        //   if ("1" == Taro.getStorageSync(LocalStorageKeys.is_bind_wx)) {
+        //     window.location.reload();
+        //   }
+        // }
       }
     });
     return Promise.reject({

@@ -1,5 +1,5 @@
 // import Taro from "@tarojs/taro";
-import { axios } from "./axios";
+import { axios, apiId } from "./axios";
 import qs from "qs";
 import { isWeapp } from "./lib";
 import { API } from "@/utils/setting";
@@ -12,9 +12,6 @@ import { Dispatch } from "redux";
 import { LocalStorageKeys } from "@/utils/setting";
 
 const wx = require("weixin-js-sdk");
-
-// 公众号配置
-export const apiId = "wx7a6971dd5ee1ebce";
 
 export const isWXBrowser = navigator.userAgent
   .toLocaleLowerCase()
@@ -78,10 +75,10 @@ export const bindWXInfo: (
       });
 
       // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-      // dispatch &&
-      loadMember(dispatch).then(() => {
-        jump({ url: "/pages/user/index" });
-      });
+      dispatch &&
+        loadMember(dispatch).then(() => {
+          jump({ url: "/pages/user/index" });
+        });
     })
     .catch(e => {
       // console.log(e);

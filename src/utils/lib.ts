@@ -3,7 +3,7 @@ import moment from "dayjs";
 
 import { getType, axios } from "./axios";
 
-import Fingerprint2 from 'fingerprintjs2';
+import Fingerprint2 from "fingerprintjs2";
 import { API } from "./setting";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
@@ -168,6 +168,10 @@ export const setUserStore = (state, store) => {
 
 export const clearUser = () => {
   Taro.removeStorage({ key: LocalStorageKeys.user });
+  clearToken();
+};
+
+export const clearToken = () => {
   Taro.removeStorage({ key: LocalStorageKeys.token });
   let g_axios = getGlobalData("g_axios");
   g_axios = Reflect.deleteProperty(g_axios, "token");
@@ -202,8 +206,8 @@ export const sleep = time => new Promise(resolve => setTimeout(resolve, time));
  */
 export const getUid = () =>
   new Promise((resolve, reject) => {
-    Fingerprint2.get(function (val) {
-      let token = Fingerprint2.x64hash128(val.join(''), 31);
+    Fingerprint2.get(function(val) {
+      let token = Fingerprint2.x64hash128(val.join(""), 31);
       resolve(token);
     });
   });
@@ -396,5 +400,5 @@ export const randomStr = () =>
 export const getMemberInfo = () => {
   let localStore = Taro.getStorageSync(LocalStorageKeys.user) || "{}";
   return JSON.parse(localStore);
-}
+};
 export const isWeapp = Taro.getEnv() === "WEAPP";
