@@ -56,7 +56,7 @@ const handleRefundItem: (res: IRefundDetailDB) => IPropGoodItem = res => {
     reimburse_reason: data.ordersSnStr,
     reimburse_type: data.refundType,
     returnType: data.returnType,
-    reimburse_explain: "" // TODO 缺少留言信息
+    reimburse_explain: data.buyerMessage
   };
 };
 
@@ -141,14 +141,16 @@ const Detail = () => {
         </View>
       </Skeleton>
       <Skeleton loading={loading} row={refundDetail.length}>
-        <View className="goods">
-          {refundDetail.map(item => (
-            <View className="item" key={item.value}>
-              <View className="title">{item.name}：</View>
-              <Text>{data[item.value]}</Text>
-            </View>
-          ))}
-        </View>
+        {data && (
+          <View className="goods">
+            {refundDetail.map(item => (
+              <View className="item" key={item.value}>
+                <View className="title">{item.name}：</View>
+                <Text>{data[item.value]}</Text>
+              </View>
+            ))}
+          </View>
+        )}
       </Skeleton>
     </View>
   );
