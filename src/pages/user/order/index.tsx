@@ -20,7 +20,11 @@ import Rebuy from "./components/Rebuy";
 
 import CountTime from "./components/CountTime";
 
+import dayjs from "dayjs";
+
 const { EOrderStatus } = db;
+
+const isAutoCancle = order => dayjs().isAfter(order.autoCancelTime);
 
 const Order = () => {
   let isLogin = useLogin();
@@ -93,8 +97,6 @@ const Order = () => {
 
   const onRefresh = reFetch;
 
-  // console.log(state);
-
   return (
     <View className="user_order">
       <Tab list={db.orderStateList} current={current} onChange={handleMenu} />
@@ -115,7 +117,9 @@ const Order = () => {
                   <Image src={HomeIcon} className="icon" />
                   <Text className="title">{order.shop}</Text>
                 </View>
-                <View className="status">{order.statusName}</View>
+                <View className="status">
+                  {isAutoCancle(order) ? "付款超时" : order.statusName}
+                </View>
               </View>
 
               {order.goods.map((goodsItem, idx) => (
@@ -150,6 +154,13 @@ const Order = () => {
                 </View>
               ))}
 
+              <View
+                className="footer"
+                style={{ paddingTop: 0, paddingBottom: 0 }}
+              >
+                <Text>{order.address.detail}</Text>
+                <Text className="payAmount">{order.address.name}</Text>
+              </View>
               <View className="footer">
                 <Text>
                   运费：{"￥" + order.express || "包邮"}，共{order.goods.length}
@@ -162,22 +173,28 @@ const Order = () => {
 
               {[EOrderStatus.sending, EOrderStatus.needPay].includes(
                 order.status
-              ) && (
-                <View className="closeTime">
-                  <CountTime time={order.autoCancelTime} />
-                </View>
-              )}
+              ) &&
+                !isAutoCancle(order) && (
+                  <View className="closeTime">
+                    <CountTime time={order.autoCancelTime} />
+                  </View>
+                )}
 
               <View className="action">
                 {/* 取消订单 */}
-                {[EOrderStatus.needPay].includes(order.status) && (
-                  <CancelOrder orderId={order.orderId} onRefresh={onRefresh} />
-                )}
+                {[EOrderStatus.needPay].includes(order.status) &&
+                  !isAutoCancle(order) && (
+                    <CancelOrder
+                      orderId={order.orderId}
+                      onRefresh={onRefresh}
+                    />
+                  )}
 
                 {/* 地址编辑 */}
-                {[EOrderStatus.needPay].includes(order.status) && (
-                  <EditAddr orderId={order.orderId} onRefresh={onRefresh} />
-                )}
+                {[EOrderStatus.needPay].includes(order.status) &&
+                  !isAutoCancle(order) && (
+                    <EditAddr orderId={order.orderId} onRefresh={onRefresh} />
+                  )}
 
                 {/* 退款 */}
                 {(!order.refund || order.refund.length === 0) &&
@@ -186,13 +203,14 @@ const Order = () => {
                   )}
 
                 {/* 去付款 */}
-                {[EOrderStatus.needPay].includes(order.status) && (
-                  <Pay
-                    payId={order.payId}
-                    onRefresh={onRefresh}
-                    autoCancelTime={order.autoCancelTime}
-                  />
-                )}
+                {[EOrderStatus.needPay].includes(order.status) &&
+                  !isAutoCancle(order) && (
+                    <Pay
+                      payId={order.payId}
+                      onRefresh={onRefresh}
+                      autoCancelTime={order.autoCancelTime}
+                    />
+                  )}
 
                 {/* 确认收货 */}
                 {[EOrderStatus.sending].includes(order.status) && (

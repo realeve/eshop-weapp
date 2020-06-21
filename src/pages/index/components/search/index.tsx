@@ -22,6 +22,13 @@ const Search = ({
 }: ISearchProps) => {
   let [keyword, setKeyword] = useState(value);
 
+  const onSearch = () => {
+    if (keyword.trim().length === 0) {
+      return;
+    }
+    jump(`/pages/search/index?keyword=${keyword}`);
+  };
+
   return (
     <View
       className={classname("searchWrap", `searchWrap${pos}`, className, {
@@ -34,12 +41,9 @@ const Search = ({
         onChange={(e: string) => {
           setKeyword(e);
         }}
-        onActionClick={() => {
-          if (keyword.trim().length === 0) {
-            return;
-          }
-          jump(`/pages/search/index?keyword=${keyword}`);
-        }}
+        onConfirm={onSearch}
+        onSubmit={onSearch}
+        onActionClick={onSearch}
         placeholder="请输入搜索关键词"
       />
     </View>

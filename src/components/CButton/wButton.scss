@@ -2,35 +2,35 @@
 
 .cButton {
   &gardient {
-    color: $white;
-    border: none;
-    background: $yellowGardiant;
+    color: $white !important;
+    border: none !important;
+    background: $yellowGardiant !important;
   }
 
   &blackgardient {
-    color: $white;
-    border: none;
-    background: $blackGardiant;
+    color: $white !important;
+    border: none !important;
+    background: $blackGardiant !important;
   }
 
   &yellow {
-    color: $yellow;
-    background: $white;
+    color: $yellow !important;
+    background: $white !important;
     &::after {
-      border-color: $yellow;
+      border-color: $yellow !important;
     }
   }
 
   &small {
-    min-width: 180px;
-    height: 72px;
-    line-height: 72px;
-    font-size: $font-size-base;
+    min-width: 180px !important;
+    height: 72px !important;
+    line-height: 72px !important;
+    font-size: $font-size-base !important;
   }
   &Rect {
-    border-radius: 0;
+    border-radius: 0 !important;
     &::after {
-      border-radius: 0;
+      border-radius: 0 !important;
     }
   }
 }

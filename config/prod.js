@@ -17,6 +17,24 @@ module.exports = {
   mini: {},
   h5: {
     esnextModules: ["taro-ui"],
+    output: {
+      filename: "js/[name].[hash:8].js",
+      chunkFilename: "js/[name].[chunkhash:8].js"
+    },
+    postcss: {
+      // css modules 功能开关与相关配置
+      cssModules: {
+        enable: true, // 默认为 false，如需使用 css modules 功能，则设为 true
+        config: {
+          namingPattern: "module",
+          generateScopedName: "[name]__[local]___[hash:base64:5]"
+        }
+      }
+    },
+    miniCssExtractPluginOption: {
+      filename: "css/[name].[hash:8].css",
+      chunkFilename: "css/[id].[chunkhash:8].css"
+    },
     router: {
       // https://taro-docs.jd.com/taro/docs/config-detail#h5router
       mode: "browser" // 或者是 'hash'

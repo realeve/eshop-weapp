@@ -6,13 +6,14 @@ import { ISubscribe } from "../db";
 import classnames from "classnames";
 import { jump } from "@/utils/lib";
 import { OSS_URL } from "@/utils/setting";
-
+import dayjs from "dayjs";
 interface IProps {
   data: ISubscribe;
   [key: string]: any;
 }
 const SpecialAction = ({ data = {}, className }: IProps) => {
   const [agree, setAgree] = useState(false);
+
   return (
     <View className={classnames("special__action", className)}>
       <View className="readme">
@@ -33,9 +34,14 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
             <Text style={{ marginRight: 5 }}>预约价</Text>
             <CPrice retail={data.goodsPrice} />
           </View>
-          <View className="tips">10天15小时后关闭预约</View>
+          <View className="tips">
+            {dayjs().isBefore(data.drawTime)
+              ? dayjs().from(data.drawTime)
+              : "申购已结束"}
+          </View>
         </View>
         <CButton
+          disabled={!dayjs().isBefore(data.drawTime)}
           onClick={() => {
             if (!agree) {
               Taro.showToast({
@@ -63,7 +69,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           // style="width:100px;"
           style={{ width: "100px" }}
         >
-          立即预约
+          {dayjs().isBefore(data.drawTime) ? "立即预约" : "已结束"}
         </CButton>
       </View>
     </View>

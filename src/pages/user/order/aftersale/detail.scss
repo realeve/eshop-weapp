@@ -22,6 +22,7 @@ $imgPadding: 12px;
     .name {
       color: $subTitle;
       margin-top: 15px;
+      font-size: $fontSizeMid;
     }
   }
   .goods {
@@ -30,9 +31,11 @@ $imgPadding: 12px;
     .item {
       @extend .alignRow;
       padding: 10px 0;
+      font-size: $fontSizeNormal;
       .title {
         width: 150px;
         text-align: right;
+        font-size: $fontSizeNormal;
       }
     }
   }

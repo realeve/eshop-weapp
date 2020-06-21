@@ -2,14 +2,18 @@ import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
 import "./OrderDetail.scss";
 import * as lib from "@/utils/lib";
+import { AtBadge } from "taro-ui";
+
 const OrderDetail = ({
-  data
+  data,
+  value
 }: {
   data: {
     name: string;
-    img: any;
+    img: string;
     link: string;
   };
+  value?: number;
 }) => (
   <View
     className="link_item"
@@ -17,9 +21,9 @@ const OrderDetail = ({
       lib.jump(data.link);
     }}
   >
-    <View>
+    <AtBadge value={value}>
       <Image src={data.img} className="icon" />
-    </View>
+    </AtBadge>
     <Text>{data.name}</Text>
   </View>
 );

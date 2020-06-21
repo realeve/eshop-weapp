@@ -20,6 +20,7 @@ $shopHeight: 45px;
   .header {
     @extend .spaceBetween;
     padding: 18px 24px;
+    align-items: center;
 
     /* prettier-ignore */
     border-bottom: 1PX solid #d6e4ef;
@@ -31,7 +32,9 @@ $shopHeight: 45px;
   }
   .shop {
     padding: 18px 24px;
-    height: $shopHeight;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 
     .icon {
       width: 24px;

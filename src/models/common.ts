@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { setStore, setUserStore, jump } from "@/utils/lib";
+import { setStore, setUserStore, jump, randomStr } from "@/utils/lib";
 import * as db from "../services/common";
 import { Dispatch } from "redux";
 import { ICateItem } from "@/pages/index/components/cateList";
@@ -102,6 +102,7 @@ export interface IGlobalModel {
   normalList: db.ICarouselItem[]; //普品专题列表
   specialList: db.ICarouselItem[]; //三联播
   buyLocking: boolean;
+  orderTrigger: string;
 }
 
 const state = {
@@ -136,7 +137,8 @@ const state = {
   normalList: [],
   specialList: [],
   curCateId: 0,
-  buyLocking: false
+  buyLocking: false,
+  orderTrigger: randomStr()
 };
 
 // 载入登录信息
