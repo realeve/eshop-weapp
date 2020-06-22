@@ -166,17 +166,27 @@ export const setUserStore = (state, store) => {
   return setStore(state, store);
 };
 
-export const clearUser = () => {
-  Taro.removeStorage({ key: LocalStorageKeys.user });
-  clearToken();
-};
-
 export const clearToken = () => {
   Taro.removeStorage({ key: LocalStorageKeys.token });
   let g_axios = getGlobalData("g_axios");
   g_axios = Reflect.deleteProperty(g_axios, "token");
   setGlobalData("g_axios", g_axios);
   setGlobalData("token", "");
+};
+
+export const updateToken = token => {
+  let g_axios = getGlobalData("g_axios");
+  setGlobalData("g_axios", { ...g_axios, token });
+  setGlobalData("token", token);
+  Taro.setStorage({
+    key: LocalStorageKeys.token,
+    data: token
+  });
+};
+
+export const clearUser = () => {
+  Taro.removeStorage({ key: LocalStorageKeys.user });
+  clearToken();
 };
 
 // 判断字符串是不是中文

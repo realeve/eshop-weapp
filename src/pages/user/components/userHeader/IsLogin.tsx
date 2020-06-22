@@ -11,12 +11,13 @@ const IsLogin = ({ data }: ILoginProp) => {
   if (!data) {
     return null;
   }
-  let { avatar, trueName, isRealNamePassed } = data;
+  let { avatar, trueName, isRealNamePassed, registerTime } = data;
   return (
     <View className="is_login">
       <View className="avatar_img">
         <AtAvatar circle size="large" image={avatar} />
       </View>
+      <Text className="detail_welcome">{registerTime}</Text>
       <View className="detail">
         <View className="detail_user_name">
           <Text className="name">{trueName}</Text>
