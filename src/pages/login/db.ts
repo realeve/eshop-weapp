@@ -246,10 +246,12 @@ export const logout = async (dispatch: Dispatch): Promise<any> => {
     }
   }
   clearUser();
-  return true;
-  // return axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
-  //   clearUser();
-  // })
+  return axios({ method: "post", url: API.LOGOUT as string });
+};
+
+export const unbind = async dispatch => {
+  await axios({ method: "post", url: API.UNBIND as string });
+  return logout(dispatch);
 };
 
 /**

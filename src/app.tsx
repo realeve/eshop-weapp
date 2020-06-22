@@ -47,6 +47,9 @@ class App extends Component {
       "pages/help/index", // 帮助中心
       "pages/help/view", // 查看
 
+      "pages/user/setting/index", //账户设置
+      "pages/user/verify/index", //账户设置
+
       "pages/user/address/index", //我的地址
 
       "pages/user/address/new", //新增地址
