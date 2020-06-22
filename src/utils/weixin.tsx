@@ -54,6 +54,11 @@ export const bindWXInfo: (
   let params = qs.parse(hrefArr[1]);
   let code = params.code;
 
+  // code无效
+  if (code.length === 0) {
+    return;
+  }
+
   await axios({
     method: "post",
     url: API.LOGIN_WX_H5 as string,

@@ -17,7 +17,6 @@ const IsLogin = ({ data }: ILoginProp) => {
       <View className="avatar_img">
         <AtAvatar circle size="large" image={avatar} />
       </View>
-      <Text className="detail_welcome">{registerTime}</Text>
       <View className="detail">
         <View className="detail_user_name">
           <Text className="name">{trueName}</Text>
@@ -28,6 +27,7 @@ const IsLogin = ({ data }: ILoginProp) => {
           )}
         </View>
         <Text className="detail_welcome">欢迎畅享中钞电商购物体验</Text>
+        <Text className="detail_welcome">{registerTime} 注册</Text>
       </View>
     </View>
   );
