@@ -53,7 +53,7 @@ const Setting = ({ isLogin, user, dispatch }) => {
       <View
         className="at-list__item fields"
         onClick={() => {
-          jump("/pages/user/verify/index");
+          !user.isRealNamePassed && jump("/pages/user/verify/index");
         }}
       >
         <View className="at-list__item-container">
@@ -61,7 +61,7 @@ const Setting = ({ isLogin, user, dispatch }) => {
             <View className="item-content__info-title">实名认证</View>
           </View>
           <View className="at-list__item-extra item-extra">
-            {!user.isRealNamePassed ? (
+            {user.isRealNamePassed ? (
               "已认证"
             ) : (
               <View>
