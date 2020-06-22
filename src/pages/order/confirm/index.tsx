@@ -118,7 +118,7 @@ const OrderConfirm = ({ currentAddress }) => {
       return;
     }
     setData(currentAddress);
-    setSelectedAddr(currentAddress.addressId || 0);
+    setSelectedAddr(currentAddress.address_id || 0);
   }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<IBuyGoodsItemVoList[]>([]);
