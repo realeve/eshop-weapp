@@ -54,6 +54,10 @@ export default ({ onUpload, count = 3 }) => {
         // h5
         !isWeapp &&
           res.tempFiles.forEach(fileItem => {
+            if (!fileItem.originalFileObj) {
+              fail("图片文件无效");
+              return;
+            }
             var formdata = new FormData();
             formdata.append("file", fileItem.originalFileObj);
             axios({
