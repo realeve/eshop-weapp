@@ -7,6 +7,9 @@ import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
 import { AtIcon } from "taro-ui";
 
+import { isWeapp } from "@/utils/lib";
+import { axios } from "@/utils/axios";
+
 export default ({ onUpload, count = 3 }) => {
   const [files, setFiles] = useState<{ name: string; url: string }[]>([]);
   const [token] = useState<string>(getToken());
@@ -20,7 +23,7 @@ export default ({ onUpload, count = 3 }) => {
           fail("图片选择失败");
           return;
         }
-        console.log(res);
+
         let file = res.tempFilePaths;
         if (file.length === 0) {
           return;
@@ -34,40 +37,63 @@ export default ({ onUpload, count = 3 }) => {
 
         let _files: { name: string; url: string }[] = [];
 
-        tempFilePaths.forEach(filePath => {
-          Taro.uploadFile({
-            url: UPLOAD_URL, //仅为示例，非真实的接口地址
-            filePath,
-            name: "file",
-            header: {
-              Authorization: token
-            },
-            formData: {
-              filename: "file"
-            },
-            success: res => {
-              let {
-                datas: data
-              }: { datas: { name: string; url: string } } = JSON.parse(
-                res.data
-              );
-              _files.push({
-                name: data.name || "",
-                url: data.url
-              });
-              if (_files.length === file.length) {
-                // 全部上传完毕
-                success("上传完毕");
-                onUpload(_files);
-                setFiles(_files);
-                Taro.hideLoading();
-              }
-            },
-            fail() {
-              fail("上传图片失败");
-            }
+        const handleData = data => {
+          _files.push({
+            name: data.name || "",
+            url: data.url
           });
-        });
+          if (_files.length === res.tempFiles.length) {
+            // 全部上传完毕
+            success("上传完毕");
+            onUpload(_files);
+            setFiles(_files);
+            Taro.hideLoading();
+          }
+        };
+
+        // h5
+        !isWeapp &&
+          res.tempFiles.forEach(fileItem => {
+            var formdata = new FormData();
+            formdata.append("file", fileItem.originalFileObj);
+            axios({
+              method: "post",
+              url: UPLOAD_URL,
+              data: formdata
+            })
+              .then(handleData)
+              .catch(res => {
+                fail(res.error);
+              });
+          });
+
+        // 小程序
+        isWeapp &&
+          tempFilePaths.forEach(filePath => {
+            Taro.uploadFile({
+              url: UPLOAD_URL, //仅为示例，非真实的接口地址
+              filePath,
+              name: "file",
+              header: {
+                Authorization: token
+              },
+              formData: {
+                filename: "file"
+              },
+              success: res => {
+                let {
+                  datas: data
+                }: { datas: { name: string; url: string } } = JSON.parse(
+                  res.data
+                );
+
+                handleData(data);
+              },
+              fail() {
+                fail("上传图片失败");
+              }
+            });
+          });
       },
       fail(res) {
         if (res.errMsg === "chooseImage:fail cancel") {

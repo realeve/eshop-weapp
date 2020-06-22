@@ -22,7 +22,7 @@ const IsLogin = ({ data }: ILoginProp) => {
         <View
           className="detail_user_name"
           onClick={() => {
-            !isRealNamePassed && jump("/pages/user/setting/index");
+            !isRealNamePassed && jump("/pages/user/verify/index");
           }}
         >
           <Text className="name">{trueName}</Text>
