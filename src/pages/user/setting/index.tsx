@@ -5,8 +5,7 @@ import { IGlobalModel } from "@/models/common";
 import { connect } from "@tarojs/redux";
 import * as wx from "@/utils/weixin";
 import UserPanel from "./IsLogin";
-import { AtListItem } from "taro-ui";
-import { AtModal } from "taro-ui";
+import { AtListItem, AtModal } from "taro-ui";
 import { unbind } from "@/pages/login/db";
 
 import { jump } from "@/utils/lib";
