@@ -87,7 +87,7 @@ const History = () => {
       <ListView
         isLoaded={!loading}
         hasMore={state.hasMore}
-        style={{ height: "calc(100% - 50px)", background: "#f8f8f8" }}
+        style={{ height: "calc(100vh - 50px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
         className="history_detail"
         lazy

@@ -1,13 +1,13 @@
-import { updateToken } from "./../../utils/lib";
-import { LocalStorageKeys } from "./../../utils/setting";
+// import { updateToken } from "./../../utils/lib";
+// import { LocalStorageKeys } from "./../../utils/setting";
 import { axios } from "@/utils/axios";
-import { API } from "@/utils/setting";
+import { API, LocalStorageKeys } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
-import {
-  set as setGlobalData,
-  get as getGlobalData
-} from "@/utils/global_data";
+// import {
+//   set as setGlobalData,
+//   get as getGlobalData
+// } from "@/utils/global_data";
 import { clearUser, isLogin, isWeapp, updateToken } from "@/utils/lib";
 import { loadShoppingCart } from "@/utils/cartDb";
 import * as wx from "@/utils/weixin";
