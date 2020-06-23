@@ -12,6 +12,7 @@ import { CButton } from "@/components";
 import { jump } from "@/utils/lib";
 
 export interface IResultProp {
+  subText?: string | null;
   countDown: string;
   curPeople: number;
   current: number | string;
@@ -35,7 +36,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
     return null;
   }
   const failed = ["unsigned", "lost", "other", "unlucky"].includes(data.type);
-  console.log(data.type);
+
   return (
     <View className="special-page__panel">
       <Skeleton loading={loading} row={6} rowHeight={30}>
@@ -62,6 +63,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <View className="result">
                 <Text className="title">{orderDesc[data.type]}</Text>
                 {data.typeDesc && <Text className="desc">{data.typeDesc}</Text>}
+                {data.subText && <Text className="code">{data.subText}</Text>}
 
                 {data.sn && <Text className="code">抽签码：{data.sn}</Text>}
               </View>

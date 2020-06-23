@@ -67,13 +67,16 @@ const getSpecialResult = subscribe => {
   ) {
     orderType = "unlucky";
   }
+  let subText: string | null = null;
 
   // 如果为'unlucky' 并且待抽签
   if (
-    subscribe.subscribeStateStr === "待抽签" &&
+    subscribe.subscribeStateStr === null &&
     dayjs().isBefore(subscribe.drawTime)
   ) {
     orderType = "waittingDraw";
+    typeDesc = "预约成功";
+    subText = "请耐心等待抽签";
   }
 
   // 当前步骤，如果已中签，但未付款，指向结束
@@ -90,6 +93,7 @@ const getSpecialResult = subscribe => {
     total: subscribe.subscribeQuantity || 0,
     type: orderType,
     typeDesc,
+    subText,
     lucky: subscribe.issueQuantity,
     payedBefore: dateFormat(subscribe.payExpireTime),
     curPeople: subscribe.subscribeQuantity || 0,
