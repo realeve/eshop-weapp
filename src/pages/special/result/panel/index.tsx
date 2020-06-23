@@ -9,7 +9,7 @@ import Grass from "./grass.svg";
 import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
 import { CButton } from "@/components";
-import { jump } from "src/utils/lib";
+import { jump } from "@/utils/lib";
 
 export interface IResultProp {
   countDown: string;
