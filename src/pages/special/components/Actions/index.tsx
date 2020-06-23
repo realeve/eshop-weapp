@@ -7,6 +7,10 @@ import classnames from "classnames";
 import { jump } from "@/utils/lib";
 import { OSS_URL } from "@/utils/setting";
 import dayjs from "dayjs";
+
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
+
 interface IProps {
   data: ISubscribe;
   [key: string]: any;
@@ -36,7 +40,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           </View>
           <View className="tips">
             {dayjs().isBefore(data.drawTime)
-              ? dayjs().from(data.drawTime)
+              ? dayjs(data.drawTime).from()
               : "申购已结束"}
           </View>
         </View>
