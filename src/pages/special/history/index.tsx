@@ -77,13 +77,11 @@ const History = () => {
       subTitle: "货币文化产品与服务电子商务平台"
     });
   }, []);
-
   if (!state || !state.list || state.list.length === 0) {
-    return <CEmpty type="cart" />;
+    return <CEmpty type="special" />;
   }
 
   return (
-    // <View className="history_list">
     <ListView
       isLoaded={!loading}
       hasMore={state.hasMore}

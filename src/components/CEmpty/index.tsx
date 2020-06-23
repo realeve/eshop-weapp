@@ -1,4 +1,4 @@
-import Taro, { render } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import * as lib from "@/utils/lib";
 import { CButton } from "@/components";
@@ -58,7 +58,7 @@ const empConfig: {
   },
   comment: {
     img: "comment.svg",
-    description: "此商品暂无评论哦~",
+    description: "此商品暂无评论哦",
     btnText: "去评论",
     href: "/pages/user/comment"
   },
@@ -70,39 +70,39 @@ const empConfig: {
   },
   footprint: {
     img: "footprint.svg",
-    description: "您还没有留下足迹哦，先去逛逛吧~",
+    description: "您还没有留下足迹哦，先去逛逛吧",
     btnText: "去逛逛",
     href: "/pages/user/footprint"
   },
   coupon: {
     img: "coupon.svg",
-    description: "您还没有优惠券哦~",
+    description: "您还没有优惠券哦",
     href: "/pages/user/coupon"
   },
   collector: {
     img: "collector.svg",
-    description: "您还没有收藏内容哦，先去逛逛吧~",
+    description: "您还没有收藏内容哦，先去逛逛吧",
     btnText: "去逛逛",
     href: "/pages/index/index"
   },
   counsel: {
     img: "comment.svg",
-    description: "暂无相关评论，说一下您的看法吧~",
+    description: "暂无相关评论，说一下您的看法吧",
     href: "/pages/user/comment"
   },
   goodsComment: {
     img: "comment.svg",
-    description: "暂无相关评论，说一下您的看法吧~",
+    description: "暂无相关评论，说一下您的看法吧",
     href: "/pages/user/goods_comment"
   },
   goods: {
     img: "goods.svg",
-    description: "抱歉，没有找到符合条件的商品哦~",
+    description: "抱歉，没有找到符合条件的商品哦",
     subtitle: "换个条件或关键词试试吧",
     href: "/pages/user/goods"
   },
   special: {
-    img: "special.svg",
+    img: "order.svg",
     description: "抱歉没有找到符合条件的预约活动。",
     href: "/pages/index/index"
   },
@@ -130,28 +130,26 @@ export default class CEmpty extends Taro.Component {
     let { btnText, description, href, img, subtitle } =
       empConfig[this.props.type] || {};
     return (
-      btnText && (
-        <View className="page-empty">
-          <View className="imgWrapper">
-            <Image mode="aspectFit" className="img" src={prefix + img} />
-          </View>
-          <View className="title">{description}~</View>
-          {subtitle && <View className="sub_title">{subtitle}~</View>}
-          {btnText && (
-            <CButton
-              onClick={() => {
-                lib.jump(href);
-              }}
-              theme="gardient"
-              // style="margin-top:40px;width:80vw;"
-              style={{ marginTop: "40px", width: "80%" }}
-              size="large"
-            >
-              {btnText}
-            </CButton>
-          )}
+      <View className="page-empty">
+        <View className="imgWrapper">
+          <Image mode="aspectFit" className="img" src={prefix + img} />
         </View>
-      )
+        <View className="title">{description}</View>
+        {subtitle && <View className="sub_title">{subtitle}</View>}
+        {btnText && (
+          <CButton
+            onClick={() => {
+              lib.jump(href);
+            }}
+            theme="gardient"
+            // style="margin-top:40px;width:80vw;"
+            style={{ marginTop: "40px", width: "80%" }}
+            size="large"
+          >
+            {btnText}
+          </CButton>
+        )}
+      </View>
     );
   }
 }
