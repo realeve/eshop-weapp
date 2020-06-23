@@ -47,7 +47,7 @@ const Order = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch({
+  const { loading, reFetch, setLoading } = useFetch({
     param: {
       ...ORDER.list,
       params: {
@@ -86,12 +86,11 @@ const Order = () => {
 
   const onScrollToLower = async fn => {
     // 修复无限触发ScrollToLower
-    if (loading) {
+    if (loading || !state.hasMore) {
       return;
     }
-    if (state.hasMore) {
-      setPage(page + 1);
-    }
+    setLoading(true);
+    setPage(page + 1);
     fn();
   };
 
@@ -106,7 +105,7 @@ const Order = () => {
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        // onPullDownRefresh={onScrollToLower}
         className="order_detail"
       >
         {state.list.map(order => {

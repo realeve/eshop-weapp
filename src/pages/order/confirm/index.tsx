@@ -2,9 +2,11 @@ import Taro, { useEffect, useState } from "@tarojs/taro";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
+import { cartDel, removeShoppingCartByIds } from "@/utils/cartDb";
 
+import { AtTextarea, AtIcon } from "taro-ui";
 import * as R from "ramda";
-import { CCardLite, CPrice, CButton } from "@/components/";
+import { CCardLite, CPrice } from "@/components/";
 import HomeIcon from "./shop.svg";
 
 import {
@@ -52,8 +54,8 @@ const invoice: InvoiceType = {
   email: ""
 };
 
-const OrderConfirm = ({ currentAddress }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+const OrderConfirm = ({ currentAddress, dispatch }) => {
+  // const [loading, setLoading] = useState<boolean>(false);
   // const [invalid, setInvalid] = useState(false);
   // const [isInited, setIsInited] = useState<boolean>(false);
   const [amount, setAmount] = useState<ICalcResult>(null);
@@ -62,8 +64,8 @@ const OrderConfirm = ({ currentAddress }) => {
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  const [orderId, setOrderId] = useState<number | null>(null);
-  const [payId, setPayId] = useState<number | null>(null);
+  // const [orderId, setOrderId] = useState<number | null>(null);
+  // const [payId, setPayId] = useState<number | null>(null);
 
   const calc = (
     goods?: IBuyGoodsItemVoList[],
@@ -80,11 +82,11 @@ const OrderConfirm = ({ currentAddress }) => {
       data,
       address: { addressId: _addr.address_id }
     });
-    setLoading(true);
+    // setLoading(true);
     if (preOrder) {
       calcFee(preOrder)
         .then(a => {
-          setLoading(false);
+          // setLoading(false);
           setAmount(a);
         })
         .catch(e => {
@@ -92,7 +94,7 @@ const OrderConfirm = ({ currentAddress }) => {
         });
 
       calcFreight(preOrder).then(f => {
-        setLoading(false);
+        // setLoading(false);
         setFreight(f);
       });
     }
@@ -118,19 +120,27 @@ const OrderConfirm = ({ currentAddress }) => {
       return;
     }
     setData(currentAddress);
-    setSelectedAddr(currentAddress.addressId || 0);
+    setSelectedAddr(currentAddress.address_id || 0);
   }, [JSON.stringify(currentAddress)]);
 
   const [goodsList, setGoodsList] = useState<IBuyGoodsItemVoList[]>([]);
 
+  const [cartData, setCartData] = useState<
+    {
+      cartId: string;
+      goodsId: string;
+    }[]
+  >([]);
+
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     let params = getShoppingCartAxiosParam();
     console.log("params", params);
     // setInvalid(!params);
     if (!params) {
       return;
     }
+    setCartData(JSON.parse(params.buyData));
 
     // setIsInited(true);
     step1Detail(params as IBookingDetail)
@@ -141,11 +151,11 @@ const OrderConfirm = ({ currentAddress }) => {
         setSelectedAddr(_data.address ? _data.address.addressId || 0 : 0);
         let flatGoods = getFlatBooking(data) || [];
         setGoodsList(flatGoods);
-        setLoading(false);
+        // setLoading(false);
       })
       .catch(err => {
         fail(`出错啦：${err.message}！`);
-        setLoading(false);
+        // setLoading(false);
       });
   }, []);
 
@@ -177,7 +187,7 @@ const OrderConfirm = ({ currentAddress }) => {
 
     let storeList = R.keys(goodsGroupByStore).map(storeId => ({
       storeId: String(storeId),
-      receiverMessage: JSON.stringify(userMessages),
+      receiverMessage: userMessages,
       shipTimeType: 0,
       invoiceTitle: invoice.username + "-" + invoice.title,
       invoiceContent: invoice.content,
@@ -209,8 +219,6 @@ const OrderConfirm = ({ currentAddress }) => {
       clientType: CLIENT_TYPE.web,
       buyData
     });
-    // return;
-    setLoading(true);
 
     // TODO 测试中使用app代替，待申请小程序开发者账户并开通支付后替换为mp
     // TODO 因微信小程序支付生态的限制，在step2生成订单后，略去选择支付方式，直接调用微信支付
@@ -219,17 +227,33 @@ const OrderConfirm = ({ currentAddress }) => {
       buyData: JSON.stringify(buyData)
     })
       .then(({ payId }) => {
-        setLoading(false);
+        // setLoading(false);
 
         // 跳转到支付页
         // success(`接下来处理这个支付id:${payId}`);
         console.log("支付第四步", payId);
-        pay(payId, removeConfirmCart);
+        pay(payId, () => {
+          removeConfirmCart();
+          // 此时还需要清理购物车中对应的产品;
+          removeShoppingCartItem();
+        });
       })
       .catch(err => {
         fail(`订单创建失败：${err.message}`);
-        setLoading(false);
+        // setLoading(false);
       });
+  };
+
+  const removeShoppingCartItem = () => {
+    cartDel(
+      cartData.map(item => item.cartId),
+      dispatch
+    ).then(() => {
+      removeShoppingCartByIds(
+        cartData.map(item => item.goodsId),
+        dispatch
+      );
+    });
   };
 
   // console.log(amount);
@@ -296,6 +320,17 @@ const OrderConfirm = ({ currentAddress }) => {
           <View>{invoice.title}</View>
         </View>
 
+        <View className="invoice">
+          <AtTextarea
+            placeholder="用户留言"
+            value={userMessages}
+            onChange={setUserMessages}
+            autoFocus
+            maxLength={200}
+            height={60}
+          />
+        </View>
+
         {amount && (
           <View className="summary">
             <View className="title">合计</View>
@@ -335,7 +370,12 @@ const OrderConfirm = ({ currentAddress }) => {
               amount.buyGoodsItemAmount +
               (freight && freight.freightAmount ? freight.freightAmount : 0)
             ).toFixed(2)}
-            retailStyle={{ color: "#2c2e36", fontSize: "22px", width: "unset" }}
+            retailStyle={{
+              color: "#2c2e36",
+              fontSize: "22px",
+              width: "100px",
+              textAlign: "right"
+            }}
           />
           <View
             className="btn"

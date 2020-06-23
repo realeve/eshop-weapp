@@ -1,0 +1,45 @@
+@import "@/styles/theme.scss";
+.user_panel {
+  @extend .alignRow;
+  padding: 30px;
+  margin-bottom: 20px;
+  background: $white;
+  .avatar_img {
+    width: 120px;
+    margin-right: 20px;
+  }
+  .detail {
+    @extend .alignColumn;
+    @extend .hcenter;
+    &_user_name {
+      @extend .alignRow;
+      @extend .vcenter;
+
+      font-size: $heading-3-size;
+
+      .name {
+        font: {
+          size: $heading-3-size;
+          weight: bold;
+        }
+      }
+      .valid {
+        margin-left: 10px;
+        font-size: $font-size-xs;
+        background: linear-gradient(90deg, #444 0%, $subTitle 50%, #444 100%);
+        border-radius: 18px;
+        height: 36px;
+        padding: 0 10px;
+        color: $white;
+      }
+      .invalid {
+        color: $white;
+        @extend .valid;
+        background: linear-gradient(90deg, $red 0%, #ff5b1e 50%, $red 100%);
+      }
+    }
+    &_welcome {
+      font-size: $heading-5-size;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
+
 import { View } from "@tarojs/components";
 import ListView from "taro-listview";
 import { SPECIAL_GOODS } from "@/utils/api";
@@ -7,7 +8,7 @@ import useSetState from "@/components/hooks/useSetState";
 import { CEmpty } from "@/components";
 import { historyHandler } from "./lib";
 import PreorderItem from "./preorderItem";
-
+import "./index.scss";
 import * as wx from "@/utils/weixin";
 
 interface IOrderItem {
@@ -46,7 +47,7 @@ const History = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch<ISubscribeList>({
+  const { loading, setLoading } = useFetch<ISubscribeList>({
     param: {
       ...SPECIAL_GOODS.history,
       params: {
@@ -66,7 +67,7 @@ const History = () => {
     if (loading || !state.hasMore) {
       return;
     }
-    // console.info("scroll trigger");
+    setLoading(true);
     setPage(page + 1);
     fn();
   };
@@ -77,25 +78,25 @@ const History = () => {
       subTitle: "货币文化产品与服务电子商务平台"
     });
   }, []);
+  if (!state || !state.list || state.list.length === 0) {
+    return <CEmpty type="special" />;
+  }
 
-  // console.info("loading + loaded", loading, state.isLoaded, state.hasMore);
-  return state && state.list && state.list.length > 0 ? (
-    <View>
+  return (
+    <View className="lazy-view">
       <ListView
-        lazy=".lazy-view"
         isLoaded={!loading}
         hasMore={state.hasMore}
-        style={{ height: "calc(100% - 40px)", flex: 1, background: "#f8f8f8" }}
+        style={{ height: "calc(100vh - 50px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        className="history_detail"
+        lazy
       >
         {state.list.map((data: IOrderItem) => (
           <PreorderItem key={data.activityId} data={data} />
         ))}
       </ListView>
     </View>
-  ) : (
-    <CEmpty type="cart" />
   );
 };
 

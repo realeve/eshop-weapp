@@ -89,7 +89,7 @@ const Order = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch({
+  const { loading, reFetch, setLoading } = useFetch({
     param: {
       url: API.MY_SUBSCRIBE
     },
@@ -121,9 +121,10 @@ const Order = () => {
 
   const onScrollToLower = async fn => {
     // 修复无限触发ScrollToLower
-    if (loading) {
+    if (loading || !state.hasMore) {
       return;
     }
+    setLoading(true);
     setPage(page + 1);
     fn();
   };
@@ -133,12 +134,11 @@ const Order = () => {
     <View className="user_lottery">
       <Tab list={orderList} current={current} onChange={handleMenu} />
       <ListView
-        lazy=".lazy-view"
         isLoaded={!loading}
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        // onPullDownRefresh={onScrollToLower}
         className="detail"
       >
         {state.list.map(item => {
@@ -179,19 +179,21 @@ const Order = () => {
                 </CButton>
                 {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.NEED_PAY].includes(
                   item.status
-                ) && (
-                  <CButton
-                    theme="gardient"
-                    size="small"
-                    round={false}
-                    style={{ width: "100px", marginLeft: "12px" }}
-                    onClick={() => {
-                      console.log("付款,特品");
-                    }}
-                  >
-                    立即付款
-                  </CButton>
-                )}
+                ) &&
+                  item.statusName != "已付款" && (
+                    <CButton
+                      theme="gardient"
+                      size="small"
+                      round={false}
+                      style={{ width: "100px", marginLeft: "12px" }}
+                      onClick={() => {
+                        console.log("付款,特品");
+                        // TODO 特品跳转到付款页面
+                      }}
+                    >
+                      立即付款
+                    </CButton>
+                  )}
               </View>
             </View>
           );

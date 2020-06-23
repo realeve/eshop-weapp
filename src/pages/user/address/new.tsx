@@ -194,7 +194,7 @@ const AddAddress = ({ dispatch }) => {
 
   // 编辑地址（点击保存的时候）
   const editAddress = async props => {
-    address_edit(DataChange(props, props.defaultSite, provlist))
+    address_edit(DataChange(props, account.is_default, provlist))
       .then(res => {
         if (res.success) {
           success("编辑地址信息成功!").then(() => {

@@ -8,6 +8,7 @@ export const API = {
 
   MEMBER_INFO: "/member/detail",
   LOGOUT: "/logout",
+  UNBIND: "/wx/mp/unbind-openid",
   REALNAME_AUTH: "/realName/authentication",
   INDEX_PRODUCTS: { method: "post", url: "/webIndexComponent" },
   SPECIAL_GOODS: { method: "post", url: "/specialGoods" },

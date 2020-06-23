@@ -215,6 +215,7 @@ const CommentPage = () => {
                 let nextState = R.clone(comment);
                 nextState[idx] = e;
                 setComment(nextState);
+                console.log(e);
               }}
             />
           ))}

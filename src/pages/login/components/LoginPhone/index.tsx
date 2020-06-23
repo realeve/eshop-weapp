@@ -46,7 +46,8 @@ const LoginPhone = ({ callback, dispatch }) => {
   const onSubmit = async () => {
     Taro.showLoading();
 
-    let loginToken: ILoginToken | void = await loginSms({
+    // let loginToken: ILoginToken | void =
+    await loginSms({
       mobile: account.username,
       smsAuthCode: account.password,
       clientType: CLIENT_TYPE.WECHAT

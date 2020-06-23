@@ -1,5 +1,5 @@
 // import Taro from "@tarojs/taro";
-import { axios } from "./axios";
+import { axios, apiId } from "./axios";
 import qs from "qs";
 import { isWeapp } from "./lib";
 import { API } from "@/utils/setting";
@@ -7,14 +7,11 @@ import { API } from "@/utils/setting";
 import { set as setGlobalData } from "@/utils/global_data";
 
 import { loadMember } from "@/pages/login/db";
-import { jump } from "@/utils/lib";
+import { jump, updateToken } from "@/utils/lib";
 import { Dispatch } from "redux";
 import { LocalStorageKeys } from "@/utils/setting";
 
 const wx = require("weixin-js-sdk");
-
-// 公众号配置
-export const apiId = "wx7a6971dd5ee1ebce";
 
 export const isWXBrowser = navigator.userAgent
   .toLocaleLowerCase()
@@ -57,6 +54,11 @@ export const bindWXInfo: (
   let params = qs.parse(hrefArr[1]);
   let code = params.code;
 
+  // code无效
+  if (code.length === 0) {
+    return;
+  }
+
   await axios({
     method: "post",
     url: API.LOGIN_WX_H5 as string,
@@ -70,18 +72,18 @@ export const bindWXInfo: (
       }
 
       // 如果登录有结果，拿token换身份信息
-      setGlobalData("token", res.token);
+      updateToken(res.token);
 
-      Taro.setStorage({
-        key: LocalStorageKeys.is_bind_wx,
-        data: "1"
-      });
+      // Taro.setStorage({
+      //   key: LocalStorageKeys.is_bind_wx,
+      //   data: "1"
+      // });
 
       // 在loginSms之后，用户信息的token已经载入，但token存储入全局变量为异步，此时loadMember会出现token为空校验失败。
-      // dispatch &&
-      loadMember(dispatch).then(() => {
-        jump({ url: "/pages/user/index" });
-      });
+      dispatch &&
+        loadMember(dispatch).then(() => {
+          jump({ url: "/pages/user/index" });
+        });
     })
     .catch(e => {
       // console.log(e);

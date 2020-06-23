@@ -1,13 +1,14 @@
-import { LocalStorageKeys } from "./../../utils/setting";
+// import { updateToken } from "./../../utils/lib";
+// import { LocalStorageKeys } from "./../../utils/setting";
 import { axios } from "@/utils/axios";
-import { API } from "@/utils/setting";
+import { API, LocalStorageKeys } from "@/utils/setting";
 import { Dispatch } from "redux";
 import Taro from "@tarojs/taro";
-import {
-  set as setGlobalData,
-  get as getGlobalData
-} from "@/utils/global_data";
-import { clearUser, isLogin, isWeapp } from "@/utils/lib";
+// import {
+//   set as setGlobalData,
+//   get as getGlobalData
+// } from "@/utils/global_data";
+import { clearUser, isLogin, isWeapp, updateToken } from "@/utils/lib";
 import { loadShoppingCart } from "@/utils/cartDb";
 import * as wx from "@/utils/weixin";
 
@@ -166,7 +167,7 @@ export const loginSms = (data: Object): Promise<ILoginToken> =>
     data
   }).then(res => {
     if (res.token) {
-      setGlobalData("token", res.token);
+      updateToken(res.token);
     }
     return res;
   });
@@ -245,10 +246,12 @@ export const logout = async (dispatch: Dispatch): Promise<any> => {
     }
   }
   clearUser();
-  return true;
-  // return axios({ method: 'post', url: API.LOGOUT as string }).then(res => {
-  //   clearUser();
-  // })
+  return axios({ method: "post", url: API.LOGOUT as string });
+};
+
+export const unbind = async dispatch => {
+  await axios({ method: "post", url: API.UNBIND as string });
+  return logout(dispatch);
 };
 
 /**
@@ -264,7 +267,7 @@ export const loginPsw = (data: Object): Promise<ILoginToken> =>
     data
   }).then(res => {
     if (res.token) {
-      setGlobalData("token", res.token);
+      updateToken(res.token);
     }
     return res;
   });
@@ -361,7 +364,8 @@ export const storeMember = async (
     authState: auth ? auth.authState : 90,
     isRealNamePassed: auth && auth.authState === 30,
     authMessage: auth ? auth.authStateText : "",
-    weixinIsBind: member.weixinIsBind
+    weixinIsBind: member.weixinIsBind,
+    registerTime: member.registerTime
   };
 
   Taro.setStorage({
@@ -376,6 +380,7 @@ export const storeMember = async (
         isLogin: true
       }
     });
+
   // 场景1：手机号已登录但没有绑定，发起绑定的调用，调用完毕后会在接口中自动再重新载入一次loadMemberInfo，此处可能会存在循环调用，暂未处理。
   if (!member.weixinIsBind) {
     await wx.bindWXInfo(callback); // 绑定完之后会发起重新获取用户身份信息的调用，绑定成功后不执行该模块
@@ -519,11 +524,11 @@ export const loginWx = async (dispatch: Dispatch, withPrefix = false) => {
 
 export const checkWxSession = async (dispatch: Dispatch) => {
   Taro.checkSession({
-    success: function () {
+    success: function() {
       //session_key 未过期，并且在本生命周期一直有效
       console.info("微信会话有效");
     },
-    fail: function () {
+    fail: function() {
       // session_key 已经失效，需要重新执行登录流程
       loginWx(dispatch); //重新登录
     }

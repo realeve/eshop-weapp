@@ -1,0 +1,27 @@
+@import "@/styles/theme.scss";
+
+.verify {
+  //   height: 100vh;
+  background: linear-gradient(180deg, $lightYellow, $extrmeLightYellow);
+  padding: 30px;
+  .main {
+    background: $white;
+    border-radius: 4px;
+    padding: 30px;
+    height: calc(100vh - 120px);
+    .verify_title {
+      font-size: $fontSizeMid;
+    }
+    .item {
+      margin-top: 20px;
+      .fieldname {
+        font-size: $fontSizeBase;
+      }
+    }
+    .introduce {
+      color: $subTitle;
+      margin: 30px 0;
+      font-size: $fontSizeNormal;
+    }
+  }
+}

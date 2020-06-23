@@ -2,29 +2,19 @@ import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import "./isLogin.scss";
 import { AtAvatar } from "taro-ui";
-import { IGlobalUser } from "@/models/common";
-import { jump } from "@/utils/lib";
 
-interface ILoginProp {
-  data: IGlobalUser;
-}
-const IsLogin = ({ data }: ILoginProp) => {
+export default ({ data }) => {
   if (!data) {
     return null;
   }
-  let { avatar, trueName, isRealNamePassed } = data;
+  let { avatar, trueName, isRealNamePassed, registerTime } = data;
   return (
-    <View className="is_login">
+    <View className="user_panel">
       <View className="avatar_img">
         <AtAvatar circle size="large" image={avatar} />
       </View>
       <View className="detail">
-        <View
-          className="detail_user_name"
-          onClick={() => {
-            !isRealNamePassed && jump("/pages/user/verify/index");
-          }}
-        >
+        <View className="detail_user_name">
           <Text className="name">{trueName}</Text>
           {isRealNamePassed ? (
             <Text className="valid">已实名认证</Text>
@@ -32,10 +22,8 @@ const IsLogin = ({ data }: ILoginProp) => {
             <Text className="invalid">未实名认证</Text>
           )}
         </View>
-        <Text className="detail_welcome">欢迎畅享中钞电商购物体验</Text>
+        <Text className="detail_welcome">注册时间：{registerTime} </Text>
       </View>
     </View>
   );
 };
-
-export default IsLogin;

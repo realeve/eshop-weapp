@@ -8,9 +8,12 @@ import {
   set as setGlobalData,
   get as getGlobalData
 } from "@/utils/global_data";
-import { jump, clearUser, getUid } from "@/utils/lib";
+import { jump, clearUser, getUid, isWeapp, updateToken } from "@/utils/lib";
 import { API } from "@/utils/api";
 import fail from "@/components/Toast/fail";
+
+// 公众号配置
+export const apiId = "wx7a6971dd5ee1ebce";
 
 // export interface GlobalAxios {
 //   host: string;
@@ -92,12 +95,8 @@ export const loadUserInfo = user => {
   }
 
   let setting = JSON.parse(user);
-  setGlobalData("token", setting.token);
+  updateToken(setting.token);
   return { token: setting.token };
-};
-
-const saveToken = token => {
-  Taro.setStorageSync(LocalStorageKeys.token, token);
 };
 
 export const handleError = error => {
@@ -177,13 +176,25 @@ export const handleData = async ({ config, request, data, headers }) => {
   ) {
     clearUser();
     fail("登录已失效").then(() => {
-      if (window.location.pathname !== "/pages/user/index") {
+      if (isWeapp) {
         jump({ url: "/pages/user/index" });
       } else {
-        // 如果绑定过则刷新页面
-        if ("1" == Taro.getStorageSync(LocalStorageKeys.is_bind_wx)) {
-          window.location.reload();
-        }
+        // 续token信息
+        //本地获取token
+        // const url: string = window.location.href.split("#")[0];
+
+        // 跳转到主页
+        const redirectUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${apiId}&redirect_uri=${window.location.origin}/pages/user/index&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`;
+        jump(redirectUrl);
+
+        // if (window.location.pathname !== "/pages/user/index") {
+        //   jump({ url: "/pages/user/index" });
+        // } else {
+        //   // 如果绑定过则刷新页面
+        //   if ("1" == Taro.getStorageSync(LocalStorageKeys.is_bind_wx)) {
+        //     window.location.reload();
+        //   }
+        // }
       }
     });
     return Promise.reject({
@@ -239,14 +250,12 @@ export const handleData = async ({ config, request, data, headers }) => {
   }
   if (headers.Authorization) {
     // window.g_axios.token = headers.Authorization;
-    setGlobalData("token", headers.Authorization);
-    saveToken(headers.Authorization);
+    updateToken(headers.Authorization);
   }
   // 刷新token
   if (typeof (datas || {}).token !== "undefined") {
     // window.g_axios.token = datas.token;
-    setGlobalData("token", datas.token);
-    saveToken(datas.token);
+    updateToken(datas.token);
 
     // loadMember()
 
@@ -271,7 +280,7 @@ export const getToken = () => {
 
   if (!token) {
     token = Taro.getStorageSync(LocalStorageKeys.token);
-    setGlobalData("token", token);
+    updateToken(token);
   }
   return token || "";
 };
@@ -291,7 +300,7 @@ export let axios = _option => {
 
     if (!token) {
       token = Taro.getStorageSync(LocalStorageKeys.token);
-      setGlobalData("token", token);
+      updateToken(token);
     }
 
     console.info("fp is ", fp);

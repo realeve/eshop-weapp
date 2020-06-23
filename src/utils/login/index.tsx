@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { axios } from "@/utils/axios";
+import { axios, apiId } from "@/utils/axios";
 import url from "./url";
 import { jump, isWeapp } from "@/utils/lib";
 import { ILoginToken, loadMember } from "@/pages/login/db";
@@ -8,7 +8,7 @@ import { LocalStorageKeys } from "@/utils/setting";
 import fail from "@/components/Toast/fail";
 import success from "@/components/Toast/success";
 
-import * as wx from "@/utils/weixin";
+// import * as wx from "@/utils/weixin";
 
 // 微信小程序登录接口
 export const login = dispatch =>
@@ -83,8 +83,11 @@ export const pay: (payId: string, callback: () => void) => void = async (
   }
 
   const complete = res => {
+    // console.log(res);
     if (
-      !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
+      (isWeapp && "requestPayment:ok" !== res.errMsg) ||
+      (!isWeapp && "get_brand_wcpay_request:ok" != res.err_msg)
+      // !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
     ) {
       fail("支付失败").then(() => {
         jump("/pages/user/order/index?state=2");
@@ -109,6 +112,7 @@ export const pay: (payId: string, callback: () => void) => void = async (
         console.log("支付成功");
       },
       fail: function(res) {
+        console.log(res, "fail 发起的回调");
         fail("支付失败");
       },
       complete
@@ -128,7 +132,7 @@ const mpPay = (param, callback) => {
     WeixinJSBridge.invoke(
       "getBrandWCPayRequest",
       {
-        appId: wx.apiId, //公众号名称，由商户传入
+        appId: apiId, //公众号名称，由商户传入
         signType: "MD5", //微信签名方式：
         ...param
       },

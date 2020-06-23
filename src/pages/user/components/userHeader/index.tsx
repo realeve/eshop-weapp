@@ -34,12 +34,17 @@ const UserHeader = ({ user, loading, isLogin, dispatch }) => {
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
         {!user.uid || !isLogin ? <NotLogin /> : <IsLogin data={user} />}
-        {/* <View className="at-icon at-icon-settings setting" /> */}
+        <View
+          className="at-icon at-icon-settings setting"
+          onClick={() => {
+            jump("/pages/user/setting/index");
+          }}
+        />
         {isLogin && (
           <Image
             src="https://static.ccgold.cn/img/mp/logout.svg"
             // style="width:30px;cursor:pointer"
-            style={{ width: "30px", cursor: "pointer" }}
+            style={{ width: "30px", height: "50px", cursor: "pointer" }}
             onClick={() => setIsOpened(!isOpened)}
           />
         )}

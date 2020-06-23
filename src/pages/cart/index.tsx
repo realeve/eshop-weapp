@@ -30,11 +30,14 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     exe: async () => {},
     content: ""
   });
+
   useEffect(() => {
     setIsEmpty(
       !(shoppingCart && shoppingCart.total && shoppingCart.total.num > 0)
     );
-  }, [(shoppingCart || { total: {} }).total]);
+    setSelected(recalTotal(selected.carts));
+  }, [(shoppingCart || { total: {} }).total, selected.carts]);
+
   const adjustCart = (cartId, buyNum) => {
     let prevState = R.clone(shoppingCart);
     let { data, total, loading, ...restCart } = prevState;
@@ -148,7 +151,7 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
       console.log("delGoods", cartid);
       setAction({
         content: "确定要从购物车中删除这件商品吗？",
-        exe: async () => api.cartDel([cartid], dispatch)
+        exe: () => api.cartDel([cartid], dispatch)
       });
       setIsOpened(true);
     }
@@ -182,13 +185,15 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     }));
     api.addConfirmCart(dispatch, cartData);
 
+    // 进入结算页面不清购物车，结算成功后才清除
     let goodsIds = cartData.map(item => item.cartId);
-    api.cartDel(goodsIds, dispatch).then(() => {
-      api.removeShoppingCartByIds(
-        cartData.map(item => item.id),
-        dispatch
-      );
-    });
+    console.log(goodsIds, cartData);
+    // api.cartDel(goodsIds, dispatch).then(() => {
+    //   api.removeShoppingCartByIds(
+    //     cartData.map(item => item.id),
+    //     dispatch
+    //   );
+    // });
 
     // window.localStorage.setItem(LocalStorageKeys.confirm, JSON.stringify(cartData));
     lib.jump("/pages/order/confirm/index");

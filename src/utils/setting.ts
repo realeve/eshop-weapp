@@ -95,8 +95,8 @@ export const LocalStorageKeys = {
   lastVisited: "lastVisited", // 上次访问页面
   phone: "phone", // 上次登录电话
   confirm: "confirm", //立即购买
-  mp: "weapp",
-  is_bind_wx: "is_bind_wx"
+  mp: "weapp"
+  // is_bind_wx: "is_bind_wx"
 };
 
 export const copyright = {

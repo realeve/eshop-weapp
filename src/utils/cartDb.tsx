@@ -534,7 +534,8 @@ export const getShoppingCartAxiosParam: () =>
   let data = R.map(
     (item: ILocalStorageCartDetail) => ({
       buyNum: item.num,
-      goodsId: item.id
+      goodsId: item.id,
+      cartId: item.cartId // 购物车ID
     }),
     res
   );

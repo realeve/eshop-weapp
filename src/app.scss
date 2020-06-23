@@ -11,10 +11,11 @@
     .weui-tabbar__item {
       &:nth-child(3) {
         img {
-          border-radius: 50% 50% 0 0;
+          // border-radius: 50% 50% 0 0;
+          border-radius: 50%;
           background: #fff;
           /* prettier-ignore */
-          border-top: 1PX solid rgba(0, 0, 0, 0.1);
+          // border-top: 1PX solid rgba(0, 0, 0, 0.1);
           transform: scale(2);
           margin-top: -25px;
         }
@@ -68,3 +69,7 @@
 // .at-button__wxbutton {
 //   color: #fff !important;
 // }
+
+.pullDownBlock {
+  font-size: $fontSizeMid !important;
+}

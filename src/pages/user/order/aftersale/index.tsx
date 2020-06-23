@@ -57,7 +57,7 @@ const AfterSale = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch({
+  const { loading, reFetch, setLoading } = useFetch({
     param: {
       ...SERVICE.refundList,
       params: {
@@ -82,12 +82,11 @@ const AfterSale = () => {
 
   const onScrollToLower = async fn => {
     // 修复无限触发ScrollToLower
-    if (loading) {
+    if (loading || !state.hasMore) {
       return;
     }
-    if (state.hasMore) {
-      setPage(page + 1);
-    }
+    setLoading(true);
+    setPage(page + 1);
     fn();
   };
 
@@ -96,14 +95,15 @@ const AfterSale = () => {
   // console.log(state);
 
   return (
-    <View className="user_order">
+    <View className="user_order lazy-view">
       <ListView
-        // lazy
         isLoaded={state.isLoaded}
         hasMore={state.hasMore}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        style={{ height: "100vh", background: "#f8f8f8" }}
+        // onPullDownRefresh={onScrollToLower}
         className="order_detail"
+        lazy
       >
         {state.list.map(order => {
           let operationStatus = getOperationStatus(
