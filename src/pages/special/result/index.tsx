@@ -68,6 +68,14 @@ const getSpecialResult = subscribe => {
     orderType = "unlucky";
   }
 
+  // 如果为'unlucky' 并且待抽签
+  if (
+    subscribe.subscribeStateStr === "待抽签" &&
+    dayjs().isBefore(subscribe.drawTime)
+  ) {
+    orderType = "waittingDraw";
+  }
+
   // 当前步骤，如果已中签，但未付款，指向结束
   let current = getPhase(subscribe);
   if (subscribe.state === 50 && orderType === "lost") {

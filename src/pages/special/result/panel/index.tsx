@@ -35,7 +35,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
     return null;
   }
   const failed = ["unsigned", "lost", "other", "unlucky"].includes(data.type);
-
+  console.log(data.type);
   return (
     <View className="special-page__panel">
       <Skeleton loading={loading} row={6} rowHeight={30}>
