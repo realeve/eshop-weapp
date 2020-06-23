@@ -91,7 +91,10 @@ const Order = () => {
 
   const { loading, reFetch, setLoading } = useFetch({
     param: {
-      url: API.MY_SUBSCRIBE
+      url: API.MY_SUBSCRIBE,
+      params: {
+        page
+      }
     },
     callback: e => {
       let res = handleSubscribes(e);
