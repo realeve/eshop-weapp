@@ -1,6 +1,6 @@
 import { axios as http } from "taro-axios";
 import qs from "qs";
-import { host } from "./setting";
+import { host as _host, IMWS } from "./setting";
 import * as R from "ramda";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
@@ -278,6 +278,8 @@ export const getToken = () => {
 
 // 自动处理token更新，data 序列化等
 export let axios = _option => {
+  let host = _option && _option.im ? IMWS : _host;
+
   let g_axios = getGlobalData("g_axios") || {};
   if (!g_axios.token || g_axios.token.length == 0) {
     let g_fp = getGlobalData("fp");

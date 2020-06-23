@@ -13,9 +13,10 @@ export default class ImTool extends Taro.Component {
       input: "",
       datas: [],
       lines: 1,
-      sid: 0,
+      sid: props && props.sid ? props.sid : 0,
       socketOpen: false,
-      msgQueue: []
+      msgQueue: [],
+      linkMan: {}
     };
     this.handleConnected = this.handleConnected.bind(this);
     this.handleRecieve = this.handleRecieve.bind(this);
@@ -27,7 +28,7 @@ export default class ImTool extends Taro.Component {
   }
 
   config = {
-    navigationBarTitleText: "客户服务"
+    navigationBarTitleText: "消息详情"
   };
 
   formatData(data) {
@@ -38,7 +39,7 @@ export default class ImTool extends Taro.Component {
     if (data.mType === "send") {
       let { message_content, mid, sid: to_user_id } = data;
       let member = getMemberInfo() || {};
-      data = {
+      d = {
         message_content,
         mid,
         to_user_id,

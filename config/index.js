@@ -1,7 +1,7 @@
 const path = require("path");
 
 // NOTE 在 sass 中通过别名（@ 或 ~）引用需要指定路径
-const sassImporter = function(url) {
+const sassImporter = function (url) {
   if (url[0] === "~" && url[1] !== "/") {
     return {
       file: path.resolve(__dirname, "..", "node_modules", url.substr(1))
@@ -72,6 +72,7 @@ const config = {
   //     importer: sassImporter
   //   }
   // },
+  plugins: ["@tarojs/plugin-sass"],
   defineConstants: {},
   mini: {
     postcss: {
@@ -114,7 +115,7 @@ const config = {
       }
     },
     sassLoaderOption: {
-      importer: sassImporter
+      // importer: sassImporter
     },
     router: {
       // https://taro-docs.jd.com/taro/docs/config-detail#h5router
@@ -123,7 +124,7 @@ const config = {
   }
 };
 
-module.exports = function(merge) {
+module.exports = function (merge) {
   if (process.env.NODE_ENV === "development") {
     return merge({}, config, require("./dev"));
   }
