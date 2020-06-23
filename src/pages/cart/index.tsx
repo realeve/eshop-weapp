@@ -185,13 +185,15 @@ const Cart = ({ isLogin, shoppingCart, dispatch }) => {
     }));
     api.addConfirmCart(dispatch, cartData);
 
+    // 进入结算页面不清购物车，结算成功后才清除
     let goodsIds = cartData.map(item => item.cartId);
-    api.cartDel(goodsIds, dispatch).then(() => {
-      api.removeShoppingCartByIds(
-        cartData.map(item => item.id),
-        dispatch
-      );
-    });
+    console.log(goodsIds, cartData);
+    // api.cartDel(goodsIds, dispatch).then(() => {
+    //   api.removeShoppingCartByIds(
+    //     cartData.map(item => item.id),
+    //     dispatch
+    //   );
+    // });
 
     // window.localStorage.setItem(LocalStorageKeys.confirm, JSON.stringify(cartData));
     lib.jump("/pages/order/confirm/index");
