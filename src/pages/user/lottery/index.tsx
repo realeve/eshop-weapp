@@ -89,7 +89,7 @@ const Order = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch({
+  const { loading, reFetch, setLoading } = useFetch({
     param: {
       url: API.MY_SUBSCRIBE
     },
@@ -121,9 +121,10 @@ const Order = () => {
 
   const onScrollToLower = async fn => {
     // 修复无限触发ScrollToLower
-    if (loading) {
+    if (loading || !state.hasMore) {
       return;
     }
+    setLoading(true);
     setPage(page + 1);
     fn();
   };
@@ -133,12 +134,11 @@ const Order = () => {
     <View className="user_lottery">
       <Tab list={orderList} current={current} onChange={handleMenu} />
       <ListView
-        lazy=".lazy-view"
         isLoaded={!loading}
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        // onPullDownRefresh={onScrollToLower}
         className="detail"
       >
         {state.list.map(item => {

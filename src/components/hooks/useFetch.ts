@@ -45,6 +45,7 @@ const useFetch = <T extends {} | void>({
   error: AxiosError | null;
   setData: (data: T) => void;
   reFetch: () => void;
+  setLoading: Taro.Dispatch<Taro.SetStateAction<boolean>>;
 } => {
   // 同时未传时，返回空值
   // 部分场景允许不设置param时，返回默认状态为空的数据
@@ -55,7 +56,8 @@ const useFetch = <T extends {} | void>({
       loading: true,
       error: null,
       setData: () => {},
-      reFetch: () => {}
+      reFetch: () => {},
+      setLoading: () => {}
     };
   }
 
@@ -137,7 +139,8 @@ const useFetch = <T extends {} | void>({
     reFetch: () => {
       // 数据刷新的场景中，重置innerTrigger，在useFetch中会
       setInnerTrigger(+new Date());
-    }
+    },
+    setLoading
   };
 };
 

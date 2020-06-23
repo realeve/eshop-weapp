@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
-import { View } from "@tarojs/components";
+
 import ListView from "taro-listview";
 import { SPECIAL_GOODS } from "@/utils/api";
 import useFetch from "@/components/hooks/useFetch";
@@ -7,7 +7,7 @@ import useSetState from "@/components/hooks/useSetState";
 import { CEmpty } from "@/components";
 import { historyHandler } from "./lib";
 import PreorderItem from "./preorderItem";
-
+import "./index.scss";
 import * as wx from "@/utils/weixin";
 
 interface IOrderItem {
@@ -46,7 +46,7 @@ const History = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch<ISubscribeList>({
+  const { loading, setLoading } = useFetch<ISubscribeList>({
     param: {
       ...SPECIAL_GOODS.history,
       params: {
@@ -66,7 +66,7 @@ const History = () => {
     if (loading || !state.hasMore) {
       return;
     }
-    // console.info("scroll trigger");
+    setLoading(true);
     setPage(page + 1);
     fn();
   };
@@ -78,24 +78,23 @@ const History = () => {
     });
   }, []);
 
-  // console.info("loading + loaded", loading, state.isLoaded, state.hasMore);
-  return state && state.list && state.list.length > 0 ? (
-    <View>
-      <ListView
-        lazy=".lazy-view"
-        isLoaded={!loading}
-        hasMore={state.hasMore}
-        style={{ height: "calc(100% - 40px)", flex: 1, background: "#f8f8f8" }}
-        onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
-      >
-        {state.list.map((data: IOrderItem) => (
-          <PreorderItem key={data.activityId} data={data} />
-        ))}
-      </ListView>
-    </View>
-  ) : (
-    <CEmpty type="cart" />
+  if (!state || !state.list || state.list.length === 0) {
+    return <CEmpty type="cart" />;
+  }
+
+  return (
+    // <View className="history_list">
+    <ListView
+      isLoaded={!loading}
+      hasMore={state.hasMore}
+      style={{ height: "calc(100% - 50px)", background: "#f8f8f8" }}
+      onScrollToLower={onScrollToLower}
+      className="history_detail"
+    >
+      {state.list.map((data: IOrderItem) => (
+        <PreorderItem key={data.activityId} data={data} />
+      ))}
+    </ListView>
   );
 };
 

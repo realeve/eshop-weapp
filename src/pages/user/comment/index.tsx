@@ -109,7 +109,7 @@ const Comment = () => {
     list: []
   });
 
-  const { loading, reFetch } = useFetch({
+  const { loading, reFetch, setLoading } = useFetch({
     param: {
       ...ORDER.evaluate,
       method: "get",
@@ -191,6 +191,7 @@ const Comment = () => {
     if (loading || !state.hasMore) {
       return;
     }
+    setLoading(true);
     setPage(page + 1);
     fn();
   };
@@ -199,12 +200,11 @@ const Comment = () => {
     <View className="user_comment">
       <Tab list={commentStateList} current={current} onChange={handleMenu} />
       <ListView
-        lazy=".lazy-view"
         isLoaded={!loading}
         hasMore={state.hasMore}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
         onScrollToLower={onScrollToLower}
-        onPullDownRefresh={onScrollToLower}
+        // onPullDownRefresh={onScrollToLower}
         className="comment_detail"
       >
         {state.list.map(item => {
