@@ -46,26 +46,37 @@ export const orderList: {
   name: string;
   key: string;
   id: number;
+  state: number;
 }[] = [
   {
     name: "全部",
     key: "all",
-    id: 0
+    id: 0,
+    state: -1
   },
   {
     name: "待抽签",
     key: "waiting",
-    id: 1
+    id: 1,
+    state: 10
+  },
+  {
+    name: "未中签",
+    key: "unlucky",
+    id: 2,
+    state: 20
   },
   {
     name: "已中签",
     key: "success",
-    id: 2
+    id: 3,
+    state: 30
   },
   {
-    name: "未中签",
+    name: "已结束",
     key: "fail",
-    id: 3
+    id: 4,
+    state: 100
   }
 ];
 
@@ -93,7 +104,8 @@ const Order = () => {
     param: {
       url: API.MY_SUBSCRIBE,
       params: {
-        page
+        page,
+        subscribeState: orderList[current].state
       }
     },
     callback: e => {
