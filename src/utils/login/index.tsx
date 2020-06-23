@@ -83,8 +83,11 @@ export const pay: (payId: string, callback: () => void) => void = async (
   }
 
   const complete = res => {
+    // console.log(res);
     if (
-      !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
+      "requestPayment:ok" !== res.errMsg ||
+      "get_brand_wcpay_request:ok" != res.err_msg
+      // !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
     ) {
       fail("支付失败").then(() => {
         jump("/pages/user/order/index?state=2");
@@ -109,6 +112,7 @@ export const pay: (payId: string, callback: () => void) => void = async (
         console.log("支付成功");
       },
       fail: function(res) {
+        console.log(res, "fail 发起的回调");
         fail("支付失败");
       },
       complete
