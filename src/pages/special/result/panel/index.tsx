@@ -9,6 +9,7 @@ import Grass from "./grass.svg";
 import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
 import { CButton } from "@/components";
+import { jump } from "src/utils/lib";
 
 export interface IResultProp {
   countDown: string;
@@ -50,7 +51,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
                 <View className="top" />
                 <View className="btm" />
               </View>
-              {data.type === "lucky" ? "CONGRATULATIONS" : "预约失败"}
+              {!failed ? "CONGRATULATIONS" : "预约失败"}
               <View className="right">
                 <View className="top" />
                 <View className="btm" />
@@ -72,9 +73,15 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <CButton
                 theme="gardient"
                 size="small"
-                style={{ width: "100px", marginTop: "10px" }}
+                style={{ width: "100px", margin: "10px auto 0 auto" }}
                 onClick={() => {
-                  console.log("checkOrder");
+                  if (data.type !== "lucky") {
+                    jump("/pages/user/lottery/index");
+                    return;
+                  }
+
+                  // TODO 特品付款
+                  console.log("立即付款");
                 }}
               >
                 {data.type === "lucky" ? "立即付款" : "查看订单"}

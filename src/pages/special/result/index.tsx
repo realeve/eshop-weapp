@@ -130,10 +130,12 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     params: { id }
   } = useRouter();
 
+  console.log({ special, id });
+
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${id}` },
     callback: e => handleSubscribe(e, dispatch),
-    valid: () => id > "0" && !special
+    valid: () => id > "0" // && !special
   });
 
   const [specialResult, setSpecialResult] = useState({
