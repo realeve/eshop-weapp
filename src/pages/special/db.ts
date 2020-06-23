@@ -63,6 +63,21 @@ export const SUBSCRIBE_PHASE = [
   [50, 60, 70, 100, 20, -1]
 ];
 
+//活动状态：0:未发布; 1:已发布; 10:申购中; 20:申购结束;  30:抽签中; 40:抽签结束; 50:订单创建结束; 60:付款结束; 70:发货结束; 100:结束; -1:中止;
+export const SUBSCRIBE_STATE: {
+  [key: number]: string;
+} = {
+  0: "未发布",
+  1: "已发布",
+  10: "申购中",
+  20: "申购结束",
+  30: "抽签中",
+  40: "抽签结束",
+  50: "活动结束",
+  100: "结束",
+  9999: "中止"
+};
+
 export const getTimeDescByScribe = (scribe: ISubscribe | null) => {
   if (!scribe) {
     return false;
@@ -114,21 +129,6 @@ export const getTimeDescByScribe = (scribe: ISubscribe | null) => {
 
 export const getPhase = subscribe =>
   SUBSCRIBE_PHASE.findIndex(p => p.includes(subscribe ? subscribe.state : 0));
-
-//活动状态：0:未发布; 1:已发布; 10:申购中; 20:申购结束;  30:抽签中; 40:抽签结束; 50:订单创建结束; 60:付款结束; 70:发货结束; 100:结束; -1:中止;
-export const SUBSCRIBE_STATE: {
-  [key: number]: string;
-} = {
-  0: "未发布",
-  1: "已发布",
-  10: "申购中",
-  20: "申购结束",
-  30: "抽签中",
-  40: "抽签结束",
-  50: "活动结束",
-  100: "结束",
-  9999: "中止"
-};
 
 export interface ISubscribe {
   activityId: number;

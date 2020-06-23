@@ -179,19 +179,21 @@ const Order = () => {
                 </CButton>
                 {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.NEED_PAY].includes(
                   item.status
-                ) && (
-                  <CButton
-                    theme="gardient"
-                    size="small"
-                    round={false}
-                    style={{ width: "100px", marginLeft: "12px" }}
-                    onClick={() => {
-                      console.log("付款,特品");
-                    }}
-                  >
-                    立即付款
-                  </CButton>
-                )}
+                ) &&
+                  item.statusName != "已付款" && (
+                    <CButton
+                      theme="gardient"
+                      size="small"
+                      round={false}
+                      style={{ width: "100px", marginLeft: "12px" }}
+                      onClick={() => {
+                        console.log("付款,特品");
+                        // TODO 特品跳转到付款页面
+                      }}
+                    >
+                      立即付款
+                    </CButton>
+                  )}
               </View>
             </View>
           );

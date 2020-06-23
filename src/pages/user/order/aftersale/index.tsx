@@ -100,7 +100,7 @@ const AfterSale = () => {
         isLoaded={state.isLoaded}
         hasMore={state.hasMore}
         onScrollToLower={onScrollToLower}
-        style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
+        style={{ height: "100vh", background: "#f8f8f8" }}
         // onPullDownRefresh={onScrollToLower}
         className="order_detail"
         lazy

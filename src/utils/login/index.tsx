@@ -85,8 +85,8 @@ export const pay: (payId: string, callback: () => void) => void = async (
   const complete = res => {
     // console.log(res);
     if (
-      "requestPayment:ok" !== res.errMsg ||
-      "get_brand_wcpay_request:ok" != res.err_msg
+      (isWeapp && "requestPayment:ok" !== res.errMsg) ||
+      (!isWeapp && "get_brand_wcpay_request:ok" != res.err_msg)
       // !["get_brand_wcpay_request:ok", "requestPayment:ok"].includes(res.errMsg)
     ) {
       fail("支付失败").then(() => {
