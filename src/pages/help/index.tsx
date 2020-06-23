@@ -31,6 +31,6 @@ const Index = () => {
 };
 
 Index.config = {
-  navigationBarTitleText: "帮助与客服"
+  navigationBarTitleText: "帮助中心"
 };
 export default Index;

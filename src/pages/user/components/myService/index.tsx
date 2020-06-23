@@ -1,5 +1,5 @@
 import Taro from "@tarojs/taro";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { AtList, AtListItem } from "taro-ui";
 import address from "./address.png";
@@ -10,11 +10,11 @@ import { jump } from "@/utils/lib";
 
 const MyService = () => {
   const list = [
-    {
-      title: "功能调试_im",
-      img: order,
-      url: "/pages/user/im/index?sid=3"
-    },
+    // {
+    //   title: "功能调试_im",
+    //   img: order,
+    //   url: "/pages/user/im/index?sid=3"
+    // },
     {
       title: "我的收货地址",
       img: address,
@@ -26,7 +26,7 @@ const MyService = () => {
       url: "/pages/user/comment/index"
     },
     {
-      title: "客服与帮助",
+      title: "帮助中心",
       img: service,
       url: "/pages/help/index"
     },
@@ -51,6 +51,30 @@ const MyService = () => {
             }}
           />
         ))}
+        <View className="at-list__item at-list__item--thumb">
+          <a className="at-list__item-container" href="tel:4008122200">
+            <View className="at-list__item-thumb item-thumb">
+              <View className="taro-img item-thumb__info">
+                <img className="taro-img__mode-scaletofill" src={service} />
+              </View>
+            </View>
+            <View className="at-list__item-content item-content">
+              <View
+                className="item-content__info-title"
+                style={{ color: "#2c2e36" }}
+              >
+                联系客服
+              </View>
+            </View>
+            <View className="at-list__item-extra item-extra">
+              <View>
+                <View className="item-extra__icon">
+                  <Text className="taro-text at-icon item-extra__icon-arrow at-icon-chevron-right" />
+                </View>
+              </View>
+            </View>
+          </a>
+        </View>
       </AtList>
     </View>
   );

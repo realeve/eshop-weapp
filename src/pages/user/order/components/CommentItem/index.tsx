@@ -103,7 +103,10 @@ export default ({ goods, onChange }) => {
         <AtTextarea
           placeholder="亲，分享一下收到商品的感受吧"
           value={state.comment}
-          onChange={comment => setState({ comment: comment.detail.value })}
+          onChange={comment => {
+            //: comment.detail.value
+            setState({ comment });
+          }}
           autoFocus
           maxLength={500}
           height={100}
