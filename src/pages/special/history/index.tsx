@@ -1,5 +1,6 @@
 import Taro, { useState, useEffect } from "@tarojs/taro";
 
+import { View } from "@tarojs/components";
 import ListView from "taro-listview";
 import { SPECIAL_GOODS } from "@/utils/api";
 import useFetch from "@/components/hooks/useFetch";
@@ -82,17 +83,20 @@ const History = () => {
   }
 
   return (
-    <ListView
-      isLoaded={!loading}
-      hasMore={state.hasMore}
-      style={{ height: "calc(100% - 50px)", background: "#f8f8f8" }}
-      onScrollToLower={onScrollToLower}
-      className="history_detail"
-    >
-      {state.list.map((data: IOrderItem) => (
-        <PreorderItem key={data.activityId} data={data} />
-      ))}
-    </ListView>
+    <View className="lazy-view">
+      <ListView
+        isLoaded={!loading}
+        hasMore={state.hasMore}
+        style={{ height: "calc(100% - 50px)", background: "#f8f8f8" }}
+        onScrollToLower={onScrollToLower}
+        className="history_detail"
+        lazy
+      >
+        {state.list.map((data: IOrderItem) => (
+          <PreorderItem key={data.activityId} data={data} />
+        ))}
+      </ListView>
+    </View>
   );
 };
 

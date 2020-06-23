@@ -95,15 +95,15 @@ const AfterSale = () => {
   // console.log(state);
 
   return (
-    <View className="user_order">
+    <View className="user_order lazy-view">
       <ListView
-        // lazy
         isLoaded={state.isLoaded}
         hasMore={state.hasMore}
         onScrollToLower={onScrollToLower}
         style={{ height: "calc(100% - 40px)", background: "#f8f8f8" }}
         // onPullDownRefresh={onScrollToLower}
         className="order_detail"
+        lazy
       >
         {state.list.map(order => {
           let operationStatus = getOperationStatus(

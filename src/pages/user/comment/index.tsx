@@ -193,11 +193,10 @@ const Comment = () => {
     }
     setLoading(true);
     setPage(page + 1);
-    fn();
   };
 
   return (
-    <View className="user_comment">
+    <View className="user_comment ">
       <Tab list={commentStateList} current={current} onChange={handleMenu} />
       <ListView
         isLoaded={!loading}
