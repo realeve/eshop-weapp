@@ -1,3 +1,4 @@
+// import { isLogin } from "./../utils/lib";
 import Taro from "@tarojs/taro";
 import { setStore, setUserStore, jump, randomStr } from "@/utils/lib";
 import * as db from "../services/common";
@@ -185,7 +186,22 @@ const handleData = (data, webp) => {
 export default {
   namespace,
   state,
-  reducers: { setStore, setUserStore },
+  reducers: {
+    setStore,
+    setUserStore,
+    resetUser: ({ user, ...state }) => {
+      return {
+        ...state,
+        user: {},
+        isLogin: false,
+        token: "",
+        shoppingCart: {
+          loading: false,
+          total: { num: 0 }
+        }
+      };
+    }
+  },
   subscriptions: {
     async setup({ dispatch }: { dispatch: Dispatch }) {
       let webp = getGlobalData("webp");

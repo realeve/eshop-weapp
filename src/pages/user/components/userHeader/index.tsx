@@ -12,24 +12,12 @@ import { AtModal } from "taro-ui";
 
 const UserHeader = ({ user, loading, isLogin, dispatch }) => {
   const logout = () => {
-    if (_logout(dispatch)) {
-      dispatch({
-        type: "common/setStore",
-        payload: {
-          isLogin: false,
-          user: {},
-          token: "",
-          shoppingCart: {
-            loading: false,
-            total: { num: 0 }
-          }
-        }
-      });
-      setIsOpened(false);
-      jump("/pages/index/index");
-    }
+    _logout(dispatch);
+    setIsOpened(false);
+    jump("/pages/index/index");
   };
   const [isOpened, setIsOpened] = useState<boolean>(false);
+
   return (
     <Skeleton avatar loading={loading.global} row={2}>
       <View className="userCenter-header">
