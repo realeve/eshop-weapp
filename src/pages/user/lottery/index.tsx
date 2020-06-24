@@ -202,8 +202,10 @@ const Order = () => {
                       round={false}
                       style={{ width: "100px", marginLeft: "12px" }}
                       onClick={() => {
-                        console.log("付款,特品");
-                        // TODO 特品跳转到付款页面
+                        console.log("付款,特品", item);
+                        jump(
+                          "/pages/order/confirm/index?specialId=" + item.orderId
+                        );
                       }}
                     >
                       立即付款

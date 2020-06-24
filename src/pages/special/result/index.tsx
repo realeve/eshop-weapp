@@ -93,6 +93,7 @@ const getSpecialResult = (subscribe, activityId) => {
     phone: subscribe.phone,
     total: subscribe.subscribeQuantity || 0,
     type: orderType,
+    orderId: subscribe.orderId,
     typeDesc,
     subText,
     lucky: subscribe.issueQuantity,
@@ -144,8 +145,6 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     params: { id }
   } = useRouter();
 
-  console.log({ special, id });
-
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${id}` },
     callback: e => handleSubscribe(e, dispatch),
@@ -162,6 +161,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     if (!special) {
       return;
     }
+    // console.log({ special, id });
     let res = getSpecialResult(special, id);
     setSpecialResult(res);
     // console.log(res);

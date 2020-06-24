@@ -55,7 +55,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
       return;
     }
     // 开始支付
-    jump("/pages/order/confirm/index?specialId=" + data.activityId);
+    jump("/pages/order/confirm/index?specialId=" + data.orderId);
   };
 
   return (
