@@ -1,8 +1,12 @@
 @import "@/styles/theme.scss";
 // @import "../../../user/address/AddressItem.scss";
 .address_panel {
-  height: 110px;
   background: $white;
   margin-bottom: 16px;
-  padding: 30px 34px;
+  padding: 20px 0 20px 15px;
+  .tips {
+    padding: 20px 0 0 20px;
+    font-size: $fontSizeNormal;
+    color: $yellow;
+  }
 }

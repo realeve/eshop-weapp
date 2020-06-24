@@ -144,7 +144,6 @@ const Order = () => {
     fn();
   };
 
-  // console.log(state.list);
   return (
     <View className="user_lottery">
       <Tab list={orderList} current={current} onChange={handleMenu} />
@@ -155,6 +154,7 @@ const Order = () => {
         onScrollToLower={onScrollToLower}
         // onPullDownRefresh={onScrollToLower}
         className="detail"
+        selector="user_lottery"
       >
         {state.list.map(item => {
           return (
@@ -192,18 +192,20 @@ const Order = () => {
                 >
                   预约详情
                 </CButton>
-                {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.NEED_PAY].includes(
+                {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.LOTTERY].includes(
                   item.status
                 ) &&
-                  item.statusName != "已付款" && (
+                  item.statusName == "待付款" && (
                     <CButton
                       theme="gardient"
                       size="small"
                       round={false}
                       style={{ width: "100px", marginLeft: "12px" }}
                       onClick={() => {
-                        console.log("付款,特品");
-                        // TODO 特品跳转到付款页面
+                        console.log("付款,特品", item);
+                        jump(
+                          "/pages/order/confirm/index?specialId=" + item.orderId
+                        );
                       }}
                     >
                       立即付款

@@ -74,7 +74,7 @@ const Setting = ({ isLogin, user, dispatch }) => {
         </View>
       </View>
 
-      <AtListItem className="fields" title="关于我们" extraText="V 1.3.0" />
+      <AtListItem className="fields" title="关于我们" extraText="V 1.0.0" />
       <AtListItem
         className="fields"
         title="取消微信绑定"

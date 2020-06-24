@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState } from "@tarojs/taro";
+import Taro, { useEffect, useState, useRouter } from "@tarojs/taro";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
@@ -58,21 +58,32 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   // const [loading, setLoading] = useState<boolean>(false);
   // const [invalid, setInvalid] = useState(false);
   // const [isInited, setIsInited] = useState<boolean>(false);
+
+  // 此处specialId为空时，表示为特品
+  const {
+    params: { specialId }
+  } = useRouter();
+
   const [amount, setAmount] = useState<ICalcResult>(null);
 
   const [freight, setFreight] = useState<ICalcFreight>({});
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  // const [orderId, setOrderId] = useState<number | null>(null);
-  // const [payId, setPayId] = useState<number | null>(null);
+  const [specialMember, setSpecialMember] = useState<{
+    name: string;
+    phone: string;
+  } | null>(null);
+
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [payId, setPayId] = useState<number | null>(null);
 
   const calc = (
     goods?: IBuyGoodsItemVoList[],
     addr?: Partial<IOrderAddress>
   ) => {
     let data = goods || goodsList;
-    let _addr = addr || address;
+    let _addr = addr || recievingAddr;
 
     if (!data || !_addr || !_addr.address_id) {
       return;
@@ -100,7 +111,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     }
   };
 
-  const { data: address, setData } = useFetch<IModPanelItem>({
+  const { data: recievingAddr, setData, reFetch } = useFetch<IModPanelItem>({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
@@ -119,6 +130,19 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     if (!currentAddress.address_id) {
       return;
     }
+
+    // 特品
+    if (typeof specialId != "undefined" && specialMember) {
+      if (currentAddress.name !== specialMember.name) {
+        fail("修改失败,姓名与实名认证不一致");
+        return;
+      }
+      if (currentAddress.phone !== specialMember.phone) {
+        fail("修改失败,联系电话与实名认证不一致");
+        return;
+      }
+    }
+
     setData(currentAddress);
     setSelectedAddr(currentAddress.address_id || 0);
   }, [JSON.stringify(currentAddress)]);
@@ -132,8 +156,45 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     }[]
   >([]);
 
+  // 特品数据载入逻辑
+  useFetch({
+    param: {
+      data: { orderId: specialId },
+      ...(API.MY_SUBSCRIBE_ORDER as {})
+    },
+    valid: () => specialId,
+    callback: order => {
+      let _data = R.clone(order);
+      console.log(_data);
+
+      setSpecialMember({
+        name: _data.realName,
+        phone: _data.mobile
+      });
+      setSelectedAddr(
+        _data.recommendAddress ? _data.recommendAddress.addressId || 0 : 0
+      );
+
+      if (_data.recommendAddress) {
+        let res = handleAddressList({ addressList: [_data.recommendAddress] });
+        setData(res[0]);
+        setSelectedAddr(_data.recommendAddress.addressId);
+      } else {
+        setSelectedAddr(0);
+      }
+
+      setGoodsList(_data.orders.ordersGoodsVoList);
+      setOrderId(_data.orders.orderId);
+      setPayId(_data.orders.payId);
+    }
+  });
+
+  // 普品基本信息载入
   useEffect(() => {
     // setLoading(true);
+    if (specialId) {
+      return;
+    }
     let params = getShoppingCartAxiosParam();
     console.log("params", params);
     // setInvalid(!params);
@@ -160,11 +221,11 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   }, []);
 
   useEffect(() => {
-    if (!goodsList || !address) {
+    if (!goodsList || !recievingAddr) {
       return;
     }
     calc();
-  }, [goodsList, address]);
+  }, [goodsList, recievingAddr]);
 
   let [userMessages, setUserMessages] = useState("");
 
@@ -172,7 +233,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     // console.log('prepared to book an order...');
 
     // 特品支付确认页
-    const isSpecial = false;
+    const isSpecial = typeof specialId !== "undefined";
 
     if (typeof goodsList === "undefined") {
       return;
@@ -181,8 +242,14 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     if (isSpecial) {
       // 跳转到支付订单页
       // success(`/order/topay/${payId}`);
+      pay(payId, () => {
+        removeConfirmCart();
+        // 此时还需要清理购物车中对应的产品;
+        removeShoppingCartItem();
+      });
       return;
     }
+
     let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
 
     let storeList = R.keys(goodsGroupByStore).map(storeId => ({
@@ -259,12 +326,13 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     });
   };
 
-  // console.log(amount);
-
   return (
     <View className="order_confirm">
       <ScrollView scrollY className="goods_list">
-        <AddressPanel data={address} />
+        <AddressPanel
+          data={recievingAddr}
+          special={typeof specialId !== "undefined"}
+        />
         {amount &&
           amount.storeList.map((item: IBuyGoodsItemVoList) => (
             <CCardLite className="goodslist" key={item.commonId}>
@@ -323,16 +391,19 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
           <View>{invoice.title}</View>
         </View>
 
-        <View className="invoice">
-          <AtTextarea
-            placeholder="用户留言"
-            value={userMessages}
-            onChange={setUserMessages}
-            autoFocus
-            maxLength={200}
-            height={60}
-          />
-        </View>
+        {/* 特品在STEP2接口中如果希望更新留言信息，由于已经生成了payId，此时不会继续生成，报“商品已下架” */}
+        {!specialId && (
+          <View className="invoice">
+            <AtTextarea
+              placeholder="用户留言"
+              value={userMessages}
+              onChange={setUserMessages}
+              autoFocus
+              maxLength={200}
+              height={60}
+            />
+          </View>
+        )}
 
         {amount && (
           <View className="summary">

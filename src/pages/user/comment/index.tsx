@@ -205,6 +205,7 @@ const Comment = () => {
         onScrollToLower={onScrollToLower}
         // onPullDownRefresh={onScrollToLower}
         className="comment_detail"
+        selector="user_comment"
       >
         {state.list.map(item => {
           return (
