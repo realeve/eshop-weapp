@@ -83,7 +83,7 @@ const History = () => {
   }
 
   return (
-    <View className="lazy-view">
+    <View className="skeleton lazy-view history_wrap">
       <ListView
         isLoaded={!loading}
         hasMore={state.hasMore}
@@ -91,6 +91,7 @@ const History = () => {
         onScrollToLower={onScrollToLower}
         className="history_detail"
         lazy
+        selector="history_wrap"
       >
         {state.list.map((data: IOrderItem) => (
           <PreorderItem key={data.activityId} data={data} />

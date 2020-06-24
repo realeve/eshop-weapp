@@ -13,17 +13,17 @@ export default ({ data }) => {
   const url = `/pages/special/index?id=${data.activityId}`;
 
   return (
-    <View className="item">
+    <View className="item skeleton-bg">
       <View className="detail">
         <View
-          className="goods"
+          className="goods skeleton-radius"
           onClick={() => {
             jump(url);
           }}
         >
           <Image src={data.goodsItem.imageSrc} className="img" />
         </View>
-        <View className="goodsInfo" key={data.goodsItem.goodsId}>
+        <View className="goodsInfo skeleton-rect" key={data.goodsItem.goodsId}>
           <View className="goodsMain">
             <View className="goodsTitle">
               {data.promo}
