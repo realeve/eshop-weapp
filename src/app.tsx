@@ -72,6 +72,8 @@ class App extends Component {
       "pages/login/register", // 注册
       "pages/login/forget", // 忘记密码
 
+      "pages/seckill/index", // 秒杀详情页
+
       "pages/special/index", // 特品
       "pages/special/detail/index", // 特品详情
       "pages/special/history/index", // 特品历史

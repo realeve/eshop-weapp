@@ -5,4 +5,20 @@
   @extend .alignRow;
   line-height: 1;
   font-size: $heading-4-size;
+
+  .at-countdown__separator {
+    margin: 0 10px;
+    font-weight: bold;
+    color: $red;
+  }
+  .at-countdown__time-box {
+    background-color: #e70016;
+    color: $white;
+    border: none;
+    /* prettier-ignore */
+    border-radius:2PX;
+    &:after {
+      background-color: #f0848f;
+    }
+  }
 }

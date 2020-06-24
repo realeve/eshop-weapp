@@ -8,7 +8,8 @@ import {
   CateList,
   CollectionList,
   NewProduct,
-  Carousel
+  Carousel,
+  SecKill
 } from "./components/";
 import { getWindowHeight } from "@/utils/style";
 
@@ -29,6 +30,7 @@ const Index = ({
   newProduct,
   specialList,
   normalList,
+  seckill,
   isLogin,
   dispatch
 }: IGlobalModel) => {
@@ -60,6 +62,7 @@ const Index = ({
         onScroll={onScroll}
       >
         <BannerImg special={special} />
+        <SecKill data={seckill} />
         <CateList data={menuList} dispatch={dispatch} />
         <Carousel data={normalList} ratio="1.05" />
         <CollectionList data={collectionList} />

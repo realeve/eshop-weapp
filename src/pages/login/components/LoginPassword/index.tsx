@@ -6,22 +6,12 @@ import { CButton } from "../../../../components";
 import useSetState from "@/components/hooks/useSetState";
 import CCaptcha, { TCaptchaVal } from "../../../../components/CCaptcha";
 import { AtInput, AtModal, AtModalContent } from "taro-ui";
-import {
-  SMS_TYPE,
-  ILoginToken,
-  loginSms,
-  CLIENT_TYPE,
-  loadMember,
-  loginPsw
-} from "../../db";
+import { ILoginToken, CLIENT_TYPE, loadMember, loginPsw } from "../../db";
 import UserIcon from "./user.png";
 import { IGlobalModel } from "../../../../models/common";
-import { LocalStorageKeys } from "@/utils/setting";
 
-import fail from "@/components/Toast/fail";
 import { jump, loadPhone } from "@/utils/lib";
 import { storePhone } from "@/pages/login/db";
-import { RESPONSE_CODES } from "@/utils/axios";
 
 const LoginPassword = ({ callback, dispatch }) => {
   const [account, setAccount] = useSetState<{
