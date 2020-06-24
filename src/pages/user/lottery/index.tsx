@@ -155,6 +155,7 @@ const Order = () => {
         onScrollToLower={onScrollToLower}
         // onPullDownRefresh={onScrollToLower}
         className="detail"
+        selector="user_lottery"
       >
         {state.list.map(item => {
           return (
