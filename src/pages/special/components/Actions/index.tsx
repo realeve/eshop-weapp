@@ -119,7 +119,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
         <CButton
           disabled={dayjs().isBefore(data.beginTime)}
           onClick={() => {
-            if (!agree) {
+            if (!agree && data.denyDesc != "已申购") {
               Taro.showToast({
                 title: "请先阅读并同意《免责声明》",
                 icon: "none"
