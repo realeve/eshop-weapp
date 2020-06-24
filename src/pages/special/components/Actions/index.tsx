@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 // https://day.js.org/docs/zh-CN/plugin/relative-time
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/zh-cn";
+import fail from "@/components/Toast/fail";
 dayjs.extend(relativeTime);
 
 const getStateDesc = data => {
@@ -41,6 +42,21 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
 
   const submit = () => {
     Taro.showLoading({ title: "预约中,处理完毕后跳转结果页" });
+
+    if (!dayjs().isBefore(data.endTime)) {
+      Taro.hideLoading();
+      fail("预约已结束，请下次再来").then(() => {
+        // 跳转至结果页
+        jump({
+          url: "/pages/special/result/index",
+          payload: {
+            id: data.activityId
+          }
+        });
+      });
+      return;
+    }
+
     doSubscribe(data.activityId).then(() => {
       Taro.hideLoading();
 
@@ -77,9 +93,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           <View className="tips">{getStateDesc(data)}</View>
         </View>
         <CButton
-          disabled={
-            !dayjs().isBefore(data.drawTime) || dayjs().isBefore(data.beginTime)
-          }
+          disabled={dayjs().isBefore(data.beginTime)}
           onClick={() => {
             if (!agree) {
               Taro.showToast({
