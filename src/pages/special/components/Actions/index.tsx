@@ -30,7 +30,31 @@ const getStateDesc = data => {
       .locale("zh-cn")
       .from()} 公布抽签`.replace("内", "后");
   }
+
+  if (dayjs().isBefore(data.payExpireTime)) {
+    return `${dayjs(data.payExpireTime)
+      .locale("zh-cn")
+      .from()} 停止付款`.replace("内", "后");
+  }
   return "申购已结束";
+};
+
+const getBtnText = data => {
+  if (dayjs().isBefore(data.beginTime)) {
+    return "即将开始";
+  }
+  if (dayjs().isBefore(data.endTime)) {
+    return "立即预约";
+  }
+  if (dayjs().isBefore(data.drawTime)) {
+    return "即将抽签";
+  }
+
+  if (dayjs().isBefore(data.payExpireTime)) {
+    return "已开始付款";
+  }
+
+  return "已结束";
 };
 
 interface IProps {
@@ -109,13 +133,7 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           // style="width:100px;"
           style={{ width: "100px" }}
         >
-          {dayjs().isBefore(data.beginTime)
-            ? "即将开始"
-            : dayjs().isBefore(data.endTime)
-            ? "立即预约"
-            : dayjs().isBefore(data.drawTime)
-            ? "即将抽签"
-            : "已结束"}
+          {getBtnText(data)}
         </CButton>
       </View>
     </View>

@@ -10,6 +10,7 @@ import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
 import { CButton } from "@/components";
 import { jump } from "@/utils/lib";
+import fail from "@/components/Toast/fail";
 
 export interface IResultProp {
   subText?: string | null;
@@ -25,6 +26,8 @@ export interface IResultProp {
   total: number;
   type: string;
   typeDesc: string;
+  payId: number | string;
+  [key: string]: any;
 }
 interface IProps {
   data: IResultProp;
@@ -36,7 +39,25 @@ const SpecialPanel = ({ data, loading }: IProps) => {
     return null;
   }
   const failed = ["unsigned", "lost", "other", "unlucky"].includes(data.type);
-  console.log(data);
+
+  // TODO 特品付款
+  const doPay = () => {
+    console.log(data, "立即付款");
+    if ("payed" === data.type) {
+      fail(`该订单已支付，请在我的预约中查看。`).then(() => {
+        jump("/pages/user/lottery/index");
+      });
+      return;
+    }
+
+    if (!data.payId) {
+      fail(`未能获得中签用户订单号，请刷新页面或联系平台客服。`);
+      return;
+    }
+    // 开始支付
+    jump("/pages/order/confirm/index?specialId=" + data.activityId);
+  };
+
   return (
     <View className="special-page__panel">
       <Skeleton loading={loading} row={6} rowHeight={30}>
@@ -82,8 +103,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
                     return;
                   }
 
-                  // TODO 特品付款
-                  console.log("立即付款");
+                  doPay();
                 }}
               >
                 {data.type === "lucky" ? "立即付款" : "查看订单"}
@@ -91,7 +111,9 @@ const SpecialPanel = ({ data, loading }: IProps) => {
             )}
 
             <View className="tips">
-              <Text className="tips__main">感谢您的参与!</Text>
+              {data.type !== "lucky" && (
+                <Text className="tips__main">感谢您的参与!</Text>
+              )}
               <Text className="tips__desc">{getDescDetail(data)}</Text>
             </View>
           </View>

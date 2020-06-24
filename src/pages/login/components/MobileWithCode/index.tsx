@@ -79,6 +79,7 @@ const MobileWithCode = ({
     if (!snSendTime) {
       return;
     }
+    console.log(snSendTime);
     let totalSeconds = Math.max(dayjs().diff(dayjs(snSendTime), "second"), 0);
     if (totalSeconds > 59 || totalSeconds < 0) {
       setSnSendTime(null);

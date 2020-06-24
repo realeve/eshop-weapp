@@ -1,4 +1,4 @@
-import Taro, { useEffect, useState } from "@tarojs/taro";
+import Taro, { useEffect, useState, useRouter } from "@tarojs/taro";
 import { View, Text, Image, ScrollView } from "@tarojs/components";
 import { connect } from "@tarojs/redux";
 import "./index.scss";
@@ -58,21 +58,27 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   // const [loading, setLoading] = useState<boolean>(false);
   // const [invalid, setInvalid] = useState(false);
   // const [isInited, setIsInited] = useState<boolean>(false);
+
+  // 此处specialId为空时，表示为特品
+  const {
+    params: { specialId }
+  } = useRouter();
+
   const [amount, setAmount] = useState<ICalcResult>(null);
 
   const [freight, setFreight] = useState<ICalcFreight>({});
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
-  // const [orderId, setOrderId] = useState<number | null>(null);
-  // const [payId, setPayId] = useState<number | null>(null);
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [payId, setPayId] = useState<number | null>(null);
 
   const calc = (
     goods?: IBuyGoodsItemVoList[],
     addr?: Partial<IOrderAddress>
   ) => {
     let data = goods || goodsList;
-    let _addr = addr || address;
+    let _addr = addr || recievingAddr;
 
     if (!data || !_addr || !_addr.address_id) {
       return;
@@ -100,7 +106,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     }
   };
 
-  const { data: address, setData } = useFetch<IModPanelItem>({
+  const { data: recievingAddr, setData, reFetch } = useFetch<IModPanelItem>({
     param: {
       method: "post",
       url: API.MEMBER_ADDRESS_LIST as string
@@ -132,8 +138,30 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     }[]
   >([]);
 
+  // 特品数据载入逻辑
+  useFetch({
+    param: {
+      data: { orderId: specialId },
+      ...(API.MY_SUBSCRIBE_ORDER as {})
+    },
+    valid: () => specialId,
+    callback: order => {
+      let _data = R.clone(order);
+      setSelectedAddr(
+        _data.recommendAddress ? _data.recommendAddress.addressId || 0 : 0
+      );
+      setGoodsList(_data.orders.ordersGoodsVoList);
+      setOrderId(_data.orders.orderId);
+      setPayId(_data.orders.payId);
+    }
+  });
+
+  // 普品基本信息载入
   useEffect(() => {
     // setLoading(true);
+    if (specialId) {
+      return;
+    }
     let params = getShoppingCartAxiosParam();
     console.log("params", params);
     // setInvalid(!params);
@@ -160,11 +188,11 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   }, []);
 
   useEffect(() => {
-    if (!goodsList || !address) {
+    if (!goodsList || !recievingAddr) {
       return;
     }
     calc();
-  }, [goodsList, address]);
+  }, [goodsList, recievingAddr]);
 
   let [userMessages, setUserMessages] = useState("");
 
@@ -172,7 +200,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     // console.log('prepared to book an order...');
 
     // 特品支付确认页
-    const isSpecial = false;
+    const isSpecial = typeof specialId !== "undefined";
 
     if (typeof goodsList === "undefined") {
       return;
@@ -264,7 +292,10 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   return (
     <View className="order_confirm">
       <ScrollView scrollY className="goods_list">
-        <AddressPanel data={address} />
+        <AddressPanel
+          data={recievingAddr}
+          special={typeof specialId !== "undefined"}
+        />
         {amount &&
           amount.storeList.map((item: IBuyGoodsItemVoList) => (
             <CCardLite className="goodslist" key={item.commonId}>

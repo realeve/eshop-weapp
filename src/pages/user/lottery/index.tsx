@@ -192,10 +192,10 @@ const Order = () => {
                 >
                   预约详情
                 </CButton>
-                {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.NEED_PAY].includes(
+                {SUBSCRIBE_PHASE[SUBSCRIBE_STATUS.LOTTERY].includes(
                   item.status
                 ) &&
-                  item.statusName != "已付款" && (
+                  item.statusName == "待付款" && (
                     <CButton
                       theme="gardient"
                       size="small"

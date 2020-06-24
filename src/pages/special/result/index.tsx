@@ -30,7 +30,7 @@ interface IProps {
 
 const dateFormat = (mill: string) => dayjs(mill).format("YYYY-MM-DD HH:mm:ss");
 
-const getSpecialResult = subscribe => {
+const getSpecialResult = (subscribe, activityId) => {
   const imInfo = { gid: subscribe.commonId, sid: GLOBAL_SELLER };
 
   // 已抽签未付款
@@ -86,6 +86,7 @@ const getSpecialResult = subscribe => {
   }
 
   let data: IResultProp = {
+    activityId,
     sn: subscribe.subscriberSn,
     lotteryDate: subscribe.drawTime,
     countDown: dateFormat(subscribe.endTime),
@@ -98,6 +99,7 @@ const getSpecialResult = subscribe => {
     payedBefore: dateFormat(subscribe.payExpireTime),
     curPeople: subscribe.subscribeQuantity || 0,
     current,
+    payId: subscribe.payId,
     phases:
       subscribe.state === 9999
         ? ["活动停止"]
@@ -113,29 +115,29 @@ const getSpecialResult = subscribe => {
   };
 };
 
-const checkOrder = (subscribe, subscribeResult) => {
-  if (!subscribe) {
-    return;
-  }
-  if ("lucky" === subscribeResult.type) {
-    if (!subscribe.payId) {
-      Taro.showToast({
-        title: `未能获得中签用户订单号，请刷新页面或联系平台客服。`
-      });
-      return;
-    }
-    jump(`/special/confirm/${subscribe.orderId}`);
-  }
-  if ("payed" === subscribeResult.type) {
-    Taro.showToast({
-      title: `该订单已支付，请在我的预约中查看。`
-    });
-  }
+// const checkOrder = (subscribe, subscribeResult) => {
+//   if (!subscribe) {
+//     return;
+//   }
+//   if ("lucky" === subscribeResult.type) {
+//     if (!subscribe.payId) {
+//       Taro.showToast({
+//         title: `未能获得中签用户订单号，请刷新页面或联系平台客服。`
+//       });
+//       return;
+//     }
+//     jump(`/special/confirm/${subscribe.orderId}`);
+//   }
+//   if ("payed" === subscribeResult.type) {
+//     Taro.showToast({
+//       title: `该订单已支付，请在我的预约中查看。`
+//     });
+//   }
 
-  if ("signed" === subscribeResult.type) {
-    jump(`/order/lottery`);
-  }
-};
+//   if ("signed" === subscribeResult.type) {
+//     jump(`/order/lottery`);
+//   }
+// };
 
 const SpecialResult = ({ dispatch, special }: IProps) => {
   const {
@@ -160,7 +162,7 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     if (!special) {
       return;
     }
-    let res = getSpecialResult(special);
+    let res = getSpecialResult(special, id);
     setSpecialResult(res);
     // console.log(res);
   }, [special]);
