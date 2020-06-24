@@ -242,7 +242,6 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     if (isSpecial) {
       // 跳转到支付订单页
       // success(`/order/topay/${payId}`);
-      console.log("特品支付，已经提供", payId);
       pay(payId, () => {
         removeConfirmCart();
         // 此时还需要清理购物车中对应的产品;
@@ -250,6 +249,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
       });
       return;
     }
+
     let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
 
     let storeList = R.keys(goodsGroupByStore).map(storeId => ({
@@ -391,16 +391,18 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
           <View>{invoice.title}</View>
         </View>
 
-        <View className="invoice">
-          <AtTextarea
-            placeholder="用户留言"
-            value={userMessages}
-            onChange={setUserMessages}
-            autoFocus
-            maxLength={200}
-            height={60}
-          />
-        </View>
+        {!specialId && (
+          <View className="invoice">
+            <AtTextarea
+              placeholder="用户留言"
+              value={userMessages}
+              onChange={setUserMessages}
+              autoFocus
+              maxLength={200}
+              height={60}
+            />
+          </View>
+        )}
 
         {amount && (
           <View className="summary">
