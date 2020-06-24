@@ -85,6 +85,7 @@ const getSpecialResult = (subscribe, activityId) => {
     current = 4;
   }
 
+  console.log({ subscribe });
   let data: IResultProp = {
     activityId,
     sn: subscribe.subscriberSn,

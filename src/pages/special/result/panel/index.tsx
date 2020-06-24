@@ -42,7 +42,6 @@ const SpecialPanel = ({ data, loading }: IProps) => {
 
   // TODO 特品付款
   const doPay = () => {
-    console.log(data, "立即付款");
     if ("payed" === data.type) {
       fail(`该订单已支付，请在我的预约中查看。`).then(() => {
         jump("/pages/user/lottery/index");
@@ -57,6 +56,8 @@ const SpecialPanel = ({ data, loading }: IProps) => {
     // 开始支付
     jump("/pages/order/confirm/index?specialId=" + data.orderId);
   };
+
+  console.log(data);
 
   return (
     <View className="special-page__panel">

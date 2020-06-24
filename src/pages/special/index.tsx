@@ -3,7 +3,7 @@ import { connect } from "@tarojs/redux";
 
 import { API } from "@/utils/setting";
 import { handleSubscribe, ISubscribe } from "./db";
-import { View, Text, Image, Swiper, SwiperItem } from "@tarojs/components"; // , Swiper, SwiperItem
+import { View, Image, Swiper, SwiperItem } from "@tarojs/components"; // , Swiper, SwiperItem
 import "./index.scss";
 import SpecialAction from "./components/Actions";
 import { jump } from "@/utils/lib";
