@@ -144,7 +144,6 @@ const Order = () => {
     fn();
   };
 
-  // console.log(state.list);
   return (
     <View className="user_lottery">
       <Tab list={orderList} current={current} onChange={handleMenu} />
