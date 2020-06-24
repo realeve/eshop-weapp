@@ -158,11 +158,11 @@ const serviceList = {
 };
 
 export const IM = {
-  history: { im: true, method: 'post', url: '/api/his_msg' },//获取与某个联系人的聊天记录
-  addLinkMan: { im: true, method: 'post', url: '/api/link_man_add' }, // 添加联系人
-  getUnread: { im: true, method: 'post', url: '/api/get_unread_msg_count' },//获取未读消息数量
-  getLinkInfo: { im: true, method: 'post', url: '/api/get_link_info' },//获取联系人相关信息
-  getLinkList: { im: true, method: 'post', url: '/api/get_link_list' } //获取联系人列表
+  history: { im: true, method: 'post', url: '/his_msg' },//获取与某个联系人的聊天记录
+  addLinkMan: { im: true, method: 'post', url: '/link_man_add' }, // 添加联系人
+  getUnread: { im: true, method: 'post', url: '/get_unread_msg_count' },//获取未读消息数量
+  getLinkInfo: { im: true, method: 'post', url: '/get_link_info' },//获取联系人相关信息
+  getLinkList: { im: true, method: 'post', url: '/get_link_list' } //获取联系人列表
 
 }
 

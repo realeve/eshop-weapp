@@ -25,7 +25,8 @@ const SETTING = {
   publicPath: "/",
   IM: "https://imtest.ccgold.cn/member",
   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
-  IMWS: "ws://imtest.ccgold.cn/im"
+  IMWS: "ws://imtest.ccgold.cn/im",
+  IMAPI: "http://imtest.ccgold.cn/api"
 };
 
 /**
@@ -38,7 +39,8 @@ const SETTING = {
 //   publicPath: "/",
 //   IM: "https://im.ccgold.cn/member",
 //   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
-//   IMWS: "ws://im.ccgold.cn/im"
+//   IMWS: "ws://im.ccgold.cn/im",
+//   IMAPI:"https://test.ccgold.cn/api"
 // };
 
 // https://www.ccgold.cn/index.html
@@ -58,6 +60,7 @@ export const OSS_URL = SETTING.oss;
 export const IM = SETTING.IM;
 export const INVOICE = SETTING.invoice;
 export const IMWS = SETTING.IMWS;
+export const IMAPI = SETTING.IMAPI;
 
 export const CLIENT_TYPE = {
   andriod: "android",
@@ -106,7 +109,7 @@ export const copyright = {
 
 export const help = DEV
   ? // 此处暂使用接口代理
-    "https://statictest.ccgold.cn/img/mp/help.json" //"http://api.cbpc.ltd/328/4b984cbc42/1000.json" //
+  "https://statictest.ccgold.cn/img/mp/help.json" //"http://api.cbpc.ltd/328/4b984cbc42/1000.json" //
   : "https://static.ccgold.cn/img/mp/help.json";
 
 export const cityUrl = DEV

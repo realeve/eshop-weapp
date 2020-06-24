@@ -1,6 +1,6 @@
-import { IMWS } from "@/utils/setting";
 import { axios } from "@/utils/axios";
 import { IM } from "@/utils/api";
+import { getToken } from "@/utils/axios";
 
 /**
  * 获取与某个联系人的聊天记录
@@ -8,7 +8,11 @@ import { IM } from "@/utils/api";
  * @param page
  */
 export const getHisMsg = (sid, page = 1) =>
-  axios({ ...IM.history, data: { sid, page, ctype: "wap" } });
+  axios({
+    ...IM.history,
+    // headers: { "content-type": "application/json", Host: "imtest.ccgold.cn" },
+    data: { token: getToken(), sid, page, ctype: "wap" }
+  });
 
 /**
  * 获取联系人相关信息
