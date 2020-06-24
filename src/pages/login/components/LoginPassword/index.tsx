@@ -103,7 +103,7 @@ const LoginPassword = ({ callback, dispatch }) => {
         />
       </View>
       <View className="item">
-        <View className="at-icon at-icon-lock" />
+        <View className="at-icon at-icon-lock" style={{ fontSize: "19px" }} />
         <AtInput
           name="password"
           type="password"
