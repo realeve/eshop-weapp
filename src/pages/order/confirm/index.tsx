@@ -70,6 +70,11 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   const [origin, setOrigin] = useState<IBooking>();
   const [selectedAddr, setSelectedAddr] = useState<number>(0);
 
+  const [specialMember, setSpecialMember] = useState<{
+    name: string;
+    phone: string;
+  } | null>(null);
+
   const [orderId, setOrderId] = useState<number | null>(null);
   const [payId, setPayId] = useState<number | null>(null);
 
@@ -125,6 +130,19 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     if (!currentAddress.address_id) {
       return;
     }
+
+    // 特品
+    if (typeof specialId != "undefined" && specialMember) {
+      if (currentAddress.name !== specialMember.name) {
+        fail("修改失败,姓名与实名认证不一致");
+        return;
+      }
+      if (currentAddress.phone !== specialMember.phone) {
+        fail("修改失败,联系电话与实名认证不一致");
+        return;
+      }
+    }
+
     setData(currentAddress);
     setSelectedAddr(currentAddress.address_id || 0);
   }, [JSON.stringify(currentAddress)]);
@@ -147,9 +165,24 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     valid: () => specialId,
     callback: order => {
       let _data = R.clone(order);
+      console.log(_data);
+
+      setSpecialMember({
+        name: _data.realName,
+        phone: _data.mobile
+      });
       setSelectedAddr(
         _data.recommendAddress ? _data.recommendAddress.addressId || 0 : 0
       );
+
+      if (_data.recommendAddress) {
+        let res = handleAddressList({ addressList: [_data.recommendAddress] });
+        setData(res[0]);
+        setSelectedAddr(_data.recommendAddress.addressId);
+      } else {
+        setSelectedAddr(0);
+      }
+
       setGoodsList(_data.orders.ordersGoodsVoList);
       setOrderId(_data.orders.orderId);
       setPayId(_data.orders.payId);
@@ -209,6 +242,12 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
     if (isSpecial) {
       // 跳转到支付订单页
       // success(`/order/topay/${payId}`);
+      console.log("特品支付，已经提供", payId);
+      pay(payId, () => {
+        removeConfirmCart();
+        // 此时还需要清理购物车中对应的产品;
+        removeShoppingCartItem();
+      });
       return;
     }
     let goodsGroupByStore = R.groupBy(R.prop("storeId"), goodsList);
@@ -286,8 +325,6 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
       );
     });
   };
-
-  // console.log(amount);
 
   return (
     <View className="order_confirm">
