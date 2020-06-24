@@ -391,6 +391,7 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
           <View>{invoice.title}</View>
         </View>
 
+        {/* 特品在STEP2接口中如果希望更新留言信息，由于已经生成了payId，此时不会继续生成，报“商品已下架” */}
         {!specialId && (
           <View className="invoice">
             <AtTextarea
