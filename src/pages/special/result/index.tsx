@@ -67,6 +67,17 @@ const getSpecialResult = subscribe => {
   ) {
     orderType = "unlucky";
   }
+  let subText: string | null = null;
+
+  // 如果为'unlucky' 并且待抽签
+  if (
+    subscribe.subscribeStateStr === null &&
+    dayjs().isBefore(subscribe.drawTime)
+  ) {
+    orderType = "waittingDraw";
+    typeDesc = "预约成功";
+    subText = "请耐心等待抽签";
+  }
 
   // 当前步骤，如果已中签，但未付款，指向结束
   let current = getPhase(subscribe);
@@ -82,6 +93,7 @@ const getSpecialResult = subscribe => {
     total: subscribe.subscribeQuantity || 0,
     type: orderType,
     typeDesc,
+    subText,
     lucky: subscribe.issueQuantity,
     payedBefore: dateFormat(subscribe.payExpireTime),
     curPeople: subscribe.subscribeQuantity || 0,
@@ -130,10 +142,12 @@ const SpecialResult = ({ dispatch, special }: IProps) => {
     params: { id }
   } = useRouter();
 
+  console.log({ special, id });
+
   const { data: subscribe, loading } = useFetch<ISubscribe>({
     param: { url: `${API.SP_SUBSCRIBER_INFO}/${id}` },
     callback: e => handleSubscribe(e, dispatch),
-    valid: () => id > "0" && !special
+    valid: () => id > "0" // && !special
   });
 
   const [specialResult, setSpecialResult] = useState({

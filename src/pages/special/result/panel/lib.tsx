@@ -26,12 +26,12 @@ export const getDescDetail = ({
       break;
     case "lost":
       desc = `您未按时在${moment(payedBefore).format(
-        " Y年M月D日HH时mm分 "
+        " YYYY年M月D日HH时mm分 "
       )}之前付款，认购资格被取消`;
       break;
     case "lucky":
       desc = `您的特制精品商品订单已经生成，请于${moment(payedBefore).format(
-        " Y年M月D日HH时mm分 "
+        " YYYY年M月D日HH时mm分 "
       )}前确认支付，逾期订单将自动失效`;
       break;
     case "other":

@@ -9,8 +9,10 @@ import Grass from "./grass.svg";
 import Skeleton from "taro-skeleton";
 import { getDescDetail, orderDesc } from "./lib";
 import { CButton } from "@/components";
+import { jump } from "@/utils/lib";
 
 export interface IResultProp {
+  subText?: string | null;
   countDown: string;
   curPeople: number;
   current: number | string;
@@ -50,7 +52,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
                 <View className="top" />
                 <View className="btm" />
               </View>
-              {data.type === "lucky" ? "CONGRATULATIONS" : "预约失败"}
+              {!failed ? "CONGRATULATIONS" : "预约失败"}
               <View className="right">
                 <View className="top" />
                 <View className="btm" />
@@ -61,6 +63,7 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <View className="result">
                 <Text className="title">{orderDesc[data.type]}</Text>
                 {data.typeDesc && <Text className="desc">{data.typeDesc}</Text>}
+                {data.subText && <Text className="code">{data.subText}</Text>}
 
                 {data.sn && <Text className="code">抽签码：{data.sn}</Text>}
               </View>
@@ -72,9 +75,15 @@ const SpecialPanel = ({ data, loading }: IProps) => {
               <CButton
                 theme="gardient"
                 size="small"
-                style={{ width: "100px", marginTop: "10px" }}
+                style={{ width: "100px", margin: "10px auto 0 auto" }}
                 onClick={() => {
-                  console.log("checkOrder");
+                  if (data.type !== "lucky") {
+                    jump("/pages/user/lottery/index");
+                    return;
+                  }
+
+                  // TODO 特品付款
+                  console.log("立即付款");
                 }}
               >
                 {data.type === "lucky" ? "立即付款" : "查看订单"}

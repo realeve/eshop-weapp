@@ -245,6 +245,9 @@ const OrderConfirm = ({ currentAddress, dispatch }) => {
   };
 
   const removeShoppingCartItem = () => {
+    if (cartData.length === 0) {
+      return;
+    }
     cartDel(
       cartData.map(item => item.cartId),
       dispatch

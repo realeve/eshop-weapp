@@ -102,14 +102,17 @@
       // 底部文字
 
       .tips {
-        text-align: center;
-        margin-top: 40px;
+        margin: 40px auto 0 auto;
         font-size: $fontSizeNormal;
         color: $yellow;
+        width: 80%;
         &__main {
           display: block;
           width: 100%;
           text-align: center;
+        }
+        &__desc {
+          text-align: left;
         }
       }
     }

@@ -7,6 +7,12 @@ import classnames from "classnames";
 import { jump } from "@/utils/lib";
 import { OSS_URL } from "@/utils/setting";
 import dayjs from "dayjs";
+
+// https://day.js.org/docs/zh-CN/plugin/relative-time
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/zh-cn";
+dayjs.extend(relativeTime);
+
 interface IProps {
   data: ISubscribe;
   [key: string]: any;
@@ -36,7 +42,9 @@ const SpecialAction = ({ data = {}, className }: IProps) => {
           </View>
           <View className="tips">
             {dayjs().isBefore(data.drawTime)
-              ? dayjs().from(data.drawTime)
+              ? `${dayjs(data.drawTime)
+                  .locale("zh-cn")
+                  .from()} 结束预约`
               : "申购已结束"}
           </View>
         </View>

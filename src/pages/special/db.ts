@@ -27,7 +27,8 @@ export type TOrderState =
   | "unlucky"
   | "payed"
   | "lost"
-  | "other";
+  | "other"
+  | "waittingDraw";
 
 /**
  * 禁入编码：0，1

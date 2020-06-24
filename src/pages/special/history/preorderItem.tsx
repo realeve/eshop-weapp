@@ -3,7 +3,7 @@ import { View, Text, Image } from "@tarojs/components";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 import CountTime from "@/pages/user/order/components/CountTime";
-
+import dayjs from "dayjs";
 import "./preorderItem.scss";
 
 export default ({ data }) => {
@@ -66,7 +66,7 @@ export default ({ data }) => {
 
       <View className="type">
         <View className="time">
-          {data.showCountDown && (
+          {data.showCountDown && dayjs().isBefore(data.drawTime) && (
             <View>
               <CountTime time={data.remainTime} />
               <Text>{data.operation}</Text>
