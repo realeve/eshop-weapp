@@ -4,6 +4,7 @@ $fontSize: $heading-3-size;
 
 .cPrice {
   min-width: 38px;
+  @extend .alignRow;
   &_retail {
     color: $yellow;
     font-family: priceFont;

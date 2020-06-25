@@ -4,7 +4,7 @@ import "./index.scss";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 
-import { View, Image } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 
 export interface ICouponItem {
   title: string;
@@ -47,14 +47,13 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
   className,
   state
 }) => {
-  let restPercent = 100 - parseInt(data.rest || 0);
-  let isEmpty = 0 === restPercent;
+  let isEmpty = data.rest == 100 || data.total == 0;
   return (
     <View className={classNames("couponItem", className)} style={style}>
       <View className="img">
         <Image
           src={data.img}
-          alt=""
+          className="img_item"
           onClick={() => jump(`/detail/${data.id}`)}
         />
 
@@ -74,14 +73,14 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
           <View className="progress">
             <View
               className="active"
-              style={{ width: `${restPercent}%` }}
+              style={{ width: `${data.rest || 0}%` }}
             ></View>
           </View>
           <View className="rest">还剩 {data.total}件</View>
         </View>
 
         <View className="action">
-          限购价：
+          <Text className="action_title">限购价：</Text>
           <CPrice
             retail={data.price}
             retailStyle={{ marginLeft: 10, fontSize: 18 }}
@@ -90,33 +89,17 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
           />
         </View>
         <View className="btn">
-          {!isEmpty && state.value === 1 ? (
-            <CButton
-              style={{ right: 0 }}
-              theme="yellowGardiant"
-              size="normal"
-              onClick={() => {
-                if (data.id) {
-                  jump(`/detail/${data.id}`);
-                }
-              }}
-            >
-              {STATE_TITLE[state.value]}
-            </CButton>
-          ) : (
-            <CButton
-              style={{ right: 0 }}
-              theme="white"
-              size="normal"
-              onClick={() => {
-                if (data.id) {
-                  jump(`/detail/${data.id}`);
-                }
-              }}
-            >
-              {STATE_TITLE[state.value]}
-            </CButton>
-          )}
+          <CButton
+            theme={!isEmpty && state.value === 1 ? "normal" : "gardient"}
+            size="small"
+            onClick={() => {
+              if (data.id) {
+                jump(`/detail/${data.id}`);
+              }
+            }}
+          >
+            {STATE_TITLE[state.value]}
+          </CButton>
         </View>
       </View>
     </View>
