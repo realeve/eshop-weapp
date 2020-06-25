@@ -100,8 +100,13 @@ const Order = () => {
     fn();
   };
 
-  const logy = (sn, code) => {
-    setState({ logiParams: { shipSn: sn, shipCode: code } });
+  const logy = (sn, code, sendTime) => {
+    if (!sn || !code) {
+      return;
+    }
+    setState({
+      logiParams: { shipSn: sn, shipCode: code, sendTime: sendTime }
+    });
     setShowLogy(true);
   };
 
@@ -237,7 +242,11 @@ const Order = () => {
                   EOrderStatus.appendCommented,
                   EOrderStatus.over
                 ].includes(order.status) && (
-                  <Button onClick={() => logy(order.shipSn, order.shipCode)}>
+                  <Button
+                    onClick={() =>
+                      logy(order.shipSn, order.shipCode, order.sendTime)
+                    }
+                  >
                     查看物流
                   </Button>
                 )}
