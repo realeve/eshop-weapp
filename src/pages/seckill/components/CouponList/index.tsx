@@ -7,7 +7,7 @@ import CouponItem from "../CouponItem";
 import BuyTime from "../BuyTime";
 import { IPropItem } from "../../limit";
 import * as moment from "dayjs";
-import { View } from "@tarojs/components";
+import { View, ScrollView } from "@tarojs/components";
 
 interface IPropData {
   id: string | number;
@@ -236,7 +236,6 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
     },
     callback: data => handleDetail(data)
   });
-  let { dist } = data || {};
 
   // 获取限购时间段数据
   // const getdata = (hour: string) => {
@@ -252,14 +251,14 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
   //   getdata(currentHour);
   // }, [currentHour]);
 
-  console.log(list);
+  console.log(data);
 
   return (
-    <View>
+    <View className="coupon_wrap">
       {list && (
         <BuyTime limitTime={list} onClick={setCurrent} current={current} />
       )}
-      <View className="popular">
+      <ScrollView scrollY className="popular">
         {data && data.dist ? (
           (data.dist || []).map(item => (
             <CouponItem
@@ -272,7 +271,7 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
         ) : (
           <CEmpty type="goods" />
         )}
-      </View>
+      </ScrollView>
     </View>
   );
 };

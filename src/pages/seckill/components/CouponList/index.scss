@@ -1,5 +1,10 @@
 @import "@/styles/theme.scss";
 
-.popular {
-  @extend .alignRow;
+.coupon_wrap {
+  flex: 1;
+  @extend .alignColumn;
+  .popular {
+    @extend .alignRow;
+    flex: 1;
+  }
 }

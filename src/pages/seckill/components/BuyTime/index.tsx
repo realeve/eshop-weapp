@@ -38,18 +38,12 @@ let titleDate: {
 };
 
 const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
-  data = [],
-  hour = true,
-  title = true,
-  initData = [],
   limitTime = [],
   onClick,
-  Click,
   current,
   maxNum = 5
 }) => {
   const [idx, setIdx] = useState(0);
-  const [curIdx, setcurIdx] = useState(current);
 
   return (
     <View className="buytime">
@@ -66,14 +60,13 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
         </View>
       )}
       <View className="arrow">
-        {limitTime.map((item, index) => (
+        {limitTime.map(item => (
           <View
             className={classNames("time", {
               timeActive: item.id === current
             })}
             key={item.id}
             onClick={() => {
-              setcurIdx(index);
               onClick && onClick(item.id);
             }}
             style={{
@@ -89,8 +82,7 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
           </View>
         ))}
       </View>
-      {
-        // limitTime.length > Number(maxNum) &&
+      {limitTime.length > Number(maxNum) && (
         <View
           className={classNames("next", {
             disabled: idx === limitTime.length - maxNum
@@ -101,7 +93,7 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
         >
           <Icon value="chevron-right" size={25} />
         </View>
-      }
+      )}
     </View>
   );
 };
