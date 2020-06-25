@@ -4,18 +4,25 @@ import { AtTextarea, AtIcon } from "taro-ui";
 import { IMWS } from "@/utils/setting";
 import { getToken } from "@/utils/axios";
 import { getMemberInfo } from "@/utils/lib";
+import { getHisMsg } from "./utils";
 import "./index.scss";
 
 export default class ImTool extends Taro.Component {
   constructor(props) {
     super(props);
+    let {
+      location: { params }
+    } = props;
+    console.info("props", props);
     this.state = {
       input: "",
       datas: [],
       lines: 1,
-      sid: 0,
+      sid: params.sid || 0,
+      gid: params.gid || 0,
       socketOpen: false,
-      msgQueue: []
+      msgQueue: [],
+      linkMan: {}
     };
     this.handleConnected = this.handleConnected.bind(this);
     this.handleRecieve = this.handleRecieve.bind(this);
@@ -27,7 +34,7 @@ export default class ImTool extends Taro.Component {
   }
 
   config = {
-    navigationBarTitleText: "客户服务"
+    navigationBarTitleText: "消息详情"
   };
 
   formatData(data) {
@@ -38,7 +45,7 @@ export default class ImTool extends Taro.Component {
     if (data.mType === "send") {
       let { message_content, mid, sid: to_user_id } = data;
       let member = getMemberInfo() || {};
-      data = {
+      d = {
         message_content,
         mid,
         to_user_id,
@@ -153,7 +160,7 @@ export default class ImTool extends Taro.Component {
     this.setState({ socketOpen: false });
   }
 
-  init() {
+  async init() {
     let token = getToken();
     if (!token) {
       console.warn("u need login at first.");
@@ -164,11 +171,15 @@ export default class ImTool extends Taro.Component {
       success: function() {
         console.info("connect success");
       }
+    }).then(task => {
+      task.onOpen(this.handleConnected);
+      task.onMessage(this.handleRecieve);
+      task.onError(this.handleError);
+      task.onClose(this.handleClose);
     });
-    Taro.onSocketOpen(this.handleConnected);
-    Taro.onSocketMessage(this.handleRecieve);
-    Taro.onError(this.handleError);
-    Taro.onSocketClose(this.handleClose);
+
+    let history = await getHisMsg(this.state.sid);
+    console.info("history", history);
   }
 
   componentDidMount() {

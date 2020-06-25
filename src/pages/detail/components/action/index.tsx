@@ -69,11 +69,23 @@ const DetailAction = ({
     };
     buyGoods(detail, data, dispatch, directBuy);
   };
+  const contactService = () => {
+    console.info("state", data);
+    let sid = (data.saleService && data.saleService.num) || 0;
+    let gid = data.id || 0;
+    lib.jump({
+      url: `/pages/user/im/index?sid=${sid}&gid=${gid}`
+    });
+  };
 
   return (
     <View className="detail-action">
       <View className="icons">
-        <Image src={serviceIcon} className="icon" />
+        <Image
+          src={serviceIcon}
+          className="icon"
+          onClick={() => contactService()}
+        />
         <AtBadge value={shoppingCart.total.num} maxValue={99} className="icon">
           <View
             className="at-icon at-icon-shopping-cart"

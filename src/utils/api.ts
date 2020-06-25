@@ -157,6 +157,15 @@ const serviceList = {
   cancelReturn: "/member/return/cancel" // 退货申请取消
 };
 
+export const IM = {
+  history: { im: true, method: 'post', url: '/his_msg' },//获取与某个联系人的聊天记录
+  addLinkMan: { im: true, method: 'post', url: '/link_man_add' }, // 添加联系人
+  getUnread: { im: true, method: 'post', url: '/get_unread_msg_count' },//获取未读消息数量
+  getLinkInfo: { im: true, method: 'post', url: '/get_link_info' },//获取联系人相关信息
+  getLinkList: { im: true, method: 'post', url: '/get_link_list' } //获取联系人列表
+
+}
+
 export const ORDER = convertApiConfig();
 export const SERVICE = convertApiConfig(serviceList);
 
@@ -173,3 +182,8 @@ export const ORDER_TYPE = {
   NORMAL: 0,
   VIRTUAL: 1
 };
+
+export const SECKILL = {
+  list: { method: "post", url: "/seckill" },
+  detail: { method: "post", url: "/seckill/goods" }
+}
