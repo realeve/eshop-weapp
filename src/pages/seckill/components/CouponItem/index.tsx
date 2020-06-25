@@ -1,8 +1,10 @@
-import Taro from '@tarojs/taro';
-import classNames from 'classnames';
-import from './index.scss';
-import { CPrice, CButton } from '@/components';
+import Taro from "@tarojs/taro";
+import classNames from "classnames";
+import "./index.scss";
+import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
+
+import { View } from "@tarojs/components";
 
 export interface ICouponItem {
   title: string;
@@ -28,42 +30,53 @@ let titleDate: {
   before: string;
   selling: string;
   taked: string;
-} = { start: '立即抢购', end: '已结束', before: '开抢提醒', selling: '立即抢购', taked: '去看看' };
+} = {
+  start: "立即抢购",
+  end: "已结束",
+  before: "开抢提醒",
+  selling: "立即抢购",
+  taked: "去看看"
+};
 
 const STATE = [0, 1, 2];
-const STATE_TITLE = ['即将登场', '抢购中', '已结束'];
+const STATE_TITLE = ["即将登场", "抢购中", "已结束"];
 
 const CouponItem: (prop: ICouponData) => React.ReactElement = ({
   data,
   style,
   className,
-  state,
+  state
 }) => {
   let restPercent = 100 - parseInt(data.rest || 0);
   let isEmpty = 0 === restPercent;
   return (
-    <div className={classNames('couponItem', className)} style={style}>
-      <div className='img'>
-          <img src={data.img} alt="" onClick={()=> jump(`/detail/${data.id}`)} />
+    <View className={classNames("couponItem", className)} style={style}>
+      <View className="img">
+        <img src={data.img} alt="" onClick={() => jump(`/detail/${data.id}`)} />
 
         {isEmpty && (
-          <div className='invalid'>
-            <div className='circle'>已抢完</div>
-          </div>
+          <View className="invalid">
+            <View className="circle">已抢完</View>
+          </View>
         )}
-      </div>
+      </View>
 
-      <div className='content'>
-          <div className='title' onClick={()=> jump(`/detail/${data.id}`)}>{data.title}</div>
-        <div className='tips'>{data && data.tip}</div>
-        <div className='style'>
-          <div className='progress'>
-            <div className='active' style={{ width: `${restPercent}%` }}></div>
-          </div>
-          <div className='rest'>还剩 {data.total}件</div>
-        </div>
+      <View className="content">
+        <View className="title" onClick={() => jump(`/detail/${data.id}`)}>
+          {data.title}
+        </View>
+        <View className="tips">{data && data.tip}</View>
+        <View className="style">
+          <View className="progress">
+            <View
+              className="active"
+              style={{ width: `${restPercent}%` }}
+            ></View>
+          </View>
+          <View className="rest">还剩 {data.total}件</View>
+        </View>
 
-        <div className='action'>
+        <View className="action">
           限购价：
           <CPrice
             retail={data.price}
@@ -71,8 +84,8 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
             counter={data.counter}
             counterStyle={{ marginLeft: 10, fontSize: 16 }}
           />
-        </div>
-        <div className='btn'>
+        </View>
+        <View className="btn">
           {!isEmpty && state.value === 1 ? (
             <CButton
               style={{ right: 0 }}
@@ -100,9 +113,9 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
               {STATE_TITLE[state.value]}
             </CButton>
           )}
-        </div>
-      </div>
-    </div>
+        </View>
+      </View>
+    </View>
   );
 };
 

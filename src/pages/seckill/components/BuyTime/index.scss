@@ -1,54 +1,49 @@
 @import "@/styles/theme.scss";
 
 .buytime {
-    .alignRow;
-    width: 100%;
-    .center;
-    height: 88px;
+  @extend .alignRow;
+  width: 100%;
+  @extend .center;
+  height: 88px;
+  border: 1px solid $borderColorGrey;
+  box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
+
+  .prev,
+  .next {
+    cursor: pointer;
+    @extend .center;
+    width: 50px;
+    height: 100%;
     border: 1px solid $borderColorGrey;
     box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+  }
 
-    .prev,
-    .next {
-        cursor: pointer;
-        .center;
-        width: 50px;
-        height: 100%;
-        border: 1px solid $borderColorGrey;
-        box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
-        z-index: 1;
+  .disabled {
+    cursor: not-allowed;
+  }
+
+  .arrow {
+    // cursor: pointer;
+    // width: 1360px;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+    @extend .alignRow;
+
+    .time {
+      min-width: 170px;
+      @extend .alignColumn;
+      @extend .center;
+      //      transform: translateX(-170px);
+      //    transition: transform 0.5s;
+
+      &Active,
+      &:hover {
+        background: $lightYellow;
+        color: $white;
+      }
     }
-
-    .disabled {
-        cursor: not-allowed;
-    }
-
-    .arrow {
-        // cursor: pointer;
-        // width: 1360px;
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-        background-color: #FFF;
-        .alignRow;
-
-
-        .time {
-            min-width: 170px;
-            .alignColumn;
-            .center;
-            //      transform: translateX(-170px);
-            //    transition: transform 0.5s;
-
-            &Active,
-            &:hover {
-                background: $lightYellow;
-                color: $white;
-
-            }
-        }
-
-    }
-
-
+  }
 }

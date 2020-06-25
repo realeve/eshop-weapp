@@ -1,8 +1,9 @@
-import taro, { useState } from '@tarojs/taro';
-import from './index.scss';
-import { AtIcon as Icon } from 'taro-ui';
-import * as R from 'ramda';
-import classNames from 'classnames';
+import Taro, { useState } from "@tarojs/taro";
+import "./index.scss";
+import { AtIcon as Icon } from "taro-ui";
+import * as R from "ramda";
+import classNames from "classnames";
+import { View } from "@tarojs/components";
 
 export interface IBuytimeItem {
   data?: string;
@@ -35,7 +36,13 @@ let titleDate: {
   before: string;
   selling: string;
   taked: string;
-} = { start: '已开抢', end: '已结束', before: '即将开抢', selling: '抢购中', taked: '已抢完' };
+} = {
+  start: "已开抢",
+  end: "已结束",
+  before: "即将开抢",
+  selling: "抢购中",
+  taked: "已抢完"
+};
 
 const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
   data = [],
@@ -46,7 +53,7 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
   onClick,
   Click,
   current,
-  maxNum = '8',
+  maxNum = "8"
 }) => {
   const [idx, setIdx] = useState(0);
   const [curIdex, setcurIdx] = useState(current);
@@ -54,53 +61,56 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
   // useEffect(()=>{},[])
 
   return (
-    <div className='buytime'>
+    <View className="buytime">
       {limitTime.length > Number(maxNum) && (
-        <div
-          className={classNames('prev', {
-            'disabled': idx === 0,
+        <View
+          className={classNames("prev", {
+            disabled: idx === 0
           })}
           onClick={() => {
             setIdx(R.clamp(0, limitTime.length - Number(maxNum), idx - 1));
           }}
         >
           <Icon value="left" size="25" />
-        </div>
+        </View>
       )}
-      <div className='arrow'>
+      <View className="arrow">
         {limitTime.map((item, index) => (
-          <div
-            className={classNames('time', {
-              'timeActive': item.id === current,
+          <View
+            className={classNames("time", {
+              timeActive: item.id === current
             })}
             key={item.id}
             onClick={() => {
               setcurIdx(index);
               onClick && onClick(item.id);
             }}
-            style={{ transform: `translateX(-${idx * 170}px)`, transition: 'transform .5s' }}
+            style={{
+              transform: `translateX(-${idx * 170}px)`,
+              transition: "transform .5s"
+            }}
           >
-            <div className='date'>
+            <View className="date">
               {item.data}
               <span style={{ fontSize: 24 }}>{item.hour}</span>
-            </div>
-            <div className='title'>{item.state.text}</div>
-          </div>
+            </View>
+            <View className="title">{item.state.text}</View>
+          </View>
         ))}
-      </div>
+      </View>
       {limitTime.length > Number(maxNum) && (
-        <div
-          className={classNames('next', {
-            'disabled': idx === limitTime.length - Number(maxNum),
+        <View
+          className={classNames("next", {
+            disabled: idx === limitTime.length - Number(maxNum)
           })}
           onClick={() => {
             setIdx(R.clamp(0, limitTime.length - Number(maxNum), idx + 1));
           }}
         >
-          <AtIcon type="right" style={{ fontSize: 25, border: 1 }} />
-        </div>
+          <Icon type="right" style={{ fontSize: 25, border: 1 }} />
+        </View>
       )}
-    </div>
+    </View>
   );
 };
 
