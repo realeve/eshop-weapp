@@ -54,7 +54,7 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
         <Image
           src={data.img}
           className="img_item"
-          onClick={() => jump(`/detail/${data.id}`)}
+          onClick={() => jump(`/pages/detail/index?id=${data.id}`)}
         />
 
         {isEmpty && (
@@ -65,7 +65,10 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
       </View>
 
       <View className="content">
-        <View className="title" onClick={() => jump(`/detail/${data.id}`)}>
+        <View
+          className="title"
+          onClick={() => jump(`/pages/detail/index?id=${data.id}`)}
+        >
           {data.title}
         </View>
         <View className="tips">{data && data.tip}</View>

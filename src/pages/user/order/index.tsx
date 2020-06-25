@@ -1,5 +1,6 @@
 import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
 import "./index.scss";
 import Tab from "@/pages/search/tab/";
 import * as db from "./db";
@@ -17,14 +18,17 @@ import Pay from "./components/Pay";
 import Receive from "./components/Receive";
 import Comment from "./components/Comment";
 import Rebuy from "./components/Rebuy";
+import Logy from "./components/logistics";
 
 import CountTime from "./components/CountTime";
 
 import dayjs from "dayjs";
+import { Button } from "@tarojs/components";
 
 const { EOrderStatus } = db;
 
-const isAutoCancle = order => dayjs().isAfter(order.autoCancelTime);
+const isAutoCancle = order =>
+  order.status < 20 && dayjs().isAfter(order.autoCancelTime);
 
 const Order = () => {
   let isLogin = useLogin();
@@ -40,11 +44,13 @@ const Order = () => {
   }, [router.params]);
 
   const [page, setPage] = useState(1);
+  const [showLogy, setShowLogy] = useState(false);
 
   const [state, setState] = useSetState({
     isLoaded: true,
     hasMore: false,
-    list: []
+    list: [],
+    logiParams: {}
   });
 
   const { loading, reFetch, setLoading } = useFetch({
@@ -52,7 +58,7 @@ const Order = () => {
       ...ORDER.list,
       params: {
         ordersState: ["all", "new", "pay", "send", "noeval", "cancel"][current], //全部订单
-        ordersType: db.EOrderTypes.real, // 实物订单
+        // ordersType: db.EOrderTypes.real, // 实物订单
         keyword: "", // 搜索关键词 订单号或商品
         page
       }
@@ -94,10 +100,21 @@ const Order = () => {
     fn();
   };
 
+  const logy = (sn, code) => {
+    setState({ logiParams: { shipSn: sn, shipCode: code } });
+    setShowLogy(true);
+  };
+
   const onRefresh = reFetch;
 
   return (
     <View className="user_order">
+      <AtModal isOpened={showLogy} confirmText="关闭" closeOnClickOverlay>
+        {/* <AtModalHeader>标题</AtModalHeader> */}
+        <AtModalContent>
+          {showLogy && <Logy param={state.logiParams} />}
+        </AtModalContent>
+      </AtModal>
       <Tab list={db.orderStateList} current={current} onChange={handleMenu} />
       <ListView
         // lazy
@@ -211,6 +228,19 @@ const Order = () => {
                       autoCancelTime={order.autoCancelTime}
                     />
                   )}
+
+                {/* 查看物流 */}
+                {[
+                  EOrderStatus.sending,
+                  EOrderStatus.complete,
+                  EOrderStatus.commented,
+                  EOrderStatus.appendCommented,
+                  EOrderStatus.over
+                ].includes(order.status) && (
+                  <Button onClick={() => logy(order.shipSn, order.shipCode)}>
+                    查看物流
+                  </Button>
+                )}
 
                 {/* 确认收货 */}
                 {[EOrderStatus.sending].includes(order.status) && (
