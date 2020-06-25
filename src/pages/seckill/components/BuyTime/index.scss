@@ -19,6 +19,9 @@
     border: 1px solid $borderColorGrey;
     box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
     z-index: 1;
+    .at-icon {
+      color: $yellow;
+    }
   }
 
   .disabled {
@@ -50,10 +53,10 @@
         color: $yellow;
       }
 
-      &Active,
-      &:hover {
+      &Active {
         background: $lightYellow;
         color: $white;
+        box-shadow: 0 0 10px 2px #c5c5c3;
         .title {
           color: $white;
         }

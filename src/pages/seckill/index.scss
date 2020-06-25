@@ -2,7 +2,7 @@
 @import "~taro-ui/dist/style/components/icon.scss";
 
 .limit {
-  width: 100%;
+  @extend .alignColumn;
   .img {
     width: 100%;
     height: unset;
