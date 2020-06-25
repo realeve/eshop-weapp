@@ -93,9 +93,7 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
             theme={!isEmpty && state.value === 1 ? "normal" : "gardient"}
             size="small"
             onClick={() => {
-              if (data.id) {
-                jump(`/detail/${data.id}`);
-              }
+              jump(`/pages/detail/index?id=${data.id}`);
             }}
           >
             {STATE_TITLE[state.value]}
