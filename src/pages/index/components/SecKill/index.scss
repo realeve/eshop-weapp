@@ -1,0 +1,27 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.seckill {
+  margin-bottom: $componentSpan;
+  background-color: $white;
+  @extend .alignRow;
+  padding: 20px 30px;
+  align-items: center;
+  justify-content: space-between;
+  .title {
+    font-weight: bold;
+    font-size: $fontSizeLarge;
+  }
+  .more {
+    font-size: $fontSizeBase;
+  }
+  .time {
+    font-size: $fontSizeNormal;
+    color: $red;
+    margin: 0 30px;
+  }
+  .alignRow {
+    @extend .alignRow;
+    align-items: flex-end;
+  }
+}

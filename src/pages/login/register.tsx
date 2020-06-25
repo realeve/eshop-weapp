@@ -71,6 +71,7 @@ const Register = ({ type = "register" }) => {
       });
   };
 
+  console.log(type);
   return (
     <View className="register-page">
       <View className="title">
@@ -78,7 +79,9 @@ const Register = ({ type = "register" }) => {
       </View>
       <MobileWithCode
         onChange={setAccount}
-        smsType={SMS_TYPE.REGISTER}
+        smsType={
+          type == "register" ? SMS_TYPE.REGISTER : SMS_TYPE.FIND_PASSWORD
+        }
         setValid={setValid}
       />
 

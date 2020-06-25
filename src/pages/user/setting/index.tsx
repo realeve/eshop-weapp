@@ -10,7 +10,7 @@ import { unbind } from "@/pages/login/db";
 
 import { jump } from "@/utils/lib";
 
-const Setting = ({ isLogin, user, dispatch }) => {
+const Setting = ({ isLogin, user, dispatch, appVersion }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   // 个人信息页面
@@ -74,7 +74,12 @@ const Setting = ({ isLogin, user, dispatch }) => {
         </View>
       </View>
 
-      <AtListItem className="fields" title="关于我们" extraText="V 1.0.0" />
+      <AtListItem
+        className="fields"
+        title="系统版本号"
+        extraText={appVersion}
+      />
+
       <AtListItem
         className="fields"
         title="取消微信绑定"
@@ -106,7 +111,10 @@ Setting.config = {
   navigationBarTitleText: "账号设置"
 };
 
-export default connect(({ common: { user, isLogin } }: IGlobalModel) => ({
-  user,
-  isLogin
-}))(Setting as any);
+export default connect(
+  ({ common: { user, isLogin, appVersion } }: IGlobalModel) => ({
+    user,
+    isLogin,
+    appVersion
+  })
+)(Setting as any);

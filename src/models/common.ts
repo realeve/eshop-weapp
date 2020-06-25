@@ -1,3 +1,4 @@
+// import { isLogin } from "./../utils/lib";
 import Taro from "@tarojs/taro";
 import { setStore, setUserStore, jump, randomStr } from "@/utils/lib";
 import * as db from "../services/common";
@@ -103,6 +104,8 @@ export interface IGlobalModel {
   specialList: db.ICarouselItem[]; //三联播
   buyLocking: boolean;
   orderTrigger: string;
+  appVersion: string;
+  seckill: {};
 }
 
 const state = {
@@ -138,7 +141,14 @@ const state = {
   specialList: [],
   curCateId: 0,
   buyLocking: false,
-  orderTrigger: randomStr()
+  orderTrigger: randomStr(),
+  appVersion: "V 1.0",
+  seckill: {
+    title: "",
+    remainSeconds: 0,
+    endTime: "",
+    type: "seckill"
+  }
 };
 
 // 载入登录信息
@@ -185,7 +195,22 @@ const handleData = (data, webp) => {
 export default {
   namespace,
   state,
-  reducers: { setStore, setUserStore },
+  reducers: {
+    setStore,
+    setUserStore,
+    resetUser: ({ user, ...state }) => {
+      return {
+        ...state,
+        user: {},
+        isLogin: false,
+        token: "",
+        shoppingCart: {
+          loading: false,
+          total: { num: 0 }
+        }
+      };
+    }
+  },
   subscriptions: {
     async setup({ dispatch }: { dispatch: Dispatch }) {
       let webp = getGlobalData("webp");
@@ -196,10 +221,19 @@ export default {
           componentC, //精选推荐
           componentD, //新品发售
           componentF, // 三联播
-          componentG // 普品专题列表
-          // componentI // 秒杀
+          componentG, // 普品专题列表
+          componentAppVersion, // 系统版本
+          componentI // 秒杀
         } = res;
-        let payload = {};
+
+        let appVersion = componentAppVersion.androidVersion;
+        let payload: {
+          appVersion: string;
+          [key: string]: any;
+        } = {
+          appVersion: "V " + appVersion
+        };
+
         if (special) {
           payload = {
             ...payload,
@@ -235,6 +269,15 @@ export default {
             ...payload,
             normalList: db.handleSpecialItem(componentG, webp)
           };
+        }
+
+        if (componentI) {
+          let seckill = db.handleSecGoodsList(componentI);
+          payload = {
+            ...payload,
+            seckill
+          };
+          console.log(seckill);
         }
 
         dispatch({

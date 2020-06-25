@@ -243,10 +243,21 @@ export const logout = async (dispatch: Dispatch): Promise<any> => {
         type: "common/setStore",
         payload: { miniProgram: { isBinding: false, isConfirmed: false } }
       });
+      dispatch({
+        type: "common/resetUser"
+      });
     }
   }
+
+  // 先注销当前token,然后清token
+  // TODO 2020-06-24,后端目前该接口有误，报【参数错误】
+  // await axios({ method: "post", url: API.LOGOUT as string });
   clearUser();
-  return axios({ method: "post", url: API.LOGOUT as string });
+  // 暂时刷新来重置状态；
+  window.location.reload();
+  dispatch({
+    type: "common/resetUser"
+  });
 };
 
 export const unbind = async dispatch => {
