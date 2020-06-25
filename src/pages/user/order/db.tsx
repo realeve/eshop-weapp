@@ -134,7 +134,8 @@ export enum EOrderStatus {
   sending = 30,
   complete = 40,
   commented = 40 + 1, // 状态为40，评价标志为1，两者相加
-  appendCommented = 40 + 1 + 1 // 已追评
+  appendCommented = 40 + 1 + 1, // 已追评
+  over = 50 // 已完结
 }
 
 export const getStatusByName: (name: string) => number = (name: string) => {
