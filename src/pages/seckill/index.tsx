@@ -4,7 +4,6 @@ import { View, Image } from "@tarojs/components";
 import { SECKILL } from "@/utils/api";
 import { CEmpty } from "@/components";
 import useFetch from "@/components/hooks/useFetch";
-// import Countdown, { TFormatRender } from '@/components/CountDown';
 import CouponList from "./components/CouponList";
 import * as moment from "dayjs";
 
@@ -15,33 +14,6 @@ export interface IPropItem {
   title?: string | number;
   [key: string]: any;
 }
-
-// const ClockItem = ({ time }: { time: string }) => {
-//   time = time.padStart(2, '0');
-//   return (
-//     <>
-//       {time.split('').map((item, idx) => (
-//         <div key={idx} className={styles.timeItem} style={{ marginRight: 10 }}>
-//           <div className={styles.time} />
-//           <div className={styles.text}>{item}</div>
-//         </div>
-//       ))}
-//     </>
-//   );
-// };
-
-// export const renderClock: TFormatRender = res => {
-//   let [hour, minute, second] = res.split(' ');
-//   return (
-//     <div className={styles.clockWrap}>
-//       <ClockItem time={hour} />
-//       <span>:</span>
-//       <ClockItem time={minute} />
-//       <span>:</span>
-//       <ClockItem time={second} />
-//     </div>
-//   );
-// };
 
 const handleSchedule = data => {
   // console.log('handleScheduel', data);
@@ -79,22 +51,9 @@ const LimitBuy = () => {
   let { list, current, bannerImg } = data || {};
   return list && current ? (
     <View className="limit">
-      {/* <div className={styles.header}>
-        秒杀专场
-        <span className={styles.rest}>本场剩余</span>
-        <div className={styles.countdown}>
-          <Countdown
-            title=""
-            value={current.endTime}
-            format="H m s"
-            formatRender={renderClock}
-            // className={classNames(styles.countdown, styles.red)}
-          />
-        </div>
-      </div> */}
-      {/* <CImgCard data={bannerImg} style={{ width: 1460, height: 402 }} /> */}
-      {bannerImg && <Image src={bannerImg.img} />}
-      {/* <BuyTime /> */}
+      {bannerImg && (
+        <Image className="img" src={bannerImg.img} mode="scaleToFill" />
+      )}
       <CouponList id={current.scheduleId} list={list} />
     </View>
   ) : (

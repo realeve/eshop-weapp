@@ -4,7 +4,7 @@ import "./index.scss";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 
-import { View } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 
 export interface ICouponItem {
   title: string;
@@ -52,7 +52,11 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
   return (
     <View className={classNames("couponItem", className)} style={style}>
       <View className="img">
-        <img src={data.img} alt="" onClick={() => jump(`/detail/${data.id}`)} />
+        <Image
+          src={data.img}
+          alt=""
+          onClick={() => jump(`/detail/${data.id}`)}
+        />
 
         {isEmpty && (
           <View className="invalid">

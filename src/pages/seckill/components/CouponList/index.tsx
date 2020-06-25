@@ -252,6 +252,8 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
   //   getdata(currentHour);
   // }, [currentHour]);
 
+  console.log(list);
+
   return (
     <View>
       {list && (

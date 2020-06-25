@@ -1,4 +1,5 @@
 @import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 
 .buytime {
   @extend .alignRow;
@@ -12,7 +13,8 @@
   .next {
     cursor: pointer;
     @extend .center;
-    width: 50px;
+    // width: 50px;
+    width: 5vw;
     height: 100%;
     border: 1px solid $borderColorGrey;
     box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
@@ -24,9 +26,8 @@
   }
 
   .arrow {
-    // cursor: pointer;
-    // width: 1360px;
     height: 100%;
+    width: 90vw;
     overflow: hidden;
     position: relative;
     background-color: #fff;
@@ -36,13 +37,26 @@
       min-width: 170px;
       @extend .alignColumn;
       @extend .center;
-      //      transform: translateX(-170px);
-      //    transition: transform 0.5s;
+      transform: translateX(-170px);
+      transition: transform 0.5s;
+
+      font-size: $fontSizeBase;
+
+      .datename {
+        font-size: $fontSizeSmall;
+      }
+      .title {
+        font-size: $fontSizeSmall;
+        color: $yellow;
+      }
 
       &Active,
       &:hover {
         background: $lightYellow;
         color: $white;
+        .title {
+          color: $white;
+        }
       }
     }
   }

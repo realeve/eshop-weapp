@@ -3,7 +3,7 @@ import "./index.scss";
 import { AtIcon as Icon } from "taro-ui";
 import * as R from "ramda";
 import classNames from "classnames";
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 
 export interface IBuytimeItem {
   data?: string;
@@ -13,13 +13,6 @@ export interface IBuytimeItem {
   maxNum?: string;
   [key: string]: any;
 }
-// export interface IPropItem {
-//   id: string | number;
-//   data?: string;
-//   hour: string;
-//   title?: string | number;
-//   [key: string]: any;
-// }
 
 interface IBuytimeData {
   limitTime?: IBuytimeItem[];
@@ -53,25 +46,23 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
   onClick,
   Click,
   current,
-  maxNum = "8"
+  maxNum = 5
 }) => {
   const [idx, setIdx] = useState(0);
-  const [curIdex, setcurIdx] = useState(current);
-
-  // useEffect(()=>{},[])
+  const [curIdx, setcurIdx] = useState(current);
 
   return (
     <View className="buytime">
-      {limitTime.length > Number(maxNum) && (
+      {limitTime.length > maxNum && (
         <View
           className={classNames("prev", {
             disabled: idx === 0
           })}
           onClick={() => {
-            setIdx(R.clamp(0, limitTime.length - Number(maxNum), idx - 1));
+            setIdx(R.clamp(0, limitTime.length - maxNum, idx - 1));
           }}
         >
-          <Icon value="left" size="25" />
+          <Icon value="chevron-left" size="25" />
         </View>
       )}
       <View className="arrow">
@@ -91,25 +82,26 @@ const BuyTime: (props: IBuytimeData) => React.ReactElement = ({
             }}
           >
             <View className="date">
-              {item.data}
-              <span style={{ fontSize: 24 }}>{item.hour}</span>
+              <Text className="datename">{item.data}</Text>
+              <Text className="hour">{item.hour}</Text>
             </View>
             <View className="title">{item.state.text}</View>
           </View>
         ))}
       </View>
-      {limitTime.length > Number(maxNum) && (
+      {
+        // limitTime.length > Number(maxNum) &&
         <View
           className={classNames("next", {
-            disabled: idx === limitTime.length - Number(maxNum)
+            disabled: idx === limitTime.length - maxNum
           })}
           onClick={() => {
-            setIdx(R.clamp(0, limitTime.length - Number(maxNum), idx + 1));
+            setIdx(R.clamp(0, limitTime.length - maxNum, idx + 1));
           }}
         >
-          <Icon type="right" style={{ fontSize: 25, border: 1 }} />
+          <Icon value="chevron-right" size={25} />
         </View>
-      )}
+      }
     </View>
   );
 };
