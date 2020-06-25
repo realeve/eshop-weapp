@@ -182,3 +182,8 @@ export const ORDER_TYPE = {
   NORMAL: 0,
   VIRTUAL: 1
 };
+
+export const SECKILL = {
+  list: { method: "post", url: "/seckill" },
+  detail: { method: "post", url: "/seckill/goods" }
+}
