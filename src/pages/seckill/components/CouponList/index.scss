@@ -4,7 +4,8 @@
   flex: 1;
   @extend .alignColumn;
   .popular {
-    @extend .alignRow;
+    @extend .alignColumn;
     flex: 1;
+    background: $bg;
   }
 }
