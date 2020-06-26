@@ -56,7 +56,7 @@ const LimitBuy = () => {
           <Image className="img" src={bannerImg.img} mode="scaleToFill" />
         </View>
       )}
-      <CouponList id={current.scheduleId} list={list} />
+      <CouponList id={current.scheduleId} list={list} current={current} />
     </View>
   ) : (
     <CEmpty type="goods" />

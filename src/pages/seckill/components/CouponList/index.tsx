@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import useFetch from "@/components/hooks/useFetch";
 import { CEmpty } from "@/components/";
 import { SECKILL } from "@/utils/api";
@@ -6,7 +6,9 @@ import "./index.scss";
 import CouponItem from "../CouponItem";
 import BuyTime from "../BuyTime";
 import * as moment from "dayjs";
-import { View, ScrollView } from "@tarojs/components";
+import { View, ScrollView, Text } from "@tarojs/components";
+import { AtCountdown } from "taro-ui";
+import { getDhms, IHms } from "@/pages/user/order/components/CountTime";
 
 interface IPropData {
   id: string | number;
@@ -34,9 +36,11 @@ export const handleDetail = data => {
   return { dist };
 };
 
-const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
-  // const [currentHour, setCurrentHour] = useState(new Date().getHours() + ':00');
-  // const [state, setstate] = useState(0);
+const CouponList: (prop: IPropData) => React.ReactElement = ({
+  id,
+  list,
+  current: currentData
+}) => {
   const [current, setCurrent] = useState(id);
 
   const { data } = useFetch({
@@ -47,19 +51,11 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
     callback: data => handleDetail(data)
   });
 
-  // 获取限购时间段数据
-  // const getdata = (hour: string) => {
-  //   let nextState = R.clone(initData);
-  //   if (nextState.length == 0) {
-  //     return;
-  //   }
-  //   nextState = nextState.filter(item => item.hour == hour);
-  //   // setDist(nextState);
-  // };
-
-  // useEffect(() => {
-  //   getdata(currentHour);
-  // }, [currentHour]);
+  const [dateParam, setDateParam] = useState<IHms | {}>({});
+  useEffect(() => {
+    let props: IHms = getDhms(currentData.endTime) as IHms;
+    setDateParam(props);
+  }, [JSON.stringify(currentData)]);
 
   return (
     <View className="coupon_wrap">
@@ -67,6 +63,21 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({ id, list }) => {
         <BuyTime limitTime={list} onClick={setCurrent} current={current} />
       )}
       <ScrollView scrollY className="popular">
+        <View className="at-divider">
+          <View className="at-divider__content">
+            {current < id ? (
+              "活动已结束"
+            ) : current > id ? (
+              "精彩内容即将开始"
+            ) : (
+              <View className="countdown">
+                <Text className="countdown_title">本场还剩</Text>
+                <AtCountdown {...dateParam} />
+              </View>
+            )}
+          </View>
+          <View className="at-divider__line"></View>
+        </View>
         {data && data.dist ? (
           (data.dist || []).map(item => (
             <CouponItem
