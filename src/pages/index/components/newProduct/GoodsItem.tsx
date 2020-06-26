@@ -4,13 +4,14 @@ import "./GoodsItem.scss";
 import { CPrice } from "@/components/";
 import { jump } from "@/utils/lib";
 
-const GoodsItem = ({ item }) => {
+const GoodsItem = ({ item, style }) => {
   return (
     <View
       className="item"
       onClick={() => {
         jump(`/pages/detail/index?id=${item.commonId}`);
       }}
+      style={style}
     >
       <Image
         className="img"
@@ -24,7 +25,7 @@ const GoodsItem = ({ item }) => {
           className="price"
           retail={(item && item.goodsPrice) || 0}
           counter={(item && item.counter) || 0}
-          counterStyle={{ marginLeft: "10px", fontSize: "16px" }}
+          counterStyle={{ marginLeft: "5px", fontSize: "16px" }}
         />
       </View>
     </View>

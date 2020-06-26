@@ -2,9 +2,9 @@
 @import "~taro-ui/dist/style/components/icon.scss";
 .secwrap {
   margin-bottom: $componentSpan;
+  background-color: $white;
 }
 .seckill {
-  background-color: $white;
   @extend .alignRow;
   padding: 20px 30px;
   align-items: center;
@@ -25,4 +25,10 @@
     @extend .alignRow;
     align-items: flex-end;
   }
+}
+
+.goods {
+  white-space: nowrap;
+  display: inline-block;
+  width: 100%;
 }

@@ -3,7 +3,8 @@ import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { jump } from "@/utils/lib";
 import CountTime from "@/pages/user/order/components/CountTime";
-import NewProduct from "../newProduct";
+import ScrollGoods from "./ScrollGoods";
+
 export default ({ res }) => {
   return (
     <View className="secwrap">
@@ -29,13 +30,7 @@ export default ({ res }) => {
           更多 <Text className="at-icon at-icon-chevron-right" />
         </view>
       </View>
-      {res && res.data && res.data.length > 0 && (
-        <NewProduct
-          style={{ marginTop: "-10px" }}
-          data={{ data: res.data }}
-          showTitle={false}
-        />
-      )}
+      {res.data && <ScrollGoods data={res.data || []} />}
     </View>
   );
 };

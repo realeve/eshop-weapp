@@ -399,12 +399,11 @@ export default {
           //   ]
           // };
 
-          let seckill = db.handleSecGoodsList(componentI);
+          let seckill = db.handleSecGoodsList(componentI); // componentI
           payload = {
             ...payload,
             seckill
           };
-          console.log(seckill);
         }
 
         dispatch({

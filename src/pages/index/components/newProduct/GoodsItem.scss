@@ -2,6 +2,8 @@
 
 .item {
   flex: 1;
+  background-color: $white;
+  display: inline-block;
   .img {
     width: 100%;
   }
@@ -16,6 +18,10 @@
       font-size: $fontSizeSmall;
       text-align: center;
       padding: 0;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .price {
       text-align: center;
