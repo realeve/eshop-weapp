@@ -9,40 +9,17 @@
   /* prettier-ignore */
   border: 1PX solid $borderColorGrey;
   box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
-
-  .prev,
-  .next {
-    cursor: pointer;
-    @extend .center;
-    // width: 50px;
-    width: 5vw;
-    height: 100%;
-    border: 1px solid $borderColorGrey;
-    box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
-    z-index: 1;
-    .at-icon {
-      color: $yellow;
-    }
-  }
-
-  .disabled {
-    cursor: not-allowed;
-  }
-
+  position: relative;
   .arrow {
-    height: 100%;
-    width: 90vw;
-    overflow: hidden;
-    position: relative;
-    background-color: #fff;
-    @extend .alignRow;
+    white-space: nowrap;
+    display: flex;
+    height: 90px;
 
     .time {
-      min-width: 170px;
+      margin: 0 10px;
+      padding: 0 20px;
       @extend .alignColumn;
       @extend .center;
-      transform: translateX(-170px);
-      transition: transform 0.5s;
 
       font-size: $fontSizeBase;
 
@@ -63,6 +40,22 @@
           color: $white;
         }
       }
+    }
+  }
+  .icon {
+    position: fixed;
+    right: 5px;
+    color: $yellow;
+    animation: slideRight 1.5s infinite;
+  }
+  @keyframes slideRight {
+    from {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(40px);
+      opacity: 0.3;
     }
   }
 }
