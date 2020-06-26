@@ -12,7 +12,9 @@
     height: unset;
   }
   .detail {
-    @extend .alignColumn;
+    // @extend .alignColumn;
+    display: flex;
+    flex-direction: column;
     @extend .vcenter;
     .title {
       font-size: $fontSizeSmall;

@@ -29,7 +29,7 @@ export default ({ data }) => {
               {data.promo}
               {data.goodsName}
             </View>
-            <View className="title">
+            <View className="maintitle">
               <View className="info">
                 <View className="name">预约价</View>
                 <View className="value">
