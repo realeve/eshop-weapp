@@ -64,11 +64,11 @@ export const handleSecGoodsList = (goods: {
   let data =
     goods.seckillGoodsCommonVoList && goods.seckillGoodsCommonVoList.length > 0
       ? goods.seckillGoodsCommonVoList.map((item: ISecPopularList) => ({
-          id: item.commonId,
-          img: item.imageSrc,
-          title: item.goodsName,
-          price: item.seckillGoodsPrice,
-          orgPrice: item.goodsPrice
+          commonId: item.commonId,
+          imageUrl: item.imageSrc,
+          goodsTitle: item.goodsName,
+          goodsPrice: item.seckillGoodsPrice,
+          counter: item.goodsPrice
         }))
       : undefined;
   return {

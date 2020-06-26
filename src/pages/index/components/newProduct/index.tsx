@@ -8,9 +8,9 @@ import TitleItem from "../CollectionList/titleItem";
 
 import { jump } from "@/utils/lib";
 
-const NewProduct = ({ data = { data: [] } }: IProps) => {
+const NewProduct = ({ data = { data: [] }, style = {} }: IProps) => {
   return (
-    <View className="newProduct">
+    <View className="newProduct" style={style}>
       <TitleItem data={data} />
       <View className="grid">
         {R.splitEvery(3, data.data).map((row, rowId) => (
@@ -34,6 +34,8 @@ const NewProduct = ({ data = { data: [] } }: IProps) => {
                   <CPrice
                     className="price"
                     retail={(item && item.goodsPrice) || 0}
+                    counter={(item && item.counter) || 0}
+                    counterStyle={{ marginLeft: "10px", fontSize: "16px" }}
                   />
                 </View>
               </View>

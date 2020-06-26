@@ -48,7 +48,7 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({
       ...(SECKILL.detail as {}),
       data: { page: 1, scheduleId: current }
     },
-    callback: data => handleDetail(data)
+    callback: handleDetail
   });
 
   const [dateParam, setDateParam] = useState<IHms | {}>({});

@@ -272,7 +272,134 @@ export default {
         }
 
         if (componentI) {
-          let seckill = db.handleSecGoodsList(componentI);
+          let res = {
+            seckillTime: 71200,
+            seckillName: "12点场",
+            seckillGoodsCommonVoList: [
+              {
+                seckillCommonId: 222,
+                seckillGoodsId: 0,
+                goodsName: "心语系列银手镯玫瑰款",
+                imageSrc:
+                  "https://static.ccgold.cn/image/2c/0d/2c0d930b5b29aec1e17acc023d44b617.jpg",
+                goodsId: 0,
+                commonId: 50,
+                goodsPrice: 370,
+                seckillGoodsPrice: 259,
+                goodsStorage: 12,
+                limitAmount: 0,
+                scheduleId: 66,
+                startTime: "2020-06-25 12:00:00",
+                endTime: "2020-06-26 12:00:00",
+                scheduleState: 1,
+                verifyRemark: null,
+                scheduleStateText: "已开抢",
+                storeName: null,
+                scheduleName: null,
+                goodsSaleNum: 1,
+                salesPercentage: 7,
+                isNotice: 0
+              },
+              {
+                seckillCommonId: 221,
+                seckillGoodsId: 0,
+                goodsName: "竹报平安银挂饰",
+                imageSrc:
+                  "https://static.ccgold.cn/image/84/6f/846f24096990e6f8373dbcf100422073.jpg",
+                goodsId: 0,
+                commonId: 77,
+                goodsPrice: 98,
+                seckillGoodsPrice: 66,
+                goodsStorage: 8,
+                limitAmount: 0,
+                scheduleId: 66,
+                startTime: "2020-06-25 12:00:00",
+                endTime: "2020-06-26 12:00:00",
+                scheduleState: 1,
+                verifyRemark: null,
+                scheduleStateText: "已开抢",
+                storeName: null,
+                scheduleName: null,
+                goodsSaleNum: 0,
+                salesPercentage: 0,
+                isNotice: 0
+              },
+              {
+                seckillCommonId: 220,
+                seckillGoodsId: 0,
+                goodsName: "熊猫亲子吊坠套装",
+                imageSrc:
+                  "https://static.ccgold.cn/image/d2/b2/d2b2d135d35fb688f979936e6c1aad35.jpg",
+                goodsId: 0,
+                commonId: 8,
+                goodsPrice: 216,
+                seckillGoodsPrice: 152,
+                goodsStorage: 49,
+                limitAmount: 0,
+                scheduleId: 66,
+                startTime: "2020-06-25 12:00:00",
+                endTime: "2020-06-26 12:00:00",
+                scheduleState: 1,
+                verifyRemark: null,
+                scheduleStateText: "已开抢",
+                storeName: null,
+                scheduleName: null,
+                goodsSaleNum: 0,
+                salesPercentage: 0,
+                isNotice: 0
+              },
+              {
+                seckillCommonId: 219,
+                seckillGoodsId: 0,
+                goodsName: "牍书茶盏",
+                imageSrc:
+                  "https://static.ccgold.cn/image/4e/ed/4eed5187c0fe7d8585dba39fd41e0505.jpg",
+                goodsId: 0,
+                commonId: 34,
+                goodsPrice: 900,
+                seckillGoodsPrice: 630,
+                goodsStorage: 19,
+                limitAmount: 0,
+                scheduleId: 66,
+                startTime: "2020-06-25 12:00:00",
+                endTime: "2020-06-26 12:00:00",
+                scheduleState: 1,
+                verifyRemark: null,
+                scheduleStateText: "已开抢",
+                storeName: null,
+                scheduleName: null,
+                goodsSaleNum: 0,
+                salesPercentage: 0,
+                isNotice: 0
+              },
+              {
+                seckillCommonId: 218,
+                seckillGoodsId: 0,
+                goodsName: "心语心经款银手镯",
+                imageSrc:
+                  "https://static.ccgold.cn/image/0f/36/0f36d11a356988e6462277027dabf078.jpg",
+                goodsId: 0,
+                commonId: 54,
+                goodsPrice: 370,
+                seckillGoodsPrice: 259,
+                goodsStorage: 9,
+                limitAmount: 0,
+                scheduleId: 66,
+                startTime: "2020-06-25 12:00:00",
+                endTime: "2020-06-26 12:00:00",
+                scheduleState: 1,
+                verifyRemark: null,
+                scheduleStateText: "已开抢",
+                storeName: null,
+                scheduleName: null,
+                goodsSaleNum: 0,
+                salesPercentage: 0,
+                isNotice: 0
+              }
+            ]
+          };
+
+          let seckill = db.handleSecGoodsList(res || componentI);
           payload = {
             ...payload,
             seckill

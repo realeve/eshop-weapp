@@ -28,10 +28,10 @@ export interface IProps {
   [key: string]: any;
 }
 
-const CollectionList = ({ data = { data: [] } }: IProps) => {
+const CollectionList = ({ data = { data: [] }, showTitle = true }: IProps) => {
   return (
     <View className="collectionList">
-      <TitleItem data={data} />
+      {showTitle && <TitleItem data={data} />}
       <View className="grid">
         {R.splitEvery(3, data.data).map((row, rowId) => (
           <View className="row" key={rowId + ""}>
@@ -52,20 +52,22 @@ const CollectionList = ({ data = { data: [] } }: IProps) => {
         ))}
       </View>
 
-      <View className="footer">
-        <View className="summary">{data.summary}</View>
-        <AtButton
-          type="secondary"
-          size="small"
-          onClick={() => {
-            jump({
-              url: "/pages/index/suggest/index"
-            });
-          }}
-        >
-          点击查看
-        </AtButton>
-      </View>
+      {showTitle && (
+        <View className="footer">
+          <View className="summary">{data.summary}</View>
+          <AtButton
+            type="secondary"
+            size="small"
+            onClick={() => {
+              jump({
+                url: "/pages/index/suggest/index"
+              });
+            }}
+          >
+            点击查看
+          </AtButton>
+        </View>
+      )}
     </View>
   );
 };

@@ -1,8 +1,9 @@
 @import "@/styles/theme.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
-
-.seckill {
+.secwrap {
   margin-bottom: $componentSpan;
+}
+.seckill {
   background-color: $white;
   @extend .alignRow;
   padding: 20px 30px;

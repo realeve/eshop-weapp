@@ -4,7 +4,7 @@ import "./index.scss";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 
-import { View, Image, Text } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 
 export interface ICouponItem {
   title: string;
