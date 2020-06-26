@@ -2,11 +2,37 @@ import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import "./index.scss";
 import { AtCountdown } from "taro-ui";
-import { getDhms } from "@/pages/user/order/components/CountTime";
+import { getDhms, IHms } from "@/pages/user/order/components/CountTime";
+import dayjs from "dayjs";
+
+const getConfig: (
+  data: any
+) => {
+  status: boolean;
+  title: string;
+  param?: IHms;
+} = data => {
+  if (dayjs().isBefore(data.startTime)) {
+    return {
+      status: true,
+      title: "距开始",
+      param: getDhms(data.startTime)
+    };
+  } else if (dayjs().isBefore(data.endTime)) {
+    return {
+      status: true,
+      title: "距结束",
+      param: getDhms(data.endTime)
+    };
+  }
+  return {
+    status: false,
+    title: `已于 ${data.endTime} 结束`
+  };
+};
 
 export default ({ limitBuy }) => {
-  console.log(limitBuy);
-  let props = getDhms(limitBuy.endTime);
+  let props = getConfig(limitBuy);
   return (
     <View className="limitbuy">
       <View>
@@ -14,13 +40,15 @@ export default ({ limitBuy }) => {
         <Text className="title">秒杀</Text>
       </View>
       <View className="remain">
-        <Text className="remainTitle">距结束</Text>
-        <AtCountdown
-          isCard
-          format={{ day: "天", hours: "时", minutes: "分", seconds: "秒" }}
-          isShowDay={props.day > 0}
-          {...props}
-        />
+        <Text className="remainTitle">{props.title}</Text>
+        {props.param && (
+          <AtCountdown
+            isCard
+            format={{ day: "天", hours: "时", minutes: "分", seconds: "秒" }}
+            isShowDay={props.param.day > 0}
+            {...props.param}
+          />
+        )}
       </View>
     </View>
   );

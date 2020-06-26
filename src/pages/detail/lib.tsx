@@ -205,6 +205,7 @@ export interface IProductInfo {
     percent?: number;
     type: number;
     endTime: string;
+    startTime: string;
   };
 
   // 抽签购

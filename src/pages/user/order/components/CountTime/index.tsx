@@ -3,6 +3,12 @@ import { View, Text } from "@tarojs/components";
 import dayjs from "dayjs";
 import { AtCountdown } from "taro-ui";
 import "./index.scss";
+export interface IHms {
+  day: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
 export let getDhms = time => {
   let diff =
     typeof time === "string" ? dayjs(time).diff(dayjs(), "second") : time;
