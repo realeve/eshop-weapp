@@ -53,8 +53,8 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
       <View className="img">
         <Image
           src={data.img}
-          onClick={() => jump(`/pages/detail/index?id=${data.id}`)}
           className="img_item"
+          onClick={() => jump(`/pages/detail/index?id=${data.id}`)}
         />
 
         {isEmpty && (
