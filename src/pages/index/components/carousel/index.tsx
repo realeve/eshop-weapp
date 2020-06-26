@@ -9,6 +9,15 @@ let { windowWidth }: Taro.getSystemInfoSync.Result = Taro.getSystemInfoSync();
 // https://github.com/nolimits4web/swiper/blob/149daf5e98070ce3b15061f5bfb240f1e8997748/src/components/autoplay/autoplay.js#L113
 // autoplay在h5中的参数配置
 
+let autoplay = {
+  enabled: true,
+  delay: 3000,
+  waitForTransition: true,
+  disableOnInteraction: true,
+  stopOnLastSlide: false,
+  reverseDirection: true
+};
+
 /**
  * @returns 首页组件
  * @param ratio 宽高比
@@ -25,14 +34,8 @@ export default ({
   return (
     <Swiper
       className="carousel"
-      autoplay={{
-        enabled: true,
-        delay: 3000,
-        waitForTransition: true,
-        disableOnInteraction: true,
-        stopOnLastSlide: false,
-        reverseDirection: true
-      }}
+      autoplay={autoplay}
+      params={{ autoplay }}
       indicatorDots
       indicatorActiveColor="#b98a4e"
       style={{

@@ -4,6 +4,14 @@ import "./index.scss";
 import { ITypeImageItem } from "@/pages/detail/lib";
 import { jump, isWeapp } from "@/utils/lib";
 
+let autoplay = {
+  enabled: true,
+  delay: 3000,
+  waitForTransition: true,
+  disableOnInteraction: true,
+  stopOnLastSlide: false,
+  reverseDirection: true
+};
 export default function Gallery({
   data = [],
   circular = true
@@ -30,14 +38,8 @@ export default function Gallery({
         indicatorColor="#fff"
         indicatorActiveColor="#b98a4e"
         indicatorDots
-        autoplay={{
-          enabled: true,
-          delay: 3000,
-          waitForTransition: true,
-          disableOnInteraction: true,
-          stopOnLastSlide: false,
-          reverseDirection: true
-        }}
+        autoplay={autoplay}
+        params={{ autoplay }}
         circular={circular}
       >
         {data.map(item => (

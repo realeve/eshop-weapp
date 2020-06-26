@@ -7,19 +7,21 @@ import DCard from "../card";
 import { getWebpSuffix } from "@/services/common";
 import { jump } from "@/utils/lib";
 
+let autoplay = {
+  enabled: true,
+  delay: 3000,
+  waitForTransition: true,
+  disableOnInteraction: true,
+  stopOnLastSlide: false,
+  reverseDirection: true
+};
 export default ({ data = [], title }) => (
   <DCard className="home-pin__wrap">
     {title && <View className="home-pin__title">{title}</View>}
     <Swiper
       className="home-pin__swiper"
-      autoplay={{
-        enabled: true,
-        delay: 3000,
-        waitForTransition: true,
-        disableOnInteraction: true,
-        stopOnLastSlide: false,
-        reverseDirection: true
-      }}
+      autoplay={autoplay}
+      params={{ autoplay }}
       indicatorDots
       indicatorActiveColor="#b98a4e"
     >

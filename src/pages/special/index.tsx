@@ -18,6 +18,15 @@ import useFetch from "@/components/hooks/useFetch";
 
 const isWEB = Taro.getEnv() === Taro.ENV_TYPE.WEB;
 
+let autoplay = {
+  enabled: true,
+  delay: 3000,
+  waitForTransition: true,
+  disableOnInteraction: true,
+  stopOnLastSlide: false,
+  reverseDirection: true
+};
+
 interface IProps {
   [key: string]: any;
 }
@@ -39,14 +48,8 @@ const Special = ({ dispatch }: IProps) => {
         <Swiper
           className="swiper_card"
           circular
-          autoplay={{
-            enabled: true,
-            delay: 3000,
-            waitForTransition: true,
-            disableOnInteraction: true,
-            stopOnLastSlide: false,
-            reverseDirection: true
-          }}
+          autoplay={autoplay}
+          params={{ autoplay }}
           interval={30000}
           indicatorDots
           indicatorColor="#999"

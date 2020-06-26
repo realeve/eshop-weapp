@@ -11,10 +11,15 @@
     font-weight: bold;
     color: $red;
   }
+  .at-countdown__time {
+    /* prettier-ignore */
+    letter-spacing: 1PX;
+  }
   .at-countdown__time-box {
     background-color: #e70016;
     color: $white;
     border: none;
+    @extend .center;
     /* prettier-ignore */
     border-radius:2PX;
     &:after {
