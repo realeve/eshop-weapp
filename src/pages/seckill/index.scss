@@ -3,9 +3,13 @@
 
 .limit {
   @extend .alignColumn;
-  .img {
-    width: 100%;
-    height: unset;
+  .imgwrapper {
+    height: 150px;
+    .img {
+      width: 100%;
+      height: 100%;
+    }
   }
+
   height: 100vh;
 }

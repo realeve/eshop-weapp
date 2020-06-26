@@ -1,7 +1,5 @@
 @import "@/styles/theme.scss";
 
-$itemSize: 433px;
-
 .floatPanel {
   position: absolute;
   left: 0;
@@ -9,8 +7,8 @@ $itemSize: 433px;
 }
 
 .couponItem {
-  margin: 10px;
-  padding: 15px 0;
+  margin: 0 10px 20px 10px;
+  padding: 15px;
   @extend .alignRow;
   background: $white;
 
@@ -35,8 +33,8 @@ $itemSize: 433px;
       height: 100%;
 
       .circle {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         @extend .center;
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0.6);
@@ -47,6 +45,8 @@ $itemSize: 433px;
 
   .content {
     flex: 1;
+    @extend .alignColumn;
+
     .title {
       color: $mainTitle;
       font-size: $fontSizeBase;
@@ -59,47 +59,54 @@ $itemSize: 433px;
       font-family: "PingFang SC";
     }
 
-    .style {
-      @extend .alignRow;
-      margin: 11px 0 10px 0;
-
-      $progressSize: 14px;
-      .progress {
-        width: 310px;
-        height: $progressSize;
-        border-radius: $progressSize;
-        position: relative;
-        border: 1px solid $yellow;
-
-        .active {
-          position: absolute;
-          height: $progressSize;
-          left: 0;
-          top: 0;
-          border-radius: $progressSize;
-          background: $yellow;
-          @extend .center;
-        }
-      }
-
-      .rest {
-        margin-left: 25px;
-        font-size: $fontSizeSmall;
-      }
-    }
-
     .action {
       @extend .alignRow;
+      justify-content: space-between;
       padding-bottom: 12px;
       align-items: center;
       .action_title {
         font-size: $fontSizeNormal;
       }
-    }
+      .status {
+        @extend .alignColumn;
+        flex: 1;
+        margin-left: 40px;
+        .btn {
+          display: flex;
+          justify-content: flex-end;
+        }
 
-    .btn {
-      display: flex;
-      justify-content: flex-end;
+        .style {
+          @extend .alignRow;
+          margin-top: 10px;
+          flex: 1;
+          $progressSize: 14px;
+          .progress {
+            width: 100%;
+            height: $progressSize;
+            border-radius: $progressSize;
+            position: relative;
+            border: 1px solid $yellow;
+
+            .active {
+              position: absolute;
+              height: $progressSize;
+              left: 0;
+              top: 0;
+              border-radius: $progressSize;
+              background: $yellow;
+              @extend .center;
+            }
+          }
+
+          .rest {
+            margin-left: 25px;
+            font-size: $fontSizeSmall;
+            width: 180px;
+            text-align: right;
+          }
+        }
+      }
     }
   }
 }

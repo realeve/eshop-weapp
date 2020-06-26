@@ -11,7 +11,7 @@ import classnames from "classnames";
 import iconYou from "./you.png";
 import iconBao from "./bao.png";
 import iconZheng from "./zheng.png";
-import { getGoodsInfoBySpec } from "./lib";
+// import { getGoodsInfoBySpec } from "./lib";
 
 const iconList = {
   you: iconYou,
@@ -64,7 +64,7 @@ const DetailCard = ({
             {data.services &&
               data.services.map(service => (
                 <View key={service.title} className="servicesItem">
-                  •{service.title}
+                  • {service.title}
                 </View>
               ))}
           </View>

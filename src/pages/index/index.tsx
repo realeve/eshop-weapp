@@ -62,7 +62,7 @@ const Index = ({
         onScroll={onScroll}
       >
         <BannerImg special={special} />
-        <SecKill data={seckill} />
+        <SecKill res={seckill} />
         <CateList data={menuList} dispatch={dispatch} />
         <Carousel data={normalList} ratio="1.05" />
         <CollectionList data={collectionList} />

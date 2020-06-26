@@ -4,7 +4,7 @@ import "./index.scss";
 import { CPrice, CButton } from "@/components";
 import { jump } from "@/utils/lib";
 
-import { View, Image, Text } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 
 export interface ICouponItem {
   title: string;
@@ -47,7 +47,9 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
   className,
   state
 }) => {
-  let isEmpty = data.rest == 100 || data.total == 0;
+  const isEmpty = data.rest == 100 || data.total == 0;
+  const isValid = !isEmpty && state.value === 1;
+
   return (
     <View className={classNames("couponItem", className)} style={style}>
       <View className="img">
@@ -72,35 +74,39 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
           {data.title}
         </View>
         <View className="tips">{data && data.tip}</View>
-        <View className="style">
-          <View className="progress">
-            <View
-              className="active"
-              style={{ width: `${data.rest || 0}%` }}
-            ></View>
-          </View>
-          <View className="rest">还剩 {data.total}件</View>
-        </View>
 
         <View className="action">
-          <Text className="action_title">限购价：</Text>
           <CPrice
             retail={data.price}
             retailStyle={{ marginLeft: 10, fontSize: 18 }}
             counter={data.counter}
             counterStyle={{ marginLeft: 10, fontSize: 16 }}
+            direction="column"
           />
-        </View>
-        <View className="btn">
-          <CButton
-            theme={!isEmpty && state.value === 1 ? "normal" : "gardient"}
-            size="small"
-            onClick={() => {
-              jump(`/pages/detail/index?id=${data.id}`);
-            }}
-          >
-            {STATE_TITLE[state.value]}
-          </CButton>
+          <View className="status">
+            <View className="btn">
+              <CButton
+                theme={isValid ? "gardient" : "normal"}
+                size="xsmall"
+                style={{ width: "100px" }}
+                onClick={() => {
+                  jump(`/pages/detail/index?id=${data.id}`);
+                }}
+                round={false}
+              >
+                {isEmpty ? "已结束" : STATE_TITLE[state.value]}
+              </CButton>
+            </View>
+            <View className="style">
+              <View className="progress">
+                <View
+                  className="active"
+                  style={{ width: `${data.rest || 0}%` }}
+                ></View>
+              </View>
+              <View className="rest">还剩 {data.total}件</View>
+            </View>
+          </View>
         </View>
       </View>
     </View>

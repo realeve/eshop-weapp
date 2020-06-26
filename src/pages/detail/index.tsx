@@ -20,7 +20,6 @@ import DContent from "./components/detail";
 import DGoodsList from "./components/goodsList";
 import DAction from "./components/action";
 import DGuessULike from "./components/guessulike";
-
 import * as wx from "@/utils/weixin";
 
 const Detail = () => {

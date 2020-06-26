@@ -205,6 +205,7 @@ export interface IProductInfo {
     percent?: number;
     type: number;
     endTime: string;
+    startTime: string;
   };
 
   // 抽签购
@@ -297,6 +298,7 @@ export const initData: (
     goods.promotionState === 1 &&
     org.joinBigSale === 1 &&
     goods.webUsable === 1;
+
   let prod: IProductInfo = {
     id: org.commonId,
     goodsId: org.goodsId,
@@ -373,8 +375,10 @@ export const initData: (
       ? {
           title: goods.promotionType === PROMO_TYPE.SECKILL ? "秒杀" : "限时购",
           status: true,
+          startTime: org.goodsList[0].promotionStartTime,
           endTime: org.goodsList[0].promotionEndTime,
-          type: isPromo ? org.promotionType : undefined
+          type: isPromo ? org.promotionType : undefined,
+          limitAmount: org.goodsList[0].limitAmount
         }
       : undefined
   };

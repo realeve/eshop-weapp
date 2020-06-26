@@ -7,7 +7,7 @@ export default class CButton extends Component {
   render() {
     const {
       children,
-      theme = "",
+      theme = "normal",
       className,
       onClick,
       size,

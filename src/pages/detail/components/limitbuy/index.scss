@@ -1,0 +1,60 @@
+@import "@/styles/theme.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.limitbuy {
+  margin-top: 10px;
+  background: linear-gradient(
+    -90deg,
+    $yellow,
+    $darkYellow,
+    $midYellow,
+    $yellow
+  );
+  padding: 20px;
+  color: $white;
+  font-size: $fontSizeMid;
+  height: 70px;
+  @extend .alignRow;
+  align-items: center;
+  justify-content: space-between;
+  .at-icon {
+    font-size: $fontSizeMid;
+  }
+  .title {
+    font-size: $fontSizeMid;
+    margin-left: 15px;
+  }
+  .remain {
+    &Title {
+      font-size: $fontSizeNormal;
+      margin-right: 20px;
+    }
+    // @extend .alignRow;
+    // .at-countdown {
+    //   display: flex;
+    //   align-items: flex-end;
+    // }
+
+    .at-countdown__separator {
+      margin: 0 10px;
+      color: $white;
+      font-size: $fontSizeNormal;
+    }
+    .at-countdown__time {
+      /* prettier-ignore */
+      letter-spacing: 1PX;
+    }
+    .at-countdown__time-box {
+      background-color: #556;
+      color: $white;
+      border: none;
+      /* prettier-ignore */
+      border-radius:2PX;
+      @extend .center;
+
+      &:after {
+        background-color: #666;
+      }
+    }
+  }
+}

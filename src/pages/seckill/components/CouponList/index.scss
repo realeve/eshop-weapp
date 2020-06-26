@@ -3,9 +3,25 @@
 .coupon_wrap {
   flex: 1;
   @extend .alignColumn;
+  height: calc(100vh - 180px);
   .popular {
     @extend .alignColumn;
-    flex: 1;
     background: $bg;
+    flex-grow: 1;
+    @include eject(flex, 1);
+    .at-divider {
+      background: $white;
+      height: 32px;
+      &__content {
+        font-size: $fontSizeNormal;
+      }
+      .countdown {
+        @extend .center;
+        &_title {
+          font-size: $fontSizeNormal;
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }
