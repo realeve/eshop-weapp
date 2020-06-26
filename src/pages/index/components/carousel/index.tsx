@@ -22,7 +22,14 @@ export default ({
   return (
     <Swiper
       className="carousel"
-      autoplay
+      autoplay={{
+        enabled: true,
+        delay: 3000,
+        waitForTransition: true,
+        disableOnInteraction: true,
+        stopOnLastSlide: false,
+        reverseDirection: true
+      }}
       indicatorDots
       indicatorActiveColor="#b98a4e"
       style={{

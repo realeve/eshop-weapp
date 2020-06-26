@@ -12,7 +12,14 @@ export default ({ data = [], title }) => (
     {title && <View className="home-pin__title">{title}</View>}
     <Swiper
       className="home-pin__swiper"
-      autoplay
+      autoplay={{
+        enabled: true,
+        delay: 3000,
+        waitForTransition: true,
+        disableOnInteraction: true,
+        stopOnLastSlide: false,
+        reverseDirection: true
+      }}
       indicatorDots
       indicatorActiveColor="#b98a4e"
     >

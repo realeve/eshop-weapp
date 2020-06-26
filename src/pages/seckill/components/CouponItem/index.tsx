@@ -47,7 +47,8 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
   className,
   state
 }) => {
-  let isEmpty = data.rest == 100 || data.total == 0;
+  const isEmpty = data.rest == 100 || data.total == 0;
+  const isValid = !isEmpty && state.value === 1;
   return (
     <View className={classNames("couponItem", className)} style={style}>
       <View className="img">
@@ -83,23 +84,23 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
         </View>
 
         <View className="action">
-          <Text className="action_title">限购价：</Text>
           <CPrice
             retail={data.price}
             retailStyle={{ marginLeft: 10, fontSize: 18 }}
             counter={data.counter}
             counterStyle={{ marginLeft: 10, fontSize: 16 }}
+            direction="column"
           />
         </View>
         <View className="btn">
           <CButton
-            theme={!isEmpty && state.value === 1 ? "normal" : "gardient"}
+            theme={isValid ? "gardient" : "normal"}
             size="small"
             onClick={() => {
               jump(`/pages/detail/index?id=${data.id}`);
             }}
           >
-            {STATE_TITLE[state.value]}
+            {isEmpty ? "已结束" : STATE_TITLE[state.value]}
           </CButton>
         </View>
       </View>

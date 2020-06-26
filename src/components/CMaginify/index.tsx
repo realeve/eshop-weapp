@@ -30,7 +30,14 @@ export default function Gallery({
         indicatorColor="#fff"
         indicatorActiveColor="#b98a4e"
         indicatorDots
-        autoplay
+        autoplay={{
+          enabled: true,
+          delay: 3000,
+          waitForTransition: true,
+          disableOnInteraction: true,
+          stopOnLastSlide: false,
+          reverseDirection: true
+        }}
         circular={circular}
       >
         {data.map(item => (

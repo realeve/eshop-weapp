@@ -39,7 +39,14 @@ const Special = ({ dispatch }: IProps) => {
         <Swiper
           className="swiper_card"
           circular
-          autoplay
+          autoplay={{
+            enabled: true,
+            delay: 3000,
+            waitForTransition: true,
+            disableOnInteraction: true,
+            stopOnLastSlide: false,
+            reverseDirection: true
+          }}
           interval={30000}
           indicatorDots
           indicatorColor="#999"
