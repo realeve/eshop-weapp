@@ -52,7 +52,9 @@ const LimitBuy = () => {
   return list && current ? (
     <View className="limit">
       {bannerImg && (
-        <Image className="img" src={bannerImg.img} mode="scaleToFill" />
+        <View className="imgwrapper">
+          <Image className="img" src={bannerImg.img} mode="scaleToFill" />
+        </View>
       )}
       <CouponList id={current.scheduleId} list={list} />
     </View>

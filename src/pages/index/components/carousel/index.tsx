@@ -6,6 +6,9 @@ import { jump } from "@/utils/lib";
 
 let { windowWidth }: Taro.getSystemInfoSync.Result = Taro.getSystemInfoSync();
 
+// https://github.com/nolimits4web/swiper/blob/149daf5e98070ce3b15061f5bfb240f1e8997748/src/components/autoplay/autoplay.js#L113
+// autoplay在h5中的参数配置
+
 /**
  * @returns 首页组件
  * @param ratio 宽高比

@@ -49,6 +49,7 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
 }) => {
   const isEmpty = data.rest == 100 || data.total == 0;
   const isValid = !isEmpty && state.value === 1;
+
   return (
     <View className={classNames("couponItem", className)} style={style}>
       <View className="img">
@@ -73,15 +74,6 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
           {data.title}
         </View>
         <View className="tips">{data && data.tip}</View>
-        <View className="style">
-          <View className="progress">
-            <View
-              className="active"
-              style={{ width: `${data.rest || 0}%` }}
-            ></View>
-          </View>
-          <View className="rest">还剩 {data.total}件</View>
-        </View>
 
         <View className="action">
           <CPrice
@@ -91,17 +83,30 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
             counterStyle={{ marginLeft: 10, fontSize: 16 }}
             direction="column"
           />
-        </View>
-        <View className="btn">
-          <CButton
-            theme={isValid ? "gardient" : "normal"}
-            size="small"
-            onClick={() => {
-              jump(`/pages/detail/index?id=${data.id}`);
-            }}
-          >
-            {isEmpty ? "已结束" : STATE_TITLE[state.value]}
-          </CButton>
+          <View className="status">
+            <View className="btn">
+              <CButton
+                theme={isValid ? "gardient" : "normal"}
+                size="small"
+                style={{ width: "100px" }}
+                onClick={() => {
+                  jump(`/pages/detail/index?id=${data.id}`);
+                }}
+                round={false}
+              >
+                {isEmpty ? "已结束" : STATE_TITLE[state.value]}
+              </CButton>
+            </View>
+            <View className="style">
+              <View className="progress">
+                <View
+                  className="active"
+                  style={{ width: `${data.rest || 0}%` }}
+                ></View>
+              </View>
+              <View className="rest">还剩 {data.total}件</View>
+            </View>
+          </View>
         </View>
       </View>
     </View>

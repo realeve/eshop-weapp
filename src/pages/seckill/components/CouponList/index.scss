@@ -3,9 +3,11 @@
 .coupon_wrap {
   flex: 1;
   @extend .alignColumn;
+  height: calc(100vh - 150px);
   .popular {
     @extend .alignColumn;
-    flex: 1;
     background: $bg;
+    flex-grow: 1;
+    @include eject(flex, 1);
   }
 }
