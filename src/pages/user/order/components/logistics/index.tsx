@@ -1,11 +1,12 @@
-import from './index.scss';
-import Steps from '@/components/step';
+import "./index.scss";
+import Steps from "@/components/step";
 import Skeleton from "taro-skeleton";
-import useFetch from '@/components/hooks/useFetch';
-import { ORDER } from '@/utils/api';
-import { mdFormat } from '@/utils/lib';
-import moment from 'moment';
-import * as R from 'ramda';
+import useFetch from "@/components/hooks/useFetch";
+import { ORDER } from "@/utils/api";
+import { mdFormat } from "@/utils/lib";
+import moment from "moment";
+import * as R from "ramda";
+import { View, Text, ScrollView } from "@tarojs/components";
 
 interface IPropData {
   id: number;
@@ -55,36 +56,36 @@ export interface IPropExpressDB {
  * @param remark
  */
 const getStatusByOpcode = (opCode: string) => {
-  let status = '',
+  let status = "",
     value = 0;
   console.log(opCode);
   switch (Number(opCode)) {
     case 50:
-      status = '已发货';
+      status = "已发货";
       value = 1;
       break;
     case 44:
     case 630:
-      status = '派件中';
+      status = "派件中";
       value = 3;
       break;
     case 80:
     case 8000:
-      status = '已签收';
+      status = "已签收";
       value = 4;
       break;
     default:
-      status = '运输中';
+      status = "运输中";
       value = 2;
       break;
   }
   return { status, value };
 };
 
-let expressStatus = ['待出库', '已发货', '运输中', '派件中', '已签收'];
+let expressStatus = ["待出库", "已发货", "运输中", "派件中", "已签收"];
 
 const handleExpressData = (e: IPropExpressDB, sendTime: string) => {
-  let records = R.sortBy(R.prop('time'))(e.expressVoList);
+  let records = R.sortBy(R.prop("time"))(e.expressVoList);
 
   // 根据最近一次状态确定物流状态
   let lastRecord = R.last(records);
@@ -93,22 +94,22 @@ const handleExpressData = (e: IPropExpressDB, sendTime: string) => {
     ? [
         {
           id: -1,
-          time: moment(sendTime).format('HH:mm'),
-          text: '商家已出库',
+          time: moment(sendTime).format("HH:mm"),
+          text: "商家已出库",
           date: mdFormat(sendTime),
           rec_time: sendTime,
-          opCode: '0',
-        },
+          opCode: "0"
+        }
       ]
     : [];
 
   if (R.isNil(lastRecord)) {
     return {
       status: {
-        status: sendTime ? '已出库' : '待出库',
-        value: -1,
+        status: sendTime ? "已出库" : "待出库",
+        value: -1
       },
-      data: sendDetail,
+      data: sendDetail
     };
   }
 
@@ -119,11 +120,11 @@ const handleExpressData = (e: IPropExpressDB, sendTime: string) => {
 
   let recordData = records.map(item => ({
     id: item.id,
-    time: moment(item.time).format('HH:mm'),
+    time: moment(item.time).format("HH:mm"),
     text: item.context,
     date: mdFormat(item.time),
     rec_time: item.time,
-    opCode: item.opCode,
+    opCode: item.opCode
   }));
 
   if (sendTime) {
@@ -132,7 +133,7 @@ const handleExpressData = (e: IPropExpressDB, sendTime: string) => {
 
   return {
     status,
-    data: recordData,
+    data: recordData
   };
 };
 
@@ -148,42 +149,44 @@ const Logistics = ({ param: { sendTime, ...param } }: IPropLogistics) => {
   let { data, loading, error } = useFetch<IExpressData>({
     param: {
       ...ORDER.express,
-      data: param,
+      data: param
     },
-    callback: data => handleExpressData(data, sendTime),
+    callback: data => handleExpressData(data, sendTime)
   });
 
   if (sendTime) {
-    expressStatus[0] = '已出库';
+    expressStatus[0] = "已出库";
   }
 
   return (
-    <div className='logisticsWrap'>
+    <View className="logisticsWrap">
       <Steps progressDot current={data ? data.status.value : 0}>
         {expressStatus.map(item => (
           <Steps.Step title={item} key={item} />
         ))}
       </Steps>
-      <Skeleton loading={loading}>
+      <Skeleton loading={loading} animate row={7}>
         {data && (
-          <div className='information'>
+          <ScrollView scrollY className="information">
             {data.data.length > 0 &&
               data.data.map((item: IPropData, idx: number) => (
-                <div key={idx}>
-                  <div className='address'>
-                    <div className='wrap'>
-                      <div className='time'>{item.time}</div>
-                      <div className='date'>{item.date}</div>
-                    </div>
-                    <div className='addressText'>{item.text}</div>
-                  </div>
-                  {idx + 1 < (data as IExpressData).data.length && <div className='line' />}
-                </div>
+                <View key={idx}>
+                  <View className="address">
+                    <View className="wrap">
+                      <View className="time">{item.time}</View>
+                      <View className="date">{item.date}</View>
+                    </View>
+                    <View className="addressText">{item.text}</View>
+                  </View>
+                  {idx + 1 < (data as IExpressData).data.length && (
+                    <View className="line" />
+                  )}
+                </View>
               ))}
-          </div>
+          </ScrollView>
         )}
       </Skeleton>
-    </div>
+    </View>
   );
 };
 
