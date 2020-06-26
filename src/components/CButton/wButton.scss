@@ -6,6 +6,9 @@
     border: none !important;
     background: $yellowGardiant !important;
   }
+  &normal {
+    color: $yellow !important;
+  }
 
   &blackgardient {
     color: $white !important;
@@ -25,6 +28,12 @@
     min-width: 180px !important;
     height: 72px !important;
     line-height: 72px !important;
+    font-size: $font-size-base !important;
+  }
+  &xsmall {
+    min-width: 160px !important;
+    height: 60px !important;
+    line-height: 60px !important;
     font-size: $font-size-base !important;
   }
   &Rect {

@@ -87,7 +87,7 @@ const CouponItem: (prop: ICouponData) => React.ReactElement = ({
             <View className="btn">
               <CButton
                 theme={isValid ? "gardient" : "normal"}
-                size="small"
+                size="xsmall"
                 style={{ width: "100px" }}
                 onClick={() => {
                   jump(`/pages/detail/index?id=${data.id}`);
