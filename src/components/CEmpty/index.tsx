@@ -3,6 +3,7 @@ import { View, Image } from "@tarojs/components";
 import * as lib from "@/utils/lib";
 import { CButton } from "@/components";
 import "./index.scss";
+import classnames from "classname";
 
 type TEmptyType =
   | "refund"
@@ -130,8 +131,15 @@ export default class CEmpty extends Taro.Component {
     }
     let { btnText, description, href, img, subtitle } =
       this.empConfig[this.props.type] || {};
+    let white =
+      typeof this.props.white == "undefined" ? true : this.props.white;
     return (
-      <View className="page-empty">
+      <View
+        className={classnames("page-empty", {
+          white
+        })}
+        style={this.props.style || {}}
+      >
         <View className="imgWrapper">
           <Image mode="aspectFit" className="img" src={prefix + img} />
         </View>

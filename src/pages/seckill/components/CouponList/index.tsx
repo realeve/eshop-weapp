@@ -78,8 +78,8 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({
           </View>
           <View className="at-divider__line"></View>
         </View>
-        {data && data.dist ? (
-          (data.dist || []).map(item => (
+        {data && data.dist && data.dist.length > 0 ? (
+          data.dist.map(item => (
             <CouponItem
               state={item.state}
               current={current}
@@ -88,7 +88,7 @@ const CouponList: (prop: IPropData) => React.ReactElement = ({
             />
           ))
         ) : (
-          <CEmpty type="goods" />
+          <CEmpty type="goods" style={{ height: "calc(100vh - 200px)" }} />
         )}
       </ScrollView>
     </View>

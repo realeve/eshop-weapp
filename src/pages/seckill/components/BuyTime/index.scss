@@ -6,7 +6,8 @@
   width: 100%;
   @extend .center;
   height: 88px;
-  border: 1px solid $borderColorGrey;
+  /* prettier-ignore */
+  border: 1PX solid $borderColorGrey;
   box-shadow: 6px 6px 16px 0px rgba(0, 0, 0, 0.08);
 
   .prev,

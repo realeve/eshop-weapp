@@ -1,6 +1,8 @@
 @import "@/styles/theme.scss";
 
-
+.white {
+  background: $white;
+}
 .page-empty {
   @extend .center;
   @extend .alignColumn;
