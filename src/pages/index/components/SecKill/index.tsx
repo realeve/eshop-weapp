@@ -29,11 +29,13 @@ export default ({ res }) => {
           更多 <Text className="at-icon at-icon-chevron-right" />
         </view>
       </View>
-      <NewProduct
-        style={{ marginTop: "-10px" }}
-        data={{ data: res.data || [] }}
-        showTitle={false}
-      />
+      {res && res.data && res.data.length > 0 && (
+        <NewProduct
+          style={{ marginTop: "-10px" }}
+          data={{ data: res.data }}
+          showTitle={false}
+        />
+      )}
     </View>
   );
 };
