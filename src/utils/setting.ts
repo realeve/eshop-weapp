@@ -1,4 +1,5 @@
-export let DEV = false; // process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
+export let DEV =
+  process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
 
 /**
  * 开发环境
@@ -17,30 +18,30 @@ export let DEV = false; // process.env.NODE_ENV === "development" || process.env
  * 测评环境
  * {"token":"eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiZWZiMjI5ZjI1MzE0MDY4YjhhMjI5N2QyOWJhOGE3MiIsInN1YiI6IndhcCIsImlhdCI6MTU3MDI0NTIwOCwiZXhwIjoxNTcwODUwMDA4LCJwYXJhbXMiOnsidWlkIjoxNiwidW5hbWUiOiJ1XzAwMTUxNTY4OTQyNyIsImZwIjoiNjkzNTUyMGFmNDJmNjU4NjIzYjQyYTc4NmRjMTJiOWMiLCJycCI6MX19.EO74AForPC8nazdLVDzq4PFCnbo8D9GF2BVKxpGjEdQ","avatar":"https://statictest.ccgold.cn/image/18/ad/18ad32b1ddaa26601ba789f28b1317cd.jpg","uid":16,"account":"微信","memberName":"u_001515689427","trueName":"*宾","phone":"18628123455","sex":"保密","birthday":null,"authState":30,"isRealNamePassed":true,"authMessage":"已通过"}
  */
-// const SETTING = {
-//   host: "https://apitest.ccgold.cn/api",
-//   oss: "https://statictest.ccgold.cn/",
-//   base: "/",
-//   publicPath: "/",
-//   IM: "https://imtest.ccgold.cn/member",
-//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
-//   IMWS: "ws://imtest.ccgold.cn/im",
-//   IMAPI: "http://imtest.ccgold.cn/api"
-// };
+const SETTING = {
+  host: "https://apitest.ccgold.cn/api",
+  oss: "https://statictest.ccgold.cn/",
+  base: "/",
+  publicPath: "/",
+  IM: "https://imtest.ccgold.cn/member",
+  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
+  IMWS: "ws://imtest.ccgold.cn/im",
+  IMAPI: "http://imtest.ccgold.cn/api"
+};
 
 /**
  * 生产环境
  */
-const SETTING = {
-  host: "https://api.ccgold.cn/api",
-  oss: "https://static.ccgold.cn",
-  base: "/",
-  publicPath: "/",
-  IM: "https://im.ccgold.cn/member",
-  invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
-  IMWS: "ws://im.ccgold.cn/im",
-  IMAPI: "https://test.ccgold.cn/api"
-};
+// const SETTING = {
+//   host: "https://api.ccgold.cn/api",
+//   oss: "https://static.ccgold.cn",
+//   base: "/",
+//   publicPath: "/",
+//   IM: "https://im.ccgold.cn/member",
+//   invoice: "http://web.hydzfp.com/ei_access/html/downloadMobilePdf.do",
+//   IMWS: "ws://im.ccgold.cn/im",
+//   IMAPI: "https://test.ccgold.cn/api"
+// };
 
 // https://www.ccgold.cn/index.html
 // https://w3.ccgold.cn/index.html
