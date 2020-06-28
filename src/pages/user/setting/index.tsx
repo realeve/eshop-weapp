@@ -77,7 +77,13 @@ const Setting = ({ isLogin, user, dispatch, appVersion }) => {
       <AtListItem
         className="fields"
         title="系统版本号"
-        extraText={appVersion}
+        extraText={`v ${appVersion.version}`}
+      />
+      <AtListItem className="fields" title="hash" extraText={appVersion.hash} />
+      <AtListItem
+        className="fields"
+        title="发布时间"
+        extraText={appVersion.date}
       />
 
       <AtListItem

@@ -5,6 +5,13 @@ import { get as getGlobalData } from "@/utils/global_data";
 import moment from "dayjs";
 let __webp = getGlobalData("webp");
 
+export const getVersion = () =>
+  axios({
+    url: `${window.location.origin}/version${
+      window.location.origin.includes("localhost") ? "dev" : ""
+    }.json`
+  });
+
 export const getWebp = (url, webp = __webp) =>
   webp ? `${url}?x-oss-process=image/format,webp` : url;
 

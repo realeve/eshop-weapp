@@ -1,6 +1,6 @@
 const path = require("path");
 const hash = require("./hash");
-hash.init();
+hash.init("dev");
 
 module.exports = {
   env: {
