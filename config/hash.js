@@ -6,11 +6,22 @@ const hash = () =>
   Math.random()
     .toString(36)
     .substring(2, 10);
-
-const getFileName = env => {
-  let filename = `/public/version${env}.json`;
-  let str = process.cwd() + filename;
+const getDir = () => {
+  let str = process.cwd();
   return str.replace(/\\/g, "/");
+};
+const getFileName = (env, dir = "public") => {
+  let filename = `/${dir}/version${env}.json`;
+  return getDir() + filename;
+};
+
+const decodeHtmlHash = () => {
+  let file = fs.readFileSync(getDir() + "/dist/index.html", "utf8");
+  if (!file) {
+    return hash();
+  }
+  let res = file.match(/(src=\"\/js\/app.)(\w)+/);
+  return res[0].replace(res[1], "");
 };
 
 module.exports = {
@@ -24,10 +35,11 @@ module.exports = {
     file = JSON.parse(file);
     let preVersion = Number(file.version);
     const data = {
-      version: String(preVersion + 0.1),
-      hash: hash(),
+      version: String((preVersion + 0.1).toFixed(1)),
+      hash: env === "" ? decodeHtmlHash() : hash(),
       date: dayjs().format("YYYY-MM-DD HH:mm")
     };
     fs.writeFileSync(getFileName(env), JSON.stringify(data), "utf8");
+    fs.writeFileSync(getFileName(env, "dist"), JSON.stringify(data), "utf8");
   }
 };
