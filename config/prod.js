@@ -1,5 +1,6 @@
 const path = require("path");
-
+const hash = require("./hash");
+hash.init();
 module.exports = {
   env: {
     NODE_ENV: '"production"'
@@ -52,5 +53,10 @@ module.exports = {
      *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
      * }
      */
+  },
+  copy: {
+    patterns: [
+      { from: "public/", to: "dist/" } // 指定需要 copy 的目录
+    ]
   }
 };
