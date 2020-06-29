@@ -142,7 +142,7 @@ const state = {
   curCateId: 0,
   buyLocking: false,
   orderTrigger: randomStr(),
-  appVersion: "V 1.0",
+  appVersion: { version: "1.0", hash: "000000", date: "2020-06-28 17:04:05" },
   seckill: {
     title: "",
     remainSeconds: 0,
@@ -222,17 +222,11 @@ export default {
           componentD, //新品发售
           componentF, // 三联播
           componentG, // 普品专题列表
-          componentAppVersion, // 系统版本
+          // componentAppVersion, // 系统版本
           componentI // 秒杀
         } = res;
 
-        let appVersion = componentAppVersion.androidVersion;
-        let payload: {
-          appVersion: string;
-          [key: string]: any;
-        } = {
-          appVersion: "V " + appVersion
-        };
+        let payload = {};
 
         if (special) {
           payload = {
@@ -412,6 +406,15 @@ export default {
         });
         // 热卖产品，后端暂无返回
         // console.log(componentE);
+      });
+
+      db.getVersion().then(appVersion => {
+        dispatch({
+          type: "setStore",
+          payload: {
+            appVersion
+          }
+        });
       });
 
       // 跑马灯

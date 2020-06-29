@@ -10,6 +10,11 @@ $shopHeight: 45px;
   background-color: $bg;
   @extend .alignColumn;
 
+  .at-modal__content {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
   .order_detail {
     flex: 1;
     position: fixed;

@@ -1,6 +1,6 @@
 import Taro, { useRouter, useState, useEffect } from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui";
+import { AtModal, AtModalContent, AtModalHeader } from "taro-ui";
 import "./index.scss";
 import Tab from "@/pages/search/tab/";
 import * as db from "./db";
@@ -19,11 +19,9 @@ import Receive from "./components/Receive";
 import Comment from "./components/Comment";
 import Rebuy from "./components/Rebuy";
 import Logy from "./components/logistics";
-
+import { CButton } from "@/components";
 import CountTime from "./components/CountTime";
-
 import dayjs from "dayjs";
-import { Button } from "@tarojs/components";
 
 const { EOrderStatus } = db;
 
@@ -115,7 +113,7 @@ const Order = () => {
   return (
     <View className="user_order">
       <AtModal isOpened={showLogy} confirmText="关闭" closeOnClickOverlay>
-        {/* <AtModalHeader>标题</AtModalHeader> */}
+        <AtModalHeader>物流详情</AtModalHeader>
         <AtModalContent>
           {showLogy && <Logy param={state.logiParams} />}
         </AtModalContent>
@@ -242,13 +240,16 @@ const Order = () => {
                   EOrderStatus.appendCommented,
                   EOrderStatus.over
                 ].includes(order.status) && (
-                  <Button
+                  <CButton
+                    theme="yellow"
+                    size="small"
+                    round={false}
                     onClick={() =>
                       logy(order.shipSn, order.shipCode, order.sendTime)
                     }
                   >
                     查看物流
-                  </Button>
+                  </CButton>
                 )}
 
                 {/* 确认收货 */}
