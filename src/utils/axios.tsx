@@ -1,6 +1,6 @@
 import { axios as http } from "taro-axios";
 import qs from "qs";
-import { host as _host, IMAPI } from "./setting";
+import { DEV, host as _host, IMAPI } from "./setting";
 import * as R from "ramda";
 import { LocalStorageKeys } from "@/utils/setting";
 import Taro from "@tarojs/taro";
@@ -13,7 +13,7 @@ import { API } from "@/utils/api";
 import fail from "@/components/Toast/fail";
 
 // 公众号配置
-export const apiId = "wx7a6971dd5ee1ebce";
+export const apiId = DEV ? "wx7a6971dd5ee1ebce" : "wx06815f4f53448af3";
 
 // export interface GlobalAxios {
 //   host: string;

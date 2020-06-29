@@ -106,7 +106,7 @@ class App extends Component {
         },
         {
           pagePath: "pages/special/history/index",
-          text: "发现",
+          text: "",
           iconPath: "./images/tab/logo.png",
           selectedIconPath: "./images/tab/logo.png"
         },
